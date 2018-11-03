@@ -195,27 +195,7 @@
 <li><p>根据ua进行跳转应用宝or App store </p>
 </li>
 </ol>
-<p>$$<br>// 判断访问终端跳转到不同的下载商店</p>
-<pre><code>function device_type(){
-
-    var u = navigator.userAgent;
-
-    var _isAndroid = u.indexOf(&apos;Android&apos;) &gt; -1 ; // android终端
-
-    var _isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); // ios终端
-
-    if(_isAndroid){
-
-        window.location.href=&quot;http://a.app.qq.com/o/simple.jsp?pkgname=com.octvision.liuzhou.park&quot;;
-
-    }else if(_isIOS){
-
-        window.location.href=&quot;https://itunes.apple.com/cn/app/id1231405289?mt=8&quot;;
-
-    }
-
-}
-</code></pre><p>$$</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断访问终端跳转到不同的下载商店</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">device_type</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> u = navigator.userAgent;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> _isAndroid = u.indexOf(<span class="string">'Android'</span>) &gt; <span class="number">-1</span> ; <span class="comment">// android终端</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> _isIOS = !!u.match(<span class="regexp">/\(i[^;]+;( U;)? CPU.+Mac OS X/</span>); <span class="comment">// ios终端</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(_isAndroid)&#123;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">window</span>.location.href=<span class="string">"http://a.app.qq.com/o/simple.jsp?pkgname=com.octvision.liuzhou.park"</span>;</span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(_isIOS)&#123;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">window</span>.location.href=<span class="string">"https://itunes.apple.com/cn/app/id1231405289?mt=8"</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <h2 id="HTML5新特性之摇一摇-shake-js"><a href="#HTML5新特性之摇一摇-shake-js" class="headerlink" title="HTML5新特性之摇一摇 shake.js"></a>HTML5新特性之摇一摇 shake.js</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**摇一摇,触发签筒动画 */</span></span><br><span class="line"><span class="comment">//create a new instance of shake.js.</span></span><br><span class="line"><span class="keyword">var</span> myShakeEvent = <span class="keyword">new</span> Shake(&#123;</span><br><span class="line">    threshold: <span class="number">15</span>,</span><br><span class="line">    timeout: <span class="number">1000</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// start listening to device motion</span></span><br><span class="line">myShakeEvent.start();</span><br><span class="line"><span class="comment">// register a shake event</span></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'shake'</span>, shakeEventDidOccur, <span class="literal">false</span>);</span><br><span class="line"><span class="comment">// shake event callback</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shakeEventDidOccur</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    showGif();</span><br><span class="line">    <span class="comment">// stop listening for shake events</span></span><br><span class="line">    <span class="built_in">window</span>.removeEventListener(<span class="string">'shake'</span>, shakeEventDidOccur, <span class="literal">false</span>);</span><br><span class="line">    <span class="comment">//To stop listening to device motion</span></span><br><span class="line">    myShakeEvent.stop();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="HTML5新特性之存储-localStorage"><a href="#HTML5新特性之存储-localStorage" class="headerlink" title="HTML5新特性之存储 localStorage"></a>HTML5新特性之存储 localStorage</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 进入页面时调用此方法保存URL,存储当前页面的pathname到localstorage</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">storageURL</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">	localStorage.setItem(<span class="string">'url'</span>, <span class="built_in">window</span>.location.href);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取存储的pathname,登录成功时调用此方法。若storage中无保存的URL，默认跳转到许愿树页面</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getURL</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">    <span class="keyword">var</span> url = localStorage.getItem(<span class="string">'url'</span>);</span><br><span class="line">    <span class="keyword">if</span>(url)&#123;</span><br><span class="line">    	<span class="keyword">return</span> url;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="string">'../wishTree/tree.html'</span>;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="网页转图片-下载并保存-——html2canvas-js"><a href="#网页转图片-下载并保存-——html2canvas-js" class="headerlink" title="网页转图片 下载并保存 ——html2canvas.js"></a>网页转图片 下载并保存 ——html2canvas.js</h2><p>思路是：</p>
@@ -1733,19 +1713,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Js基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1789,11 +1769,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
               </li>
              
               <li class="article-tag-list-item">
