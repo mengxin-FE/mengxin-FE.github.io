@@ -11,7 +11,7 @@
   <meta name="description" content="这是萌新的博客,请多指教呢">
 <meta property="og:type" content="website">
 <meta property="og:title" content="我的地盘听我的">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:url" content="http://yoursite.com/page/12/index.html">
 <meta property="og:site_name" content="我的地盘听我的">
 <meta property="og:description" content="这是萌新的博客,请多指教呢">
 <meta property="og:locale" content="zh-Hans">
@@ -141,152 +141,57 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-React进阶之路" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-《JavaScript面向对象编程指南》阅读笔记-七" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/15/React进阶之路/">《React进阶之路》阅读笔记</a>
+      <a class="article-title" href="/2017/03/18/《JavaScript面向对象编程指南》阅读笔记-七/">《JavaScript面向对象编程指南》阅读笔记 七</a>
     </h1>
   
 
         
-        <a href="/2018/07/15/React进阶之路/" class="archive-article-date">
-  	<time datetime="2018-07-15T12:29:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-15</time>
+        <a href="/2017/03/18/《JavaScript面向对象编程指南》阅读笔记-七/" class="archive-article-date">
+  	<time datetime="2017-03-18T13:06:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/AvskgQFU55RO5jNMCxwaT5hQzOf6PIga9eq3iMTwPac!/b/dEYBAAAAAAAA&bo=OQxABuodTA8RWak!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/erHdLVUPUtgk2G4g4vl7jxrVMA7h*sPOqH5cicAafsU!/b/dGkBAAAAAAAA&bo=ewiAAucPsAQBOLI!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
 <p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h1 id="React基础"><a href="#React基础" class="headerlink" title="React基础"></a>React基础</h1><h2 id="props和state"><a href="#props和state" class="headerlink" title="props和state"></a>props和state</h2><p>props是组件对外的接口，组件通过props接收外部传入的数据；<br><br>state是组件内部对内接口，组件内部状态的变化通过state来反应。<br><br>props是只读的，不能在组件内修改props；<br><br>state是可变的，组件的变化通过修改state来实现。</p>
-<p>在开发React应用时，要思考哪些组件应该设计成有状态组件，哪些组件应该设计成无状态组件。应该尽可能使用无状态组件，无状态组件不用关心状态的变化，只聚焦UI展示，所以更容易复用。</p>
-<p>通过定义少数的有状态组件管理整个应用的状态变化，并且将状态通过props传递给其余无状态组件，由无状态组件完成页面大部分UI渲染。</p>
-<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><p>只有类组件才具有生命周期方法，函数组件没有生命周期方法。</p>
-<ul>
-<li>挂载阶段：组件被创建，执行初始化，并被挂载到DOM中，完成组建的第一次渲染。</li>
-<li>更新阶段：组件被挂载到DOM后，组件的props或state可以引起组件更新。</li>
-<li>卸载阶段：组件从DOM中被卸载的过程</li>
-</ul>
-<h3 id="挂载阶段"><a href="#挂载阶段" class="headerlink" title="挂载阶段"></a>挂载阶段</h3><ol>
-<li>constructor：ES6构造方法，组件被创建时，首先调用此方法。该方法接收props参数，是从父组件中传入的属性对象。在这个方法中调用super(props)才能保证props被传入组件中。此方法通常用于初始化组件的state以及绑定事件。</li>
-<li>componentWillMount</li>
-<li>render：返回一个React元素而非组件的实际渲染工作，render是一个纯函数，不可在里面调用this.setState</li>
-<li>componentDidMount：组件被挂载到DOM后调用，通常用于向服务器请求数据。</li>
-</ol>
-<h3 id="更新阶段"><a href="#更新阶段" class="headerlink" title="更新阶段"></a>更新阶段</h3><ol>
-<li>componentWillReceiveProps：在props引起组件更新过程中调用。state引起更新不会触发该方法。</li>
-<li>shouldComponentUpdate：决定组件是否继续执行更新过程。</li>
-<li>componentWillUpadte：在组件render调用前执行</li>
-<li>componentDidUpdate：组件更新后被调用</li>
-</ol>
-<h3 id="卸载阶段"><a href="#卸载阶段" class="headerlink" title="卸载阶段"></a>卸载阶段</h3><ol>
-<li>componentWillUnmount：组件被卸载前调用</li>
-</ol>
-<h1 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h1><p>如果一个表单元素的值是由React来管理，它就是一个受控组件。非受控制组件指表单元素的状态依然由表单元素自己管理，而不是交给React组件管理，使用非受控组件使用属性ref来获取元素的值。<br><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"text"</span> ref=&#123; (input) =&gt; <span class="keyword">this</span>.input = input &#125; /&gt;</span><br></pre></td></tr></table></figure></p>
-<h1 id="高阶组件"><a href="#高阶组件" class="headerlink" title="高阶组件"></a>高阶组件</h1><p>HOC接收React组件作为参数，并且返回一个新的React组件。本质是一个函数，并不是组件。本质是装饰者设计模式。</p>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
-<li>操作props：在被包装组件接收props前，高阶组件可以先拦截到props，对props操作后再传递给被包装组件。</li>
-<li>通过ref访问组件实例</li>
-<li>组件状态提升</li>
-<li>用其他元素包装组件</li>
-</ul>
-<p>高阶组件的实现方式：由高阶组件处理通用逻辑，然后将相关属性传递给被包装组件，这种实现方式为属性代理。还可以通过继承方式实现高阶组件：通过继承被包装组件实现逻辑的复用。继承方式实现的高阶组件常用于渲染劫持。例如当用户处于登录状态时，允许组件渲染， 否则渲染一个空组件。</p>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
-<li>为了区分高阶组件，应该把被包装组件的名称也包到高阶组件的名称中，如withPersistentData</li>
-<li>不要在组件的render方法中使用高阶组件，尽量不要在组件的其他生命周期方法中使用高阶组件。因为调用高阶组件每次返回一个新组件，于是每次render前一次高阶组件创建的组件都会被卸载，然后重新挂载本次创建的新组件，影响效率。</li>
-<li>如果需要使用被包装组件的静态方法，需要手动复制这些静态方法，因为高阶组件返回的新组件不包含被包装组件的静态方法。</li>
-</ol>
-<h1 id="React-Router"><a href="#React-Router" class="headerlink" title="React Router"></a>React Router</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-router-dom</span><br></pre></td></tr></table></figure>
-<p>React Router v4 每遵循React中一切皆组件的思想，每一个Route（路由）都是一个普通的React组件</p>
-<p>React Router 通过Router和Route两个组件完成路由功能。<br><br>一个应用只需要一个Router实例，所有的路由配置组件Route都定义为Router的子组件。</p>
-<h3 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h3><p>Route是React Router中用于配置路由信息的组件，每当有一个组件需要根据URL决定是否渲染时，需要创建一个Route</p>
-<ul>
-<li>path：用来描述这个Route匹配的URL的pathname，当URL匹配一个Route时，这个Route中定义的组件将会被渲染。</li>
-<li><p>match：当URL和Route匹配时，Route会创建一个match对象作为props中的一个属性传递给被渲染的组件。对象包含以下4个属性</p>
-<ul>
-<li>params：Route的path可以包含参数。例如<route path="/foo/:id">包含一个参数id，params从path解析到参数{id:1}</route></li>
-<li>isExact：布尔值。当URL完全匹配时值为true。path=’/foo’、URL=’<a href="http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。" target="_blank" rel="noopener">http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。</a></li>
-<li>path：Route的path属性。构建嵌套路由时会使用到</li>
-<li>url：URL的匹配部分</li>
-</ul>
-</li>
-<li><p>Route渲染组件的方式：Route提供3个属性用来定义待渲染的组件：</p>
-<ul>
-<li>component 当URL和Route匹配时，component属性定义的组件就会被渲染：</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">'/foo'</span> component=&#123;Foo&#125;&gt;</span><br></pre></td></tr></table></figure>
-<p>当URL=’<a href="http://example.com/foo&#39;时，Foo组件会被渲染。" target="_blank" rel="noopener">http://example.com/foo&#39;时，Foo组件会被渲染。</a></p>
-</li>
-<li><p>render 该方式方便为待渲染组件传递额外的属性</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">    &lt;Route path=<span class="string">'/foo'</span> render=&#123; (props) =&gt; (</span><br><span class="line">        &lt;Foo &#123;...props&#125; data=&#123;extraProps&#125; /&gt;</span><br><span class="line">    )&#125;&gt;</span><br><span class="line">    <span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">  - children  与上述不同，children返回的组件无论路由是否匹配都会被渲染，当匹配不成功时，match属性为null</span></span><br><span class="line"><span class="string">  - `</span><span class="string">``</span>js</span><br><span class="line">    &lt;Router path=<span class="string">'/foo'</span> children=&#123; (props) =&gt; (</span><br><span class="line">        &lt;div className=&#123;props.match ? <span class="string">'active'</span> : <span class="string">''</span>&#125;&gt;</span><br><span class="line">            &lt;Foo /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;&gt;</span></span><br><span class="line"><span class="regexp">    ```  </span></span><br><span class="line"><span class="regexp">    如果Route匹配当前URL，待渲染元素的根节点div的class将被设置为active</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">- Switch 和 exact。当URL和多个Route匹配时，这些Route都会执行渲染操作。如果只想当第一个匹配的Route渲染，可以把这些Route包裹到一个Switch组件中。如果想让URL和Route完全匹配时Route才渲染，可使用Route的exact属性。Switch和exact常联合使用应用于首页的导航。</span></span><br><span class="line"><span class="regexp">    ```js</span></span><br><span class="line"><span class="regexp">    &lt;Router&gt;</span></span><br><span class="line"><span class="regexp">        &lt;Switch&gt;</span></span><br><span class="line"><span class="regexp">            &lt;Route exact path='/</span><span class="string">' component=&#123;Home&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/posts<span class="string">' component=&#123;Posts&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/:user<span class="string">' component=&#123;User&#125; /&gt;</span></span><br><span class="line"><span class="string">        &lt;/Switch&gt;</span></span><br><span class="line"><span class="string">    &lt;/Router&gt;</span></span><br></pre></td></tr></table></figure>
-<p>如果不使用Switch，当pathname为’posts’时，后面两个都会被匹配，但我们并不希望/:user被匹配。<br><br>如果不使用exact，’/‘,’/posts’…几乎所有URL都会被匹配到第一个Route,而又因为使用了Switch，后面的两个Route永远也不会被匹配。使用exact保证pathname只有完全匹配时，第一个Route才会被匹配。</p>
-</li>
-</ul>
-</li>
-<li><p>嵌套路由：是指在Route渲染的组件内部定义新的Route</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Posts = <span class="function">(<span class="params"> &#123; match&#125; </span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &#123;<span class="comment">/* 这里match.url 等于 /posts */</span>&#125;</span><br><span class="line">            &lt;Route path=&#123;<span class="string">`<span class="subst">$&#123;match.url&#125;</span>/:id`</span>&#125; component=&#123;PostDetail&#125; /&gt;</span><br><span class="line">            &lt;Route exact path=&#123;match.url&#125; component=&#123;PostList&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="链接-Link"><a href="#链接-Link" class="headerlink" title="链接 Link"></a>链接 Link</h3><p>Link是React Router提供的链接组件，一个Link组件定义了当点击该Link时，页面应该如何路由。</p>
-<p>Link使用to属性声明要导航到的URL地址。to可以是string或object类型，当to为object类型时，可以包含pathname、search、hash、state四个属性。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> Navigation = <span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    &lt;header&gt;</span><br><span class="line">        &lt;nav&gt;</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/'&gt;Home&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/posts'&gt;Posts&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">            &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>nav&gt;</span><br><span class="line">    &lt;<span class="regexp">/header&gt;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;link to &#123;</span></span><br><span class="line"><span class="regexp">    &#123;</span></span><br><span class="line"><span class="regexp">        pathname : '/</span>posts<span class="string">',</span></span><br><span class="line"><span class="string">        search : '</span>?sort=name<span class="string">',</span></span><br><span class="line">        hash : '#the-hash',</span><br><span class="line">        state : &#123; <span class="attr">fromHome</span> : <span class="literal">true</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="使用history对象手动实现导航"><a href="#使用history对象手动实现导航" class="headerlink" title="使用history对象手动实现导航"></a>使用history对象手动实现导航</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//push向浏览器历史记录新增一条</span></span><br><span class="line">history.push(path , [state])</span><br><span class="line"></span><br><span class="line"><span class="comment">//replace会用新记录替代当前记录</span></span><br><span class="line">history.replace(path , [state])</span><br></pre></td></tr></table></figure>
-<h1 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h1><p>Redux的主要思想即描述应用的状态，如何根据action进行更新。</p>
-<p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/*D.QOD9xmUP6nOTo6HZTeZy7iXJaSvMsW5dY9fC4Lp8!/b/dFYAAAAAAAAA&bo=gAZOA4AGTgMDKQw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<h3 id="Redux三大原则"><a href="#Redux三大原则" class="headerlink" title="Redux三大原则"></a>Redux三大原则</h3><ul>
-<li>只维护一个全局状态state对象，储存在Redux的store中。</li>
-<li>保持应用状态只读。不可直接修改应用状态，需要修改时必须发送action，该action描述如何修改应用状态。</li>
-<li>应用状态的改变通过纯函数reducer完成。</li>
-</ul>
-<h2 id="react-redux"><a href="#react-redux" class="headerlink" title="react-redux"></a>react-redux</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-redux</span><br></pre></td></tr></table></figure>
-<p>根据组件意图不同，可以将组件划分为两类：展示组件、容器组件。<br></p>
-<ul>
-<li>展示组件–UI展示，不关心数据。</li>
-<li>容器组件–逻辑处理，如发送网络请求、处理返回数据、将处理过的数据通过props传递给展示组件。</li>
-</ul>
-<p>当展示组件的状态变更引起源数据变化时，展示组件通过调用容器组件提供的方法同步变化。<br><b>有/无 状态组件根据是否使用state来划分，展示组件和容器组件根据组件意图划分。</b></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">connect()   <span class="comment">// 用于把React组件和Redux的store连接起来，生成一个容器组件，负责数据管理和业务逻辑</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"><span class="keyword">import</span> TodoList <span class="keyword">from</span> <span class="string">'./TodoList'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(所需应用状态 , 展示组件的状态)(TodoList);</span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(mapStateToProps , mapDispatchToProps)(TodoList);</span><br><span class="line"></span><br><span class="line">connect的两个参数的类型都是函数，前者负责从全局应用状态state中取出所需数据，映射到展示组件的props。后者负责把action映射到展示组件的props上。</span><br><span class="line"></span><br><span class="line">mapStateToProps : 把state转换成props。state是Redux store中保存的应用状态，它作为参数传递给mapStateToProps。每当store中的state更新时，mapStateToProps会重新执行，重新计算传递给展示组件的props，从而触发组件的重新渲染。</span><br><span class="line"></span><br><span class="line">mapDispatchToProps : 容器组件可以发送action更新state。该函数接收store.dispatch方法作为参数，返回展示组件用来修改state的函数</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Provider    用于容器组件获取Redux的store。该组件需要接收store属性，然后把store属性保存到context</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>Plugin</th>
-<th>README</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Dropbox</td>
-<td>[plugins/dropbox/README.md][PlDb]</td>
-</tr>
-<tr>
-<td>Github</td>
-<td>[plugins/github/README.md][PlGh]</td>
-</tr>
-<tr>
-<td>Google Drive</td>
-<td>[plugins/googledrive/README.md][PlGd]</td>
-</tr>
-<tr>
-<td>OneDrive</td>
-<td>[plugins/onedrive/README.md][PlOd]</td>
-</tr>
-<tr>
-<td>Medium</td>
-<td>[plugins/medium/README.md][PlMe]</td>
-</tr>
-<tr>
-<td>Google Analytics</td>
-<td>[plugins/googleanalytics/README.md][PlGa]</td>
-</tr>
-</tbody>
-</table>
-
+<h2 id="BOM和DOM"><a href="#BOM和DOM" class="headerlink" title="BOM和DOM"></a>BOM和DOM</h2><p>检查一个节点是否存在子节点，可以调用该节点的hasChildNodes()方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.documentElement.hasChildNodes()</span><br><span class="line"><span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>访问子元素： .childNodes()</p>
+<p>访问父元素： .parentNode()</p>
+<p>检测元素中是否存在属性： hasAttributes()</p>
+<p>获取元素的属性值： getAttribute</p>
+<p>访问标签中的内容： .textContent  低版本IE可用innerText  .nodeValue</p>
+<p>返回下一个同胞： .nextSibling</p>
+<p>返回前一个同胞： .previousSibling</p>
+<p>创建新节点： .createElement()  .createTextNode()</p>
+<p>插入新元素到末尾 .appendChild()</p>
+<p>在您指定的已有子节点之前插入新的子节点: .insertBefore()</p>
+<p>用新节点替换某个子节点: replaceChild()</p>
+<p>克隆现有节点： cloneNode()，该方法有一个布尔型参数(true = 深拷贝，包括所有子节点；false = 浅拷贝，只针对当前节点)</p>
+<p>移除节点： .removeChild()</p>
+<p>替换节点： .replaceChild()</p>
+<p>添加事件监听： .addEventListener()</p>
+<pre><code>item.addEventListener(&quot;click&quot; , 处理事件的函数 )
+</code></pre><p><code>IE9以前没有addEventListener()方法</code>，只可以用attachEvent()方法</p>
+<p>IE事件对象中，没有用于反映触发事件目标元素的target属性，但可以用它的等效属性srcElement。</p>
+<p>移除事件监听： .removeEventListener(“click” , 处理事件的函数 ) IE使用detachEvent()方法</p>
+<p>阻止事件冒泡： .stopPropagation() IE没有此方法，可以将cancelBubble设置为true</p>
+<p>阻止默认行为： .preventDefault() IE没有此方法，可以将returnValue设置为false</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">evt</span>)</span>&#123;</span><br><span class="line">   <span class="comment">//prep work</span></span><br><span class="line">   evt = evt || <span class="built_in">window</span>.event;</span><br><span class="line">   <span class="keyword">var</span> target =evt.target || evt.srcElement;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//actual callback work</span></span><br><span class="line">   <span class="built_in">console</span>.log(target.nodeName)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//start listening for click events</span></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">document</span>.addEventListener)&#123;</span><br><span class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">"click"</span>,callback,<span class="literal">false</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(docunment.attachEvent)&#123;<span class="comment">//old IE</span></span><br><span class="line">    <span class="built_in">document</span>.attachEvent(<span class="string">"onclick"</span>,callback);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">document</span>.onclick = callback;<span class="comment">//ancient</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="XMLHttpRequest对象"><a href="#XMLHttpRequest对象" class="headerlink" title="XMLHttpRequest对象"></a>XMLHttpRequest对象</h2><p>利用JavaScript将HTTP请求发送给服务端，然后根据服务器端的响应来局部更新页面。</p>
+<p>Ajax就是异步JavaScript，在发送HTTP请求后不需要停下来等待服务器响应，可以继续执行其他任务，待服务器处理完毕返回时再处理。</p>
+<p>XHR对象就是由JavaScript创建的。</p>
+<p>XHR对象用法步骤：<br>1.发送请求。在这步，需要对XHR对象的构建，并设置事件监听。<br>2.处理响应。在这步，事件监听器会在服务器的响应信息到达后处理相关代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//兼容IE低版本ActiveX对象</span></span><br><span class="line"><span class="keyword">var</span> ids = [<span class="string">"MSXML2.XMLHTTP.3.0"</span>,<span class="string">"MSXML2.XMLHTTP"</span>,<span class="string">"Microsoft.XMLHTTP"</span>];</span><br><span class="line"><span class="comment">//创建xhr对象</span></span><br><span class="line"><span class="keyword">var</span> xhr;</span><br><span class="line"><span class="keyword">if</span>(XMLHttpRequest)&#123;</span><br><span class="line">   	xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	IE:<span class="comment">//try to find an ActiveX object to use</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;ids.length;i++)&#123;</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			xhr = <span class="keyword">new</span> ActiveXObject(ids[<span class="number">1</span>]);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;<span class="keyword">catch</span>(e)&#123;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//为该对象设置触发readystatechange事件的监听器</span></span><br><span class="line">xhr.onreadystatechange = myCallback;</span><br><span class="line">xhr.open(<span class="string">"GET请求的类型"</span>,<span class="string">"somefile.txt请求的URL"</span>,<span class="literal">true</span>)</span><br><span class="line">xhr.send(<span class="string">"发送请求时可附带数据"</span>)</span><br><span class="line"><span class="comment">//请求被发送出去后，我们继续执行后续任务，直到服务器端响应后，会自动启动回调函数myCallback</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//每个XHR对象中有一个readyState属性。一旦改变了该属性的值，就会触发readystatechange事件，可能的值如下：</span></span><br><span class="line">&lt;li&gt;<span class="number">0</span>----为初始化状态&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">&lt;li&gt;1----载入请求状态&lt;/</span>li&gt;</span><br><span class="line">&lt;li&gt;<span class="number">2</span>----载入完成状态&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">&lt;li&gt;3----请求交互状态&lt;/</span>li&gt;</span><br><span class="line">&lt;li&gt;<span class="number">4</span>----请求完成状态&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function myCallback()&#123;</span></span><br><span class="line"><span class="regexp">   if(xhr.readyState &lt; 4)&#123;</span></span><br><span class="line"><span class="regexp">      return;/</span><span class="regexp">/not ready yet</span></span><br><span class="line"><span class="regexp">   &#125;</span></span><br><span class="line"><span class="regexp">   if(xhr.status !== 200)&#123;</span></span><br><span class="line"><span class="regexp">      alert("Error!");</span></span><br><span class="line"><span class="regexp">      retrun;</span></span><br><span class="line"><span class="regexp">   &#125;</span></span><br><span class="line"><span class="regexp">   /</span><span class="regexp">/all is fine, do the work</span></span><br><span class="line"><span class="regexp">   alert(xhr.responseText)</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/当readyState的值为4时，意味着服务器端的响应信息response已经返回，可以开始处理了。</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/在myCallback函数中，除了确定readyState的值是4之外，还必须检查HTTP请求的状态码，通过XHR对象的status属性获取，正常情况应该是200。</span></span><br><span class="line"><span class="regexp"></span></span><br></pre></td></tr></table></figure>
       
 
       
@@ -299,7 +204,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">《JavaScript面向对象编程指南》阅读笔记</a>
         		</li>
       		
 		</ul>
@@ -309,7 +214,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/15/React进阶之路/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/18/《JavaScript面向对象编程指南》阅读笔记-七/">展开全文 >></a>
         </p>
       
 
@@ -339,78 +244,39 @@
 
 
   
-    <article id="post-使用ant-design-Pro开发项目的小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-《JavaScript面向对象编程指南》阅读笔记-六" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">使用ant design Pro开发项目的小结</a>
+      <a class="article-title" href="/2017/03/15/《JavaScript面向对象编程指南》阅读笔记-六/">《JavaScript面向对象编程指南》阅读笔记 六</a>
     </h1>
   
 
         
-        <a href="/2018/07/11/使用ant-design-Pro开发项目的小结/" class="archive-article-date">
-  	<time datetime="2018-07-11T14:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-11</time>
+        <a href="/2017/03/15/《JavaScript面向对象编程指南》阅读笔记-六/" class="archive-article-date">
+  	<time datetime="2017-03-15T01:45:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/ptCDi2wSCRmTt8JmZjcS4dcLslpSrG0Er3YejnV*Ixw!/b/dFMBAAAAAAAA&bo=oAU4BAAAAAARF7k!&rf=viewer_4&t=5" width="100%"></p>
-<h1 id="一、关于上手。"><a href="#一、关于上手。" class="headerlink" title="一、关于上手。"></a>一、关于上手。</h1><ol>
-<li><p>关于ant design Pro的介绍，自己看官网，大致上可以理解为ant design（组件库） + ant design Pro （完整的项目）+ dva（路由+数据流管理）的组合拳。总之这个Pro是一个已经帮你打通了从搭建到测试打包发布的一整套完整的项目，你只需要站在巨人的肩膀上开发就好了。</p>
-</li>
-<li><p>按照官网安装好项目之后，就能看到几个页面。进行开发之前，你需要一定的react语法、Js(ES6)、dva的基础。啥？全家桶都不会？没关系，写页面又不需要你精通全家桶，看完以下链接就开始写页面吧，遇到不会的再去查，这样学比较快。请按照以下顺序食用</p>
-</li>
-</ol>
-<ul>
-<li><a href="https://dvajs.com/knowledgemap/#javascript-%E8%AF%AD%E8%A8%80" target="_blank" rel="noopener">dva知识地图</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-javascript" target="_blank" rel="noopener">js快速预览</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-react" target="_blank" rel="noopener">react快速预览</a></li>
-<li><a href="http://huziketang.mangojuice.top/books/react/lesson9" target="_blank" rel="noopener">react小书</a></li>
-<li><a href="https://dvajs.com/guide/concepts.html" target="_blank" rel="noopener">dva文档</a></li>
-<li><a href="https://doc.react-china.org/docs/hello-world.html" target="_blank" rel="noopener">react中文文档</a></li>
-<li><a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">ES6</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect" target="_blank" rel="noopener">MDN ？？？ MDN有什么好看的？如果你js不太熟，MDN有很全的API可以查阅</a> </li>
-</ul>
-<h1 id="二、使用ant-design-Pro"><a href="#二、使用ant-design-Pro" class="headerlink" title="二、使用ant design Pro"></a>二、使用ant design Pro</h1><p>以一个ant design Table组件展示数据为例。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164898bf659b926d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>这样一个页面，可以看到：左边是导航栏menu组件，右边是主体BasicLayout组件。至于什么是layout，同样，在ant design Pro官网找得到。当你刚安装好antdp的时候已经有几个页面可以参考了。此处：在页面中，有几个按钮，按钮下方是ant design 的Table组件。</p>
-<h2 id="一、新建一个页面。"><a href="#一、新建一个页面。" class="headerlink" title="一、新建一个页面。"></a>一、新建一个页面。</h2><p>1.在路由中新建一条页面的配置。先不要管报错，因为路由对应的component和models你还没有，继续往下看。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648993196568bf6?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.新增一条之后，需要去对应的路径新建页面。一般都放在routes文件夹中</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899504863164d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>例如我新建了一个角色管理的页面，使用connect进行关联models。</p>
-<p>3.然后再去models文件夹中新建一个model层文件，注意namespace要对应connect的component</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648996437cdd086?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<h2 id="二、数据交互。"><a href="#二、数据交互。" class="headerlink" title="二、数据交互。"></a>二、数据交互。</h2><p>这个表格页面使用antd 的table 组件，自己去官网拷贝代码。这里不再赘述。主要提一下，数据是怎样交互的。</p>
-<p>Table组件里面的行数据就是是columns，它有自己的数据格式，你需要把数据格式转换成他规定的那种。在刚装好的项目中有表格的例子你可以参考一下，只不过案例是写死的静态数据。试试看：你把columns里面的数据删除掉，然后从外部获取到数据替换掉。</p>
-<p>1.使用生命周期函数componentDidMount在组件挂载时，去请求表格的数据。这里发起一个dispatch 触发action，type的值就是models层中的。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899dce523beae?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.在models中会使用antd封装好的方法去请求api.js中定义好的接口地址，然后等待返回就可以处理数据。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899eaeaf27d29?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>此处response拿到服务端返回的结果。你可以在此处对数据进行处理。比如后端返回的并非是你需要的数据格式，或者你可以进行更高层次的封装。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/16489a0f04e1bf8c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>3.再调用reducers中的save方法将数据存储。通过在UIcomponent中已经进行关联，此时this.props能够取到你传送过去的数据。然后放入Table组件即可。</p>
-<p>此处可能讲得不是很详细，比如上述代码各种方法是做什么用的，如果你有仔细看过文章开头列举的文档，尤其是dva文档，心中应该略知一二。此处只介绍了一个很粗略的开发流程，后续我会详细讲解。</p>
-<p>三、个人开发思想及心得<br>1.在使用这套框架开发几个页面之后会明显感觉到，框架有点像MVC分层，十分规范！</p>
-<p>M层models负责控制数据</p>
-<p>V层UIComponent ，and design以及为你准备了丰富的组件库。</p>
-<p>C层control，我个人理解为是api层的管理，将所有的需要请求后台数据的接口统一起来，很直观也方便调用和修改。</p>
-<p>2.ant design Pro几乎已经为你做好了一切，你只需要替换数据、接口，开箱即用。在你切完数个页面之后会发现一个问题：如何进行更高层次的封装呢？不能每次都要复制粘贴很多重复的组件代码呢？</p>
-<p>我个人是这样做的：比如说上面举例的表格页面。</p>
-<p>首先，我会封装一个函数，函数接收各种字段。比如后端返回一系列的input各种类型的字段给你，你在函数中对字段进行匹配，每个字段对应到ant design的组件，将数据与组件关联，然后return这个组件。最后将所有的组件push到一个数组中，然后放入render函数，即可渲染出整个页面。</p>
-<p>这个函数有点类似于React的HOC高阶组件（传组件和props进去，rerurn新的组件出来）概念，区别是我这里传入的是每个组件所需的数据而非组件，而return出的是一个组件。</p>
-<p>3.多利用无状态组件、函数组件。表格上最后一行，编辑/删除按钮。我是在models层进行处理的，因为columns（Table组件的数据对象）在UIcomponents层已经进行渲染了，个人认为UI组件应该尽量简化，它只负责渲染数据。我在models层中将columns中的数据进行遍历，在本地构建一个对象（编辑按钮组件、删除按钮组件）与服务端返回的对象进行合并。同时，两个按钮的组件应该本身具备自有的功能，比如在任何一个表格中调用该组件即可使用其功能。合并后将新的colums对象丢给表格组件，这样进行了一个小小的抽象。</p>
-<p>在表格上方的按钮，同样是通过函数来输出的按钮组件。按钮具有各自的属性、功能，通过入参来传递给函数，然后通过props设置给组件，来达到复用的目的。</p>
-<p>最后，页面上有哪些组件、哪些按钮该如何规定呢？你需要和后端协商好字段、属性，比如一个表单页面有很多种input类型，input会有type、rules（验证规则）….后端返回给你一段组件所需的属性之后，你根据这些数据即可渲染出整个页面的组件。</p>
-<p>以上是本人萌新使用ant design Pro的小小经验，可能创建页面的案例讲的不太清晰、抽象封装的思想不知道各位能否明白我所说的。</p>
-<p>希望各位大佬们多多指教。如何进行更高层次的封装呢？每个页面需要对应路由、models、api接口地址、能否再进行封装达到动态的目的呢？这样连修改接口的重复工作也省了。</p>
-<p>感谢阅读。</p>
-
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/eJ1BugQz26*Gk*ekGXg2tQG7ilVQj6fVaYa61ylYEhY!/b/dG0BAAAAAAAA&bo=1ASwBNQEsAQRNwA!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<h2 id="继承的多种方式"><a href="#继承的多种方式" class="headerlink" title="继承的多种方式"></a>继承的多种方式</h2><p>题外话：JavaScript没有类的概念，但可以用构造器函数来实现相同的功能。有封装吗？对象本身就包括数据及方法。有聚合吗？一个对象中可以包含其他对象，对象是靠函数来实现的，而函数本身也就是对象。</p>
+<h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p>每个函数都有一个prototype属性，该属性指向某一个对象。函数被new操作符调用时会创建并返回一个对象，并且该对象中会有一个指向其原型对象的<strong>proto</strong>，通过该链接可以在新建的对象中调用相关原型对象的属性和方法。</p>
+<p>例如对象A的属性中有一个<strong>proto</strong>隐藏属性，它指向了对象B，B的<strong>proto</strong>属性指向对象C，直到链条末端的Object对象。<br>这意义在于：如果某属性不在对象A中而在对象B中，依然可以来访问，这就是继承的作用，能够使每个对象都能访问其继承链上的任何一个属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//首先，新建三个构造函数</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Shape</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	  <span class="keyword">this</span>.name = <span class="string">"shape"</span>;</span><br><span class="line">	  <span class="keyword">this</span>.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	     <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">	  &#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">TwoDShape</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	   <span class="keyword">this</span>.name = <span class="string">"2D Shape"</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Triangle</span>(<span class="params">side,height</span>)</span>&#123;</span><br><span class="line">	   <span class="keyword">this</span>.name = <span class="string">"Triangle"</span>;</span><br><span class="line">	   <span class="keyword">this</span>.side = side;</span><br><span class="line">	   <span class="keyword">this</span>.height = height;</span><br><span class="line">	   <span class="keyword">this</span>.getArea = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	     <span class="keyword">return</span> <span class="keyword">this</span>.side * <span class="keyword">this</span>.height /<span class="number">2</span>;</span><br><span class="line">	   &#125;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//把TwoDShape的prototype属性指向Shape</span></span><br><span class="line">	TwoDShape.prototype = <span class="keyword">new</span> Shape();</span><br><span class="line">	<span class="comment">//TwoDShape拥有了Shape的name属性和toString方法</span></span><br><span class="line">	<span class="comment">//Shape &#123;name: "shape"&#125;</span></span><br><span class="line">		<span class="comment">//name: "shape"</span></span><br><span class="line">		<span class="comment">//toString: function()</span></span><br><span class="line">		<span class="comment">//__proto__: Object</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">//把Triangle的prototype属性指向TwoDShape</span></span><br><span class="line">	Triangle.prototype = <span class="keyword">new</span> TwoDShape()</span><br><span class="line">	<span class="comment">//Triangle拥有了TwoDShape对象从Shape对象继承而来的name属性、toString方法、</span></span><br><span class="line">	<span class="comment">//Shape &#123;name: "2D Shape"&#125;</span></span><br><span class="line">		<span class="comment">//name: "2D Shape"</span></span><br><span class="line">		<span class="comment">//__proto__: Shape</span></span><br><span class="line">		<span class="comment">//name: "shape"</span></span><br><span class="line">		<span class="comment">//toString: function()</span></span><br><span class="line">		<span class="comment">//__proto__: Object</span></span><br></pre></td></tr></table></figure>
+<p>在此，我们将对象直接创建在TwoDShape对象的prototype属性中，并没有拓展这些对象的原有原型。我们用构造器Shape()通过new操作符另新建了一个新对象，然后用它覆盖TwoDshape构造器的prototype属性。</p>
+<p><code>JavaScript没有类的概念，因此我们需要直接用new Shape()构造一个实体，然后才能通过该实体的属性完成继承，而不能直接继承Shape()构造器。</code></p>
+<p>这也确保了在继承实现后，我们对Shape()所进行的任何修改、重写甚至删除，都不会对TwoDShape()产生影响，<code>因为我们所继承的只是由该构造器所建的一个实体。</code></p>
+<p><code>注意：当我们对对象的prototype属性进行修改时，有可能会对对象constructor属性产生影响，所有，我们在完成继承关系设定后，要对这些对象的constructor属性进行重置</code></p>
+<pre><code>TwoDShape.prototype.constructor = TwoDShape;
+Triangle.prototype.constructor = Triangle;
+</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//创建一个Triangle对象，调用它的getArea方法</span></span><br><span class="line"><span class="keyword">var</span> my =<span class="keyword">new</span> Triangle(<span class="number">5</span>,<span class="number">10</span>);</span><br><span class="line"><span class="built_in">console</span>.log(my);</span><br><span class="line"><span class="comment">//Triangle &#123;name: "Triangle", side: 5, height: 10&#125;</span></span><br><span class="line">	<span class="comment">//getArea: function()</span></span><br><span class="line">	<span class="comment">//height: 10</span></span><br><span class="line">	<span class="comment">//name: "Triangle"</span></span><br><span class="line">	<span class="comment">//side: 5</span></span><br><span class="line">	<span class="comment">//__proto__: TwoDShape</span></span><br><span class="line">		<span class="comment">//constructor: function Triangle(side,height)</span></span><br><span class="line">		<span class="comment">//name: "2D Shape"</span></span><br><span class="line">		<span class="comment">//__proto__: Shape</span></span><br><span class="line">		<span class="comment">//constructor: function TwoDShape()</span></span><br><span class="line">		<span class="comment">//name: "shape"</span></span><br><span class="line">		<span class="comment">//toString: function()</span></span><br><span class="line">		<span class="comment">//__proto__: Object</span></span><br><span class="line"></span><br><span class="line">my.getArea()</span><br><span class="line"><span class="comment">//25</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//尽管Triangle对象没有toString方法，但是它继承了TwoDShape()所继承的Shape()，试着调用一下。</span></span><br><span class="line">my.toString();</span><br><span class="line"><span class="comment">//"Triangle"</span></span><br><span class="line"><span class="comment">//分析：在调用my.toString()时发生了什么：</span></span><br><span class="line"><span class="comment">//首先它会遍历my对象中的所有属性，但没有toString方法，接着再去看my.__proto__所指向的对象，该对象是在继承关系构建过程中由new TwoDShape()所创建的实体。</span></span><br><span class="line"><span class="built_in">console</span>.log(my.__proto__)</span><br><span class="line"><span class="comment">//TwoDShape &#123;name: "2D Shape"&#125;</span></span><br><span class="line"><span class="comment">//constructor: function Triangle(side,height)</span></span><br><span class="line"><span class="comment">//name: "2D Shape"</span></span><br><span class="line"><span class="comment">//__proto__: Shape	</span></span><br><span class="line">	<span class="comment">//constructor: function TwoDShape()</span></span><br><span class="line">	<span class="comment">//name: "shape"</span></span><br><span class="line">	<span class="comment">//toString: function()</span></span><br><span class="line">	<span class="comment">//__proto__: Object</span></span><br><span class="line"><span class="comment">//显然，在TwoDShape实体中也没有找到toString方法，然后它会继续检查该实体的__proto__属性。这时候，该__proto__属性所指向的实体是由new Shape()所创建的。</span></span><br><span class="line"><span class="built_in">console</span>.log(my.__proto__.__proto__)</span><br><span class="line"><span class="comment">//Shape &#123;name: "shape"&#125;</span></span><br><span class="line"><span class="comment">//constructor: function TwoDShape()</span></span><br><span class="line">   <span class="comment">//name: "shape"</span></span><br><span class="line"><span class="comment">//toString: function()</span></span><br><span class="line"><span class="comment">//__proto__: Object</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//此时，在new Shape()所创建的实体中找到了toString()方法，最后该方法就会在my对象中被调用，并且其this指向my</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果我们向my对象询问：“您的构造器函数是哪一个？”，它能够给出正确答案，因为我们在构建继承关系时已经对相关的constructor属性进行了重置。</span></span><br><span class="line">my.constructor</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Triangle</span>(<span class="params">side,height</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.name = <span class="string">"Triangle"</span>;</span><br><span class="line">   <span class="keyword">this</span>.side = side;</span><br><span class="line">   <span class="keyword">this</span>.height = height;</span><br><span class="line">   <span class="keyword">this</span>.getArea = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.side * <span class="keyword">this</span>.height /<span class="number">2</span>;</span><br><span class="line">   &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//通过instanceof操作符可以验证my对象是上述三个构造器函数的实例</span></span><br><span class="line"><span class="comment">//instanceof操作符用来检测一个对象是否是由某指定的构造器函数创建的</span></span><br><span class="line">my <span class="keyword">instanceof</span> Triangle</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line">my <span class="keyword">instanceof</span> TwoDShape</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line">my <span class="keyword">instanceof</span> Shape</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用isPrototypeOf()方法检测当前对象是否是另一个对象的原型。</span></span><br><span class="line">Triangle.prototype.isPrototypeOf(my)</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line">TwoDShape.prototype.isPrototypeOf(my)</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line">Shape.prototype.isPrototypeOf(my)</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
 
       
@@ -423,7 +289,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">《JavaScript面向对象编程指南》</a>
         		</li>
       		
 		</ul>
@@ -433,7 +299,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/15/《JavaScript面向对象编程指南》阅读笔记-六/">展开全文 >></a>
         </p>
       
 
@@ -463,29 +329,139 @@
 
 
   
-    <article id="post-《你不知道的JavaScript-下卷》阅读笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-《JavaScript面向对象编程指南》阅读笔记-五" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/">《你不知道的JavaScript-下卷》阅读笔记</a>
+      <a class="article-title" href="/2017/03/09/《JavaScript面向对象编程指南》阅读笔记-五/">《JavaScript面向对象编程指南》阅读笔记 五</a>
     </h1>
   
 
         
-        <a href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/" class="archive-article-date">
-  	<time datetime="2018-05-20T08:18:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
+        <a href="/2017/03/09/《JavaScript面向对象编程指南》阅读笔记-五/" class="archive-article-date">
+  	<time datetime="2017-03-09T05:15:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/COkv.nP.LHbZizbCvAUIjEbrIlFOQ8cUk1hDpfxv*Aw!/b/dDABAAAAAAAA&bo=VQhABsAP0AsRKRE!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/SQCDRtNdihzgM7*1Y8zU6*m*2olypy5ZtRFeARtOjg4!/b/dGsBAAAAAAAA&bo=3wOAArAEBwMBKOE!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
 <p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h2 id="隐式转换-见中卷第一部分第四章"><a href="#隐式转换-见中卷第一部分第四章" class="headerlink" title="隐式转换 见中卷第一部分第四章"></a>隐式转换 见中卷第一部分第四章</h2><h2 id="作用域-见上卷第一部分前三章"><a href="#作用域-见上卷第一部分前三章" class="headerlink" title="作用域  见上卷第一部分前三章"></a>作用域  见上卷第一部分前三章</h2><h3 id="值与类型"><a href="#值与类型" class="headerlink" title="值与类型"></a>值与类型</h3><p>Js的值有类型，但变量无类型，变量只是值的容器。</p>
+<h2 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h2><h3 id="原型属性"><a href="#原型属性" class="headerlink" title="原型属性"></a>原型属性</h3><p>在JavaScript中，函数本身也是一个包含了属性和方法的对象。（如length和constructor属性，call()和apply()方法），接下来介绍函数对象的另一个属性—prototype</p>
+<p>简单地定义一个函数foo()</p>
+<pre><code>function foo(a,b){
+   return a * b;
+}
+
+foo.length
+//2
+
+foo.constructor
+//Function() { [native code] }
+</code></pre><p>在函数定义时被创建的属性中就包括prototype属性，它的初始化值是一个“空”对象</p>
+<pre><code>foo.prototype
+//Object {}
+
+typeof foo.prototype
+//&quot;object&quot;
+</code></pre><p>还可以自己添加prototype属性</p>
+<pre><code>foo.prototype = {};
+</code></pre><p>并且还可以赋予这个空对象一些属性和方法，并且不会对foo函数本身造成影响，因为只有foo()作为构造器使用时，这些属性才会起作用。</p>
+<h4 id="利用原型添加属性和方法"><a href="#利用原型添加属性和方法" class="headerlink" title="利用原型添加属性和方法"></a>利用原型添加属性和方法</h4><p>定义构造器函数，(如这种方法:)</p>
+<pre><code>var sum = new Function(&apos;a&apos;,&apos;b&apos;,&apos;return a + b;&apos;);
+sum(1,2);
+//3
+</code></pre><p>并用它来新建（构造）函数，这种做法的意图是通过new操作符来调用函数,以达到访问对象this值得目的，然后通过this就可以访问构造器所返回的对象了。这样就有了一种赋予新建对象一定功能（即为其添加属性和方法）的方法。</p>
+<p>新建一个构造器函数Gadget()</p>
+<pre><code>function Gadget(name ,color){
+     this.name = name;
+     this.color = color;
+     this.whatAreYou = function(){
+         return &quot;I am a &quot; + this.color + &quot; &quot; + this.name; 
+     }
+}
+</code></pre><p>添加属性和方法还有一种方法，即通过构造器函数的prototype属性来增加该构造器所能提供的功能。</p>
+<pre><code>Gadget.prototype.price = 100;
+
+Gadget.prototype.rating = 3;
+
+Gadget.prototype.getInfo = function(){
+     return &quot;Rating&quot; + this.rating + &quot;, price:&quot; + this.price;
+};
+</code></pre><p>如果不想将它它们<code>逐一添加</code>到原型对象上，可以另外定义一个新对象，然后将其覆盖到之前的原型上：</p>
+<pre><code>Gadget.prototype = {
+    price :100,
+    rating : .....
+}
+</code></pre><h4 id="使用原型的属性和方法"><a href="#使用原型的属性和方法" class="headerlink" title="使用原型的属性和方法"></a>使用原型的属性和方法</h4><p>在向prototype属性中添加完所有属性和方法后，就可直接用该构造器来新建对象了。例如，用构造器Gadget()新建了一个newtoy对象，就可以访问之前定义的那些属性和方法。</p>
+<pre><code>var newtoy = new Gadget(&quot;webcam&quot;,&quot;balck&quot;);
+newtoy.name
+//&quot;webcam&quot;
+newtoy.color
+//&quot;balck&quot;
+newtoy.whatAreYou()
+//&quot;I am a balck webcam&quot;
+newtoy.price
+//100
+newtoy.rating
+//3
+newtoy.getInfo()
+//&quot;Rating3, price:100&quot;
+</code></pre><p>注意：几乎所有对象都是通过传引用的方式来传递，因此由同一个构造器创建的所有对象的prototype属性也都会同时改变。</p>
+<h4 id="自身属性和原型属性"><a href="#自身属性和原型属性" class="headerlink" title="自身属性和原型属性"></a>自身属性和原型属性</h4><pre><code>var newtoy = new Gadget(&quot;webcam&quot;,&quot;balck&quot;);
+</code></pre><p>当我们访问newtoy的某个属性如newtoy.name时，JavaScript引擎会遍历该对象的所有属性，并找出name属性。如果找到了就会立即返回其值。</p>
+<pre><code>newtoy.name  //&quot;webcam&quot;
+</code></pre><p>如果我们访问rating属性会怎么样呢？JavaScript引擎依然会查询newtoy对象的所有属性，但这一次找不到了，脚本引擎接下来就去查询用于创建当前对象的构造器函数的原型（等价于我们直接访问newtoy.constructor.prototype）如果在原型中找到了该属性，就立即使用该属性。</p>
+<pre><code>newtoy.rating;
+//3
+newtoy.constructor === Gadget
+//true
+newtoy.constructor.prototype.rating;
+//3
+</code></pre><p>回顾：每个对象都有一个构造器constructor，而原型prototype本身也是一个对象，这意味着原型prototype它必然也有一个构造器，而这个构造器又会有自己的原型，于是这种结构可能会一直持续下去，并最终取决于原型链的长度，但其最后一环肯定是Object内建对象。</p>
+<p>如果试着调用newtoy.toString()，由于newtoy对象及其原型都没有toString()方法，最后只有调用Object对象的toString()方法</p>
+<pre><code>newtoy.toString()
+//&quot;[object Object]&quot;
+</code></pre><h4 id="通过自身属性重写原型属性"><a href="#通过自身属性重写原型属性" class="headerlink" title="通过自身属性重写原型属性"></a>通过自身属性重写原型属性</h4><p>我们知道一个对象自身属性中没有找到指定的属性，就会用原型链中查找到的相关属性。但是，如果遇上对象的自身属性与原型属性同名该怎么办呢？答案是对象自身属性优先级高于原型属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Gadget</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line">Gadget.prototype.name = <span class="string">"jack"</span></span><br><span class="line"><span class="comment">//新建一个对象并访问其属性</span></span><br><span class="line"><span class="keyword">var</span> toy = <span class="keyword">new</span> Gadget(<span class="string">"camera"</span>);</span><br><span class="line"><span class="comment">//看，自身的属性优先于原型的属性</span></span><br><span class="line">toy.name</span><br><span class="line"><span class="comment">//"camera"</span></span><br><span class="line"><span class="comment">//调用hasOwnProperty()方法判断一个属性是自身属性还是原型属性</span></span><br><span class="line">toy.hasOwnProperty(<span class="string">"name"</span>);</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line"><span class="comment">//删除自身的属性</span></span><br><span class="line"><span class="keyword">delete</span> toy.name</span><br><span class="line"><span class="comment">//看，那么属性变成原型的了</span></span><br><span class="line">toy.name</span><br><span class="line"><span class="comment">//"jack"</span></span><br><span class="line">toy.hasOwnProperty(<span class="string">"name"</span>)</span><br><span class="line"><span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<p>如何判断一个对象的某个原型属性到底是原型链中哪个原型的属性呢？使用hasOwnProperty()，例如我们想知道toString属性来自哪</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">toy.toString()</span><br><span class="line"><span class="comment">//"[object Object]"</span></span><br><span class="line">toy.hasOwnProperty(<span class="string">"toString"</span>)</span><br><span class="line"><span class="comment">//false</span></span><br><span class="line">toy.constructor.hasOwnProperty(<span class="string">"toString"</span>)</span><br><span class="line"><span class="comment">//false</span></span><br><span class="line">toy.constructor.prototype.hasOwnProperty(<span class="string">"toString"</span>)</span><br><span class="line"><span class="comment">//false</span></span><br><span class="line"><span class="built_in">Object</span>.hasOwnProperty(<span class="string">"toString"</span>)</span><br><span class="line"><span class="comment">//false</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.hasOwnProperty(<span class="string">"toString"</span>)</span><br><span class="line"><span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<h4 id="枚举属性"><a href="#枚举属性" class="headerlink" title="枚举属性"></a>枚举属性</h4><p>如果想获得某个对象所有属性的列表，可以使用for-in循环。</p>
+<p>for循环更适合数组而for-in更适合对象</p>
+<p>构造一个URL字符串为例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> params =&#123;</span><br><span class="line">   productid : <span class="number">666</span>,</span><br><span class="line">   section : <span class="string">"products"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> url = <span class="string">"http://example.org/page.php?"</span> , </span><br><span class="line">    i ,</span><br><span class="line">    query =[];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(i <span class="keyword">in</span> params)&#123;</span><br><span class="line">  query.push(i + <span class="string">"="</span> + params[i]);</span><br><span class="line">&#125;</span><br><span class="line">url += query.join(<span class="string">"&amp;"</span>);</span><br><span class="line"><span class="comment">//"http://example.org/page.php?productid=666&amp;section=products"</span></span><br></pre></td></tr></table></figure>
+<h3 id="isPrototypeOf-方法"><a href="#isPrototypeOf-方法" class="headerlink" title="isPrototypeOf()方法"></a>isPrototypeOf()方法</h3><p>新建一个简单的对象monkey：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> monkey =&#123;</span><br><span class="line">	hair: <span class="literal">true</span>,</span><br><span class="line">	feeds: <span class="string">"bananas"</span>,</span><br><span class="line">	breathes: <span class="string">"air"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新建一个Human构造器函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Human</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Human.prototype =monkey</span><br></pre></td></tr></table></figure>
+<p>新建一个叫Tim的Human对象，并提问monkey是Tim的原型吗？ture</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Tim = <span class="keyword">new</span> Human(<span class="string">"Tim"</span>);</span><br><span class="line">monkey.isPrototypeOf(Tim)</span><br><span class="line"><span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p><code>ES5的object.getPrototypeOf()方法</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.getPrototypeOf(tim).feeds</span><br><span class="line"><span class="comment">//"bananas"</span></span><br><span class="line"><span class="built_in">Object</span>.getPrototypeOf(tim) === monkey</span><br><span class="line"><span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<div><h3><strong>proto</strong>  指向prototype属性，可以用它访问相关原型对象的属性: “xxx.<strong>proto</strong>.原型的属性”</h3></div>
+
+<p>改写一个用monkey对象做原型的Human()对象构造器</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> monkey =&#123;</span><br><span class="line">    hair: <span class="literal">true</span>,</span><br><span class="line">    feeds: <span class="string">"bananas"</span>,</span><br><span class="line">    breathes: <span class="string">"air"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Human</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">Human.prototype = monkey;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> developer = <span class="keyword">new</span> Human()</span><br><span class="line">developer.feeds = <span class="string">"pizza"</span>;</span><br><span class="line">developer.hack = <span class="string">"JavaScript"</span></span><br><span class="line"></span><br><span class="line">developer.hack</span><br><span class="line"><span class="comment">//"JavaScript"</span></span><br><span class="line">developer.feeds</span><br><span class="line"><span class="comment">//"pizza"</span></span><br></pre></td></tr></table></figure>
+<p>developer中没有breath属性，就得去原型中找，就好像其中有一个神秘的链接或大门通向了相关的原型对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">developer.breathes</span><br><span class="line"><span class="comment">//"air"</span></span><br><span class="line">developer.__proto__ === monkey</span><br><span class="line"><span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>在javascript中，对象中存在一个指向相关原型的链接，这个链接叫做<strong>proto</strong>属性,proto这个词前后有两条下划线。<code>注意：此属性在IE中不存在</code></p>
+<p>注意：<strong>proto与prototype并不是等价的。</strong>proto实际上是某个实例对象的属性，而prototype是构造器函数的属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> developer.__proto__</span><br><span class="line"><span class="comment">//"object"</span></span><br><span class="line"><span class="keyword">typeof</span> developer.prototype</span><br><span class="line"><span class="comment">//"undefined"</span></span><br><span class="line"><span class="keyword">typeof</span> developer.constructor.prototype</span><br><span class="line"><span class="comment">//"object"</span></span><br></pre></td></tr></table></figure>
+<h3 id="扩展内建对象"><a href="#扩展内建对象" class="headerlink" title="扩展内建对象"></a>扩展内建对象</h3><p>在JavaScript中，内建对象的构造器函数（例如Array、String、Object、Function）都是通过其原型来进行扩展。这意味着我们可以做一些事情，例如只要往数组原型中添加新的方法，就可以使其在所有的数组可用。</p>
+<p>查询数组中是否存在某个特定的值。实现一个inArray()方法  （ES5中有indexOf()方法）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">Array</span>.prototype.inArray = <span class="function"><span class="keyword">function</span>(<span class="params">needle</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span> , len = <span class="keyword">this</span>.length; i &lt; len; i++)&#123;</span><br><span class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>[i] === needle)&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> colors = [<span class="string">"red"</span>,<span class="string">"blue"</span>,<span class="string">"green"</span>,<span class="string">"yellow"</span>];</span><br><span class="line">colors.inArray(<span class="string">"red"</span>)</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line">colors.inArray(<span class="string">"black"</span>)</span><br><span class="line"><span class="comment">//false</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>给String对象添加一个reverse()方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String.prototype.reverse = function()&#123;</span><br><span class="line">  return Array.prototype.reverse.apply(this.split(&quot;&quot;)).join(&quot;&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码实际上先用split()将目标字符串转换成数组，然后调用该数组的reverse()方法产生一个反向数组，然后通过join()方法将结果转换成字符串。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;ABCDEFG&quot;.reverse()</span><br><span class="line">//&quot;GFEDCBA&quot;</span><br></pre></td></tr></table></figure></p>
+<p>这种基于相关内建原型来增加自定义方法这种技术，最常用且最能被接受的例子，是实现让老式浏览器支持新功能。例如让旧版IE支持ES5中的方法。通常把这类扩展叫做shims或polyfills</p>
+<p>另外，当你用自定义方法扩展原型时，首先应该<code>检查该方法是否已经存在，避免方法覆盖。</code></p>
+<p>例子:为String对象添加trim()方法，该方法是ES5标准的一部分，但其在老式浏览器中并没有支持:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">String</span>.prototype.trim !== <span class="string">"function"</span>)&#123;</span><br><span class="line">    <span class="built_in">String</span>.prototype.trim = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/^\s+|\s+&amp;/g</span>, <span class="string">""</span> );</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="string">"hello     "</span>.trim()</span><br><span class="line"><span class="comment">//"hello"</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="原型陷阱"><a href="#原型陷阱" class="headerlink" title="原型陷阱"></a>原型陷阱</h3><p>例子：新建一个构造器函数，并用它创建两个对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dog</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.tail = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//先创建对象，再给Dog原型添加属性，观察：属性在被添加之前、已存在的对象也可以随时访问后添加的新属性。</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Dog()</span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> Dog()</span><br><span class="line"></span><br><span class="line">Dog.prototype.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  		<span class="keyword">return</span> <span class="string">"Woof!"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//成功调用创建对象后才添加的原型的新属性</span></span><br><span class="line">a.say()</span><br><span class="line"><span class="comment">//"Woof!"</span></span><br><span class="line">b.say()</span><br><span class="line"><span class="comment">//"Woof!"	</span></span><br><span class="line">检查下a、b的对象构造器函数</span><br><span class="line">a.constructor === Dog</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line"><span class="comment">//注意！用一个新对象覆盖掉原有的原型对象：</span></span><br><span class="line">Dog.prototype =&#123;</span><br><span class="line">   paws : <span class="number">4</span>,</span><br><span class="line">   hair : <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line">此时，a、b的构造器函数还是Dog</span><br><span class="line">a.constructor === Dog</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line"><span class="comment">//但是用不了新原型的属性，因为__proto__属性还和原有的原型对象保持联系</span></span><br><span class="line">a.say()</span><br><span class="line">   <span class="comment">//"Woof!"	</span></span><br><span class="line"><span class="keyword">typeof</span> a.paws</span><br><span class="line"><span class="comment">//"undefined"</span></span><br><span class="line"><span class="keyword">typeof</span> a.__proto__.say</span><br><span class="line"><span class="comment">//"function"</span></span><br><span class="line"><span class="keyword">typeof</span> a.__proto__.paws</span><br><span class="line"><span class="comment">//"undefined"</span></span><br><span class="line"><span class="comment">//新建一个新对象</span></span><br><span class="line"><span class="keyword">var</span> c = <span class="keyword">new</span> Dog()</span><br><span class="line"><span class="comment">//c可以调用新原型的属性</span></span><br><span class="line">c.paws</span><br><span class="line"><span class="comment">//4</span></span><br><span class="line"><span class="comment">//c不能调用原有的原型的属性，__proto__属性指向了新的prototype对象</span></span><br><span class="line"><span class="keyword">typeof</span> c.__proto__.say</span><br><span class="line"><span class="comment">//"undefined"</span></span><br><span class="line"><span class="keyword">typeof</span> c.__proto__.paws</span><br><span class="line"><span class="comment">//"number"</span></span><br><span class="line"><span class="comment">//c的构造器函数本该是dog，但是却指向了Object</span></span><br><span class="line">c.constructor</span><br><span class="line"><span class="comment">//Object() &#123; [native code] &#125;</span></span><br><span class="line"><span class="comment">//`我们可以重新设置constructor属性来解决这些异常`</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
 
@@ -499,7 +475,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">《你不知道的JavaScript》</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">《JavaScript面向对象编程指南》</a>
         		</li>
       		
 		</ul>
@@ -509,7 +485,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/09/《JavaScript面向对象编程指南》阅读笔记-五/">展开全文 >></a>
         </p>
       
 
@@ -541,7 +517,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/11/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/13/">Next &raquo;</a>
     </nav>
   
 

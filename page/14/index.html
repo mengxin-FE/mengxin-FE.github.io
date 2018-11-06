@@ -11,7 +11,7 @@
   <meta name="description" content="这是萌新的博客,请多指教呢">
 <meta property="og:type" content="website">
 <meta property="og:title" content="我的地盘听我的">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:url" content="http://yoursite.com/page/14/index.html">
 <meta property="og:site_name" content="我的地盘听我的">
 <meta property="og:description" content="这是萌新的博客,请多指教呢">
 <meta property="og:locale" content="zh-Hans">
@@ -141,148 +141,380 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-React进阶之路" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-《JavaScript面向对象编程指南》阅读笔记-二" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/15/React进阶之路/">《React进阶之路》阅读笔记</a>
+      <a class="article-title" href="/2017/02/18/《JavaScript面向对象编程指南》阅读笔记-二/">《JavaScript面向对象编程指南》阅读笔记-二</a>
     </h1>
   
 
         
-        <a href="/2018/07/15/React进阶之路/" class="archive-article-date">
-  	<time datetime="2018-07-15T12:29:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-15</time>
+        <a href="/2017/02/18/《JavaScript面向对象编程指南》阅读笔记-二/" class="archive-article-date">
+  	<time datetime="2017-02-18T11:47:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/AvskgQFU55RO5jNMCxwaT5hQzOf6PIga9eq3iMTwPac!/b/dEYBAAAAAAAA&bo=OQxABuodTA8RWak!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+        <p><img src="http://a2.qpic.cn/psb?/V10qN6b63c9MK4/Guh7q37W1B8jvkNIAw12upUHC4DYebyBhQCK0VGaR1s!/b/dAoAAAAAAAAA&bo=VQOAAkAGsAQFAAU!&rf=viewer_4&t=5" width="100%" height="100%" alt="图片名称" align="center"></p>
 <p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h1 id="React基础"><a href="#React基础" class="headerlink" title="React基础"></a>React基础</h1><h2 id="props和state"><a href="#props和state" class="headerlink" title="props和state"></a>props和state</h2><p>props是组件对外的接口，组件通过props接收外部传入的数据；<br><br>state是组件内部对内接口，组件内部状态的变化通过state来反应。<br><br>props是只读的，不能在组件内修改props；<br><br>state是可变的，组件的变化通过修改state来实现。</p>
-<p>在开发React应用时，要思考哪些组件应该设计成有状态组件，哪些组件应该设计成无状态组件。应该尽可能使用无状态组件，无状态组件不用关心状态的变化，只聚焦UI展示，所以更容易复用。</p>
-<p>通过定义少数的有状态组件管理整个应用的状态变化，并且将状态通过props传递给其余无状态组件，由无状态组件完成页面大部分UI渲染。</p>
-<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><p>只有类组件才具有生命周期方法，函数组件没有生命周期方法。</p>
+<h2 id="基本数据类型、数组、循环及条件表达式"><a href="#基本数据类型、数组、循环及条件表达式" class="headerlink" title="基本数据类型、数组、循环及条件表达式"></a>基本数据类型、数组、循环及条件表达式</h2><h4 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h4><ul>
+<li>Number 数字</li>
+<li>Boolean 布尔值 包括turn和false</li>
+<li>String 字符串</li>
+<li>Null 只包含一个值null，null通常是指没有值或空值，不代表任何东西。null与underfined最大的区别在于:被赋为null的变量通常是被认为已经定义了的。</li>
+<li>Underfined 当访问不存在的变量时会返回这个值，此外，已声明却未赋值的变量也会如此。</li>
+</ul>
+<h4 id="查看类型操作符-typeof"><a href="#查看类型操作符-typeof" class="headerlink" title="查看类型操作符 typeof"></a>查看类型操作符 typeof</h4><p>typeof可以查看变量或值的类型，该操作符会返回代表数据类型的字符串，结果有：number、boolean、string、undefined、object、function</p>
+<pre><code>var n =1;
+typeof n;
+//&quot;number&quot;
+</code></pre><h3 id="Infinity"><a href="#Infinity" class="headerlink" title="Infinity"></a>Infinity</h3><p>在javascript中这是一个特殊值，代表超出javascript处理范围的数值。它仍是一个数字。</p>
+<pre><code>typeof Infinity;
+//&quot;number&quot;
+</code></pre><p>任何数除以0也等于Infinity</p>
+<pre><code>var a = 6 / 0;
+a;
+//Infinity
+
+Infinity -  Infinity
+//NaN
+</code></pre><p>Infinity与其他操作数执行算术运算的结果都是Infinity</p>
+<pre><code>Infinity - 20;
+//Infinity
+</code></pre><h3 id="NaN-仍是数字类型"><a href="#NaN-仍是数字类型" class="headerlink" title="NaN 仍是数字类型"></a>NaN 仍是数字类型</h3><pre><code>typeof NaN
+//&quot;number&quot;
+</code></pre><p>在算术运算中使用不恰当的操作数导致运算失败，就会返回NaN</p>
+<pre><code>var a = 10 * f;
+a
+//NaN
+</code></pre><h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>一对双引号或单引号之间的任何值都会视为字符串</p>
+<pre><code>var s = &quot;1&quot;;
+typeof s;
+//&quot;string&quot;
+</code></pre><p>字符串+拼接</p>
+<pre><code>var s1 =&quot;web&quot;;
+var s2 =&quot;site&quot;;
+var s3= s1+s2;
+s3;
+//website
+typeof s3
+//&quot;string&quot;
+</code></pre><h5 id="将一个数字字符串用于算术运算中，该字符串会在运算中被当做数字类型"><a href="#将一个数字字符串用于算术运算中，该字符串会在运算中被当做数字类型" class="headerlink" title="将一个数字字符串用于算术运算中，该字符串会在运算中被当做数字类型"></a>将一个数字字符串用于算术运算中，该字符串会在运算中被当做数字类型</h5><pre><code>var s = &quot;1&quot;;
+var s = 3 * s;
+s
+//3
+typeof s;
+//&quot;number&quot;
+
+var a = &quot;1&quot;;
+a++;
+a
+//2
+typeof a
+//&quot;number&quot;
+</code></pre><h5 id="数字字符串转换为数字的偷懒办法，将它乘以1。（最好的办法是调用parseInt-函数）"><a href="#数字字符串转换为数字的偷懒办法，将它乘以1。（最好的办法是调用parseInt-函数）" class="headerlink" title="数字字符串转换为数字的偷懒办法，将它乘以1。（最好的办法是调用parseInt()函数）"></a>数字字符串转换为数字的偷懒办法，将它乘以1。（最好的办法是调用parseInt()函数）</h5><pre><code>var s =&quot;100&quot;;
+typeof s;
+//&quot;string&quot;
+s = s * 1;
+//100
+typeof s;
+//&quot;number&quot;
+</code></pre><p>转换失败，会得到NaN。上述提过，运算失败会返回Nan</p>
+<pre><code>var moive = &quot;101 delmatians&quot;;
+move * 1;
+NaN
+</code></pre><h5 id="其他类型转换为字符串的偷懒办法，与空字符串相加"><a href="#其他类型转换为字符串的偷懒办法，与空字符串相加" class="headerlink" title="其他类型转换为字符串的偷懒办法，与空字符串相加"></a>其他类型转换为字符串的偷懒办法，与空字符串相加</h5><pre><code>var n =1;
+typeof n;
+//&quot;number&quot;
+n = n + &quot;&quot;;
+//&quot;1&quot;
+typeof n
+//&quot;string&quot;
+</code></pre><h3 id="布尔值-ture和false"><a href="#布尔值-ture和false" class="headerlink" title="布尔值 ture和false"></a>布尔值 ture和false</h3><p>三种逻辑运算符，都属于布尔运算。  &amp;&amp; || ！</p>
+<p>理解各种类型的值转换为相应布尔值的规则非常重要。除了下面特定的值（将转换为false）,其他的大部分值在转换为布尔值时都为ture</p>
 <ul>
-<li>挂载阶段：组件被创建，执行初始化，并被挂载到DOM中，完成组建的第一次渲染。</li>
-<li>更新阶段：组件被挂载到DOM后，组件的props或state可以引起组件更新。</li>
-<li>卸载阶段：组件从DOM中被卸载的过程</li>
+<li>空字符串””</li>
+<li>null</li>
+<li>underfined</li>
+<li>数字0</li>
+<li>数字NaN</li>
+<li>布尔值false</li>
 </ul>
-<h3 id="挂载阶段"><a href="#挂载阶段" class="headerlink" title="挂载阶段"></a>挂载阶段</h3><ol>
-<li>constructor：ES6构造方法，组件被创建时，首先调用此方法。该方法接收props参数，是从父组件中传入的属性对象。在这个方法中调用super(props)才能保证props被传入组件中。此方法通常用于初始化组件的state以及绑定事件。</li>
-<li>componentWillMount</li>
-<li>render：返回一个React元素而非组件的实际渲染工作，render是一个纯函数，不可在里面调用this.setState</li>
-<li>componentDidMount：组件被挂载到DOM后调用，通常用于向服务器请求数据。</li>
-</ol>
-<h3 id="更新阶段"><a href="#更新阶段" class="headerlink" title="更新阶段"></a>更新阶段</h3><ol>
-<li>componentWillReceiveProps：在props引起组件更新过程中调用。state引起更新不会触发该方法。</li>
-<li>shouldComponentUpdate：决定组件是否继续执行更新过程。</li>
-<li>componentWillUpadte：在组件render调用前执行</li>
-<li>componentDidUpdate：组件更新后被调用</li>
-</ol>
-<h3 id="卸载阶段"><a href="#卸载阶段" class="headerlink" title="卸载阶段"></a>卸载阶段</h3><ol>
-<li>componentWillUnmount：组件被卸载前调用</li>
-</ol>
-<h1 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h1><p>如果一个表单元素的值是由React来管理，它就是一个受控组件。非受控制组件指表单元素的状态依然由表单元素自己管理，而不是交给React组件管理，使用非受控组件使用属性ref来获取元素的值。<br><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"text"</span> ref=&#123; (input) =&gt; <span class="keyword">this</span>.input = input &#125; /&gt;</span><br></pre></td></tr></table></figure></p>
-<h1 id="高阶组件"><a href="#高阶组件" class="headerlink" title="高阶组件"></a>高阶组件</h1><p>HOC接收React组件作为参数，并且返回一个新的React组件。本质是一个函数，并不是组件。本质是装饰者设计模式。</p>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
-<li>操作props：在被包装组件接收props前，高阶组件可以先拦截到props，对props操作后再传递给被包装组件。</li>
-<li>通过ref访问组件实例</li>
-<li>组件状态提升</li>
-<li>用其他元素包装组件</li>
-</ul>
-<p>高阶组件的实现方式：由高阶组件处理通用逻辑，然后将相关属性传递给被包装组件，这种实现方式为属性代理。还可以通过继承方式实现高阶组件：通过继承被包装组件实现逻辑的复用。继承方式实现的高阶组件常用于渲染劫持。例如当用户处于登录状态时，允许组件渲染， 否则渲染一个空组件。</p>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
-<li>为了区分高阶组件，应该把被包装组件的名称也包到高阶组件的名称中，如withPersistentData</li>
-<li>不要在组件的render方法中使用高阶组件，尽量不要在组件的其他生命周期方法中使用高阶组件。因为调用高阶组件每次返回一个新组件，于是每次render前一次高阶组件创建的组件都会被卸载，然后重新挂载本次创建的新组件，影响效率。</li>
-<li>如果需要使用被包装组件的静态方法，需要手动复制这些静态方法，因为高阶组件返回的新组件不包含被包装组件的静态方法。</li>
-</ol>
-<h1 id="React-Router"><a href="#React-Router" class="headerlink" title="React Router"></a>React Router</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-router-dom</span><br></pre></td></tr></table></figure>
-<p>React Router v4 每遵循React中一切皆组件的思想，每一个Route（路由）都是一个普通的React组件</p>
-<p>React Router 通过Router和Route两个组件完成路由功能。<br><br>一个应用只需要一个Router实例，所有的路由配置组件Route都定义为Router的子组件。</p>
-<h3 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h3><p>Route是React Router中用于配置路由信息的组件，每当有一个组件需要根据URL决定是否渲染时，需要创建一个Route</p>
+<p>这6个值有时称为falsy值，而其他值称为truthy值（包括字符串”0”，”false”）</p>
+<pre><code>ture &amp;&amp; ture &amp;&amp; false &amp;&amp; false;
+//false
+
+false || ture || false;
+//ture
+
+false &amp;&amp; false || ture &amp;&amp; ture;
+//ture
+</code></pre><p>逻辑运算，！的优先级最高，其次是&amp;&amp;，最后是||</p>
+<pre><code>flase &amp;&amp; false || ture &amp;&amp; ture;
+//ture
+
+与下面等效:
+(false &amp;&amp; false) || (ture &amp;&amp; ture);
+</code></pre><h5 id="惰性求值-在一个连续的逻辑操作中，操作结果在最后一个操作完成之前就已经明确了的话，那么该操往往就不必再继续执行了"><a href="#惰性求值-在一个连续的逻辑操作中，操作结果在最后一个操作完成之前就已经明确了的话，那么该操往往就不必再继续执行了" class="headerlink" title="惰性求值 在一个连续的逻辑操作中，操作结果在最后一个操作完成之前就已经明确了的话，那么该操往往就不必再继续执行了"></a>惰性求值 在一个连续的逻辑操作中，操作结果在最后一个操作完成之前就已经明确了的话，那么该操往往就不必再继续执行了</h5><pre><code>ture || false || ture || false || ture;
+//ture
+</code></pre><h5 id="JavaScript引擎在一个逻辑表达式遇到一个非布尔类型的操作数，那么该操作数的值就会成为该表达式所返回的结果。通常这种情况应该尽量避免，它会降低代码可读性。"><a href="#JavaScript引擎在一个逻辑表达式遇到一个非布尔类型的操作数，那么该操作数的值就会成为该表达式所返回的结果。通常这种情况应该尽量避免，它会降低代码可读性。" class="headerlink" title="JavaScript引擎在一个逻辑表达式遇到一个非布尔类型的操作数，那么该操作数的值就会成为该表达式所返回的结果。通常这种情况应该尽量避免，它会降低代码可读性。"></a>JavaScript引擎在一个逻辑表达式遇到一个非布尔类型的操作数，那么该操作数的值就会成为该表达式所返回的结果。通常这种情况应该尽量避免，它会降低代码可读性。</h5><pre><code>ture || &quot;something&quot;
+//ture
+true &amp;&amp; &quot;something&quot;
+//something
+true &amp;&amp; something &amp;&amp; true
+//true
+</code></pre><h3 id="undefined-与null"><a href="#undefined-与null" class="headerlink" title="undefined 与null"></a>undefined 与null</h3><pre><code>var i = 1 + undefined;
+i;
+//NaN
+
+var i = 1 + null;
+i;
+//1
+</code></pre><p>null和undefined在被转换为其他基本类型时，方法存在一定的区别。</p>
 <ul>
-<li>path：用来描述这个Route匹配的URL的pathname，当URL匹配一个Route时，这个Route中定义的组件将会被渲染。</li>
-<li><p>match：当URL和Route匹配时，Route会创建一个match对象作为props中的一个属性传递给被渲染的组件。对象包含以下4个属性</p>
+<li><p>转换成数字：</p>
+<pre><code>1 * undefined；
+//NaN
+
+1 * null；
+//0
+</code></pre></li>
+<li><p>转换成布尔值</p>
+<pre><code>!!undefined
+//false
+
+!!null;
+//false
+</code></pre></li>
+<li><p>转换成字符串</p>
+<pre><code>&quot;value:&quot; + null;
+//&quot;value:null&quot;
+
+&quot;value:&quot; + undefined;
+//&quot;value:undefined&quot;
+</code></pre></li>
+</ul>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><pre><code>声明数组
+var a = [];
+var a = [1,2,3]
+a[0];
+//1
+
+修改数组
+a[2] = &quot;three&quot;;
+//[0,1,&quot;three&quot;]
+a[3] = &quot;four&quot;
+//[0,1,&quot;three&quot;,&quot;four&quot;]
+
+如果新元素被添加的位置与原数组末端之间存在一定间隔，那么之间的元素将会设置为undefined值
+var a = [1,2,3];
+a[5] = &quot;new&quot;;
+[1,2,3,undefined,undefined,&quot;new&quot;]
+
+删除元素，使用delete操作符，但仅仅是元素被删除的位置留空，数组长度不变。
+var a = [1,2,3];
+delete a[0];
+ture;
+a
+//[undefined × 1, 2, 3]
+
+var a = [[1,2,3],[4,5,6]];
+a;
+//[Array[3], Array[3]]
+a[0]
+//[1,2,3]
+访问内层数组的元素
+a[0][0];
+//1
+</code></pre><p>注意：可以通过数组这种访问方式来获取字符串中特定位置上的字符</p>
+<pre><code>var a = &quot;one&quot;;
+a[0];
+//o
+a[1];
+//n    
+a[2]
+//e
+</code></pre><h5 id="检查变量是否存在-使用typeof"><a href="#检查变量是否存在-使用typeof" class="headerlink" title="检查变量是否存在  使用typeof"></a>检查变量是否存在  使用typeof</h5><pre><code>var result =&quot;&quot;;
+if (somevar){
+    result = &quot;yes&quot;;
+}
+result
+//&quot;&quot;
+就算if(somevar)返回的是false，也并不意味着somevar就未定义，它也可以是一种被初始化为falsy值(如false或0)
+因此在检查变量是否存在时应使用typeof
+var result =&quot;&quot;;
+if(typeof somevar !== &quot;undefined&quot;){
+    result = &quot;yes&quot;;
+}
+result
+//&quot;&quot;
+</code></pre><p>三元操作符</p>
+<pre><code>var a = 1;
+var result = &quot;&quot;;
+if(a === 1){
+    result = &quot;a is one&quot;;
+}else{
+    result = &quot;a is not one&quot;;
+}
+</code></pre><p>简化为：<br>    var a = 1;<br>    var result = (a === 1) ? “a is one” : “a is not one”;</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">《JavaScript面向对象编程指南》</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/18/《JavaScript面向对象编程指南》阅读笔记-二/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-《JavaScript面向对象编程指南》阅读笔记-一" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/17/《JavaScript面向对象编程指南》阅读笔记-一/">《JavaScript面向对象编程指南》阅读笔记(一)</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/17/《JavaScript面向对象编程指南》阅读笔记-一/" class="archive-article-date">
+  	<time datetime="2017-02-17T14:37:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://a3.qpic.cn/psb?/V10qN6b62Hd8cf/f0Hj6QCHodFtBxuFbA6b.I1*qNs9tkm079DminyhAKE!/b/dI8AAAAAAAAA&bo=oAU4BAASgA0FACU!&rf=viewer_4&t=5" width="100%" height="100%" alt="图片名称" align="center"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<p>在面向对象程序设计(OOP)中最常用到的概念：</p>
 <ul>
-<li>params：Route的path可以包含参数。例如<route path="/foo/:id">包含一个参数id，params从path解析到参数{id:1}</route></li>
-<li>isExact：布尔值。当URL完全匹配时值为true。path=’/foo’、URL=’<a href="http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。" target="_blank" rel="noopener">http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。</a></li>
-<li>path：Route的path属性。构建嵌套路由时会使用到</li>
-<li>url：URL的匹配部分</li>
+<li>对象、方法、属性;</li>
+<li>类；</li>
+<li>封装；</li>
+<li>聚合；</li>
+<li>重用与继承；</li>
+<li>多态。</li>
 </ul>
-</li>
-<li><p>Route渲染组件的方式：Route提供3个属性用来定义待渲染的组件：</p>
+<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>既然这种程序设计风格叫做面向对象，那么其重点就应该在对象上。</p>
+<p>例如“猫”这种对象，我们可以看到它们具有某些特征（颜色、名字、体型），能执行某些动作（喵喵叫、睡觉、躲起来、逃跑等）。在OOP语义中，对象特征叫做属性，而动作则被称为方法。</p>
+<p>此外，我们还有一个口语方面的类比。</p>
 <ul>
-<li>component 当URL和Route匹配时，component属性定义的组件就会被渲染：</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">'/foo'</span> component=&#123;Foo&#125;&gt;</span><br></pre></td></tr></table></figure>
-<p>当URL=’<a href="http://example.com/foo&#39;时，Foo组件会被渲染。" target="_blank" rel="noopener">http://example.com/foo&#39;时，Foo组件会被渲染。</a></p>
-</li>
-<li><p>render 该方式方便为待渲染组件传递额外的属性</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">    &lt;Route path=<span class="string">'/foo'</span> render=&#123; (props) =&gt; (</span><br><span class="line">        &lt;Foo &#123;...props&#125; data=&#123;extraProps&#125; /&gt;</span><br><span class="line">    )&#125;&gt;</span><br><span class="line">    <span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">  - children  与上述不同，children返回的组件无论路由是否匹配都会被渲染，当匹配不成功时，match属性为null</span></span><br><span class="line"><span class="string">  - `</span><span class="string">``</span>js</span><br><span class="line">    &lt;Router path=<span class="string">'/foo'</span> children=&#123; (props) =&gt; (</span><br><span class="line">        &lt;div className=&#123;props.match ? <span class="string">'active'</span> : <span class="string">''</span>&#125;&gt;</span><br><span class="line">            &lt;Foo /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;&gt;</span></span><br><span class="line"><span class="regexp">    ```  </span></span><br><span class="line"><span class="regexp">    如果Route匹配当前URL，待渲染元素的根节点div的class将被设置为active</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">- Switch 和 exact。当URL和多个Route匹配时，这些Route都会执行渲染操作。如果只想当第一个匹配的Route渲染，可以把这些Route包裹到一个Switch组件中。如果想让URL和Route完全匹配时Route才渲染，可使用Route的exact属性。Switch和exact常联合使用应用于首页的导航。</span></span><br><span class="line"><span class="regexp">    ```js</span></span><br><span class="line"><span class="regexp">    &lt;Router&gt;</span></span><br><span class="line"><span class="regexp">        &lt;Switch&gt;</span></span><br><span class="line"><span class="regexp">            &lt;Route exact path='/</span><span class="string">' component=&#123;Home&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/posts<span class="string">' component=&#123;Posts&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/:user<span class="string">' component=&#123;User&#125; /&gt;</span></span><br><span class="line"><span class="string">        &lt;/Switch&gt;</span></span><br><span class="line"><span class="string">    &lt;/Router&gt;</span></span><br></pre></td></tr></table></figure>
-<p>如果不使用Switch，当pathname为’posts’时，后面两个都会被匹配，但我们并不希望/:user被匹配。<br><br>如果不使用exact，’/‘,’/posts’…几乎所有URL都会被匹配到第一个Route,而又因为使用了Switch，后面的两个Route永远也不会被匹配。使用exact保证pathname只有完全匹配时，第一个Route才会被匹配。</p>
-</li>
+<li>对象往往是用名词来表示的（如book、person）</li>
+<li>方法一般都是动词（read、run）</li>
+<li>属性则往往是些形容词</li>
 </ul>
-</li>
-<li><p>嵌套路由：是指在Route渲染的组件内部定义新的Route</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Posts = <span class="function">(<span class="params"> &#123; match&#125; </span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &#123;<span class="comment">/* 这里match.url 等于 /posts */</span>&#125;</span><br><span class="line">            &lt;Route path=&#123;<span class="string">`<span class="subst">$&#123;match.url&#125;</span>/:id`</span>&#125; component=&#123;PostDetail&#125; /&gt;</span><br><span class="line">            &lt;Route exact path=&#123;match.url&#125; component=&#123;PostList&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="链接-Link"><a href="#链接-Link" class="headerlink" title="链接 Link"></a>链接 Link</h3><p>Link是React Router提供的链接组件，一个Link组件定义了当点击该Link时，页面应该如何路由。</p>
-<p>Link使用to属性声明要导航到的URL地址。to可以是string或object类型，当to为object类型时，可以包含pathname、search、hash、state四个属性。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> Navigation = <span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    &lt;header&gt;</span><br><span class="line">        &lt;nav&gt;</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/'&gt;Home&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/posts'&gt;Posts&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">            &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>nav&gt;</span><br><span class="line">    &lt;<span class="regexp">/header&gt;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;link to &#123;</span></span><br><span class="line"><span class="regexp">    &#123;</span></span><br><span class="line"><span class="regexp">        pathname : '/</span>posts<span class="string">',</span></span><br><span class="line"><span class="string">        search : '</span>?sort=name<span class="string">',</span></span><br><span class="line">        hash : '#the-hash',</span><br><span class="line">        state : &#123; <span class="attr">fromHome</span> : <span class="literal">true</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="使用history对象手动实现导航"><a href="#使用history对象手动实现导航" class="headerlink" title="使用history对象手动实现导航"></a>使用history对象手动实现导航</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//push向浏览器历史记录新增一条</span></span><br><span class="line">history.push(path , [state])</span><br><span class="line"></span><br><span class="line"><span class="comment">//replace会用新记录替代当前记录</span></span><br><span class="line">history.replace(path , [state])</span><br></pre></td></tr></table></figure>
-<h1 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h1><p>Redux的主要思想即描述应用的状态，如何根据action进行更新。</p>
-<p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/*D.QOD9xmUP6nOTo6HZTeZy7iXJaSvMsW5dY9fC4Lp8!/b/dFYAAAAAAAAA&bo=gAZOA4AGTgMDKQw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<h3 id="Redux三大原则"><a href="#Redux三大原则" class="headerlink" title="Redux三大原则"></a>Redux三大原则</h3><ul>
-<li>只维护一个全局状态state对象，储存在Redux的store中。</li>
-<li>保持应用状态只读。不可直接修改应用状态，需要修改时必须发送action，该action描述如何修改应用状态。</li>
-<li>应用状态的改变通过纯函数reducer完成。</li>
-</ul>
-<h2 id="react-redux"><a href="#react-redux" class="headerlink" title="react-redux"></a>react-redux</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-redux</span><br></pre></td></tr></table></figure>
-<p>根据组件意图不同，可以将组件划分为两类：展示组件、容器组件。<br></p>
+<p>try：“The black cat sleeps on my head”,the cat就是一个对象，black是一个颜色属性值，sleep则是动作也就是OOP语义中的方法。</p>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>相似对象之间往往有一些共同的特征。例如蜂鸟和鹰都具有鸟类的特征，因此它们统称为鸟类。“对象”这个词，我们有时候也叫“实例”，所以我们可以说老鹰是鸟类的实例。可以基于同一个类创建很多不同的对象，因为类是一种模板，而对象则是在这些模板的基础上被创建出来的实体。</p>
+<p>JavaScript与Java这种传统的面向对象语言不同，它压根儿没有类。该语言的一切都是基于对象，依靠的是一套原型（prototype）系统。在传统面向对象语言中，我们一般这样描述：“我基于Person类创建了一个叫做Bob的新对象”。而在这种基于原型的面向对象语言中，我们则这样描述：“我将现有的Person对象扩展成了一个叫做Bob的新对象”。</p>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>封装是另一个与OOP相关的概念，其主要用于阐述对象中所包含的内容。封装概念通常由两部分组成：</p>
 <ul>
-<li>展示组件–UI展示，不关心数据。</li>
-<li>容器组件–逻辑处理，如发送网络请求、处理返回数据、将处理过的数据通过props传递给展示组件。</li>
+<li>相关的数据 （用于存储属性）</li>
+<li>基于这些数据所能做的事情（所能调用的方法）</li>
 </ul>
-<p>当展示组件的状态变更引起源数据变化时，展示组件通过调用容器组件提供的方法同步变化。<br><b>有/无 状态组件根据是否使用state来划分，展示组件和容器组件根据组件意图划分。</b></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">connect()   <span class="comment">// 用于把React组件和Redux的store连接起来，生成一个容器组件，负责数据管理和业务逻辑</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"><span class="keyword">import</span> TodoList <span class="keyword">from</span> <span class="string">'./TodoList'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(所需应用状态 , 展示组件的状态)(TodoList);</span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(mapStateToProps , mapDispatchToProps)(TodoList);</span><br><span class="line"></span><br><span class="line">connect的两个参数的类型都是函数，前者负责从全局应用状态state中取出所需数据，映射到展示组件的props。后者负责把action映射到展示组件的props上。</span><br><span class="line"></span><br><span class="line">mapStateToProps : 把state转换成props。state是Redux store中保存的应用状态，它作为参数传递给mapStateToProps。每当store中的state更新时，mapStateToProps会重新执行，重新计算传递给展示组件的props，从而触发组件的重新渲染。</span><br><span class="line"></span><br><span class="line">mapDispatchToProps : 容器组件可以发送action更新state。该函数接收store.dispatch方法作为参数，返回展示组件用来修改state的函数</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Provider    用于容器组件获取Redux的store。该组件需要接收store属性，然后把store属性保存到context</span><br></pre></td></tr></table></figure>
+<p>除此之外，这个术语还有另一层意思。因此在理解这个概念时应注意语境。</p>
+<p>以一个mp3播放器为例。假设它是一个对象，作为该对象的用户，我们需要一些类似于按钮、显示屏这样的工作接口。这些接口会帮助我们使用该对象（如播放歌曲等）。至于它的内部是如何工作的，我们并不清楚，也无需关心。换句话说，这些接口的实现对我们来说是隐藏的。同样的，在OOP中也是如此，当我们在调用一个对象的方法时，无论该对象来自于我们自己编写的代码还是某个第三方库，我们都不需要知道该方法是如何工作的。即我们只需要知道所操作对象的接口，不必关心它的具体实现。</p>
+<h2 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h2><p>聚合有时候也称之为组合，实际上就是指我们把几个现有的对象合并成一个新对象的过程。这个概念所强调的就是将多个对象合而为一的能力。通过聚合这种强有力的方法，我们可以将一个问题分解成多个更小的问题，各个击破。</p>
+<p>例如，个人电脑是一个复杂的对象，我们不可能知道它启动时所发生的全部事情。但如果我们将这个问题的抽象级别降低，只关注它几个组件对象的初始化工作，例如显示器对象，鼠标对象，键盘对象等，我们就很容易深入了解这些子对象情况，然后再将这些部分的结果合并起来，之前那个复杂问题就迎刃而解。</p>
+<p>例如Book是由一个或多个author对象、publisher对象、若干chapter对象等组合（聚合）而成的对象。</p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>通过继承我们可以优雅地实现代码重用。例如，我们有一个Person对象，其中包含姓名、出生日期等属性，以及一些功能性函数，如步行、谈话、睡觉、吃饭等。然后我们发现自己需要一个programmer对象时，当然，这时候你可以再将Person对象中所有的属性和方法再实现一遍，但除此之外有一种更聪明的办法：即我们让programmer对象继承自Person，这样就节省很多工作，因为programmer对象只需要实现自己的那部分特殊功能，如（编写代码）。其他的只需重用Person的实现即可。</p>
+<p>传统OOP环境中，继承通常指的是类与类之间的关系，但由于JavaScript不存在类，因此它的继承只能发生在对象之间。</p>
+<p>当一个对象继承自另一个对象时，通常会往其中添加新的方法，以扩展被继承的老对象。我们通常将这一过程称之为“B继承自A”或者“B扩展自A”，新对象也可以根据自身需要重新定义继承过来的方法，这样做并不会改变对象的接口，因为其方法名是相同的，这样重定义继承方法的过程叫做重写。</p>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>Programmer对象继承了Person的所有方法，意味着这两个对象都实现了“talk”等方法。现在我们的代码中有一个叫做“Bob”的变量直接调用该对象的“talk”方法，不必担心这会影响代码正常工作，类似这种不同对象通过相同的方法调用来实现各自行为的能力，我们称之为多态。</p>
 <table>
 <thead>
 <tr>
-<th>Plugin</th>
-<th>README</th>
+<th>特征描述</th>
+<th>相应概念</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Dropbox</td>
-<td>[plugins/dropbox/README.md][PlDb]</td>
+<td>Bob是一个男人</td>
+<td>对象</td>
 </tr>
 <tr>
-<td>Github</td>
-<td>[plugins/github/README.md][PlGh]</td>
+<td>Bob出生于1980年，男性，黄头发</td>
+<td>属性</td>
 </tr>
 <tr>
-<td>Google Drive</td>
-<td>[plugins/googledrive/README.md][PlGd]</td>
+<td>Bob能吃饭、睡觉、打豆豆</td>
+<td>方法</td>
 </tr>
 <tr>
-<td>OneDrive</td>
-<td>[plugins/onedrive/README.md][PlOd]</td>
+<td>Bob是Programmer类的一个实例</td>
+<td>传统OOP中的类</td>
 </tr>
 <tr>
-<td>Medium</td>
-<td>[plugins/medium/README.md][PlMe]</td>
+<td>Bob是一个由Programmer对象扩展而来的新对象</td>
+<td>基于原型OOP中的原型对象</td>
 </tr>
 <tr>
-<td>Google Analytics</td>
-<td>[plugins/googleanalytics/README.md][PlGa]</td>
+<td>Bob对象中包含了数据（例如生日）和基于这些数据的方法（例如记录年龄）</td>
+<td>封装</td>
+</tr>
+<tr>
+<td>Bob只是整个web开发团队对象中的一部分，此外开发团队对象还包含了一个Designer对象Jill</td>
+<td>聚合、组合</td>
+</tr>
+<tr>
+<td>Designer、ProjectManager、Programmer都是分别扩展自Person对象的新对象</td>
+<td>继承</td>
+</tr>
+<tr>
+<td>我们可以随时调用Bob、Jill、Jack这三个对象各自的talk方法，它们都可以正常工作。这些方法可能产生的结果不同。（比如Bob可能谈的是代码，Jill谈论的是购物，Jack在撩妹）</td>
+<td>多态、方法的重写</td>
 </tr>
 </tbody>
 </table>
@@ -299,7 +531,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">《JavaScript面向对象编程指南》</a>
         		</li>
       		
 		</ul>
@@ -309,207 +541,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/15/React进阶之路/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-使用ant-design-Pro开发项目的小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">使用ant design Pro开发项目的小结</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/11/使用ant-design-Pro开发项目的小结/" class="archive-article-date">
-  	<time datetime="2018-07-11T14:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/ptCDi2wSCRmTt8JmZjcS4dcLslpSrG0Er3YejnV*Ixw!/b/dFMBAAAAAAAA&bo=oAU4BAAAAAARF7k!&rf=viewer_4&t=5" width="100%"></p>
-<h1 id="一、关于上手。"><a href="#一、关于上手。" class="headerlink" title="一、关于上手。"></a>一、关于上手。</h1><ol>
-<li><p>关于ant design Pro的介绍，自己看官网，大致上可以理解为ant design（组件库） + ant design Pro （完整的项目）+ dva（路由+数据流管理）的组合拳。总之这个Pro是一个已经帮你打通了从搭建到测试打包发布的一整套完整的项目，你只需要站在巨人的肩膀上开发就好了。</p>
-</li>
-<li><p>按照官网安装好项目之后，就能看到几个页面。进行开发之前，你需要一定的react语法、Js(ES6)、dva的基础。啥？全家桶都不会？没关系，写页面又不需要你精通全家桶，看完以下链接就开始写页面吧，遇到不会的再去查，这样学比较快。请按照以下顺序食用</p>
-</li>
-</ol>
-<ul>
-<li><a href="https://dvajs.com/knowledgemap/#javascript-%E8%AF%AD%E8%A8%80" target="_blank" rel="noopener">dva知识地图</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-javascript" target="_blank" rel="noopener">js快速预览</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-react" target="_blank" rel="noopener">react快速预览</a></li>
-<li><a href="http://huziketang.mangojuice.top/books/react/lesson9" target="_blank" rel="noopener">react小书</a></li>
-<li><a href="https://dvajs.com/guide/concepts.html" target="_blank" rel="noopener">dva文档</a></li>
-<li><a href="https://doc.react-china.org/docs/hello-world.html" target="_blank" rel="noopener">react中文文档</a></li>
-<li><a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">ES6</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect" target="_blank" rel="noopener">MDN ？？？ MDN有什么好看的？如果你js不太熟，MDN有很全的API可以查阅</a> </li>
-</ul>
-<h1 id="二、使用ant-design-Pro"><a href="#二、使用ant-design-Pro" class="headerlink" title="二、使用ant design Pro"></a>二、使用ant design Pro</h1><p>以一个ant design Table组件展示数据为例。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164898bf659b926d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>这样一个页面，可以看到：左边是导航栏menu组件，右边是主体BasicLayout组件。至于什么是layout，同样，在ant design Pro官网找得到。当你刚安装好antdp的时候已经有几个页面可以参考了。此处：在页面中，有几个按钮，按钮下方是ant design 的Table组件。</p>
-<h2 id="一、新建一个页面。"><a href="#一、新建一个页面。" class="headerlink" title="一、新建一个页面。"></a>一、新建一个页面。</h2><p>1.在路由中新建一条页面的配置。先不要管报错，因为路由对应的component和models你还没有，继续往下看。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648993196568bf6?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.新增一条之后，需要去对应的路径新建页面。一般都放在routes文件夹中</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899504863164d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>例如我新建了一个角色管理的页面，使用connect进行关联models。</p>
-<p>3.然后再去models文件夹中新建一个model层文件，注意namespace要对应connect的component</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648996437cdd086?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<h2 id="二、数据交互。"><a href="#二、数据交互。" class="headerlink" title="二、数据交互。"></a>二、数据交互。</h2><p>这个表格页面使用antd 的table 组件，自己去官网拷贝代码。这里不再赘述。主要提一下，数据是怎样交互的。</p>
-<p>Table组件里面的行数据就是是columns，它有自己的数据格式，你需要把数据格式转换成他规定的那种。在刚装好的项目中有表格的例子你可以参考一下，只不过案例是写死的静态数据。试试看：你把columns里面的数据删除掉，然后从外部获取到数据替换掉。</p>
-<p>1.使用生命周期函数componentDidMount在组件挂载时，去请求表格的数据。这里发起一个dispatch 触发action，type的值就是models层中的。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899dce523beae?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.在models中会使用antd封装好的方法去请求api.js中定义好的接口地址，然后等待返回就可以处理数据。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899eaeaf27d29?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>此处response拿到服务端返回的结果。你可以在此处对数据进行处理。比如后端返回的并非是你需要的数据格式，或者你可以进行更高层次的封装。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/16489a0f04e1bf8c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>3.再调用reducers中的save方法将数据存储。通过在UIcomponent中已经进行关联，此时this.props能够取到你传送过去的数据。然后放入Table组件即可。</p>
-<p>此处可能讲得不是很详细，比如上述代码各种方法是做什么用的，如果你有仔细看过文章开头列举的文档，尤其是dva文档，心中应该略知一二。此处只介绍了一个很粗略的开发流程，后续我会详细讲解。</p>
-<p>三、个人开发思想及心得<br>1.在使用这套框架开发几个页面之后会明显感觉到，框架有点像MVC分层，十分规范！</p>
-<p>M层models负责控制数据</p>
-<p>V层UIComponent ，and design以及为你准备了丰富的组件库。</p>
-<p>C层control，我个人理解为是api层的管理，将所有的需要请求后台数据的接口统一起来，很直观也方便调用和修改。</p>
-<p>2.ant design Pro几乎已经为你做好了一切，你只需要替换数据、接口，开箱即用。在你切完数个页面之后会发现一个问题：如何进行更高层次的封装呢？不能每次都要复制粘贴很多重复的组件代码呢？</p>
-<p>我个人是这样做的：比如说上面举例的表格页面。</p>
-<p>首先，我会封装一个函数，函数接收各种字段。比如后端返回一系列的input各种类型的字段给你，你在函数中对字段进行匹配，每个字段对应到ant design的组件，将数据与组件关联，然后return这个组件。最后将所有的组件push到一个数组中，然后放入render函数，即可渲染出整个页面。</p>
-<p>这个函数有点类似于React的HOC高阶组件（传组件和props进去，rerurn新的组件出来）概念，区别是我这里传入的是每个组件所需的数据而非组件，而return出的是一个组件。</p>
-<p>3.多利用无状态组件、函数组件。表格上最后一行，编辑/删除按钮。我是在models层进行处理的，因为columns（Table组件的数据对象）在UIcomponents层已经进行渲染了，个人认为UI组件应该尽量简化，它只负责渲染数据。我在models层中将columns中的数据进行遍历，在本地构建一个对象（编辑按钮组件、删除按钮组件）与服务端返回的对象进行合并。同时，两个按钮的组件应该本身具备自有的功能，比如在任何一个表格中调用该组件即可使用其功能。合并后将新的colums对象丢给表格组件，这样进行了一个小小的抽象。</p>
-<p>在表格上方的按钮，同样是通过函数来输出的按钮组件。按钮具有各自的属性、功能，通过入参来传递给函数，然后通过props设置给组件，来达到复用的目的。</p>
-<p>最后，页面上有哪些组件、哪些按钮该如何规定呢？你需要和后端协商好字段、属性，比如一个表单页面有很多种input类型，input会有type、rules（验证规则）….后端返回给你一段组件所需的属性之后，你根据这些数据即可渲染出整个页面的组件。</p>
-<p>以上是本人萌新使用ant design Pro的小小经验，可能创建页面的案例讲的不太清晰、抽象封装的思想不知道各位能否明白我所说的。</p>
-<p>希望各位大佬们多多指教。如何进行更高层次的封装呢？每个页面需要对应路由、models、api接口地址、能否再进行封装达到动态的目的呢？这样连修改接口的重复工作也省了。</p>
-<p>感谢阅读。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-《你不知道的JavaScript-下卷》阅读笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/">《你不知道的JavaScript-下卷》阅读笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/" class="archive-article-date">
-  	<time datetime="2018-05-20T08:18:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/COkv.nP.LHbZizbCvAUIjEbrIlFOQ8cUk1hDpfxv*Aw!/b/dDABAAAAAAAA&bo=VQhABsAP0AsRKRE!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h2 id="隐式转换-见中卷第一部分第四章"><a href="#隐式转换-见中卷第一部分第四章" class="headerlink" title="隐式转换 见中卷第一部分第四章"></a>隐式转换 见中卷第一部分第四章</h2><h2 id="作用域-见上卷第一部分前三章"><a href="#作用域-见上卷第一部分前三章" class="headerlink" title="作用域  见上卷第一部分前三章"></a>作用域  见上卷第一部分前三章</h2><h3 id="值与类型"><a href="#值与类型" class="headerlink" title="值与类型"></a>值与类型</h3><p>Js的值有类型，但变量无类型，变量只是值的容器。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">《你不知道的JavaScript》</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/02/17/《JavaScript面向对象编程指南》阅读笔记-一/">展开全文 >></a>
         </p>
       
 
@@ -541,7 +573,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/13/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span>
     </nav>
   
 

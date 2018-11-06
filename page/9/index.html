@@ -11,7 +11,7 @@
   <meta name="description" content="这是萌新的博客,请多指教呢">
 <meta property="og:type" content="website">
 <meta property="og:title" content="我的地盘听我的">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:url" content="http://yoursite.com/page/9/index.html">
 <meta property="og:site_name" content="我的地盘听我的">
 <meta property="og:description" content="这是萌新的博客,请多指教呢">
 <meta property="og:locale" content="zh-Hans">
@@ -141,152 +141,30 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-React进阶之路" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-SQL笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/15/React进阶之路/">《React进阶之路》阅读笔记</a>
+      <a class="article-title" href="/2017/12/20/SQL笔记/">SQL笔记</a>
     </h1>
   
 
         
-        <a href="/2018/07/15/React进阶之路/" class="archive-article-date">
-  	<time datetime="2018-07-15T12:29:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-15</time>
+        <a href="/2017/12/20/SQL笔记/" class="archive-article-date">
+  	<time datetime="2017-12-20T03:58:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/AvskgQFU55RO5jNMCxwaT5hQzOf6PIga9eq3iMTwPac!/b/dEYBAAAAAAAA&bo=OQxABuodTA8RWak!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h1 id="React基础"><a href="#React基础" class="headerlink" title="React基础"></a>React基础</h1><h2 id="props和state"><a href="#props和state" class="headerlink" title="props和state"></a>props和state</h2><p>props是组件对外的接口，组件通过props接收外部传入的数据；<br><br>state是组件内部对内接口，组件内部状态的变化通过state来反应。<br><br>props是只读的，不能在组件内修改props；<br><br>state是可变的，组件的变化通过修改state来实现。</p>
-<p>在开发React应用时，要思考哪些组件应该设计成有状态组件，哪些组件应该设计成无状态组件。应该尽可能使用无状态组件，无状态组件不用关心状态的变化，只聚焦UI展示，所以更容易复用。</p>
-<p>通过定义少数的有状态组件管理整个应用的状态变化，并且将状态通过props传递给其余无状态组件，由无状态组件完成页面大部分UI渲染。</p>
-<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><p>只有类组件才具有生命周期方法，函数组件没有生命周期方法。</p>
-<ul>
-<li>挂载阶段：组件被创建，执行初始化，并被挂载到DOM中，完成组建的第一次渲染。</li>
-<li>更新阶段：组件被挂载到DOM后，组件的props或state可以引起组件更新。</li>
-<li>卸载阶段：组件从DOM中被卸载的过程</li>
-</ul>
-<h3 id="挂载阶段"><a href="#挂载阶段" class="headerlink" title="挂载阶段"></a>挂载阶段</h3><ol>
-<li>constructor：ES6构造方法，组件被创建时，首先调用此方法。该方法接收props参数，是从父组件中传入的属性对象。在这个方法中调用super(props)才能保证props被传入组件中。此方法通常用于初始化组件的state以及绑定事件。</li>
-<li>componentWillMount</li>
-<li>render：返回一个React元素而非组件的实际渲染工作，render是一个纯函数，不可在里面调用this.setState</li>
-<li>componentDidMount：组件被挂载到DOM后调用，通常用于向服务器请求数据。</li>
-</ol>
-<h3 id="更新阶段"><a href="#更新阶段" class="headerlink" title="更新阶段"></a>更新阶段</h3><ol>
-<li>componentWillReceiveProps：在props引起组件更新过程中调用。state引起更新不会触发该方法。</li>
-<li>shouldComponentUpdate：决定组件是否继续执行更新过程。</li>
-<li>componentWillUpadte：在组件render调用前执行</li>
-<li>componentDidUpdate：组件更新后被调用</li>
-</ol>
-<h3 id="卸载阶段"><a href="#卸载阶段" class="headerlink" title="卸载阶段"></a>卸载阶段</h3><ol>
-<li>componentWillUnmount：组件被卸载前调用</li>
-</ol>
-<h1 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h1><p>如果一个表单元素的值是由React来管理，它就是一个受控组件。非受控制组件指表单元素的状态依然由表单元素自己管理，而不是交给React组件管理，使用非受控组件使用属性ref来获取元素的值。<br><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"text"</span> ref=&#123; (input) =&gt; <span class="keyword">this</span>.input = input &#125; /&gt;</span><br></pre></td></tr></table></figure></p>
-<h1 id="高阶组件"><a href="#高阶组件" class="headerlink" title="高阶组件"></a>高阶组件</h1><p>HOC接收React组件作为参数，并且返回一个新的React组件。本质是一个函数，并不是组件。本质是装饰者设计模式。</p>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
-<li>操作props：在被包装组件接收props前，高阶组件可以先拦截到props，对props操作后再传递给被包装组件。</li>
-<li>通过ref访问组件实例</li>
-<li>组件状态提升</li>
-<li>用其他元素包装组件</li>
-</ul>
-<p>高阶组件的实现方式：由高阶组件处理通用逻辑，然后将相关属性传递给被包装组件，这种实现方式为属性代理。还可以通过继承方式实现高阶组件：通过继承被包装组件实现逻辑的复用。继承方式实现的高阶组件常用于渲染劫持。例如当用户处于登录状态时，允许组件渲染， 否则渲染一个空组件。</p>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
-<li>为了区分高阶组件，应该把被包装组件的名称也包到高阶组件的名称中，如withPersistentData</li>
-<li>不要在组件的render方法中使用高阶组件，尽量不要在组件的其他生命周期方法中使用高阶组件。因为调用高阶组件每次返回一个新组件，于是每次render前一次高阶组件创建的组件都会被卸载，然后重新挂载本次创建的新组件，影响效率。</li>
-<li>如果需要使用被包装组件的静态方法，需要手动复制这些静态方法，因为高阶组件返回的新组件不包含被包装组件的静态方法。</li>
-</ol>
-<h1 id="React-Router"><a href="#React-Router" class="headerlink" title="React Router"></a>React Router</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-router-dom</span><br></pre></td></tr></table></figure>
-<p>React Router v4 每遵循React中一切皆组件的思想，每一个Route（路由）都是一个普通的React组件</p>
-<p>React Router 通过Router和Route两个组件完成路由功能。<br><br>一个应用只需要一个Router实例，所有的路由配置组件Route都定义为Router的子组件。</p>
-<h3 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h3><p>Route是React Router中用于配置路由信息的组件，每当有一个组件需要根据URL决定是否渲染时，需要创建一个Route</p>
-<ul>
-<li>path：用来描述这个Route匹配的URL的pathname，当URL匹配一个Route时，这个Route中定义的组件将会被渲染。</li>
-<li><p>match：当URL和Route匹配时，Route会创建一个match对象作为props中的一个属性传递给被渲染的组件。对象包含以下4个属性</p>
-<ul>
-<li>params：Route的path可以包含参数。例如<route path="/foo/:id">包含一个参数id，params从path解析到参数{id:1}</route></li>
-<li>isExact：布尔值。当URL完全匹配时值为true。path=’/foo’、URL=’<a href="http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。" target="_blank" rel="noopener">http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。</a></li>
-<li>path：Route的path属性。构建嵌套路由时会使用到</li>
-<li>url：URL的匹配部分</li>
-</ul>
-</li>
-<li><p>Route渲染组件的方式：Route提供3个属性用来定义待渲染的组件：</p>
-<ul>
-<li>component 当URL和Route匹配时，component属性定义的组件就会被渲染：</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">'/foo'</span> component=&#123;Foo&#125;&gt;</span><br></pre></td></tr></table></figure>
-<p>当URL=’<a href="http://example.com/foo&#39;时，Foo组件会被渲染。" target="_blank" rel="noopener">http://example.com/foo&#39;时，Foo组件会被渲染。</a></p>
-</li>
-<li><p>render 该方式方便为待渲染组件传递额外的属性</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">    &lt;Route path=<span class="string">'/foo'</span> render=&#123; (props) =&gt; (</span><br><span class="line">        &lt;Foo &#123;...props&#125; data=&#123;extraProps&#125; /&gt;</span><br><span class="line">    )&#125;&gt;</span><br><span class="line">    <span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">  - children  与上述不同，children返回的组件无论路由是否匹配都会被渲染，当匹配不成功时，match属性为null</span></span><br><span class="line"><span class="string">  - `</span><span class="string">``</span>js</span><br><span class="line">    &lt;Router path=<span class="string">'/foo'</span> children=&#123; (props) =&gt; (</span><br><span class="line">        &lt;div className=&#123;props.match ? <span class="string">'active'</span> : <span class="string">''</span>&#125;&gt;</span><br><span class="line">            &lt;Foo /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;&gt;</span></span><br><span class="line"><span class="regexp">    ```  </span></span><br><span class="line"><span class="regexp">    如果Route匹配当前URL，待渲染元素的根节点div的class将被设置为active</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">- Switch 和 exact。当URL和多个Route匹配时，这些Route都会执行渲染操作。如果只想当第一个匹配的Route渲染，可以把这些Route包裹到一个Switch组件中。如果想让URL和Route完全匹配时Route才渲染，可使用Route的exact属性。Switch和exact常联合使用应用于首页的导航。</span></span><br><span class="line"><span class="regexp">    ```js</span></span><br><span class="line"><span class="regexp">    &lt;Router&gt;</span></span><br><span class="line"><span class="regexp">        &lt;Switch&gt;</span></span><br><span class="line"><span class="regexp">            &lt;Route exact path='/</span><span class="string">' component=&#123;Home&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/posts<span class="string">' component=&#123;Posts&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/:user<span class="string">' component=&#123;User&#125; /&gt;</span></span><br><span class="line"><span class="string">        &lt;/Switch&gt;</span></span><br><span class="line"><span class="string">    &lt;/Router&gt;</span></span><br></pre></td></tr></table></figure>
-<p>如果不使用Switch，当pathname为’posts’时，后面两个都会被匹配，但我们并不希望/:user被匹配。<br><br>如果不使用exact，’/‘,’/posts’…几乎所有URL都会被匹配到第一个Route,而又因为使用了Switch，后面的两个Route永远也不会被匹配。使用exact保证pathname只有完全匹配时，第一个Route才会被匹配。</p>
-</li>
-</ul>
-</li>
-<li><p>嵌套路由：是指在Route渲染的组件内部定义新的Route</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Posts = <span class="function">(<span class="params"> &#123; match&#125; </span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &#123;<span class="comment">/* 这里match.url 等于 /posts */</span>&#125;</span><br><span class="line">            &lt;Route path=&#123;<span class="string">`<span class="subst">$&#123;match.url&#125;</span>/:id`</span>&#125; component=&#123;PostDetail&#125; /&gt;</span><br><span class="line">            &lt;Route exact path=&#123;match.url&#125; component=&#123;PostList&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="链接-Link"><a href="#链接-Link" class="headerlink" title="链接 Link"></a>链接 Link</h3><p>Link是React Router提供的链接组件，一个Link组件定义了当点击该Link时，页面应该如何路由。</p>
-<p>Link使用to属性声明要导航到的URL地址。to可以是string或object类型，当to为object类型时，可以包含pathname、search、hash、state四个属性。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> Navigation = <span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    &lt;header&gt;</span><br><span class="line">        &lt;nav&gt;</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/'&gt;Home&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/posts'&gt;Posts&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">            &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>nav&gt;</span><br><span class="line">    &lt;<span class="regexp">/header&gt;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;link to &#123;</span></span><br><span class="line"><span class="regexp">    &#123;</span></span><br><span class="line"><span class="regexp">        pathname : '/</span>posts<span class="string">',</span></span><br><span class="line"><span class="string">        search : '</span>?sort=name<span class="string">',</span></span><br><span class="line">        hash : '#the-hash',</span><br><span class="line">        state : &#123; <span class="attr">fromHome</span> : <span class="literal">true</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="使用history对象手动实现导航"><a href="#使用history对象手动实现导航" class="headerlink" title="使用history对象手动实现导航"></a>使用history对象手动实现导航</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//push向浏览器历史记录新增一条</span></span><br><span class="line">history.push(path , [state])</span><br><span class="line"></span><br><span class="line"><span class="comment">//replace会用新记录替代当前记录</span></span><br><span class="line">history.replace(path , [state])</span><br></pre></td></tr></table></figure>
-<h1 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h1><p>Redux的主要思想即描述应用的状态，如何根据action进行更新。</p>
-<p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/*D.QOD9xmUP6nOTo6HZTeZy7iXJaSvMsW5dY9fC4Lp8!/b/dFYAAAAAAAAA&bo=gAZOA4AGTgMDKQw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<h3 id="Redux三大原则"><a href="#Redux三大原则" class="headerlink" title="Redux三大原则"></a>Redux三大原则</h3><ul>
-<li>只维护一个全局状态state对象，储存在Redux的store中。</li>
-<li>保持应用状态只读。不可直接修改应用状态，需要修改时必须发送action，该action描述如何修改应用状态。</li>
-<li>应用状态的改变通过纯函数reducer完成。</li>
-</ul>
-<h2 id="react-redux"><a href="#react-redux" class="headerlink" title="react-redux"></a>react-redux</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-redux</span><br></pre></td></tr></table></figure>
-<p>根据组件意图不同，可以将组件划分为两类：展示组件、容器组件。<br></p>
-<ul>
-<li>展示组件–UI展示，不关心数据。</li>
-<li>容器组件–逻辑处理，如发送网络请求、处理返回数据、将处理过的数据通过props传递给展示组件。</li>
-</ul>
-<p>当展示组件的状态变更引起源数据变化时，展示组件通过调用容器组件提供的方法同步变化。<br><b>有/无 状态组件根据是否使用state来划分，展示组件和容器组件根据组件意图划分。</b></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">connect()   <span class="comment">// 用于把React组件和Redux的store连接起来，生成一个容器组件，负责数据管理和业务逻辑</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"><span class="keyword">import</span> TodoList <span class="keyword">from</span> <span class="string">'./TodoList'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(所需应用状态 , 展示组件的状态)(TodoList);</span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(mapStateToProps , mapDispatchToProps)(TodoList);</span><br><span class="line"></span><br><span class="line">connect的两个参数的类型都是函数，前者负责从全局应用状态state中取出所需数据，映射到展示组件的props。后者负责把action映射到展示组件的props上。</span><br><span class="line"></span><br><span class="line">mapStateToProps : 把state转换成props。state是Redux store中保存的应用状态，它作为参数传递给mapStateToProps。每当store中的state更新时，mapStateToProps会重新执行，重新计算传递给展示组件的props，从而触发组件的重新渲染。</span><br><span class="line"></span><br><span class="line">mapDispatchToProps : 容器组件可以发送action更新state。该函数接收store.dispatch方法作为参数，返回展示组件用来修改state的函数</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Provider    用于容器组件获取Redux的store。该组件需要接收store属性，然后把store属性保存到context</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>Plugin</th>
-<th>README</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Dropbox</td>
-<td>[plugins/dropbox/README.md][PlDb]</td>
-</tr>
-<tr>
-<td>Github</td>
-<td>[plugins/github/README.md][PlGh]</td>
-</tr>
-<tr>
-<td>Google Drive</td>
-<td>[plugins/googledrive/README.md][PlGd]</td>
-</tr>
-<tr>
-<td>OneDrive</td>
-<td>[plugins/onedrive/README.md][PlOd]</td>
-</tr>
-<tr>
-<td>Medium</td>
-<td>[plugins/medium/README.md][PlMe]</td>
-</tr>
-<tr>
-<td>Google Analytics</td>
-<td>[plugins/googleanalytics/README.md][PlGa]</td>
-</tr>
-</tbody>
-</table>
-
+        <p><a href="http://www.shouce.ren/api/view/a/6030" target="_blank" rel="noopener">SQL文档</a></p>
+<h4 id="语句要大写"><a href="#语句要大写" class="headerlink" title="语句要大写"></a>语句要大写</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM table_name;     用于从数据库中选取数据。</span><br></pre></td></tr></table></figure>
+<h4 id="WHERE子句"><a href="#WHERE子句" class="headerlink" title="WHERE子句"></a>WHERE子句</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name,column_name     用于提取那些满足指定标准的记录。</span><br><span class="line"> FROM table_name</span><br><span class="line"> WHERE column_name operator value;	</span><br></pre></td></tr></table></figure>
+<h4 id="AND-amp-OR-运算符"><a href="#AND-amp-OR-运算符" class="headerlink" title="AND &amp; OR 运算符"></a>AND &amp; OR 运算符</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM Customers     </span><br><span class="line"> WHERE Country=&apos;Germany&apos;</span><br><span class="line"> AND City=&apos;Berlin&apos;;     AND &amp; OR 运算符</span><br><span class="line"></span><br><span class="line">如果第一个条件和第二个条件都成立，则 AND 运算符显示一条记录。</span><br><span class="line">如果第一个条件和第二个条件中只要有一个成立，则 OR 运算符显示一条记录。</span><br></pre></td></tr></table></figure>
       
 
       
@@ -299,7 +177,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SQL</a>
         		</li>
       		
 		</ul>
@@ -309,7 +187,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/15/React进阶之路/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/12/20/SQL笔记/">展开全文 >></a>
         </p>
       
 
@@ -339,77 +217,29 @@
 
 
   
-    <article id="post-使用ant-design-Pro开发项目的小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-vue-JS第二天" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">使用ant design Pro开发项目的小结</a>
+      <a class="article-title" href="/2017/06/21/vue-JS第二天/">vue.JS第二天</a>
     </h1>
   
 
         
-        <a href="/2018/07/11/使用ant-design-Pro开发项目的小结/" class="archive-article-date">
-  	<time datetime="2018-07-11T14:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-11</time>
+        <a href="/2017/06/21/vue-JS第二天/" class="archive-article-date">
+  	<time datetime="2017-06-21T02:44:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/ptCDi2wSCRmTt8JmZjcS4dcLslpSrG0Er3YejnV*Ixw!/b/dFMBAAAAAAAA&bo=oAU4BAAAAAARF7k!&rf=viewer_4&t=5" width="100%"></p>
-<h1 id="一、关于上手。"><a href="#一、关于上手。" class="headerlink" title="一、关于上手。"></a>一、关于上手。</h1><ol>
-<li><p>关于ant design Pro的介绍，自己看官网，大致上可以理解为ant design（组件库） + ant design Pro （完整的项目）+ dva（路由+数据流管理）的组合拳。总之这个Pro是一个已经帮你打通了从搭建到测试打包发布的一整套完整的项目，你只需要站在巨人的肩膀上开发就好了。</p>
-</li>
-<li><p>按照官网安装好项目之后，就能看到几个页面。进行开发之前，你需要一定的react语法、Js(ES6)、dva的基础。啥？全家桶都不会？没关系，写页面又不需要你精通全家桶，看完以下链接就开始写页面吧，遇到不会的再去查，这样学比较快。请按照以下顺序食用</p>
-</li>
-</ol>
-<ul>
-<li><a href="https://dvajs.com/knowledgemap/#javascript-%E8%AF%AD%E8%A8%80" target="_blank" rel="noopener">dva知识地图</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-javascript" target="_blank" rel="noopener">js快速预览</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-react" target="_blank" rel="noopener">react快速预览</a></li>
-<li><a href="http://huziketang.mangojuice.top/books/react/lesson9" target="_blank" rel="noopener">react小书</a></li>
-<li><a href="https://dvajs.com/guide/concepts.html" target="_blank" rel="noopener">dva文档</a></li>
-<li><a href="https://doc.react-china.org/docs/hello-world.html" target="_blank" rel="noopener">react中文文档</a></li>
-<li><a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">ES6</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect" target="_blank" rel="noopener">MDN ？？？ MDN有什么好看的？如果你js不太熟，MDN有很全的API可以查阅</a> </li>
-</ul>
-<h1 id="二、使用ant-design-Pro"><a href="#二、使用ant-design-Pro" class="headerlink" title="二、使用ant design Pro"></a>二、使用ant design Pro</h1><p>以一个ant design Table组件展示数据为例。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164898bf659b926d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>这样一个页面，可以看到：左边是导航栏menu组件，右边是主体BasicLayout组件。至于什么是layout，同样，在ant design Pro官网找得到。当你刚安装好antdp的时候已经有几个页面可以参考了。此处：在页面中，有几个按钮，按钮下方是ant design 的Table组件。</p>
-<h2 id="一、新建一个页面。"><a href="#一、新建一个页面。" class="headerlink" title="一、新建一个页面。"></a>一、新建一个页面。</h2><p>1.在路由中新建一条页面的配置。先不要管报错，因为路由对应的component和models你还没有，继续往下看。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648993196568bf6?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.新增一条之后，需要去对应的路径新建页面。一般都放在routes文件夹中</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899504863164d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>例如我新建了一个角色管理的页面，使用connect进行关联models。</p>
-<p>3.然后再去models文件夹中新建一个model层文件，注意namespace要对应connect的component</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648996437cdd086?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<h2 id="二、数据交互。"><a href="#二、数据交互。" class="headerlink" title="二、数据交互。"></a>二、数据交互。</h2><p>这个表格页面使用antd 的table 组件，自己去官网拷贝代码。这里不再赘述。主要提一下，数据是怎样交互的。</p>
-<p>Table组件里面的行数据就是是columns，它有自己的数据格式，你需要把数据格式转换成他规定的那种。在刚装好的项目中有表格的例子你可以参考一下，只不过案例是写死的静态数据。试试看：你把columns里面的数据删除掉，然后从外部获取到数据替换掉。</p>
-<p>1.使用生命周期函数componentDidMount在组件挂载时，去请求表格的数据。这里发起一个dispatch 触发action，type的值就是models层中的。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899dce523beae?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.在models中会使用antd封装好的方法去请求api.js中定义好的接口地址，然后等待返回就可以处理数据。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899eaeaf27d29?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>此处response拿到服务端返回的结果。你可以在此处对数据进行处理。比如后端返回的并非是你需要的数据格式，或者你可以进行更高层次的封装。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/16489a0f04e1bf8c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>3.再调用reducers中的save方法将数据存储。通过在UIcomponent中已经进行关联，此时this.props能够取到你传送过去的数据。然后放入Table组件即可。</p>
-<p>此处可能讲得不是很详细，比如上述代码各种方法是做什么用的，如果你有仔细看过文章开头列举的文档，尤其是dva文档，心中应该略知一二。此处只介绍了一个很粗略的开发流程，后续我会详细讲解。</p>
-<p>三、个人开发思想及心得<br>1.在使用这套框架开发几个页面之后会明显感觉到，框架有点像MVC分层，十分规范！</p>
-<p>M层models负责控制数据</p>
-<p>V层UIComponent ，and design以及为你准备了丰富的组件库。</p>
-<p>C层control，我个人理解为是api层的管理，将所有的需要请求后台数据的接口统一起来，很直观也方便调用和修改。</p>
-<p>2.ant design Pro几乎已经为你做好了一切，你只需要替换数据、接口，开箱即用。在你切完数个页面之后会发现一个问题：如何进行更高层次的封装呢？不能每次都要复制粘贴很多重复的组件代码呢？</p>
-<p>我个人是这样做的：比如说上面举例的表格页面。</p>
-<p>首先，我会封装一个函数，函数接收各种字段。比如后端返回一系列的input各种类型的字段给你，你在函数中对字段进行匹配，每个字段对应到ant design的组件，将数据与组件关联，然后return这个组件。最后将所有的组件push到一个数组中，然后放入render函数，即可渲染出整个页面。</p>
-<p>这个函数有点类似于React的HOC高阶组件（传组件和props进去，rerurn新的组件出来）概念，区别是我这里传入的是每个组件所需的数据而非组件，而return出的是一个组件。</p>
-<p>3.多利用无状态组件、函数组件。表格上最后一行，编辑/删除按钮。我是在models层进行处理的，因为columns（Table组件的数据对象）在UIcomponents层已经进行渲染了，个人认为UI组件应该尽量简化，它只负责渲染数据。我在models层中将columns中的数据进行遍历，在本地构建一个对象（编辑按钮组件、删除按钮组件）与服务端返回的对象进行合并。同时，两个按钮的组件应该本身具备自有的功能，比如在任何一个表格中调用该组件即可使用其功能。合并后将新的colums对象丢给表格组件，这样进行了一个小小的抽象。</p>
-<p>在表格上方的按钮，同样是通过函数来输出的按钮组件。按钮具有各自的属性、功能，通过入参来传递给函数，然后通过props设置给组件，来达到复用的目的。</p>
-<p>最后，页面上有哪些组件、哪些按钮该如何规定呢？你需要和后端协商好字段、属性，比如一个表单页面有很多种input类型，input会有type、rules（验证规则）….后端返回给你一段组件所需的属性之后，你根据这些数据即可渲染出整个页面的组件。</p>
-<p>以上是本人萌新使用ant design Pro的小小经验，可能创建页面的案例讲的不太清晰、抽象封装的思想不知道各位能否明白我所说的。</p>
-<p>希望各位大佬们多多指教。如何进行更高层次的封装呢？每个页面需要对应路由、models、api接口地址、能否再进行封装达到动态的目的呢？这样连修改接口的重复工作也省了。</p>
-<p>感谢阅读。</p>
+        <h2 id="主入口-main-js"><a href="#主入口-main-js" class="headerlink" title="主入口 main.js"></a>主入口 main.js</h2><p>src目录中的main.js—程序的主入口</p>
+<p>其中使用了ES6语法，使用<code>import</code>来导入包，这里导入了vue包，还有两个文件，分别是router.js和App.vue，.js和.vue后缀可省略<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"></span><br><span class="line">Vue.config.productionTip = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* eslint-disable no-new */</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#app'</span>,</span><br><span class="line">  router,</span><br><span class="line">  template: <span class="string">'&lt;App/&gt;'</span>,</span><br><span class="line">  components: &#123; App &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以看到在new Vue()时传入了一个对象，但是这个对象却不是键值对，</span></span><br><span class="line">是这样，这是ES6的一种语法，当引用的变量名和键名相同时，就可以简写成这样</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  router: router,</span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">&#125;).$mount(<span class="string">'app'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 被简写成了</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  router, <span class="comment">// 这是ES6对象的简写，扩展开就是router: router</span></span><br><span class="line">  <span class="comment">// 箭头函数(=&gt;)是ES6的新语法</span></span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(App) <span class="comment">// 这里扩展开就是render: (h) =&gt; &#123; return h(App) &#125;</span></span><br><span class="line">&#125;).$mount(<span class="string">'app'</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="router"><a href="#router" class="headerlink" title="router"></a>router</h2><p>router—index.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 告诉vue要使用router</span></span><br><span class="line">Vue.use(VueRouter)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例化router对象</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line"></span><br><span class="line">routes <span class="comment">// 挂载路由集合</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出router对象</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br></pre></td></tr></table></figure></p>
 
       
 
@@ -423,7 +253,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vue.JS</a>
         		</li>
       		
 		</ul>
@@ -433,7 +263,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/06/21/vue-JS第二天/">展开全文 >></a>
         </p>
       
 
@@ -463,30 +293,48 @@
 
 
   
-    <article id="post-《你不知道的JavaScript-下卷》阅读笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-vue.JS第一天" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/">《你不知道的JavaScript-下卷》阅读笔记</a>
+      <a class="article-title" href="/2017/06/20/vue.JS第一天/">Vue.JS 第一天</a>
     </h1>
   
 
         
-        <a href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/" class="archive-article-date">
-  	<time datetime="2018-05-20T08:18:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
+        <a href="/2017/06/20/vue.JS第一天/" class="archive-article-date">
+  	<time datetime="2017-06-20T02:35:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/COkv.nP.LHbZizbCvAUIjEbrIlFOQ8cUk1hDpfxv*Aw!/b/dDABAAAAAAAA&bo=VQhABsAP0AsRKRE!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h2 id="隐式转换-见中卷第一部分第四章"><a href="#隐式转换-见中卷第一部分第四章" class="headerlink" title="隐式转换 见中卷第一部分第四章"></a>隐式转换 见中卷第一部分第四章</h2><h2 id="作用域-见上卷第一部分前三章"><a href="#作用域-见上卷第一部分前三章" class="headerlink" title="作用域  见上卷第一部分前三章"></a>作用域  见上卷第一部分前三章</h2><h3 id="值与类型"><a href="#值与类型" class="headerlink" title="值与类型"></a>值与类型</h3><p>Js的值有类型，但变量无类型，变量只是值的容器。</p>
+        <p>1.安装 nrm，用于管理npm镜像源。</p>
+<pre><code>安装
+$ npm install -g nrm
 
+列出可选的源
+nrm ls
+
+切换源
+nrm use cnpm
+
+测试源
+nrm test
+</code></pre><p>2.全局安装Vue.JS</p>
+<pre><code>npm install --global vue-cli
+</code></pre><p>3.创建项目目录，初始化项目</p>
+<pre><code>vue init webpack my-project  //my-project是文件夹名称
+
+cd my-project    //进入文件夹
+
+npm install
+npm run dev
+</code></pre>
       
 
       
@@ -499,7 +347,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">《你不知道的JavaScript》</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vue.JS</a>
         		</li>
       		
 		</ul>
@@ -509,7 +357,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/06/20/vue.JS第一天/">展开全文 >></a>
         </p>
       
 
@@ -541,7 +389,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
     </nav>
   
 

@@ -11,7 +11,7 @@
   <meta name="description" content="这是萌新的博客,请多指教呢">
 <meta property="og:type" content="website">
 <meta property="og:title" content="我的地盘听我的">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:url" content="http://yoursite.com/page/8/index.html">
 <meta property="og:site_name" content="我的地盘听我的">
 <meta property="og:description" content="这是萌新的博客,请多指教呢">
 <meta property="og:locale" content="zh-Hans">
@@ -141,151 +141,220 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-React进阶之路" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-《关于this》" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/15/React进阶之路/">《React进阶之路》阅读笔记</a>
+      <a class="article-title" href="/2018/03/19/《关于this》/">《关于this》</a>
     </h1>
   
 
         
-        <a href="/2018/07/15/React进阶之路/" class="archive-article-date">
-  	<time datetime="2018-07-15T12:29:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-15</time>
+        <a href="/2018/03/19/《关于this》/" class="archive-article-date">
+  	<time datetime="2018-03-19T14:37:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/AvskgQFU55RO5jNMCxwaT5hQzOf6PIga9eq3iMTwPac!/b/dEYBAAAAAAAA&bo=OQxABuodTA8RWak!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h1 id="React基础"><a href="#React基础" class="headerlink" title="React基础"></a>React基础</h1><h2 id="props和state"><a href="#props和state" class="headerlink" title="props和state"></a>props和state</h2><p>props是组件对外的接口，组件通过props接收外部传入的数据；<br><br>state是组件内部对内接口，组件内部状态的变化通过state来反应。<br><br>props是只读的，不能在组件内修改props；<br><br>state是可变的，组件的变化通过修改state来实现。</p>
-<p>在开发React应用时，要思考哪些组件应该设计成有状态组件，哪些组件应该设计成无状态组件。应该尽可能使用无状态组件，无状态组件不用关心状态的变化，只聚焦UI展示，所以更容易复用。</p>
-<p>通过定义少数的有状态组件管理整个应用的状态变化，并且将状态通过props传递给其余无状态组件，由无状态组件完成页面大部分UI渲染。</p>
-<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><p>只有类组件才具有生命周期方法，函数组件没有生命周期方法。</p>
-<ul>
-<li>挂载阶段：组件被创建，执行初始化，并被挂载到DOM中，完成组建的第一次渲染。</li>
-<li>更新阶段：组件被挂载到DOM后，组件的props或state可以引起组件更新。</li>
-<li>卸载阶段：组件从DOM中被卸载的过程</li>
-</ul>
-<h3 id="挂载阶段"><a href="#挂载阶段" class="headerlink" title="挂载阶段"></a>挂载阶段</h3><ol>
-<li>constructor：ES6构造方法，组件被创建时，首先调用此方法。该方法接收props参数，是从父组件中传入的属性对象。在这个方法中调用super(props)才能保证props被传入组件中。此方法通常用于初始化组件的state以及绑定事件。</li>
-<li>componentWillMount</li>
-<li>render：返回一个React元素而非组件的实际渲染工作，render是一个纯函数，不可在里面调用this.setState</li>
-<li>componentDidMount：组件被挂载到DOM后调用，通常用于向服务器请求数据。</li>
-</ol>
-<h3 id="更新阶段"><a href="#更新阶段" class="headerlink" title="更新阶段"></a>更新阶段</h3><ol>
-<li>componentWillReceiveProps：在props引起组件更新过程中调用。state引起更新不会触发该方法。</li>
-<li>shouldComponentUpdate：决定组件是否继续执行更新过程。</li>
-<li>componentWillUpadte：在组件render调用前执行</li>
-<li>componentDidUpdate：组件更新后被调用</li>
-</ol>
-<h3 id="卸载阶段"><a href="#卸载阶段" class="headerlink" title="卸载阶段"></a>卸载阶段</h3><ol>
-<li>componentWillUnmount：组件被卸载前调用</li>
-</ol>
-<h1 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h1><p>如果一个表单元素的值是由React来管理，它就是一个受控组件。非受控制组件指表单元素的状态依然由表单元素自己管理，而不是交给React组件管理，使用非受控组件使用属性ref来获取元素的值。<br><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"text"</span> ref=&#123; (input) =&gt; <span class="keyword">this</span>.input = input &#125; /&gt;</span><br></pre></td></tr></table></figure></p>
-<h1 id="高阶组件"><a href="#高阶组件" class="headerlink" title="高阶组件"></a>高阶组件</h1><p>HOC接收React组件作为参数，并且返回一个新的React组件。本质是一个函数，并不是组件。本质是装饰者设计模式。</p>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
-<li>操作props：在被包装组件接收props前，高阶组件可以先拦截到props，对props操作后再传递给被包装组件。</li>
-<li>通过ref访问组件实例</li>
-<li>组件状态提升</li>
-<li>用其他元素包装组件</li>
-</ul>
-<p>高阶组件的实现方式：由高阶组件处理通用逻辑，然后将相关属性传递给被包装组件，这种实现方式为属性代理。还可以通过继承方式实现高阶组件：通过继承被包装组件实现逻辑的复用。继承方式实现的高阶组件常用于渲染劫持。例如当用户处于登录状态时，允许组件渲染， 否则渲染一个空组件。</p>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
-<li>为了区分高阶组件，应该把被包装组件的名称也包到高阶组件的名称中，如withPersistentData</li>
-<li>不要在组件的render方法中使用高阶组件，尽量不要在组件的其他生命周期方法中使用高阶组件。因为调用高阶组件每次返回一个新组件，于是每次render前一次高阶组件创建的组件都会被卸载，然后重新挂载本次创建的新组件，影响效率。</li>
-<li>如果需要使用被包装组件的静态方法，需要手动复制这些静态方法，因为高阶组件返回的新组件不包含被包装组件的静态方法。</li>
-</ol>
-<h1 id="React-Router"><a href="#React-Router" class="headerlink" title="React Router"></a>React Router</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-router-dom</span><br></pre></td></tr></table></figure>
-<p>React Router v4 每遵循React中一切皆组件的思想，每一个Route（路由）都是一个普通的React组件</p>
-<p>React Router 通过Router和Route两个组件完成路由功能。<br><br>一个应用只需要一个Router实例，所有的路由配置组件Route都定义为Router的子组件。</p>
-<h3 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h3><p>Route是React Router中用于配置路由信息的组件，每当有一个组件需要根据URL决定是否渲染时，需要创建一个Route</p>
-<ul>
-<li>path：用来描述这个Route匹配的URL的pathname，当URL匹配一个Route时，这个Route中定义的组件将会被渲染。</li>
-<li><p>match：当URL和Route匹配时，Route会创建一个match对象作为props中的一个属性传递给被渲染的组件。对象包含以下4个属性</p>
-<ul>
-<li>params：Route的path可以包含参数。例如<route path="/foo/:id">包含一个参数id，params从path解析到参数{id:1}</route></li>
-<li>isExact：布尔值。当URL完全匹配时值为true。path=’/foo’、URL=’<a href="http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。" target="_blank" rel="noopener">http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。</a></li>
-<li>path：Route的path属性。构建嵌套路由时会使用到</li>
-<li>url：URL的匹配部分</li>
-</ul>
-</li>
-<li><p>Route渲染组件的方式：Route提供3个属性用来定义待渲染的组件：</p>
-<ul>
-<li>component 当URL和Route匹配时，component属性定义的组件就会被渲染：</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">'/foo'</span> component=&#123;Foo&#125;&gt;</span><br></pre></td></tr></table></figure>
-<p>当URL=’<a href="http://example.com/foo&#39;时，Foo组件会被渲染。" target="_blank" rel="noopener">http://example.com/foo&#39;时，Foo组件会被渲染。</a></p>
-</li>
-<li><p>render 该方式方便为待渲染组件传递额外的属性</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">    &lt;Route path=<span class="string">'/foo'</span> render=&#123; (props) =&gt; (</span><br><span class="line">        &lt;Foo &#123;...props&#125; data=&#123;extraProps&#125; /&gt;</span><br><span class="line">    )&#125;&gt;</span><br><span class="line">    <span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">  - children  与上述不同，children返回的组件无论路由是否匹配都会被渲染，当匹配不成功时，match属性为null</span></span><br><span class="line"><span class="string">  - `</span><span class="string">``</span>js</span><br><span class="line">    &lt;Router path=<span class="string">'/foo'</span> children=&#123; (props) =&gt; (</span><br><span class="line">        &lt;div className=&#123;props.match ? <span class="string">'active'</span> : <span class="string">''</span>&#125;&gt;</span><br><span class="line">            &lt;Foo /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;&gt;</span></span><br><span class="line"><span class="regexp">    ```  </span></span><br><span class="line"><span class="regexp">    如果Route匹配当前URL，待渲染元素的根节点div的class将被设置为active</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">- Switch 和 exact。当URL和多个Route匹配时，这些Route都会执行渲染操作。如果只想当第一个匹配的Route渲染，可以把这些Route包裹到一个Switch组件中。如果想让URL和Route完全匹配时Route才渲染，可使用Route的exact属性。Switch和exact常联合使用应用于首页的导航。</span></span><br><span class="line"><span class="regexp">    ```js</span></span><br><span class="line"><span class="regexp">    &lt;Router&gt;</span></span><br><span class="line"><span class="regexp">        &lt;Switch&gt;</span></span><br><span class="line"><span class="regexp">            &lt;Route exact path='/</span><span class="string">' component=&#123;Home&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/posts<span class="string">' component=&#123;Posts&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/:user<span class="string">' component=&#123;User&#125; /&gt;</span></span><br><span class="line"><span class="string">        &lt;/Switch&gt;</span></span><br><span class="line"><span class="string">    &lt;/Router&gt;</span></span><br></pre></td></tr></table></figure>
-<p>如果不使用Switch，当pathname为’posts’时，后面两个都会被匹配，但我们并不希望/:user被匹配。<br><br>如果不使用exact，’/‘,’/posts’…几乎所有URL都会被匹配到第一个Route,而又因为使用了Switch，后面的两个Route永远也不会被匹配。使用exact保证pathname只有完全匹配时，第一个Route才会被匹配。</p>
-</li>
-</ul>
-</li>
-<li><p>嵌套路由：是指在Route渲染的组件内部定义新的Route</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Posts = <span class="function">(<span class="params"> &#123; match&#125; </span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &#123;<span class="comment">/* 这里match.url 等于 /posts */</span>&#125;</span><br><span class="line">            &lt;Route path=&#123;<span class="string">`<span class="subst">$&#123;match.url&#125;</span>/:id`</span>&#125; component=&#123;PostDetail&#125; /&gt;</span><br><span class="line">            &lt;Route exact path=&#123;match.url&#125; component=&#123;PostList&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="链接-Link"><a href="#链接-Link" class="headerlink" title="链接 Link"></a>链接 Link</h3><p>Link是React Router提供的链接组件，一个Link组件定义了当点击该Link时，页面应该如何路由。</p>
-<p>Link使用to属性声明要导航到的URL地址。to可以是string或object类型，当to为object类型时，可以包含pathname、search、hash、state四个属性。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> Navigation = <span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    &lt;header&gt;</span><br><span class="line">        &lt;nav&gt;</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/'&gt;Home&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/posts'&gt;Posts&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">            &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>nav&gt;</span><br><span class="line">    &lt;<span class="regexp">/header&gt;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;link to &#123;</span></span><br><span class="line"><span class="regexp">    &#123;</span></span><br><span class="line"><span class="regexp">        pathname : '/</span>posts<span class="string">',</span></span><br><span class="line"><span class="string">        search : '</span>?sort=name<span class="string">',</span></span><br><span class="line">        hash : '#the-hash',</span><br><span class="line">        state : &#123; <span class="attr">fromHome</span> : <span class="literal">true</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="使用history对象手动实现导航"><a href="#使用history对象手动实现导航" class="headerlink" title="使用history对象手动实现导航"></a>使用history对象手动实现导航</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//push向浏览器历史记录新增一条</span></span><br><span class="line">history.push(path , [state])</span><br><span class="line"></span><br><span class="line"><span class="comment">//replace会用新记录替代当前记录</span></span><br><span class="line">history.replace(path , [state])</span><br></pre></td></tr></table></figure>
-<h1 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h1><p>Redux的主要思想即描述应用的状态，如何根据action进行更新。</p>
-<p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/*D.QOD9xmUP6nOTo6HZTeZy7iXJaSvMsW5dY9fC4Lp8!/b/dFYAAAAAAAAA&bo=gAZOA4AGTgMDKQw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<h3 id="Redux三大原则"><a href="#Redux三大原则" class="headerlink" title="Redux三大原则"></a>Redux三大原则</h3><ul>
-<li>只维护一个全局状态state对象，储存在Redux的store中。</li>
-<li>保持应用状态只读。不可直接修改应用状态，需要修改时必须发送action，该action描述如何修改应用状态。</li>
-<li>应用状态的改变通过纯函数reducer完成。</li>
-</ul>
-<h2 id="react-redux"><a href="#react-redux" class="headerlink" title="react-redux"></a>react-redux</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-redux</span><br></pre></td></tr></table></figure>
-<p>根据组件意图不同，可以将组件划分为两类：展示组件、容器组件。<br></p>
-<ul>
-<li>展示组件–UI展示，不关心数据。</li>
-<li>容器组件–逻辑处理，如发送网络请求、处理返回数据、将处理过的数据通过props传递给展示组件。</li>
-</ul>
-<p>当展示组件的状态变更引起源数据变化时，展示组件通过调用容器组件提供的方法同步变化。<br><b>有/无 状态组件根据是否使用state来划分，展示组件和容器组件根据组件意图划分。</b></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">connect()   <span class="comment">// 用于把React组件和Redux的store连接起来，生成一个容器组件，负责数据管理和业务逻辑</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"><span class="keyword">import</span> TodoList <span class="keyword">from</span> <span class="string">'./TodoList'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(所需应用状态 , 展示组件的状态)(TodoList);</span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(mapStateToProps , mapDispatchToProps)(TodoList);</span><br><span class="line"></span><br><span class="line">connect的两个参数的类型都是函数，前者负责从全局应用状态state中取出所需数据，映射到展示组件的props。后者负责把action映射到展示组件的props上。</span><br><span class="line"></span><br><span class="line">mapStateToProps : 把state转换成props。state是Redux store中保存的应用状态，它作为参数传递给mapStateToProps。每当store中的state更新时，mapStateToProps会重新执行，重新计算传递给展示组件的props，从而触发组件的重新渲染。</span><br><span class="line"></span><br><span class="line">mapDispatchToProps : 容器组件可以发送action更新state。该函数接收store.dispatch方法作为参数，返回展示组件用来修改state的函数</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Provider    用于容器组件获取Redux的store。该组件需要接收store属性，然后把store属性保存到context</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>Plugin</th>
-<th>README</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Dropbox</td>
-<td>[plugins/dropbox/README.md][PlDb]</td>
-</tr>
-<tr>
-<td>Github</td>
-<td>[plugins/github/README.md][PlGh]</td>
-</tr>
-<tr>
-<td>Google Drive</td>
-<td>[plugins/googledrive/README.md][PlGd]</td>
-</tr>
-<tr>
-<td>OneDrive</td>
-<td>[plugins/onedrive/README.md][PlOd]</td>
-</tr>
-<tr>
-<td>Medium</td>
-<td>[plugins/medium/README.md][PlMe]</td>
-</tr>
-<tr>
-<td>Google Analytics</td>
-<td>[plugins/googleanalytics/README.md][PlGa]</td>
-</tr>
-</tbody>
-</table>
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/fLCR3nmC.IdpJ54sfCqXDJozqnlahSnmpc7rEjTUEeU!/b/dJUAAAAAAAAA&bo=AAWrBtALwA8RObI!&rf=viewer_4&t=5" width="100%" align="center"></p>
+<p>著作权归该作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<p>this 指向一个对象，具体指向谁，是在运行时基于函数的执行环境动态绑定的，而非函数被生命时的环境。</p>
+<p>除去不常用的 with 和 eval 的情况，具体到实际应用中，this 的指向大致可以分为以下 4种。</p>
+<ul><br><li>作为对象的方法调用</li><br><li>作为普通函数调用</li><br><li>构造器调用</li><br><li>Function.prototype.call 或 Function.prototype.apply 调用 </li><br></ul>
+
+<h3 id="1-作为对象的方法调用"><a href="#1-作为对象的方法调用" class="headerlink" title="1.作为对象的方法调用"></a>1.作为对象的方法调用</h3><p><b>当函数作为对象的方法被调用时，this 指向该对象： </b></p>
+<pre><code>var obj = {
+    a:1,
+    getA:function(){
+        console.log(this === obj);
+        console.log(this.a);
+        console.log(this)
+    }
+}
+
+obj.getA()
+//true
+//1
+//Object {a: 1}
+</code></pre><h3 id="2-作为普通函数调用"><a href="#2-作为普通函数调用" class="headerlink" title="2.作为普通函数调用"></a>2.作为普通函数调用</h3><p><b>当函数不作为对象的属性被调用时，作为普通函数调用，此时this指向全局对象即Window</b></p>
+<pre><code>window.name = &apos;globalName&apos;;
+var getName = function(){ 
+    return this.name; 
+};
+
+console.log( getName() ); 
+//globalName
+</code></pre><p><br></p>
+<pre><code>window.name = &apos;globalName&apos;; 
+var myObject = {    
+    name: &apos;sven&apos;,     
+    getName: function(){        
+        return this.name;    
+    } 
+}; 
+
+var getName = myObject.getName; 
+//用另外一个变量 getName来引用 myObject.getName，并且调用 getName 时，此时是普通函数调用方式，this 是指向全局 window 的
+console.log( getName() );    //globalName
+
+myObject.getName();    //&quot;sven&quot;
+</code></pre><p><b>在strict模式下，this不会指向全局对象，而是undefined</b></p>
+<h3 id="3-构造器调用"><a href="#3-构造器调用" class="headerlink" title="3.构造器调用"></a>3.构造器调用</h3><p><b>当用new运算符调用函数时，该函数返回一个对象，构造器中的this指向这个返回的对象。</b></p>
+<pre><code>var MyClass = function(){
+    this.name = &apos;seven&apos;;
+}
+
+var obj = new MyClass();
+console.log(obj.name);    //seven
+</code></pre><p><b>使用new调用构造器时，如果构造器显示返回一个object类型的对象，那么此次运算结果最终会返回这个对象，而不是我们之前期待的this</b></p>
+<pre><code>var MyClass = function(){
+    this.name = &apos;seven&apos;;
+    return{    //显示返回一个对象
+        name : &apos;anne&apos;
+    }
+}
+
+var obj = new MyClass();
+console.log(obj.name);    //anne
+</code></pre><h3 id="4-Function-prototype-call-或-Function-prototype-apply-调用"><a href="#4-Function-prototype-call-或-Function-prototype-apply-调用" class="headerlink" title="4.Function.prototype.call 或 Function.prototype.apply 调用"></a>4.Function.prototype.call 或 Function.prototype.apply 调用</h3><p>跟普通的函数调用相比，用 Function.prototype.call 或 Function.prototype.apply 可以动态地 改变传入函数的 this： </p>
+<pre><code>var obj1 = {
+    name : &apos;seven&apos;,
+    getName : function(){
+        return this.name;
+    }
+};
+
+var obj2 = {
+    name : &apos;anne&apos;
+};
+
+console.log(obj1.getName());    //seven
+console.log(obj1.getName.call(obj2));        //anne
+</code></pre><h2 id="call和apply"><a href="#call和apply" class="headerlink" title="call和apply"></a>call和apply</h2><p>Function.prototype.call 和 Function.prototype.apply 的作用一模 一样，区别仅在于传入参数形式的不同。</p>
+<p>apply 接受两个参数，第一个参数指定了函数体内 this 对象的指向，第二个参数为一个带下 标的集合，这个集合可以为数组，也可以为类数组，apply 方法把这个集合中的元素作为参数传 递给被调用的函数： </p>
+<pre><code>var func = function(a,b,c){
+    console.log([a,b,c]);    //输出[1,2,3]
+}
+
+func.apply(null,[1,2,3]);
+</code></pre><p>在这段代码中，参数 1、2、3 被放在数组中一起传入 func 函数，它们分别对应 func 参数列 表中的 a、b、c。 </p>
+<p>call 传入的参数数量不固定，跟 apply 相同的是，第一个参数也是代表函数体内的 this 指向， 从第二个参数开始往后，每个参数被依次传入函数： </p>
+<pre><code>func.call(null,1,2,3);
+</code></pre><p>当使用 call 或者 apply 的时候，如果我们传入的第一个参数为 null，函数体内的 this 会指 向默认的宿主对象，在浏览器中则是 window。但如果是在严格模式下，函数体内的 this 还是为 null。</p>
+<p>有时候我们使用 call 或者 apply 的目的不在于指定 this 指向，而是另有用途，比如借用其 他对象的方法。那么我们可以传入 null 来代替某个具体的对象：<br>Math.max.apply( null, [ 1, 2, 5, 3, 4 ] )    // 输出：5 </p>
+<h3 id="call和apply的作用"><a href="#call和apply的作用" class="headerlink" title="call和apply的作用"></a>call和apply的作用</h3><h4 id="1-改变this指向"><a href="#1-改变this指向" class="headerlink" title="1.改变this指向"></a>1.改变this指向</h4><p>call 和 apply 常见的用途是改变函数内部的 this 指向，我们来看个例子： </p>
+<pre><code>var obj1 = {
+    name : &apos;seven&apos;
+};
+
+var obj2 = {
+    name : &apos;anne&apos;
+};
+
+window.name = &apos;window&apos;;
+
+var getName = function(){
+    alert(this.name)
+};
+
+getName();    //window    作为普通函数调用，指向全局
+
+getName.call(obj1);    //输出seven
+getName.call(obj2);    //输出anne
+</code></pre><p>当执行 getName.call( obj1 )这句代码时，getName 函数体内的 this 就指向 obj1 对象，所以 此处的</p>
+<pre><code>var getName = function(){
+    alert(this.name)
+};
+</code></pre><p>实际上相当于： </p>
+<pre><code>var getName = function(){
+    alert(obj1.name);    
+}
+</code></pre><p>以上内容选自《JavaScript设计模式与开发实践》</p>
+<h2 id="例外情况"><a href="#例外情况" class="headerlink" title="例外情况"></a>例外情况</h2><pre><code>var prop = 0;
+var Obj = {
+  prop: 37,
+  getProp: function() {
+    setTimeout(function() {
+        console.log(this.prop) // 结果是 0 ，不是37！
+    },1000)
+  }
+};
+
+Obj.getProp();
+</code></pre><p>setTimeout 中的 this 向了全局对象，这里不是把它当作函数的方法使用吗？其实，setTimeout 和 setInterval 都只是在全局上下文中执行一个函数，因此 this 指向全局对象。 除非你实用箭头函数，Function.prototype.bind 方法等办法修复，如下：</p>
+<pre><code>var Obj = {
+  prop: 37,
+  getProp: function() {
+    setTimeout(() =&gt; {
+        console.log(this.prop) // 37
+    },1000)
+  }
+};
+
+Obj.getProp();
+</code></pre><h3 id="箭头函数的this"><a href="#箭头函数的this" class="headerlink" title="箭头函数的this"></a>箭头函数的this</h3><p>在箭头函数中，this 与封闭词法上下文的 this 保持一致，也就是说由上下文确定。</p>
+<pre><code>var obj = {
+    x: 10,
+    foo: function() {
+        var fn = () =&gt; {
+            return () =&gt; {
+                return () =&gt; {
+                    console.log(this);      //{x: 10, foo: ƒ} 即 obj
+                    console.log(this.x);    //10
+                }
+            }
+        }
+        fn()()();
+    }
+}
+obj.foo();
+</code></pre><p>obj.foo 是一个匿名函数，无论如何， 这个函数中的 this 指向它被创建时的上下文（在上面的例子中，就是 obj 对象）。这同样适用于在其他函数中创建的箭头函数：这些箭头函数的this 被设置为外层执行上下文。</p>
+<pre><code>// 创建一个含有bar方法的obj对象，bar返回一个函数，这个函数返回它自己的this，
+// 这个返回的函数是以箭头函数创建的，所以它的this被永久绑定到了它外层函数的this。
+// bar的值可以在调用中设置，它反过来又设置返回函数的值。
+var obj = {
+    bar: function() {
+        var x = (() =&gt; this);
+        return x;
+    }
+};
+
+// 作为obj对象的一个方法来调用bar，把它的this绑定到obj。
+// x所指向的匿名函数赋值给fn。
+var fn = obj.bar();
+
+// 直接调用fn而不设置this，通常(即不使用箭头函数的情况)默认为全局对象，若在严格模式则为undefined
+console.log(fn() === obj); // true
+
+// 但是注意，如果你只是引用obj的方法，而没有调用它(this是在函数调用过程中设置的)
+var fn2 = obj.bar;
+// 那么调用箭头函数后，this指向window，因为它从 bar 继承了this。
+console.log(fn2()() == window); // true
+</code></pre><p>在上面的例子中，一个赋值给了 obj.bar 的函数（称为匿名函数 A），返回了另一个箭头函数（称为匿名函数 B）。因此，函数B的this被永久设置为 obj.bar（函数A）被调用时的 this 。当返回的函数（函数B）被调用时，它this始终是最初设置的。在上面的代码示例中，函数B的 this 被设置为函数A的 this ，即 obj，所以它仍然设置为 obj，即使以通常将 this 设置为 undefined 或全局对象（或者如前面示例中全局执行上下文中的任何其他方法）进行调用。</p>
+<h3 id="getter-与-setter-中的-this"><a href="#getter-与-setter-中的-this" class="headerlink" title="getter 与 setter 中的 this"></a>getter 与 setter 中的 this</h3><p>用作 getter 或  setter 的函数都会把 this 绑定到正在设置或获取属性的对象。</p>
+<pre><code>function sum() {
+  return this.a + this.b + this.c;
+}
+
+var o = {
+  a: 1,
+  b: 2,
+  c: 3,
+  get average() {
+    return (this.a + this.b + this.c) / 3;
+  }
+};
+
+Object.defineProperty(o, &apos;sum&apos;, {
+    get: sum, enumerable: true, configurable: true});
+
+console.log(o.average, o.sum); // logs 2, 6
+</code></pre><p>参考资料： <a href="http://www.css88.com/archives/8482" target="_blank" rel="noopener">全面理解 JavaScript 中的 this</a></p>
 
       
 
@@ -299,7 +368,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Js基础</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">this</a>
         		</li>
       		
 		</ul>
@@ -309,7 +382,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/15/React进阶之路/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/03/19/《关于this》/">展开全文 >></a>
         </p>
       
 
@@ -339,78 +412,756 @@
 
 
   
-    <article id="post-使用ant-design-Pro开发项目的小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-《深入理解ES6》" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">使用ant design Pro开发项目的小结</a>
+      <a class="article-title" href="/2018/01/22/《深入理解ES6》/">《深入理解ES6》读书笔记</a>
     </h1>
   
 
         
-        <a href="/2018/07/11/使用ant-design-Pro开发项目的小结/" class="archive-article-date">
-  	<time datetime="2018-07-11T14:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-11</time>
+        <a href="/2018/01/22/《深入理解ES6》/" class="archive-article-date">
+  	<time datetime="2018-01-22T15:06:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-22</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/ptCDi2wSCRmTt8JmZjcS4dcLslpSrG0Er3YejnV*Ixw!/b/dFMBAAAAAAAA&bo=oAU4BAAAAAARF7k!&rf=viewer_4&t=5" width="100%"></p>
-<h1 id="一、关于上手。"><a href="#一、关于上手。" class="headerlink" title="一、关于上手。"></a>一、关于上手。</h1><ol>
-<li><p>关于ant design Pro的介绍，自己看官网，大致上可以理解为ant design（组件库） + ant design Pro （完整的项目）+ dva（路由+数据流管理）的组合拳。总之这个Pro是一个已经帮你打通了从搭建到测试打包发布的一整套完整的项目，你只需要站在巨人的肩膀上开发就好了。</p>
-</li>
-<li><p>按照官网安装好项目之后，就能看到几个页面。进行开发之前，你需要一定的react语法、Js(ES6)、dva的基础。啥？全家桶都不会？没关系，写页面又不需要你精通全家桶，看完以下链接就开始写页面吧，遇到不会的再去查，这样学比较快。请按照以下顺序食用</p>
-</li>
-</ol>
-<ul>
-<li><a href="https://dvajs.com/knowledgemap/#javascript-%E8%AF%AD%E8%A8%80" target="_blank" rel="noopener">dva知识地图</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-javascript" target="_blank" rel="noopener">js快速预览</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-react" target="_blank" rel="noopener">react快速预览</a></li>
-<li><a href="http://huziketang.mangojuice.top/books/react/lesson9" target="_blank" rel="noopener">react小书</a></li>
-<li><a href="https://dvajs.com/guide/concepts.html" target="_blank" rel="noopener">dva文档</a></li>
-<li><a href="https://doc.react-china.org/docs/hello-world.html" target="_blank" rel="noopener">react中文文档</a></li>
-<li><a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">ES6</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect" target="_blank" rel="noopener">MDN ？？？ MDN有什么好看的？如果你js不太熟，MDN有很全的API可以查阅</a> </li>
-</ul>
-<h1 id="二、使用ant-design-Pro"><a href="#二、使用ant-design-Pro" class="headerlink" title="二、使用ant design Pro"></a>二、使用ant design Pro</h1><p>以一个ant design Table组件展示数据为例。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164898bf659b926d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>这样一个页面，可以看到：左边是导航栏menu组件，右边是主体BasicLayout组件。至于什么是layout，同样，在ant design Pro官网找得到。当你刚安装好antdp的时候已经有几个页面可以参考了。此处：在页面中，有几个按钮，按钮下方是ant design 的Table组件。</p>
-<h2 id="一、新建一个页面。"><a href="#一、新建一个页面。" class="headerlink" title="一、新建一个页面。"></a>一、新建一个页面。</h2><p>1.在路由中新建一条页面的配置。先不要管报错，因为路由对应的component和models你还没有，继续往下看。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648993196568bf6?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.新增一条之后，需要去对应的路径新建页面。一般都放在routes文件夹中</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899504863164d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>例如我新建了一个角色管理的页面，使用connect进行关联models。</p>
-<p>3.然后再去models文件夹中新建一个model层文件，注意namespace要对应connect的component</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648996437cdd086?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<h2 id="二、数据交互。"><a href="#二、数据交互。" class="headerlink" title="二、数据交互。"></a>二、数据交互。</h2><p>这个表格页面使用antd 的table 组件，自己去官网拷贝代码。这里不再赘述。主要提一下，数据是怎样交互的。</p>
-<p>Table组件里面的行数据就是是columns，它有自己的数据格式，你需要把数据格式转换成他规定的那种。在刚装好的项目中有表格的例子你可以参考一下，只不过案例是写死的静态数据。试试看：你把columns里面的数据删除掉，然后从外部获取到数据替换掉。</p>
-<p>1.使用生命周期函数componentDidMount在组件挂载时，去请求表格的数据。这里发起一个dispatch 触发action，type的值就是models层中的。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899dce523beae?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.在models中会使用antd封装好的方法去请求api.js中定义好的接口地址，然后等待返回就可以处理数据。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899eaeaf27d29?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>此处response拿到服务端返回的结果。你可以在此处对数据进行处理。比如后端返回的并非是你需要的数据格式，或者你可以进行更高层次的封装。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/16489a0f04e1bf8c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>3.再调用reducers中的save方法将数据存储。通过在UIcomponent中已经进行关联，此时this.props能够取到你传送过去的数据。然后放入Table组件即可。</p>
-<p>此处可能讲得不是很详细，比如上述代码各种方法是做什么用的，如果你有仔细看过文章开头列举的文档，尤其是dva文档，心中应该略知一二。此处只介绍了一个很粗略的开发流程，后续我会详细讲解。</p>
-<p>三、个人开发思想及心得<br>1.在使用这套框架开发几个页面之后会明显感觉到，框架有点像MVC分层，十分规范！</p>
-<p>M层models负责控制数据</p>
-<p>V层UIComponent ，and design以及为你准备了丰富的组件库。</p>
-<p>C层control，我个人理解为是api层的管理，将所有的需要请求后台数据的接口统一起来，很直观也方便调用和修改。</p>
-<p>2.ant design Pro几乎已经为你做好了一切，你只需要替换数据、接口，开箱即用。在你切完数个页面之后会发现一个问题：如何进行更高层次的封装呢？不能每次都要复制粘贴很多重复的组件代码呢？</p>
-<p>我个人是这样做的：比如说上面举例的表格页面。</p>
-<p>首先，我会封装一个函数，函数接收各种字段。比如后端返回一系列的input各种类型的字段给你，你在函数中对字段进行匹配，每个字段对应到ant design的组件，将数据与组件关联，然后return这个组件。最后将所有的组件push到一个数组中，然后放入render函数，即可渲染出整个页面。</p>
-<p>这个函数有点类似于React的HOC高阶组件（传组件和props进去，rerurn新的组件出来）概念，区别是我这里传入的是每个组件所需的数据而非组件，而return出的是一个组件。</p>
-<p>3.多利用无状态组件、函数组件。表格上最后一行，编辑/删除按钮。我是在models层进行处理的，因为columns（Table组件的数据对象）在UIcomponents层已经进行渲染了，个人认为UI组件应该尽量简化，它只负责渲染数据。我在models层中将columns中的数据进行遍历，在本地构建一个对象（编辑按钮组件、删除按钮组件）与服务端返回的对象进行合并。同时，两个按钮的组件应该本身具备自有的功能，比如在任何一个表格中调用该组件即可使用其功能。合并后将新的colums对象丢给表格组件，这样进行了一个小小的抽象。</p>
-<p>在表格上方的按钮，同样是通过函数来输出的按钮组件。按钮具有各自的属性、功能，通过入参来传递给函数，然后通过props设置给组件，来达到复用的目的。</p>
-<p>最后，页面上有哪些组件、哪些按钮该如何规定呢？你需要和后端协商好字段、属性，比如一个表单页面有很多种input类型，input会有type、rules（验证规则）….后端返回给你一段组件所需的属性之后，你根据这些数据即可渲染出整个页面的组件。</p>
-<p>以上是本人萌新使用ant design Pro的小小经验，可能创建页面的案例讲的不太清晰、抽象封装的思想不知道各位能否明白我所说的。</p>
-<p>希望各位大佬们多多指教。如何进行更高层次的封装呢？每个页面需要对应路由、models、api接口地址、能否再进行封装达到动态的目的呢？这样连修改接口的重复工作也省了。</p>
-<p>感谢阅读。</p>
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b62Hd8cf/yGUda3uVVLGEJzxX7J6dGezq0oULx4S7Cijtp2Y2xjI!/b/dPMAAAAAAAAA&bo=5AgABQAPcAgRKYA!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<h1 id="块级作用域绑定"><a href="#块级作用域绑定" class="headerlink" title="块级作用域绑定"></a>块级作用域绑定</h1><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/DONqFTHt1buXMdc7OQqSegmpVBm4bw9bQsg3zKhbNB0!/b/dF4BAAAAAAAA&bo=1QNsAdUDbAEDGTw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<h4>var声明及变量提升Hoisting机制</h4>
 
+<p>在函数作用域或全局作用域中通过var声明的变量，都会被当成在当前作用域顶部声明的变量，这就是提升机制。</p>
+<pre><code>function getValue(condition) {
+    if (condition) {
+        var value = &apos;red&apos;;
+        return null;
+    }
+    eles {
+        //此处可以访问到value，值为undefined
+        return null;
+    }
+    //此处可以访问到value，值为undefined
+}
+</code></pre><p>如果你以为condition为true时才创建 value变量那就大错特错了，事实上，Js引擎在预编译时会把value变量声明提升到函数内部最顶端。而初始化操作会在原处执行，所以else也可以访问该变量，但值是undefined。</p>
+<pre><code>function getValue(condition) {
+    var vlue;
+    if (condition) {
+        value = &apos;red&apos;;
+        return value;
+    }
+    eles {
+        return null;
+    }
+}
+</code></pre><h4 id="块级声明-用于声明在指定块的作用域之外无法访问的变量。块级作用域（词法作用域）存在于：函数内部、块中。"><a href="#块级声明-用于声明在指定块的作用域之外无法访问的变量。块级作用域（词法作用域）存在于：函数内部、块中。" class="headerlink" title="块级声明 用于声明在指定块的作用域之外无法访问的变量。块级作用域（词法作用域）存在于：函数内部、块中。"></a>块级声明 用于声明在指定块的作用域之外无法访问的变量。块级作用域（词法作用域）存在于：函数内部、块中。</h4><h2 id="let声明-可以把变量的作用域限制在当前代码块中"><a href="#let声明-可以把变量的作用域限制在当前代码块中" class="headerlink" title="let声明 可以把变量的作用域限制在当前代码块中"></a>let声明 可以把变量的作用域限制在当前代码块中</h2><p>let声明<b>不会被提升</b>，<b>不可在同一作用域重复声明</b>，通常将let语句放在封闭代码块顶部，便于整个代码块都可以访问。</p>
+<pre><code>function getValue(condition) {
+    if (condition) {
+        let value = &apos;red&apos;;    //变量在此处，在if块中
+        return value;
+    }
+    eles {
+        //变量在此处不存在
+        return null;
+    }
+    //变量在此处不存在
+}
+</code></pre><h2 id="const声明-常量-一旦设置不可修改，声明时需要初始化，和let一样也是块级标识符，只在当前代码块内有效。"><a href="#const声明-常量-一旦设置不可修改，声明时需要初始化，和let一样也是块级标识符，只在当前代码块内有效。" class="headerlink" title="const声明  常量 一旦设置不可修改，声明时需要初始化，和let一样也是块级标识符，只在当前代码块内有效。"></a>const声明  常量 一旦设置不可修改，声明时需要初始化，和let一样也是块级标识符，只在当前代码块内有效。</h2><pre><code>const Max = 30;
+</code></pre><h4>用const声明对象，对象的值可以修改，但不允许修改绑定</h4>
+
+<pre><code>const person = {
+  name : &apos;jack&apos;
+}
+
+person.name = &apos;abc&apos;
+//语法错误
+person = {
+  name : &apos;123&apos;
+}
+</code></pre><p>绑定person的值是一个包含一个name属性的变量，改变person.name的值是允许的，直接给person赋值则会出错</p>
+<h3 id="最佳实践：默认使用const，有改变变量的需求时再使用let。"><a href="#最佳实践：默认使用const，有改变变量的需求时再使用let。" class="headerlink" title="最佳实践：默认使用const，有改变变量的需求时再使用let。"></a>最佳实践：默认使用const，有改变变量的需求时再使用let。</h3><h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/X5LTEVY44WURtq38eWxcXPQBLfO7au.BEN7VA9AYp9A!/b/dGoBAAAAAAAA&bo=8QaAAtMJigMDKSo!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<p></p><h4>模板字面量 ` ：支持多行字符串、字符串格式化（将变量的值嵌入字符串）、HTML转义</h4><br><b>多行字符串,旧的实现方式</b><p></p>
+<pre><code>var message = &quot;m \
+string&quot;;
+console.log(message);   //&quot;m string&quot;
+//如果想换行，需要手动添加换行符
+var message = &quot;a \n\
+string&quot;;
+console.log(message);   //&quot;a&quot; 
+                        //&quot;string&quot;
+</code></pre><p><b>使用ES6的模板字面量 `，反撇号中所有空白符都属于字符串一部分，要小心缩进</b></p>
+<pre><code>let message = `a
+string`;
+console.log(message);   //&quot;a&quot; 
+                        //&quot;string&quot;
+</code></pre><p><b>字符串占位符 将Js表达式嵌入占位符中并作为字符串输出</b></p>
+<pre><code>let name = &quot;jim&quot;,
+    message = `hello,${name}`;
+    console.log(message);   //&quot;hello,jim&quot;
+
+let count = 10,
+    price=0.25,
+    message = `${count} items cost $${(count * price).toFixed(2)}`; //第一个$会被原样输出因为后面没有括号
+    console.log(message);   //10 items cost $2.50
+</code></pre><p><b>嵌套</b></p>
+<pre><code>let name = &quot;jim&quot;,
+    message = `Hello,${ `my name is ${name}` }`;
+    console.log(message);   //Hello,my name is jim
+</code></pre><p><b>标签模板：执行模板字面量上的转换并返回字符串</b></p>
+<pre><code>let message = tag`Hello world`
+//tag是模板标签，应用于模板字面量`Hello world`
+</code></pre><p><b>定义标签</b></p>
+<p>标签可以是函数，调用时传入加工过的模板字面量各部分数据。</p>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/B9*B.t4qcMo*BrXBQTQViq3IRDesNXXNag41Xzm9EAU!/b/dFYBAAAAAAAA&bo=BgWAAh8ICwQDKZU!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<p>Js在函数定义中无论定义了多少个形参，都可以传入任意个参数，还可以指定参数的默认值。</p>
+<pre><code>function request(url,timeout,callback){
+    timeout = timeout || 2000;
+    callback = callback || function(){};
+}
+
+function request(url,timeout,callback){
+    timeout = (typeof timeout !== &quot;undefined&quot;) ? timeout : 2000;
+    callback = (typeof callback !== &quot;undefined&quot;) ? callback : function(){};
+}
+</code></pre><p>此函数中，timeout、callback是可选参数，如果不传入，则会自动赋予默认值，当前一个操作数的值为假时，返回后一个值。</p>
+<p><b>ES6默认参数值</b>，如果没有为参数传入值则提供一个默认值</p>
+<pre><code>function request(url,timeout = 2000,callback = function(){}){
+
+}
+</code></pre><p><b>默认参数表达式</b>，非原始值传参</p>
+<pre><code>function getV(){
+    return 5;
+}
+
+function add(first,second = getV()){
+    return first + second
+}
+
+add(1,1);   //2 指定了两个参数，不使用默认值
+add(1);     //6 second参数未指定，使用了默认值
+</code></pre><p><b>只允许引用前面参数的值</b></p>
+<pre><code>function getV(value){
+    return value + 5;
+}
+
+function add(first,second = getV(first)){
+    return first + second
+}
+
+add(1); //7 没传入第二个参数，使用默认参数表达式，该表达式调用了前面参数的值
+add(1,1);   //2  传入两个参数，不使用默认参数
+</code></pre><h2 id="不定参数…"><a href="#不定参数…" class="headerlink" title="不定参数…"></a>不定参数…</h2><p>在函数的命名参数前添加…  表明这是一个不定参数，该参数为一个数组，包含着自它之后传入的所有参数，通过这个数组名即可访问里面的参数</p>
+<pre><code>function pick(object,...keys){
+    let result = Object.create(null);
+
+    for(let i=0,len=keys.length;i&lt;len;i++){
+        result[keys[i]] = object[keys[i]];
+    }
+
+    return result;
+}
+</code></pre><p><b>在此处，不定参数keys包含object之后传入的所有参数，而arguments对象包含的是所有传入的参数即包括object</b>，好处在于可以直观看出可以处理的参数数量。</p>
+<p><b>每个函数只能声明一个不定参数，而且必须放在参数的末尾</b></p>
+<h2 id="展开运算符"><a href="#展开运算符" class="headerlink" title="展开运算符"></a>展开运算符</h2><p>可以让你指定一个数组，将它们打散后作为各自独立的参数传入函数，简化使用数组给函数传参的过程</p>
+<pre><code>let values = [1,2,3,4,5,100];
+Math.max(...values);    //100
+</code></pre><p><b>Js函数内部有两个方法[[Call]]、[[Construct]]  <br>当通过new关键字调用函数时，执行的是[[Construct]]函数，它负责创建一个实例然后再执行函数体，将this绑定到实例上，具有[[Construct]]方法的函数称为构造函数。<br>如果不通过new关键字调用函数，则执行[[Call]]函数。</b></p>
+<h2 id="判断函数是否通过new关键字被调用-判断该函数是否作为构造函数被调用"><a href="#判断函数是否通过new关键字被调用-判断该函数是否作为构造函数被调用" class="headerlink" title="判断函数是否通过new关键字被调用/判断该函数是否作为构造函数被调用"></a>判断函数是否通过new关键字被调用/判断该函数是否作为构造函数被调用</h2><p>—使用instanceof</p>
+<p><b>new.target属性</b> 为了解决判断函数是否通过new关键字调用的问题<br><br>当调用函数的[[Construct]] 方法时，new.target被赋予为new操作符的目标，通常是新创建的对象实例；如果调用[[Call]]方法，则new.target的值为undefined</p>
+<pre><code>function Person(name){
+    if(typeof new.target !== &quot;undefined&quot;){
+        this.name = name;
+    }else{
+        throw new Error(&quot;必须通过new关键字来调用Person&quot;)
+    }
+}
+
+var person = new Person(&quot;jim&quot;);
+var notPerson = Person.call(person,&quot;cook&quot;)
+</code></pre><p>检查new.target是否被某个特定构造函数所调用</p>
+<pre><code>function Person(name){
+    if(new.target === Person){
+        this.name = name;
+    }else{
+        throw new Error(&quot;必须通过new关键字来调用Person&quot;)
+    }
+}
+
+function AnotherPerson(name){
+    Person.call(this,name)
+}
+
+var person = new Person(&quot;jim&quot;);
+var anotherPerson = new AnotherPerson(&quot;cook&quot;);
+</code></pre><h2 id="块级函数"><a href="#块级函数" class="headerlink" title="块级函数"></a>块级函数</h2><p>在ES6版本之前，在代码块中声明一个块级函数是语法错误。但在ES6中，可以声明块级函数，可以在定义该函数的代码块中调用它。</p>
+<pre><code>&quot;use strict&quot;;
+if(true){
+    console.log(typeof doSomething);    //function
+    //在代码块中，块级函数被提升至顶部，所以可以访问到值为function，即使在函数定义之前的位置调用
+
+    function doSomething(){}
+
+    doSomething();
+}
+//代码块之外，函数将不存在
+console.log(typeof doSomething);    //undefined
+</code></pre><p><b>块级函数和let函数表达式类似，一旦执行过程流出代码块，函数就会移除。二者区别在于：块级函数会被提升至块的顶部，而let定义的函数表达式则不会</b></p>
+<pre><code>&quot;use strict&quot;;
+if(true){
+    console.log(typeof doSomething);    //错误，let定义的函数表达式不会被提升至代码块顶部
+
+    let doSomething=function(){}
+
+    doSomething();
+}
+
+console.log(typeof doSomething);
+</code></pre><p><b>因此，需要将函数提升至代码块顶部则用块级函数，否则用let表达式</b><br><br><b>在非严格模式下，函数会提升至外围或全局作用域的顶部，而非代码块的顶部。</b></p>
+<h2 id="箭头函数-gt"><a href="#箭头函数-gt" class="headerlink" title="箭头函数 =&gt;"></a>箭头函数 =&gt;</h2><ul><br>    <li>没有this、super、arguments、new.target绑定</li><br>    <li>不能通过new关键字调用。箭头函数没有[[Construct]]方法，所以不能被用作构造函数</li><br>    <li>没有原型，没有prototype属性</li><br>    <li>不可改变this的绑定</li><br>    <li>必须通过命名参数和不定参数这两张形式访问函数的参数。没有arguments绑定</li><br>    <li>不支持重复的命名参数</li><br></ul>
+
+<p>箭头函数：函数参数、箭头、函数体</p>
+<pre><code>let re = value =&gt;value;
+//相当于
+let re = function(value){
+    return values;
+}
+</code></pre><p>当箭头函数只有一个参数时，可以直接写参数名，箭头紧跟其后，箭头右侧的表达式被求值后返回。<b>如果要传入两个以上参数，要在参数两侧加小括号。</b></p>
+<pre><code>let sum = (num1 , num2) =&gt; num1 + num2;
+sum(1,2);   //3
+//相当于
+let sum = function(num1,num2){
+    return num1 + num2;
+}
+</code></pre><p><b>如果没有参数，需要写小括号</b></p>
+<pre><code>let getName = () =&gt; &quot;jim&quot;;
+//相当于
+let getName = function(){
+    return &quot;jim&quot;
+}
+</code></pre><p><b>空函数</b></p>
+<pre><code>let doNothing = () =&gt;{};
+//相当于
+ let doNothing = function(){};
+</code></pre><p><b>箭头函数返回一个对象字面量,需要将字面量放在小括号中</b></p>
+<pre><code>let getItem = id =&gt;({id:id,name:&quot;jim&quot;});
+//相当于
+let getItem = function(id){
+    return{
+        id:id,
+        name:&quot;jim&quot;
+    };
+};
+</code></pre><p><b>创建立即执行函数表达式IIFE</b></p>
+<pre><code>let person = function(name){
+    return{
+        getName : function(){
+            return name;
+        }
+    };
+}(&quot;jim&quot;);
+
+console.log(person.getName());    //&quot;jim&quot;
+</code></pre><p>相当于：</p>
+<pre><code>let person = ((name) =&gt; {
+    return{
+        getName : function(){
+            return name;
+        }
+    };
+})(&quot;jim&quot;);
+
+console.log(person.getName());    //&quot;jim&quot;
+</code></pre><p><b>尾调用优化</b><br>尾调用指的是函数作为另一个函数的最后一条语句被调用</p>
+<pre><code>function doSomething(){
+    return doSomething();   //尾调用
+}
+</code></pre><h1 id="扩展对象的功能性"><a href="#扩展对象的功能性" class="headerlink" title="扩展对象的功能性"></a>扩展对象的功能性</h1><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/6xvqn1HpytV2nmwU4vTWGyNY2iGqvJXYzWXV*4BVR6Q!/b/dFYBAAAAAAAA&bo=.gWAAvcHVQMDKdc!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<h2 id="对象字面量语法扩展"><a href="#对象字面量语法扩展" class="headerlink" title="对象字面量语法扩展"></a>对象字面量语法扩展</h2><h3 id="属性初始值的简写当属性名和属性值相同时，可以简写。"><a href="#属性初始值的简写当属性名和属性值相同时，可以简写。" class="headerlink" title="属性初始值的简写当属性名和属性值相同时，可以简写。"></a>属性初始值的简写当属性名和属性值相同时，可以简写。</h3><pre><code>function createPerson(name,age){
+    return{
+        name : name,
+        age  : age
+    }
+}
+
+//简写为
+
+function createPerson(name,age){
+    return{
+        name,
+        age
+    }
+}
+</code></pre><p>当对象字面量里只有一个属性的名称时，js引擎会在可访问作用域中寻找同名变量，如果找到则该变量的值会赋予对象字面量的同名属性。</p>
+<h3 id="对象方法的简写去掉了冒号和function关键字"><a href="#对象方法的简写去掉了冒号和function关键字" class="headerlink" title="对象方法的简写去掉了冒号和function关键字"></a>对象方法的简写去掉了冒号和function关键字</h3><pre><code>var pseron = {
+    name : &quot;jim&quot;,
+    sayName : function(){
+        console.log(this.name)
+    }
+}
+
+//简写为
+
+var person = {
+    name : &quot;jim&quot;,
+    sayName(){
+        console.log(this.name)
+    }
+}
+</code></pre><h3 id="可计算属性名"><a href="#可计算属性名" class="headerlink" title="可计算属性名"></a>可计算属性名</h3><p>在ES6以前，想要通过计算得到属性名，需要用方括号代替点。在对象字面量中，可以直接使用字符串字面量作为属性名称。</p>
+<pre><code>var person = {
+    &quot;first name&quot; : &quot;jim&quot;
+};
+
+console.log(person[&quot;first name&quot;])   //&quot;jim&quot;
+</code></pre><p>这种模式适用于<b>属性名提前已知或可被字符串字面量表示的情况</b>。如果属性名称”first name”被包含在一个变量中，或者需要计算才能得到，那么，只有ES6能够做到。</p>
+<pre><code>let lastName = &quot;last name&quot;;
+
+let person = {
+    &quot;first name&quot; : &quot;jim&quot;,
+    [lastName]   : &quot;zii&quot;    //在对象字面量中使用方括号表示的该属性名称是可计算的，它的内容将被求值并被转化为一个字符串，因此可以用表达式来写属性名称
+}
+
+console.log(person[&quot;first name&quot;]);  //&quot;jim&quot;
+console.log(person[lastName]);  //&quot;zii&quot;
+</code></pre><p><b>字符串+变量 计算得出的属性名</b>求值后属性名为”firstname” “lastname”</p>
+<pre><code>var suffix = &quot;name&quot;;
+
+var person = {
+    [&quot;first&quot; + suffix] : &quot;jim&quot;,
+    [&quot;last&quot; + suffix] : &quot;zii&quot;,
+}
+
+console.log(person[&quot;firstname&quot;]);  //&quot;jim&quot;
+console.log(person[&quot;lastname&quot;]);  //&quot;zii&quot;
+</code></pre><h2 id="新增方法"><a href="#新增方法" class="headerlink" title="新增方法"></a>新增方法</h2><h3 id="Object-assign-接受一个对象和任意数量的源对象，并按指定的顺序将属性复制到接受对象中。如果多个源对象存在同名属性，则排位靠后的源对象会覆盖前面的。"><a href="#Object-assign-接受一个对象和任意数量的源对象，并按指定的顺序将属性复制到接受对象中。如果多个源对象存在同名属性，则排位靠后的源对象会覆盖前面的。" class="headerlink" title="Object.assign() 接受一个对象和任意数量的源对象，并按指定的顺序将属性复制到接受对象中。如果多个源对象存在同名属性，则排位靠后的源对象会覆盖前面的。"></a>Object.assign() 接受一个对象和任意数量的源对象，并按指定的顺序将属性复制到接受对象中。如果多个源对象存在同名属性，则排位靠后的源对象会覆盖前面的。</h3><pre><code>function EventTarget(){}
+
+EventTarget.prototype = {
+    constructor : EventTarget,
+    emit        : function(){},
+    on          : function(){}
+}
+
+var myObject = {}
+
+Object.assign(myObject,EventTarget.prototype);
+</code></pre><h2 id="允许重复的对象字面量属性，后者覆盖前者"><a href="#允许重复的对象字面量属性，后者覆盖前者" class="headerlink" title="允许重复的对象字面量属性，后者覆盖前者"></a>允许重复的对象字面量属性，后者覆盖前者</h2><pre><code>var person = {
+    name : &quot;jim&quot;,
+    name : &quot;tina&quot;
+}
+console.log(pseron.name);   //&quot;tina&quot;
+</code></pre><h2 id="增强对象原型"><a href="#增强对象原型" class="headerlink" title="增强对象原型"></a>增强对象原型</h2><p><b>改变对象的原型：Object.setPrototypeOf()</b>，接受两个参数：被改变原型的对象、替代第一个参数原型的对象</p>
+<pre><code>let person = {
+    getGreeting(){
+        return &quot;Hello&quot;;
+    }
+}
+
+let dog = {
+    getGreeting(){
+        return &quot;woof&quot;;
+    }
+}
+
+let friend = Object.create(person);
+console.log(friend.getGreeting());  //Hello
+console.log(Object.getPrototypeOf(friend) === person);  //true
+
+//将原型改为dog
+
+Object.setPrototypeOf(friend,dog);
+console.log(friend.getGreeting());  //&quot;woof&quot;
+console.log(Object.getPrototypeOf(friend) === dog); //&quot;true&quot;
+</code></pre><h2 id="Super-简化原型访问-必须在简写方法的对象中使用"><a href="#Super-简化原型访问-必须在简写方法的对象中使用" class="headerlink" title="Super 简化原型访问 必须在简写方法的对象中使用"></a>Super 简化原型访问 必须在简写方法的对象中使用</h2><pre><code>let person = {
+    getGreeting(){
+        return &quot;Hello&quot;;
+    }
+}
+
+let dog = {
+    getGreeting(){
+        return &quot;woof&quot;;
+    }
+}
+
+let friend = {
+    getGreeting(){
+        return Object.getPrototypeOf(this).getGreeting.call(this) + &quot;,hi!&quot;;
+    }
+}
+
+//将原型设置为person
+Object.setPrototypeOf(friend,person);
+console.log(friend.getGreeting());  //&quot;Hello,hi!&quot;
+console.log(Object.getPrototypeOf(friend) === person);  //true
+
+//将原型设置为dog
+Object.setPrototypeOf(friend,dog);
+console.log(friend.getGreeting());  //&quot;woof,hi!&quot;
+console.log(Object.getPrototypeOf(friend) === dog);  //true
+</code></pre><p>以上，friend对象的getGreeting()方法调用了同名原型方法。Object.getPrototypeOf()方法可以确保调用正确的原型，.call(this)可以确保正确设置原型方法中的this值。<br><br>以上过程太复杂，因此ES6引入了super关键字，Super引用相当于指向对象原型的指针，也就是Object.getPrototypeOf(this)的值。</p>
+<pre><code>let friend = {
+    getGreeting(){
+        return super.getGreeting + &quot;,hi!&quot;;
+    }
+}
+</code></pre><p>super.getGreeting相当于在当前上下文中调用Object.getPrototypeOf(this).getGreeting.call(this)</p>
+<p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/GndtvJPVBbG4EUjHVd*MfXMnUbltK9uKNKpD4dtsu8Q!/b/dGcBAAAAAAAA&bo=iwc4BLYPyggDOdc!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<h2 id="解构"><a href="#解构" class="headerlink" title="解构"></a>解构</h2><p>想象一下，从对象中提取属性，需要写很多重复代码。如果包含嵌套解构，还必须深挖整个数据结构才能找到所需信息。<br>因此，ES6给对象和数组提供了解构功能。将数据结构打散，更容易获取所需信息。</p>
+<h2 id="对象解构-语法是：在一个赋值操作符左边放置一个对象字面量"><a href="#对象解构-语法是：在一个赋值操作符左边放置一个对象字面量" class="headerlink" title="对象解构 语法是：在一个赋值操作符左边放置一个对象字面量"></a>对象解构 语法是：在一个赋值操作符左边放置一个对象字面量</h2><pre><code>let node = {
+    type : &quot;Identifier&quot;,
+    name : &quot;foo&quot;
+}
+
+let {type,name} = node;
+console.log(type);  //&quot;Identifier&quot; node.type的值被存储在type变量中
+console.log(name);  //&quot;foo&quot; node.name的值被存储在type变量中
+</code></pre><h3 id="解构赋值-给变量赋值时使用解构语法，例如在定义变量后想要修改它们的值"><a href="#解构赋值-给变量赋值时使用解构语法，例如在定义变量后想要修改它们的值" class="headerlink" title="解构赋值 给变量赋值时使用解构语法，例如在定义变量后想要修改它们的值"></a>解构赋值 给变量赋值时使用解构语法，例如在定义变量后想要修改它们的值</h3><pre><code>let node = {
+    type : &quot;Identifier&quot;,
+    name : &quot;foo&quot;
+},
+
+type = &quot;jim&quot;,
+name = 5;
+//使用解构语法为多个变量赋值
+({type , name} = node); 
+
+console.log(type);  //&quot;Identifier&quot;
+console.log(name);  //&quot;foo&quot;
+</code></pre><h3 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h3><p>当解构赋值时，指定的局部变量名在对象中不存在，那么这个局部变量会被赋值为undefined，<br>或者你可以在属性名称后加 = 默认值</p>
+<pre><code>let node = {
+    type : &quot;Identifier&quot;,
+    name : &quot;foo&quot;
+}
+
+//使用解构语法为多个变量赋值
+//node中没有value变量，给value赋默认值为true
+let {type , name , value = true} = node; 
+
+console.log(type);  //&quot;Identifier&quot;
+console.log(name);  //&quot;foo&quot;
+console.log(value);  //true
+</code></pre><h3 id="为非同名局部变量赋值-语法类似对象字面量"><a href="#为非同名局部变量赋值-语法类似对象字面量" class="headerlink" title="为非同名局部变量赋值 语法类似对象字面量"></a>为非同名局部变量赋值 语法类似对象字面量</h3><pre><code>let node = {
+    type : &quot;Identifier&quot;,
+    name : &quot;foo&quot;
+}
+//解构赋值声明变量localType、localName
+let {
+    type : localType,    //读取名为type的属性并将其值存储在变量localType
+    name : localName    
+
+}= node;
+
+console.log(localType); //&quot;Identifier&quot;
+console.log(localName); //&quot;foo&quot;
+</code></pre><h3 id="嵌套对象解构"><a href="#嵌套对象解构" class="headerlink" title="嵌套对象解构"></a>嵌套对象解构</h3><pre><code>let node = {
+    type : &quot;Identifier&quot;,
+    name : &quot;foo&quot;,
+    loc  : {
+        start :{
+            line : 1,
+            column : 4
+        }
+    }
+};
+//提取node.loc.start
+let {loc : {start : localStart}}= node;
+//node.loc.start被存储在新的局部变量localstart中
+console.log(localStart.line);
+console.log(localStart.column);
+</code></pre><h2 id="数组解构"><a href="#数组解构" class="headerlink" title="数组解构"></a>数组解构</h2><pre><code>//按顺序解构数组的前两个值，提供两个变量即可
+let colors = [&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;];
+let [firstColor,secondColor] = colors;
+console.log(firstColor);    //&quot;red&quot;
+console.log(secondColor);   //&quot;green&quot;
+
+//选取第3个值，则不需要提供前两个变量名称 
+
+let [, , thirdColor] = color;
+console.log(thirdColor);    //&quot;blue&quot;
+</code></pre><h3 id="解构赋值"><a href="#解构赋值" class="headerlink" title="解构赋值"></a>解构赋值</h3><pre><code>let colors = [&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;],
+    firstColor = &quot;black&quot;,
+    secondColor = &quot;white&quot;;
+
+[firstColor,secondColor] = colors;
+
+console.log(firstColor);    //&quot;red&quot;
+console.log(secondColor);   //&quot;green&quot;
+</code></pre><h3 id="变量交换"><a href="#变量交换" class="headerlink" title="变量交换"></a>变量交换</h3><p>在ES6以前，a、b两个变量交换值需要第3个临时变量<br>而在ES6，可以直接：</p>
+<pre><code>let a = 1,
+    b = 2;
+
+[a,b] = [b,a];
+console.log(a); //2
+console.log(b); //1
+</code></pre><p>左侧是一个解构模式，右侧是一个为交换过程创建的临时数组字面量。先解构临时数组，再将b和a的值复制到左侧数组的前两个位置。</p>
+<h3 id="默认值-1"><a href="#默认值-1" class="headerlink" title="默认值"></a>默认值</h3><pre><code>let colors = [&quot;red&quot;];
+let [first,second=&quot;blue&quot;] = colors    //赋予了second默认值：blue
+
+console.log(first);
+console.log(second);
+</code></pre><h3 id="嵌套数组解构"><a href="#嵌套数组解构" class="headerlink" title="嵌套数组解构"></a>嵌套数组解构</h3><pre><code>let colors = [&quot;red&quot;,[&quot;green&quot;,&quot;lightgreen&quot;],&quot;blue&quot;];
+
+let [first ,[second]] = colors;
+
+console.log(first); //&quot;red&quot;
+console.log(second);    //&quot;green&quot;
+</code></pre><h3 id="不定元素-可以通过…语法将数组中的其余元素复制给特定的变量"><a href="#不定元素-可以通过…语法将数组中的其余元素复制给特定的变量" class="headerlink" title="不定元素  可以通过…语法将数组中的其余元素复制给特定的变量"></a>不定元素  可以通过…语法将数组中的其余元素复制给特定的变量</h3><pre><code>let colors = [&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;];
+let [first , ...restColors] = colors;    //将除了第一个元素，其余元素赋值给了restColor
+
+console.log(first);    //&quot;red&quot;
+console.log(restColors.length);    //2
+console.log(restColors);    //[&quot;green&quot;, &quot;blue&quot;]
+</code></pre><h3 id="复制数组"><a href="#复制数组" class="headerlink" title="复制数组"></a>复制数组</h3><pre><code>var colors = [&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;];
+var clone = colors.concat();
+console.log(clone); //[&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;]
+</code></pre><p>concat()方法本身用于连接字符串，如果调用时不传递参数，就会返回当前数组的副本。</p>
+<p>ES6通过不定参数也可以实现。</p>
+<pre><code>let colors = [&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;];
+let [...cloneArray] = colors;
+console.log(cloneArray);    //[&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;]
+</code></pre><h2 id="Set集合和Map集合-为创建非数值型索引、非数组对象而生的一种数据结构"><a href="#Set集合和Map集合-为创建非数值型索引、非数组对象而生的一种数据结构" class="headerlink" title="Set集合和Map集合  为创建非数值型索引、非数组对象而生的一种数据结构"></a>Set集合和Map集合  为创建非数值型索引、非数组对象而生的一种数据结构</h2><h3 id="Set-一种无重复元素的有序的列表，通常不会逐一访问每个元素，一般用来检测给定元素是否存在于该集合中"><a href="#Set-一种无重复元素的有序的列表，通常不会逐一访问每个元素，一般用来检测给定元素是否存在于该集合中" class="headerlink" title="Set 一种无重复元素的有序的列表，通常不会逐一访问每个元素，一般用来检测给定元素是否存在于该集合中"></a>Set 一种无重复元素的有序的列表，通常不会逐一访问每个元素，一般用来检测给定元素是否存在于该集合中</h3><p><b>new Set()</b>创建Set集合，<br><br><b>add()</b>方法向集合中添加元素，<b>传入相同的值将被忽略。</b><br><br><b>size()</b>属性获取集合元素数量，<br><br><b>has()</b>方法检测集合中是否存在某个值<br><br><b>delete()</b>用于移除某一元素，<b>clear()</b>用于清空集合</p>
+<pre><code>let set = new Set();
+set.add(&quot;a&quot;);
+set.add(&quot;b&quot;);
+set.add(1);
+console.log(set);    //Set {&quot;a&quot;, &quot;b&quot;, 1}
+console.log(set.size);    //3
+
+//忽略相同的值
+let set =new Set([1,1,1,1,1,1]);
+console.log(set);    //1
+console.log(set.has(1));    //true
+console.log(set.has(2));    //false
+</code></pre><p>Set接受可迭代对象（eg:数组、Set集合、Map集合）作为参数，<b>含有重复元素的数组通过Set可以去重</b></p>
+<h3 id="forEach-遍历Set集合"><a href="#forEach-遍历Set集合" class="headerlink" title="forEach()遍历Set集合"></a>forEach()遍历Set集合</h3><pre><code>let set =new Set([&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;]);
+//回调函数接受三个参数：Set集合中下一次索引的位置、与第一个参数一样的值、被遍历的Set集合本身
+set.forEach(function(value,key,ownerSet){
+    console.log(key + &quot; &quot; + value);
+    console.log(ownerSet === set);
+});
+</code></pre><p>回调函数每次执行时，输出的键和值都保持一致，ownerSet 与set相等</p>
+<p><b>虽然Set集合可以用forEach()操作集合中的每个元素，但是不能像数组那样通过索引访问元素，如有需要，先将Set集合转成一个数组。</b></p>
+<h3 id="将Set集合转换为数组"><a href="#将Set集合转换为数组" class="headerlink" title="将Set集合转换为数组"></a>将Set集合转换为数组</h3><p>将数组转换为Set集合只需要给Set构造函数传入数组。<br><br>将Set集合转换为数组需要用展开运算符(…)</p>
+<pre><code>let set = new Set([1,2,3,4,5]),
+    array = [...set];
+console.log(set);   //Set {1, 2, 3, 4, 5}
+console.log(array); //[1, 2, 3, 4, 5]
+</code></pre><p>封装一个数组去重的方法（返回的是原数组的副本）</p>
+<pre><code>function e(items){
+    return [...new Set(items)];    //Set集合在此用于去重复
+}
+
+let numbers = [1,1,1,2,3,4,5,6,3,4,5],
+    noe = e(numbers);
+console.log(noe);
+</code></pre><p>Set实例中的对象保持了引用</p>
+<pre><code>let set =new Set(),
+    key = {};
+
+set.add(key);
+//移除原始引用
+key = null;
+console.log(set.size);  //1
+//重新取回原始引用
+key = [...set][0];  
+console.log(key);   //Object {}
+</code></pre><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/Yvv9*VpZLR0GX7tI2ABoL1YkIWSvUo.XbkzgH361Hmk!/b/dHMAAAAAAAAA&bo=zAV.AswFfgIDKQw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<h2 id="Map集合-是一个存放了若干个键值对的有序列表，通常用于缓存频繁取用的数据。"><a href="#Map集合-是一个存放了若干个键值对的有序列表，通常用于缓存频繁取用的数据。" class="headerlink" title="Map集合 是一个存放了若干个键值对的有序列表，通常用于缓存频繁取用的数据。"></a>Map集合 是一个存放了若干个键值对的有序列表，通常用于缓存频繁取用的数据。</h2><p><b>set()</b>方法传入键值两个参数来向Map集合添加新元素<br><br><b>get()</b>获取</p>
+<pre><code>let map = new Map();
+map.set(&quot;title&quot;,&quot;es6&quot;);
+map.set(&quot;name&quot;,&quot;jim&quot;);
+console.log(map);    //Map {&quot;title&quot; =&gt; &quot;es6&quot;, &quot;name&quot; =&gt; &quot;jim&quot;}
+map.get(&quot;title&quot;);    //&quot;es6&quot;
+
+//无法用作对象属性的却可以用作Map的键名,例如把key1、key2对象作为键名
+let key1 = {};
+let key2 = {};
+map.set(key1,1);
+map.set(key2,2);
+console.log(map);    //Map {&quot;title&quot; =&gt; &quot;es6&quot;, &quot;name&quot; =&gt; &quot;jim&quot;, Object {} =&gt; 1, Object {} =&gt; 2}
+console.log(map.get(key1));    //1
+</code></pre><h3 id="初始化Map集合—-给Map构造函数传入数组的方式"><a href="#初始化Map集合—-给Map构造函数传入数组的方式" class="headerlink" title="初始化Map集合—-给Map构造函数传入数组的方式"></a>初始化Map集合—-给Map构造函数传入数组的方式</h3><p>数组中的每个元素都是一个子数组，子数组中包含一个键值对，因此整个Map集合中包含的全是这样的两元素数组：</p>
+<pre><code>let map = new Map([ [&quot;name&quot;,&quot;es6&quot;] , [&quot;age&quot;,&quot;12&quot;] ,[&quot;sex&quot;,&quot;boy&quot;]  ])
+console.log(map);    //Map {&quot;name&quot; =&gt; &quot;es6&quot;, &quot;age&quot; =&gt; &quot;12&quot;, &quot;sex&quot; =&gt; &quot;boy&quot;}
+</code></pre><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/nlBrfeGy1YVGgoVUd9LY49sThP*wOXGkLyFVd7qsbHk!/b/dGsBAAAAAAAA&bo=xgOQAcYDkAEDGTw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<h1 id="类"><a href="#类" class="headerlink" title="类"></a>类</h1><pre><code>class PersonClass{
+    //通过constructor方法定义构造函数
+    //等价于PersonType构造函数  function PersonType(name){ this.name =name;}
+    constructor(name){
+        this.name = name;
+    }
+
+    //等价于PersonType.prototype.sayName =function(){console.log(this.name)}
+    sayName(){
+        console.log(this.name);
+    } 
+}    
+
+let person = new PersonClass(&quot;jim&quot;);
+person.name();  //&quot;jim&quot;
+</code></pre><p>自有属性是实例中的属性，不会出现在原型上，且只能在类的构造函数或方法中创建，在此处name就是一个自有属性。</p>
+<p>注意点：</p>
+<ul><br>    <li>函数声明可以被提升，而类声明与let声明类似，不能被提升；</li><br>    <li>类声明中的所有代码自动运行在严格模式下</li><br>    <li>在自定义类中，需要通过object.defineProperty()方法手工指定某个方法为不可枚举，而在类中，所有方法都不可枚举。</li><br>    <li>使用除关键字new以外的方式调用类的构造函数会导致程序抛出错误</li><br></ul>
+
+
+<h3 id="类表达式"><a href="#类表达式" class="headerlink" title="类表达式"></a>类表达式</h3><p>类和函数都有两种存在形式：声明形式和表达式形式。声明形式的函数和类都应由相应的关键字（分别为function和class）进行定义，随后紧跟一个标识符；表达式形式的函数和类与之类似，只是不需要再关键字后添加标识符。类表达式的设计初衷是为了声明相应变量或传入函数作为参数。</p>
+<pre><code>let PersonClass = class{
+    //等价于PersonType构造函数  function PersonType(name){ this.name =name;}
+    constructor(name){
+        this.name = name;
+    }
+
+    //等价于PersonType.prototype.sayName =function(){console.log(this.name)}
+    sayName(){
+        console.log(this.name);
+    } 
+}
+
+let person = new PersonClass(&quot;jim&quot;);
+person.name();  //&quot;jim&quot;
+</code></pre><h3 id="访问器属性"><a href="#访问器属性" class="headerlink" title="访问器属性"></a>访问器属性</h3><pre><code>Class Customers{
+    constructor (element){
+        this.element = element;
+    }
+
+    get html(){
+        return this.element.innerHTML;
+    }
+
+    set html(value){
+        this.element.innerHTML = value;
+    }
+}
+</code></pre><h3 id="类的继承-使用extends关键字指定类继承的函数。原型会自动调整，通过调用super-方法即可访问基类的构造函数。"><a href="#类的继承-使用extends关键字指定类继承的函数。原型会自动调整，通过调用super-方法即可访问基类的构造函数。" class="headerlink" title="类的继承 使用extends关键字指定类继承的函数。原型会自动调整，通过调用super()方法即可访问基类的构造函数。"></a>类的继承 使用extends关键字指定类继承的函数。原型会自动调整，通过调用super()方法即可访问基类的构造函数。</h3><pre><code>class Rec{
+    constructor(length,width){
+        this.length = length;
+        this.width = width;
+    }
+
+    getArea(){
+        return this.length * this.width
+    }
+}
+
+//通过关键字继承Rec类
+class Sq extends Rec{
+    constructor(length){
+        //通过super()调用Rec构造函数并传入相应参数
+        super(length , length)
+    }
+}
+
+var square = new Sq(3);
+console.log(square.getArea());  //9
+console.log(square instanceof Sq);  //true
+</code></pre><p>继承自其他类的类被称为派生类，如果在派生类中指定了构造函数则必须调用super()。如果选择不使用构造函数，则当创建新的类实例时会自动调用super()并传入所有参数。</p>
+<pre><code>class Sq extends Rec{
+    //没有构造函数
+}
+
+//等价于
+class Sq extends Rec{
+    constructor(...args){
+        super(...args);
+    }
+}
+</code></pre><p><b>使用super()应注意：只可在派生类的构造函数中使用super()</b><br><br><b>在构造函数中访问this之前要调用super()，它负责初始化this</b><br><br><b>如果不想调用super，可以让类的构造函数返回一个对象</b></p>
+<h3 id="类方法遮蔽"><a href="#类方法遮蔽" class="headerlink" title="类方法遮蔽"></a>类方法遮蔽</h3><p>派生类中的方法会覆盖基类中的同名方法。例如给Sq方法添加同名的getArea()方法来重新定义这个方法</p>
+<pre><code>class Sq extends Rec{
+    constructor(length){
+        super(length,length);
+    }
+
+    //覆盖了Rec.prototype.getArea()方法
+    getArea(){
+        return this.length * this.length;
+    }
+}
+</code></pre><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/X2cDJff3OsFHphDEhvtZ6rkaIF7LSIZHsJm8YZ0EfxY!/b/dGEBAAAAAAAA&bo=dgPNAXYDzQEDGTw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<h1 id="改进的数组"><a href="#改进的数组" class="headerlink" title="改进的数组"></a>改进的数组</h1><h3 id="Array-of-创建一个包含所有参数的数组。（规避用Array构造函数创建数组时的怪异行为）"><a href="#Array-of-创建一个包含所有参数的数组。（规避用Array构造函数创建数组时的怪异行为）" class="headerlink" title="Array.of() 创建一个包含所有参数的数组。（规避用Array构造函数创建数组时的怪异行为）"></a>Array.of() 创建一个包含所有参数的数组。（规避用Array构造函数创建数组时的怪异行为）</h3><pre><code>let items = Array.of(1,2);
+console.log(items)  //[1,2]
+</code></pre><h3 id="Array-from"><a href="#Array-from" class="headerlink" title="Array.from()"></a>Array.from()</h3><p>将对象转化为数组，第一个参数：可迭代对象或类数组对象 ， 第二个参数：映射函数</p>
+<pre><code>function translate(){
+    return Array.from(arguments , (value) =&gt; value + 1);
+}
+
+let num = translate(1,2,3)
+console.log(num);   //2,3,4
+</code></pre><h3 id="find-用来查找数组中特定的值，接受两个参数：一是回调函数，另一个可选，用于指定回调函数中this的值"><a href="#find-用来查找数组中特定的值，接受两个参数：一是回调函数，另一个可选，用于指定回调函数中this的值" class="headerlink" title="find() 用来查找数组中特定的值，接受两个参数：一是回调函数，另一个可选，用于指定回调函数中this的值"></a>find() 用来查找数组中特定的值，接受两个参数：一是回调函数，另一个可选，用于指定回调函数中this的值</h3><pre><code>let numbers = [10,20,25,30,35,40];
+console.log(numbers.find(n =&gt; n &gt; 33)); //35
+console.log(numbers.findIndex(n =&gt; n &gt; 22));    //2
+</code></pre><h3 id="findIndex-同上，但返回的是查到的值的索引部分。"><a href="#findIndex-同上，但返回的是查到的值的索引部分。" class="headerlink" title="findIndex() 同上，但返回的是查到的值的索引部分。"></a>findIndex() 同上，但返回的是查到的值的索引部分。</h3><h3 id="fill-按指定的元素，可以传入一个或多个数组元素。fill-方法会用这个值重写数组中的所有值。"><a href="#fill-按指定的元素，可以传入一个或多个数组元素。fill-方法会用这个值重写数组中的所有值。" class="headerlink" title="fill() 按指定的元素，可以传入一个或多个数组元素。fill()方法会用这个值重写数组中的所有值。"></a>fill() 按指定的元素，可以传入一个或多个数组元素。fill()方法会用这个值重写数组中的所有值。</h3><pre><code>let numbers= [1,2,3,4];
+number.fill(1)
+console.log(numbers);   //[1,1,1,1]
+</code></pre><h3 id="copyWithin-从数组中复制元素的值"><a href="#copyWithin-从数组中复制元素的值" class="headerlink" title="copyWithin() 从数组中复制元素的值"></a>copyWithin() 从数组中复制元素的值</h3><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/NBq3eLsp5EHSj7FX6tdJY545Ftpryp2o5I4uH14mAHw!/b/dGsBAAAAAAAA&bo=mQWAAhkGuQIDKbY!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<h1 id="Promise-基于成功或失败的状态-让代码更容易理解和调试"><a href="#Promise-基于成功或失败的状态-让代码更容易理解和调试" class="headerlink" title="Promise  基于成功或失败的状态 让代码更容易理解和调试"></a>Promise  基于成功或失败的状态 让代码更容易理解和调试</h1><pre><code>let promise = readFile(&quot;example.txt&quot;)
+</code></pre><p>readFile()不会立即开始执行，函数会先返回一个表示异步读取操作的Promise对象，未来对该对象的操作完全取决于Promise的生命周期</p>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>pending 进行中 </p>
+<pre><code>let promise = readFile(&quot;example.txt&quot;);
+
+promise.then(function(contents){
+    //完成
+    console.log(contents);
+},function(err){
+    //拒绝
+    console.log(err.message)
+})
+</code></pre><p>unsettled 未处理</p>
+<p>settled 已处理</p>
+<h3 id="创建-使用Promise构造函数创建未完成的Promise"><a href="#创建-使用Promise构造函数创建未完成的Promise" class="headerlink" title="创建  使用Promise构造函数创建未完成的Promise"></a>创建  使用Promise构造函数创建未完成的Promise</h3><p>构造函数参数：包含初始化Promise代码的执行器函数 </p>
+<p>执行器接受参数：resolve()函数【执行器完成时调用】、reject()函数【失败时调用】</p>
+<pre><code>let fs = require(&quot;fs&quot;);
+function readFile(filename){
+    //使用Promise构造函数，传入两个函数
+    return new Promise(function(resolve,reject){
+        //触发异步操作
+        fs.readFile(filename,{ecoding:&quot;utf8&quot;},function(err,contents){
+            if(err){
+                reject(err);//失败
+                return;
+            }
+            resolve(contents);
+        });
+    });
+}
+
+let promise = readFile(&quot;example.txt&quot;);
+promise.then(function(contents){
+    //完成
+    console.log(contents)
+},function(err){
+    //拒绝
+    console.log(err.message)
+});
+</code></pre><p>readFile()方法被调用时执行器会立刻执行，在执行器中，无论是调用resolve()还是reject(），都会向任务队列中添加一个任务来解决这个Promise。</p>
+<h3 id="创建已处理的Promise"><a href="#创建已处理的Promise" class="headerlink" title="创建已处理的Promise"></a>创建已处理的Promise</h3><p>方法1：使用Promise.resolve() 接受一个参数并返回一个完成态的Promise</p>
+<p>方法2：使用Promise.reject() 创建已拒绝Promise</p>
+<h1 id="代理Proxy和反射Reflection"><a href="#代理Proxy和反射Reflection" class="headerlink" title="代理Proxy和反射Reflection"></a>代理Proxy和反射Reflection</h1><p>调用new Proxy()可创建代替其他目标对象的代理，代理可以拦截JS引擎，被拦截后会触发响应特定操作的陷阱函数。代理可以覆写对象方法</p>
+<h3 id="创建代理"><a href="#创建代理" class="headerlink" title="创建代理"></a>创建代理</h3><p>用Proxy构造函数创建代理，传入两个参数：目标和处理程序。</p>
+<p>let target = {};<br>let proxy = new Proxy(target , {});</p>
+<p>proxy.name = “proxy”;<br>console.log(proxy.name);    //“proxy”<br>console.log(target.name);    //“proxy”</p>
+<p>target.name = “target”;<br>console.log(proxy.name);    //“target”<br>console.log(target.name);    //“target”</p>
+<h1 id="用模块封装代码"><a href="#用模块封装代码" class="headerlink" title="用模块封装代码"></a>用模块封装代码</h1><p>在模块顶部创建的变量不会自动被添加到全局共享作用域，该变量只存于模块顶级作用域中。而且模块必须导出一些元素提供给外部代码访问。模块也可以从其他模块导入绑定。</p>
+<p>模块的真正魔力在于仅导出导入你需要的绑定，而不是将所有东西都放到一个文件。</p>
+<h3 id="导出语法：export-var-color-“red”-导出数据"><a href="#导出语法：export-var-color-“red”-导出数据" class="headerlink" title="导出语法：export var color = “red”; 导出数据"></a>导出语法：export var color = “red”; 导出数据</h3><h4 id="导出函数"><a href="#导出函数" class="headerlink" title="导出函数"></a>导出函数</h4><pre><code>export function sum(num1,num2){
+  return num1+ num2
+}
+</code></pre><h4 id="导出类"><a href="#导出类" class="headerlink" title="导出类"></a>导出类</h4><pre><code>export Class R{
+  constructor(){}
+}
+</code></pre><h4 id="定义一个函数，之后将它导出"><a href="#定义一个函数，之后将它导出" class="headerlink" title="定义一个函数，之后将它导出"></a>定义一个函数，之后将它导出</h4><pre><code>function multiply(num1,num2){
+  return num1 *num2
+}
+
+export multiply; 导出的是引用
+</code></pre><h3 id="导入语法：import-导入的标识符-应该从哪个模块导入"><a href="#导入语法：import-导入的标识符-应该从哪个模块导入" class="headerlink" title="导入语法：import 导入的标识符 应该从哪个模块导入"></a>导入语法：import 导入的标识符 应该从哪个模块导入</h3><pre><code>import {indentfier1} from “./example.js”;
+</code></pre>
       
 
       
@@ -423,7 +1174,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">深入理解ES6</a>
         		</li>
       		
 		</ul>
@@ -433,7 +1184,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/01/22/《深入理解ES6》/">展开全文 >></a>
         </p>
       
 
@@ -463,29 +1214,30 @@
 
 
   
-    <article id="post-《你不知道的JavaScript-下卷》阅读笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-《指尖上行-移动前端开发进阶之路》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/">《你不知道的JavaScript-下卷》阅读笔记</a>
+      <a class="article-title" href="/2018/01/09/《指尖上行-移动前端开发进阶之路》读书笔记/">《指尖上行-移动前端开发进阶之路》读书笔记</a>
     </h1>
   
 
         
-        <a href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/" class="archive-article-date">
-  	<time datetime="2018-05-20T08:18:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
+        <a href="/2018/01/09/《指尖上行-移动前端开发进阶之路》读书笔记/" class="archive-article-date">
+  	<time datetime="2018-01-09T13:04:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/COkv.nP.LHbZizbCvAUIjEbrIlFOQ8cUk1hDpfxv*Aw!/b/dDABAAAAAAAA&bo=VQhABsAP0AsRKRE!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b60EL1ED/DQkRI4B0Df8Uj8zKdvAOuUuNLAh2WneSVtw7OfeREf4!/b/dD8BAAAAAAAA&bo=AAWrBkYFCAcRGco!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
 <p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h2 id="隐式转换-见中卷第一部分第四章"><a href="#隐式转换-见中卷第一部分第四章" class="headerlink" title="隐式转换 见中卷第一部分第四章"></a>隐式转换 见中卷第一部分第四章</h2><h2 id="作用域-见上卷第一部分前三章"><a href="#作用域-见上卷第一部分前三章" class="headerlink" title="作用域  见上卷第一部分前三章"></a>作用域  见上卷第一部分前三章</h2><h3 id="值与类型"><a href="#值与类型" class="headerlink" title="值与类型"></a>值与类型</h3><p>Js的值有类型，但变量无类型，变量只是值的容器。</p>
+<p><img src="
+http://m.qpic.cn/psb?/V10qN6b62ffpyk/ZwvvTc8YqYH1RDGtOFU3EbsX7mvmNa*2pD.c9G1sGk0!/b/dFsBAAAAAAAA&bo=gAIcBn8avEADKQ0!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
 
       
 
@@ -499,7 +1251,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">《你不知道的JavaScript》</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">移动前端开发进阶之路</a>
         		</li>
       		
 		</ul>
@@ -509,7 +1261,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/01/09/《指尖上行-移动前端开发进阶之路》读书笔记/">展开全文 >></a>
         </p>
       
 
@@ -541,7 +1293,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
     </nav>
   
 

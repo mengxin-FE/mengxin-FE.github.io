@@ -11,7 +11,7 @@
   <meta name="description" content="这是萌新的博客,请多指教呢">
 <meta property="og:type" content="website">
 <meta property="og:title" content="我的地盘听我的">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:url" content="http://yoursite.com/page/11/index.html">
 <meta property="og:site_name" content="我的地盘听我的">
 <meta property="og:description" content="这是萌新的博客,请多指教呢">
 <meta property="og:locale" content="zh-Hans">
@@ -141,275 +141,431 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-React进阶之路" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-《JavaScript设计模式与开发实践》阅读笔记-二" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/15/React进阶之路/">《React进阶之路》阅读笔记</a>
+      <a class="article-title" href="/2017/05/11/《JavaScript设计模式与开发实践》阅读笔记-二/">《JavaScript设计模式与开发实践》阅读笔记 二</a>
     </h1>
   
 
         
-        <a href="/2018/07/15/React进阶之路/" class="archive-article-date">
-  	<time datetime="2018-07-15T12:29:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-15</time>
+        <a href="/2017/05/11/《JavaScript设计模式与开发实践》阅读笔记-二/" class="archive-article-date">
+  	<time datetime="2017-05-11T15:33:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/AvskgQFU55RO5jNMCxwaT5hQzOf6PIga9eq3iMTwPac!/b/dEYBAAAAAAAA&bo=OQxABuodTA8RWak!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+        <p><img src="http://b358.photo.store.qq.com/psb?/V10qN6b63c9MK4/F0xAM7SG.aVV9H4C.dQFXFVuW0y3l.7nFFqR7L71pXQ!/b/dGYBAAAAAAAA&bo=qwYABQASgA0FKT0!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
 <p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h1 id="React基础"><a href="#React基础" class="headerlink" title="React基础"></a>React基础</h1><h2 id="props和state"><a href="#props和state" class="headerlink" title="props和state"></a>props和state</h2><p>props是组件对外的接口，组件通过props接收外部传入的数据；<br><br>state是组件内部对内接口，组件内部状态的变化通过state来反应。<br><br>props是只读的，不能在组件内修改props；<br><br>state是可变的，组件的变化通过修改state来实现。</p>
-<p>在开发React应用时，要思考哪些组件应该设计成有状态组件，哪些组件应该设计成无状态组件。应该尽可能使用无状态组件，无状态组件不用关心状态的变化，只聚焦UI展示，所以更容易复用。</p>
-<p>通过定义少数的有状态组件管理整个应用的状态变化，并且将状态通过props传递给其余无状态组件，由无状态组件完成页面大部分UI渲染。</p>
-<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><p>只有类组件才具有生命周期方法，函数组件没有生命周期方法。</p>
-<ul>
-<li>挂载阶段：组件被创建，执行初始化，并被挂载到DOM中，完成组建的第一次渲染。</li>
-<li>更新阶段：组件被挂载到DOM后，组件的props或state可以引起组件更新。</li>
-<li>卸载阶段：组件从DOM中被卸载的过程</li>
-</ul>
-<h3 id="挂载阶段"><a href="#挂载阶段" class="headerlink" title="挂载阶段"></a>挂载阶段</h3><ol>
-<li>constructor：ES6构造方法，组件被创建时，首先调用此方法。该方法接收props参数，是从父组件中传入的属性对象。在这个方法中调用super(props)才能保证props被传入组件中。此方法通常用于初始化组件的state以及绑定事件。</li>
-<li>componentWillMount</li>
-<li>render：返回一个React元素而非组件的实际渲染工作，render是一个纯函数，不可在里面调用this.setState</li>
-<li>componentDidMount：组件被挂载到DOM后调用，通常用于向服务器请求数据。</li>
+<h2 id="this、call和apply"><a href="#this、call和apply" class="headerlink" title="this、call和apply"></a>this、call和apply</h2><p>JavaScript的this总是指向一个对象，而具体指向哪个对象是在运行时基于函数的执行环境动态绑定的。<br>除去不常用的with和eval的情况，this的指向大致分4种</p>
+<ol>
+<li>作为对象的方法调用</li>
+<li>作为普通函数调用</li>
+<li>构造器调用</li>
+<li>Function.prototype.call或Function.prototype.apply调用</li>
 </ol>
-<h3 id="更新阶段"><a href="#更新阶段" class="headerlink" title="更新阶段"></a>更新阶段</h3><ol>
-<li>componentWillReceiveProps：在props引起组件更新过程中调用。state引起更新不会触发该方法。</li>
-<li>shouldComponentUpdate：决定组件是否继续执行更新过程。</li>
-<li>componentWillUpadte：在组件render调用前执行</li>
-<li>componentDidUpdate：组件更新后被调用</li>
-</ol>
-<h3 id="卸载阶段"><a href="#卸载阶段" class="headerlink" title="卸载阶段"></a>卸载阶段</h3><ol>
-<li>componentWillUnmount：组件被卸载前调用</li>
-</ol>
-<h1 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h1><p>如果一个表单元素的值是由React来管理，它就是一个受控组件。非受控制组件指表单元素的状态依然由表单元素自己管理，而不是交给React组件管理，使用非受控组件使用属性ref来获取元素的值。<br><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"text"</span> ref=&#123; (input) =&gt; <span class="keyword">this</span>.input = input &#125; /&gt;</span><br></pre></td></tr></table></figure></p>
-<h1 id="高阶组件"><a href="#高阶组件" class="headerlink" title="高阶组件"></a>高阶组件</h1><p>HOC接收React组件作为参数，并且返回一个新的React组件。本质是一个函数，并不是组件。本质是装饰者设计模式。</p>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
-<li>操作props：在被包装组件接收props前，高阶组件可以先拦截到props，对props操作后再传递给被包装组件。</li>
-<li>通过ref访问组件实例</li>
-<li>组件状态提升</li>
-<li>用其他元素包装组件</li>
-</ul>
-<p>高阶组件的实现方式：由高阶组件处理通用逻辑，然后将相关属性传递给被包装组件，这种实现方式为属性代理。还可以通过继承方式实现高阶组件：通过继承被包装组件实现逻辑的复用。继承方式实现的高阶组件常用于渲染劫持。例如当用户处于登录状态时，允许组件渲染， 否则渲染一个空组件。</p>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
-<li>为了区分高阶组件，应该把被包装组件的名称也包到高阶组件的名称中，如withPersistentData</li>
-<li>不要在组件的render方法中使用高阶组件，尽量不要在组件的其他生命周期方法中使用高阶组件。因为调用高阶组件每次返回一个新组件，于是每次render前一次高阶组件创建的组件都会被卸载，然后重新挂载本次创建的新组件，影响效率。</li>
-<li>如果需要使用被包装组件的静态方法，需要手动复制这些静态方法，因为高阶组件返回的新组件不包含被包装组件的静态方法。</li>
-</ol>
-<h1 id="React-Router"><a href="#React-Router" class="headerlink" title="React Router"></a>React Router</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-router-dom</span><br></pre></td></tr></table></figure>
-<p>React Router v4 每遵循React中一切皆组件的思想，每一个Route（路由）都是一个普通的React组件</p>
-<p>React Router 通过Router和Route两个组件完成路由功能。<br><br>一个应用只需要一个Router实例，所有的路由配置组件Route都定义为Router的子组件。</p>
-<h3 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h3><p>Route是React Router中用于配置路由信息的组件，每当有一个组件需要根据URL决定是否渲染时，需要创建一个Route</p>
+<p>1.当函数作为对象的方法调用，this指向该对象：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    a : <span class="number">1</span>,</span><br><span class="line">    get : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span> === obj)</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.get()</span><br><span class="line"><span class="comment">//Object &#123;a: 1, get: function&#125;</span></span><br><span class="line"><span class="comment">//true</span></span><br><span class="line"><span class="comment">//1</span></span><br></pre></td></tr></table></figure></p>
+<p>2.当函数作为普通函数被调用，不作为对象的属性被调用，此时this指向全局对象，即window对象<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.name = <span class="string">"globalName"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> getName = &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(getName());</span><br><span class="line"><span class="comment">//globalName</span></span><br></pre></td></tr></table></figure></p>
+<p>3.构造器调用<br>大部分JavaScript函数都可以当做构造器使用，构造器的外表和普通函数一样，区别在于被调用的方式。当用new运算符调用函数时，该函数总会返回一个对象，通常情况下构造器里的this就指向返回的这个对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyClass = functio()&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"Bob"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> MyClss()</span><br><span class="line"><span class="built_in">console</span>.log(obj.name)</span><br><span class="line"><span class="comment">//Bob</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果构造器显式返回一个object类型的对象，此次运算结果最终会返回这个对象，而不是之前期待的那样</span></span><br><span class="line"><span class="keyword">var</span> MyClass = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name =<span class="string">"Bob"</span>;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        <span class="comment">//显式返回一个对象</span></span><br><span class="line">        name : <span class="string">"anne"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> MyClass()</span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br><span class="line"><span class="comment">//Object &#123;name: "anne"&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.name)</span><br><span class="line"><span class="comment">//anne</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果构造器返回一个非对象类型的数据，就不会出现问题。this指向返回的对象。</span></span><br><span class="line"><span class="keyword">var</span> MyClass = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"Bob"</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"anne"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj =<span class="keyword">new</span> MyClass();</span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br><span class="line"><span class="comment">//MyClass &#123;name: "Bob"&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.name)</span><br><span class="line"><span class="comment">//Bob</span></span><br></pre></td></tr></table></figure></p>
+<p>4.Function.prototype.call 或 Function.prototype.apply<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">call() 方法在使用一个指定的<span class="keyword">this</span>值和若干个指定的参数值的前提下调用某个函数或方法.</span><br><span class="line">该方法的作用和 apply() 方法类似，只有一个区别，就是call()方法接受的是若干个参数的列表，而apply()方法接受的是一个包含多个参数的数组。</span><br><span class="line"></span><br><span class="line">fun.call(thisArg[, arg1[, arg2[, ...]]])</span><br><span class="line">参数</span><br><span class="line">thisArg</span><br><span class="line">在fun函数运行时指定的<span class="keyword">this</span>值。需要注意的是，指定的<span class="keyword">this</span>值并不一定是该函数执行时真正的<span class="keyword">this</span>值，如果这个函数处于非严格模式下，则指定为<span class="literal">null</span>和<span class="literal">undefined</span>的<span class="keyword">this</span>值会自动指向全局对象(浏览器中就是<span class="built_in">window</span>对象)，同时值为原始值(数字，字符串，布尔值)的<span class="keyword">this</span>会指向该原始值的自动包装对象。</span><br><span class="line">arg1, arg2, ...</span><br><span class="line">指定的参数列表。</span><br><span class="line">返回值</span><br><span class="line">返回结果包括指定的<span class="keyword">this</span>值和参数。</span><br><span class="line">描述</span><br><span class="line">可以让call()中的对象调用当前对象所拥有的<span class="function"><span class="keyword">function</span>。你可以使用<span class="title">call</span>(<span class="params"></span>)来实现继承：写一个方法，然后让另外一个新的对象来继承它（而不是在新对象中再写一次这个方法）。</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">跟普通的函数调用相比，用<span class="title">Function</span>.<span class="title">prototype</span>.<span class="title">call</span>或<span class="title">Function</span>.<span class="title">prototype</span>.<span class="title">apply</span>可以动态地改变传入函数的<span class="title">this</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">var</span> <span class="title">obj</span> = </span>&#123;</span><br><span class="line">    name : <span class="string">"jay"</span>,</span><br><span class="line">    getName : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj2 =&#123;</span><br><span class="line">    name : <span class="string">"anne"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj.getName());</span><br><span class="line"><span class="comment">//jay</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.getName.call(obj2))</span><br><span class="line"><span class="comment">//anne</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//丢失的this，这是一个常见问题</span></span><br><span class="line"><span class="keyword">var</span> obj =&#123;</span><br><span class="line">    myName : <span class="string">"Bob"</span>,</span><br><span class="line">    getName : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.myName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj.getName());  <span class="comment">//此时,getName作为对象的方法被调用，this指向该对象也就是obj，输出"Bob"</span></span><br><span class="line"><span class="comment">//当调用obj.getName时，getName方法是作为obj对象的属性被调用的，此时this指向obj对象，所以obj.getName()输出"Bob"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> getName2 = obj.getName;</span><br><span class="line"></span><br><span class="line"><span class="comment">//当另外一个变量getName2引用obj.getName，并且调用getName2时，此时是普通函数调用方式，this指向全局window，所以输出undefined</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(getName2);  <span class="comment">//function ()&#123;return this.myName;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(getName2());    <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="call与apply的区别"><a href="#call与apply的区别" class="headerlink" title="call与apply的区别"></a>call与apply的区别</h3><p>在ECMAScript3中给Function的原型定义了两个方法，Function.prototype.call 和Function.prototype.apply，作用相同，仅仅是传入参数形式不同。<br>apply接受两个参数，第一个参数指定了函数体内this对象的指向，第二个参数为一个带下标的集合，这个集合可以是数组，也可以是类数组，apply方法把这个集合中的元素作为参数传递给被调用的函数：<br>当使用call或apply的时候，如果传入的第一个参数为null，函数体内的this会指向默认的宿主对象，即window</p>
+<pre><code>var func = function(a,b,c){
+    console.log([a,b,c]);
+}
+
+func.apply(null,[1,2,3]);    //[1,2,3]
+</code></pre><p>有时使用call或apply的目的不在于指定this，而是借用其他对象的方法，那我们可以传入null来替代某个具体对象<br>Math.max.apply(null,[1,2,5,3,4]);   //5</p>
+<h3 id="call和apply的用途"><a href="#call和apply的用途" class="headerlink" title="call和apply的用途"></a>call和apply的用途</h3><p>1.改变this的指向</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 =&#123;</span><br><span class="line">    name : <span class="string">"anne"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj2 =&#123;</span><br><span class="line">    name : <span class="string">"Bob"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.name = <span class="string">"jack"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line">getName() <span class="comment">//函数作为普通函数被调用,this指向全局window 输出 "jack"</span></span><br><span class="line">getName.call(obj1)  <span class="comment">//"anne"</span></span><br><span class="line"><span class="comment">//当执行getName.call(obj1) getName函数体内的this指向obj1对象</span></span><br><span class="line">getName.call(obj2)  <span class="comment">//"Bob"</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>path：用来描述这个Route匹配的URL的pathname，当URL匹配一个Route时，这个Route中定义的组件将会被渲染。</li>
-<li><p>match：当URL和Route匹配时，Route会创建一个match对象作为props中的一个属性传递给被渲染的组件。对象包含以下4个属性</p>
-<ul>
-<li>params：Route的path可以包含参数。例如<route path="/foo/:id">包含一个参数id，params从path解析到参数{id:1}</route></li>
-<li>isExact：布尔值。当URL完全匹配时值为true。path=’/foo’、URL=’<a href="http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。" target="_blank" rel="noopener">http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。</a></li>
-<li>path：Route的path属性。构建嵌套路由时会使用到</li>
-<li>url：URL的匹配部分</li>
+<li>this被不经意改变的场景：比如有一个div节点，div节点的onclick事件中的this本来指向该div</li>
 </ul>
-</li>
-<li><p>Route渲染组件的方式：Route提供3个属性用来定义待渲染的组件：</p>
-<ul>
-<li>component 当URL和Route匹配时，component属性定义的组件就会被渲染：</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">'/foo'</span> component=&#123;Foo&#125;&gt;</span><br></pre></td></tr></table></figure>
-<p>当URL=’<a href="http://example.com/foo&#39;时，Foo组件会被渲染。" target="_blank" rel="noopener">http://example.com/foo&#39;时，Foo组件会被渲染。</a></p>
-</li>
-<li><p>render 该方式方便为待渲染组件传递额外的属性</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">    &lt;Route path=<span class="string">'/foo'</span> render=&#123; (props) =&gt; (</span><br><span class="line">        &lt;Foo &#123;...props&#125; data=&#123;extraProps&#125; /&gt;</span><br><span class="line">    )&#125;&gt;</span><br><span class="line">    <span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">  - children  与上述不同，children返回的组件无论路由是否匹配都会被渲染，当匹配不成功时，match属性为null</span></span><br><span class="line"><span class="string">  - `</span><span class="string">``</span>js</span><br><span class="line">    &lt;Router path=<span class="string">'/foo'</span> children=&#123; (props) =&gt; (</span><br><span class="line">        &lt;div className=&#123;props.match ? <span class="string">'active'</span> : <span class="string">''</span>&#125;&gt;</span><br><span class="line">            &lt;Foo /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;&gt;</span></span><br><span class="line"><span class="regexp">    ```  </span></span><br><span class="line"><span class="regexp">    如果Route匹配当前URL，待渲染元素的根节点div的class将被设置为active</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">- Switch 和 exact。当URL和多个Route匹配时，这些Route都会执行渲染操作。如果只想当第一个匹配的Route渲染，可以把这些Route包裹到一个Switch组件中。如果想让URL和Route完全匹配时Route才渲染，可使用Route的exact属性。Switch和exact常联合使用应用于首页的导航。</span></span><br><span class="line"><span class="regexp">    ```js</span></span><br><span class="line"><span class="regexp">    &lt;Router&gt;</span></span><br><span class="line"><span class="regexp">        &lt;Switch&gt;</span></span><br><span class="line"><span class="regexp">            &lt;Route exact path='/</span><span class="string">' component=&#123;Home&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/posts<span class="string">' component=&#123;Posts&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/:user<span class="string">' component=&#123;User&#125; /&gt;</span></span><br><span class="line"><span class="string">        &lt;/Switch&gt;</span></span><br><span class="line"><span class="string">    &lt;/Router&gt;</span></span><br></pre></td></tr></table></figure>
-<p>如果不使用Switch，当pathname为’posts’时，后面两个都会被匹配，但我们并不希望/:user被匹配。<br><br>如果不使用exact，’/‘,’/posts’…几乎所有URL都会被匹配到第一个Route,而又因为使用了Switch，后面的两个Route永远也不会被匹配。使用exact保证pathname只有完全匹配时，第一个Route才会被匹配。</p>
-</li>
-</ul>
-</li>
-<li><p>嵌套路由：是指在Route渲染的组件内部定义新的Route</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Posts = <span class="function">(<span class="params"> &#123; match&#125; </span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &#123;<span class="comment">/* 这里match.url 等于 /posts */</span>&#125;</span><br><span class="line">            &lt;Route path=&#123;<span class="string">`<span class="subst">$&#123;match.url&#125;</span>/:id`</span>&#125; component=&#123;PostDetail&#125; /&gt;</span><br><span class="line">            &lt;Route exact path=&#123;match.url&#125; component=&#123;PostList&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="链接-Link"><a href="#链接-Link" class="headerlink" title="链接 Link"></a>链接 Link</h3><p>Link是React Router提供的链接组件，一个Link组件定义了当点击该Link时，页面应该如何路由。</p>
-<p>Link使用to属性声明要导航到的URL地址。to可以是string或object类型，当to为object类型时，可以包含pathname、search、hash、state四个属性。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> Navigation = <span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    &lt;header&gt;</span><br><span class="line">        &lt;nav&gt;</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/'&gt;Home&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/posts'&gt;Posts&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">            &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>nav&gt;</span><br><span class="line">    &lt;<span class="regexp">/header&gt;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;link to &#123;</span></span><br><span class="line"><span class="regexp">    &#123;</span></span><br><span class="line"><span class="regexp">        pathname : '/</span>posts<span class="string">',</span></span><br><span class="line"><span class="string">        search : '</span>?sort=name<span class="string">',</span></span><br><span class="line">        hash : '#the-hash',</span><br><span class="line">        state : &#123; <span class="attr">fromHome</span> : <span class="literal">true</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="使用history对象手动实现导航"><a href="#使用history对象手动实现导航" class="headerlink" title="使用history对象手动实现导航"></a>使用history对象手动实现导航</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//push向浏览器历史记录新增一条</span></span><br><span class="line">history.push(path , [state])</span><br><span class="line"></span><br><span class="line"><span class="comment">//replace会用新记录替代当前记录</span></span><br><span class="line">history.replace(path , [state])</span><br></pre></td></tr></table></figure>
-<h1 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h1><p>Redux的主要思想即描述应用的状态，如何根据action进行更新。</p>
-<p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/*D.QOD9xmUP6nOTo6HZTeZy7iXJaSvMsW5dY9fC4Lp8!/b/dFYAAAAAAAAA&bo=gAZOA4AGTgMDKQw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<h3 id="Redux三大原则"><a href="#Redux三大原则" class="headerlink" title="Redux三大原则"></a>Redux三大原则</h3><ul>
-<li>只维护一个全局状态state对象，储存在Redux的store中。</li>
-<li>保持应用状态只读。不可直接修改应用状态，需要修改时必须发送action，该action描述如何修改应用状态。</li>
-<li>应用状态的改变通过纯函数reducer完成。</li>
-</ul>
-<h2 id="react-redux"><a href="#react-redux" class="headerlink" title="react-redux"></a>react-redux</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-redux</span><br></pre></td></tr></table></figure>
-<p>根据组件意图不同，可以将组件划分为两类：展示组件、容器组件。<br></p>
-<ul>
-<li>展示组件–UI展示，不关心数据。</li>
-<li>容器组件–逻辑处理，如发送网络请求、处理返回数据、将处理过的数据通过props传递给展示组件。</li>
-</ul>
-<p>当展示组件的状态变更引起源数据变化时，展示组件通过调用容器组件提供的方法同步变化。<br><b>有/无 状态组件根据是否使用state来划分，展示组件和容器组件根据组件意图划分。</b></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">connect()   <span class="comment">// 用于把React组件和Redux的store连接起来，生成一个容器组件，负责数据管理和业务逻辑</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"><span class="keyword">import</span> TodoList <span class="keyword">from</span> <span class="string">'./TodoList'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(所需应用状态 , 展示组件的状态)(TodoList);</span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(mapStateToProps , mapDispatchToProps)(TodoList);</span><br><span class="line"></span><br><span class="line">connect的两个参数的类型都是函数，前者负责从全局应用状态state中取出所需数据，映射到展示组件的props。后者负责把action映射到展示组件的props上。</span><br><span class="line"></span><br><span class="line">mapStateToProps : 把state转换成props。state是Redux store中保存的应用状态，它作为参数传递给mapStateToProps。每当store中的state更新时，mapStateToProps会重新执行，重新计算传递给展示组件的props，从而触发组件的重新渲染。</span><br><span class="line"></span><br><span class="line">mapDispatchToProps : 容器组件可以发送action更新state。该函数接收store.dispatch方法作为参数，返回展示组件用来修改state的函数</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Provider    用于容器组件获取Redux的store。该组件需要接收store属性，然后把store属性保存到context</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"div1"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.id);   <span class="comment">//输出div1</span></span><br><span class="line">&#125;</span><br><span class="line">假如该事件函数中有一个内部函数func，在事件内部调用func函数时，func函数体内的<span class="keyword">this</span>就指向<span class="built_in">window</span>，而不是我们预期的div</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"div1"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.id);   <span class="comment">//输出div1</span></span><br><span class="line">    <span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.id)    <span class="comment">//输出undefined</span></span><br><span class="line">    &#125;</span><br><span class="line">    func()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">这时候使用call来修正func函数内的<span class="keyword">this</span></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"div1"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.id)    <span class="comment">//输出undefined</span></span><br><span class="line">    &#125;</span><br><span class="line">    func.call(<span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.Function.prototype.bind  用来指定函数内部的this指向<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">var</span> self = <span class="keyword">this</span>;  <span class="comment">//保存原函数</span></span><br><span class="line">   <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//返回一个新函数</span></span><br><span class="line">      <span class="keyword">return</span> self.apply(context , <span class="built_in">arguments</span>);<span class="comment">//执行新函数的时候，会把之前传入的context当作新函数体内的this</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj =&#123;</span><br><span class="line">  name : <span class="string">"jay"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;.bind(obj);</span><br><span class="line">func()</span><br><span class="line"><span class="comment">//jay</span></span><br><span class="line"></span><br><span class="line">通过<span class="built_in">Function</span>.prototype.bind来<span class="string">"包装"</span>func函数，并且传入一个对象context当作参数，这个context对象就是我们想修正的<span class="keyword">this</span>对象</span><br><span class="line"></span><br><span class="line">在<span class="built_in">Function</span>.prototype.bind内部，我们先把func函数的引用保存起来，然后返回一个新函数，在将来执行func函数时，实际上先执行的是刚返回的新函数，在新函数内部，self.apply(context,<span class="built_in">arguments</span>)这句代码才是执行原来的func函数，并且指定context对象为func函数体内的<span class="keyword">this</span></span><br></pre></td></tr></table></figure></p>
+<p>3.借用其他对象的方法</p>
+<p>一、借用构造函数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> A = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> B = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  A.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">B.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> B(<span class="string">"jay"</span>)</span><br><span class="line"><span class="built_in">console</span>.log(b.getName())</span><br><span class="line"><span class="comment">//jay</span></span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">《JavaScript设计模式与开发实践》</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/11/《JavaScript设计模式与开发实践》阅读笔记-二/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-《JavaScript设计模式与开发实践》阅读笔记-一" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/22/《JavaScript设计模式与开发实践》阅读笔记-一/">《JavaScript设计模式与开发实践》阅读笔记 一</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/22/《JavaScript设计模式与开发实践》阅读笔记-一/" class="archive-article-date">
+  	<time datetime="2017-04-22T01:54:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://wx2.sinaimg.cn/large/006gfOdGgy1feirsfesagj332o21tb2a.jpg" width="100%" height="100%" align="center" alt="图片来自微博"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>动态类型语言如JavaScript的变量类型在运行时是可变的，一个JavaScript既可以表示A类型的对象，又可以表示B类型的对象，与生俱来的多态特性。</p>
+<p>多态的思想实际上是把“做什么”和“谁去做”分离开来，要实现这一点，归根结底要消除类型之间的耦合关系。</p>
+<p>多态的最根本好处在于，你不必再向对象询问“你是什么类型”而后根据得到的答案调用对象的某个行为—你只管调用该行为就是了，其他的一切多态机制会为你安排妥当。</p>
+<p>多态最根本的作用就是通过把过程化的条件分支语句转换为对象的多态性，从而消除这些分支语句。</p>
+<p>在电影的拍摄现场，当导演喊出“action”时，主角开始背台词，照明师负责打灯光，后面的群众演员假装中枪倒地，道具师往镜头里撒雪花。在得到同一个消息时，每个对象都知道自己应该做什么。如果不利于对象的多态性，而是用面向过程的方式来编写这段代码，那么相当于在电影开始拍摄之后，导演每次都要走到每个人的面前，确认他们的职业分工，然后告诉他们要做什么，如果映射到程序中，那么程序中将充斥着条件分之语句。</p>
+<p>利用对象的多态性，导演在发布消息时，就不必考虑各个对象接到消息后应该做什么。对象应该做什么并不是临时决定的，而是已经事先约定和排练完毕的。每个对象应该做什么，已经成为了该对象的一个方法，被安排在对象的内部，每个对象负责它们自己的行为。所以这些对象可以根据同一个消息，有条不紊地分别进行各自的工作。</p>
+<p>利用对象的多态性，导演在发布消息时就不必考虑各个对象接到消息后应该做什么。对象应该做什么不是临时决定的，而是已经事先约定和排练完毕的。每个对象应该做什么，已经成了该对象的一个方法，被安装在对象的内部，每个对象负责它们自己的行为。所以这些对象可以根据同一个消息分别进行各自的工作。</p>
+<p>将行为分布在各个对象中，并让这些对象各自负责自己的行为，这正是面向对象设计的优点。</p>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><h4 id="封装数据"><a href="#封装数据" class="headerlink" title="封装数据"></a>封装数据</h4><p>封装的目的是将信息隐藏，一般而言是由语法解析来实现，这些语言提供了private、public、protected等关键字来提供不同的访问权限。</p>
+<p>但JavaScript没有提供对这些关键字的支持，只能依赖变量的作用域来实现封装特性，而且只能模拟出public、private这两种封装性。</p>
+<p>除了ES6提供的let之外，一般我们通过函数来创建作用域：</p>
+<pre><code>var myObject = (function(){
+    var _name = &quot;sven&quot;;//私有(private)变量
+    return{
+        getName : function(){
+            return _name;
+        }
+    }
+})();
+console.log(myObject)    //myObject保存的是立即执行函数返回的对象，对象中没有_name变量 
+console.log(myObject.getName());    //输出：sven
+console.log(myObject._name);    //输出：undefined
+</code></pre><p>ES6还可以通过Symbol创建私有属性。 <a href="https://github.com/lukehoban/es6features" target="_blank" rel="noopener">es6features</a></p>
+<h2 id="基于原型继承的JavaScript对象系统"><a href="#基于原型继承的JavaScript对象系统" class="headerlink" title="基于原型继承的JavaScript对象系统"></a>基于原型继承的JavaScript对象系统</h2><p>在以类为中心的面向对象编程语言中，类和对象的关系就可以想象成铸模和铸件的关系，对象总是从类中创建而来。而在原型编程的思想中， 对象未必需要从类中创建，一个对象是通过克隆另外一个对象所得到的。<br>在面向对象编程中，如果我们需要创建一个对象，先指定它的类型，然后通过类来创建这个对象。在原型模式中，我们不再关心对象的具体类型，而是找到一个对象，然后通过克隆来创建一个一模一样的对象。</p>
+<p>ECMAScript5提供了Object.create方法可以用来克隆对象。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Plane = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.blood = <span class="number">100</span>;</span><br><span class="line">    <span class="keyword">this</span>.attackLevel =<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">this</span>.defenseLevel =<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> plane = <span class="keyword">new</span> Plane();</span><br><span class="line"></span><br><span class="line">plane.blood =<span class="number">500</span>;</span><br><span class="line">plane.attackLevel =<span class="number">10</span>;</span><br><span class="line">plane.defenseLevel =<span class="number">7</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> clonePlane = <span class="built_in">Object</span>.create(plane);</span><br><span class="line"><span class="built_in">console</span>.log(clonePlane.blood)   <span class="comment">//500</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//不支持Object.create方法的浏览器</span></span><br><span class="line"><span class="built_in">Object</span>.create = <span class="built_in">Object</span>.create || <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">    F.prototype =obj;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>目前我们一直在讨论的“对象的原型“，只能说对象的构造器有原型。某个对象的<strong>__proto</strong>属性默认会指向它的构造器的原型对象，即{Constructor}.prototype 。<strong>__proto</strong>就是对象跟“对象构造器的原型”联系起来的纽带。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">《JavaScript设计模式与开发实践》</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/22/《JavaScript设计模式与开发实践》阅读笔记-一/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-《实战ES2015》-阅读笔记-一" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/31/《实战ES2015》-阅读笔记-一/">《实战ES2015》 阅读笔记 一</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/31/《实战ES2015》-阅读笔记-一/" class="archive-article-date">
+  	<time datetime="2017-03-31T12:50:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://b143.photo.store.qq.com/psb?/V10qN6b62Hd8cf/9.90aVBSCvcuDJiE3sBU.9*b1K5p9LziiITNKwcd3TA!/b/dI8AAAAAAAAA&bo=oAU4BAASgA0FGTw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<h2 id="let、const和块级作用域"><a href="#let、const和块级作用域" class="headerlink" title="let、const和块级作用域"></a>let、const和块级作用域</h2><p>let和const是新的变量定义方法。</p>
+<p>const即constant的缩写，用于定义常量，不可变。</p>
+<p><code>作用域</code> 在ES2015之前的标准中，只有全局作用域和函数作用域。</p>
+<h3 id="与作用域有着极强关系的循环绑定事件"><a href="#与作用域有着极强关系的循环绑定事件" class="headerlink" title="与作用域有着极强关系的循环绑定事件"></a>与作用域有着极强关系的<code>循环绑定事件</code></h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//举一个不恰当的例子：给一组按钮添加事件绑定时，对这个节点列表进行遍历，对每个节点列表进行事件绑定，看似没有问题，但是当点击任何一个按钮时，都会报错。</span></span><br><span class="line"><span class="comment">//为什么呢？需要对for循环的运行原理进行深入理解</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> buttons = <span class="built_in">document</span>.querySelectorAll(<span class="string">".button"</span>);</span><br><span class="line"><span class="keyword">var</span> text = <span class="built_in">document</span>.querySelector(<span class="string">"#text"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>;i&lt;buttons.length;i++)&#123;</span><br><span class="line">   buttons[i].addEventListener(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">   text.innerText = buttons[i].innerText</span><br><span class="line">   &#125;,<span class="literal">false</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//打印i的值，一直等于buttons.length的值。在使用var来定义的计数器中，i会存在于for循环的上一层作用域中，这意味着在对于它的引用被全部解除之前，他都不会被垃圾收集器所标记并清除，而一直保持着循环结束后的值。</span></span><br><span class="line"><span class="comment">//这意味着每次点击按钮时，触发的响应函数中对计数器i的引用所获得的值都一样，即按钮的个数，这便是报错的直接原因。</span></span><br><span class="line"><span class="comment">//块状作用域的作用便是希望在for循环所属的&#123;....&#125;内能形成一个作用域，即块状作用域，让在循坏体内所定义的变量能留在循环体内。</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <table>
 <thead>
 <tr>
-<th>Plugin</th>
-<th>README</th>
+<th>let与var的异同点</th>
+<th>let</th>
+<th>var</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Dropbox</td>
-<td>[plugins/dropbox/README.md][PlDb]</td>
+<td>定义变量</td>
+<td>√</td>
+<td>√</td>
 </tr>
 <tr>
-<td>Github</td>
-<td>[plugins/github/README.md][PlGh]</td>
+<td>可被释放</td>
+<td>√</td>
+<td>√</td>
 </tr>
 <tr>
-<td>Google Drive</td>
-<td>[plugins/googledrive/README.md][PlGd]</td>
+<td>可被提升</td>
+<td></td>
+<td>√</td>
 </tr>
 <tr>
-<td>OneDrive</td>
-<td>[plugins/onedrive/README.md][PlOd]</td>
+<td>重复定义检查</td>
+<td>√</td>
+<td></td>
 </tr>
 <tr>
-<td>Medium</td>
-<td>[plugins/medium/README.md][PlMe]</td>
-</tr>
-<tr>
-<td>Google Analytics</td>
-<td>[plugins/googleanalytics/README.md][PlGa]</td>
+<td>可被用于块状作用域</td>
+<td>√</td>
 </tr>
 </tbody>
 </table>
+<h3 id="let定义变量"><a href="#let定义变量" class="headerlink" title="let定义变量"></a>let定义变量</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">"a"</span>;</span><br><span class="line"><span class="keyword">var</span> a = <span class="string">"b"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"><span class="comment">//"b"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b =<span class="string">"b"</span>;</span><br><span class="line"><span class="keyword">let</span> b = <span class="string">"c"</span>;</span><br><span class="line"><span class="comment">//Uncaught SyntaxError: Identifier 'b' has already been declared</span></span><br></pre></td></tr></table></figure>
+<h3 id="let用于块级作用域"><a href="#let用于块级作用域" class="headerlink" title="let用于块级作用域"></a>let用于块级作用域</h3><p>块级作用域在上面for循环的应用便是为循环体的每一次执行都产生一个作用域。</p>
+<p>只需要将刚才的i的定义改成let，便可在循环体内形成块级作用域，让每一次循环体的执行都能保留当前计数器的数值和引用。<br>for(let i = 0;i&lt;buttons.length;i++){<br>…….<br>}</p>
+<h3 id="const定义常量"><a href="#const定义常量" class="headerlink" title="const定义常量"></a>const定义常量</h3><p>以前对于常量的定义都是使用大写字母组合的变量名，这种妥协的“常量”是随时可以被修改的。</p>
+<pre><code>var MAX_NUM = 100;
+MAX_NUM =1000;//WARNING!
+</code></pre><p>使用const真正获得定义常量的能力。</p>
+<pre><code>const PI = 3.1415926
+PI = 3.14
+//Uncaught TypeError: Assignment to constant variable.(…)
+</code></pre><p><code>const定义常量的原理是阻隔变量名所对应的内存地址被改版</code></p>
+<p>变量与内存之间的关系由三个部分组成：变量名、内存绑定、内存地址</p>
+<p>ECMAScript在对变量名的引用进行读取时，会从该变量当前所对应的内存地址所指向的内存空间中读取内容。当用户改变变量的值时，引擎会重新从内存中分配一个新的内存空间以存储新的值，并将新的内存地址与变量进行绑定。const的原理就是让变量名与内存地址之间建立不可改变的绑定。</p>
+<p>例外情况：复杂类型的数据</p>
+<pre><code>const foo ={
+  a : 1
+}
 
-      
+foo.a =2
+foo.b =3
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
-        		</li>
-      		
-		</ul>
-	</div>
+console.log(foo.a)
+//2
+</code></pre><h3 id="变量的生命周期"><a href="#变量的生命周期" class="headerlink" title="变量的生命周期"></a>变量的生命周期</h3><p>在ECMAScript中，一个变量的生命周期是固定的，由作用域和对其的引用决定。</p>
+<pre><code>(function(){
+   var foo = &quot;A&quot;
+})()
 
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/15/React进阶之路/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-使用ant-design-Pro开发项目的小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">使用ant design Pro开发项目的小结</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/11/使用ant-design-Pro开发项目的小结/" class="archive-article-date">
-  	<time datetime="2018-07-11T14:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/ptCDi2wSCRmTt8JmZjcS4dcLslpSrG0Er3YejnV*Ixw!/b/dFMBAAAAAAAA&bo=oAU4BAAAAAARF7k!&rf=viewer_4&t=5" width="100%"></p>
-<h1 id="一、关于上手。"><a href="#一、关于上手。" class="headerlink" title="一、关于上手。"></a>一、关于上手。</h1><ol>
-<li><p>关于ant design Pro的介绍，自己看官网，大致上可以理解为ant design（组件库） + ant design Pro （完整的项目）+ dva（路由+数据流管理）的组合拳。总之这个Pro是一个已经帮你打通了从搭建到测试打包发布的一整套完整的项目，你只需要站在巨人的肩膀上开发就好了。</p>
-</li>
-<li><p>按照官网安装好项目之后，就能看到几个页面。进行开发之前，你需要一定的react语法、Js(ES6)、dva的基础。啥？全家桶都不会？没关系，写页面又不需要你精通全家桶，看完以下链接就开始写页面吧，遇到不会的再去查，这样学比较快。请按照以下顺序食用</p>
-</li>
-</ol>
-<ul>
-<li><a href="https://dvajs.com/knowledgemap/#javascript-%E8%AF%AD%E8%A8%80" target="_blank" rel="noopener">dva知识地图</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-javascript" target="_blank" rel="noopener">js快速预览</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-react" target="_blank" rel="noopener">react快速预览</a></li>
-<li><a href="http://huziketang.mangojuice.top/books/react/lesson9" target="_blank" rel="noopener">react小书</a></li>
-<li><a href="https://dvajs.com/guide/concepts.html" target="_blank" rel="noopener">dva文档</a></li>
-<li><a href="https://doc.react-china.org/docs/hello-world.html" target="_blank" rel="noopener">react中文文档</a></li>
-<li><a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">ES6</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect" target="_blank" rel="noopener">MDN ？？？ MDN有什么好看的？如果你js不太熟，MDN有很全的API可以查阅</a> </li>
+console.log(foo);
+//undefined
+</code></pre><p>可以看出，在一个函数内定义了一个变量，脱离了该作用域该变量就不存在。</p>
+<p>ECMAScript垃圾回收的方式是基于对变量的引用进行统计，当一个变量的引用被全部解除时，便会回收。</p>
+<p>如果想让foo的生命周期延长，最简单的办法是闭包，闭包就是利用高阶函数来产生能够穿透作用域的引用。</p>
+<h3 id="let、const与循环"><a href="#let、const与循环" class="headerlink" title="let、const与循环"></a>let、const与循环</h3><p>ES2015新增for..of循环，替代for…in循环</p>
+<pre><code>const arr = [1,2,3,4,5];
+for (const item of arr){
+  console.log(item)
+}
+//1 2 3 4 5
+</code></pre><h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><p>顾名思义，使用箭头=&gt;进行定义的函数。</p>
+<h4 id="单一参数的单行箭头函数"><a href="#单一参数的单行箭头函数" class="headerlink" title="单一参数的单行箭头函数"></a>单一参数的单行箭头函数</h4><pre><code>//syntax:arg =&gt; statemet 
+let array = [&quot;a&quot;,&quot;bc&quot;,&quot;def&quot;,&quot;ghij&quot;];
+array = array.filter(item =&gt; item.length &gt;= 2)
+//[&quot;bc&quot;, &quot;def&quot;, &quot;ghij&quot;]
+</code></pre><h4 id="多参数的单行箭头函数-常见于数组的处理，如排序"><a href="#多参数的单行箭头函数-常见于数组的处理，如排序" class="headerlink" title="多参数的单行箭头函数 常见于数组的处理，如排序"></a>多参数的单行箭头函数 常见于数组的处理，如排序</h4><pre><code>//syntax:(arg1,arg2) =&gt; statemet 
+let array = [&quot;a&quot;,&quot;bc&quot;,&quot;def&quot;,&quot;ghij&quot;];
+array = array.sort((a,b) =&gt; a.length &lt;b.length)
+//[&quot;ghij&quot;, &quot;def&quot;, &quot;bc&quot;, &quot;a&quot;]
+</code></pre><h4 id="多行箭头函数"><a href="#多行箭头函数" class="headerlink" title="多行箭头函数"></a>多行箭头函数</h4><pre><code>//syntax:arg =&gt; {....}
+</code></pre><h4 id="无参数箭头函数"><a href="#无参数箭头函数" class="headerlink" title="无参数箭头函数"></a>无参数箭头函数</h4><pre><code>//syntax:()=&gt;statment
+</code></pre><p>使用箭头函数的好处是省略了function关键字，简洁直观。</p>
+<pre><code>const arr = [1,2,3];
+const squares = arr.map(x =&gt; x * x)
+//传统写法
+const squares = arr.map(function(x){
+    return x * x
+})
+</code></pre><h2 id="模版字符串"><a href="#模版字符串" class="headerlink" title="模版字符串"></a>模版字符串</h2><p>模版字符串并不是模板引擎，是两回事。以前做字符串与变量拼接时，需要使用多个“+”，代码很不整洁。</p>
+<h3 id="模板字符串语法"><a href="#模板字符串语法" class="headerlink" title="模板字符串语法"></a>模板字符串语法</h3><p>使用普通的字符串时，使用单引号或双引号来包裹字符串的内容。而ES2015的模板字符串则需要使用反勾号 <code>。
+//syntax:</code>string….`</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">`something`</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> str1 = <span class="string">`string: <span class="subst">$&#123;str&#125;</span>`</span></span><br><span class="line"><span class="comment">//"string: something"</span></span><br></pre></td></tr></table></figure>
+<p>注意！不能使用双引号嵌套单引号来表达字符串中的字符串，可以使用反斜杠来将需要显示的反勾号转义成普通的字符。</p>
+<pre><code>const str1 =&quot;Here is the outter string.&apos;This is a string in another string&apos;&quot;
+const str2 =`Here is the outter string.\&apos;This is a string in another string\``
+</code></pre><h2 id="对象字面量扩展语法"><a href="#对象字面量扩展语法" class="headerlink" title="对象字面量扩展语法"></a>对象字面量扩展语法</h2><p>在之前，对象字面量只是一种表达对象的语法。</p>
+<h3 id="函数类属性的省略语法"><a href="#函数类属性的省略语法" class="headerlink" title="函数类属性的省略语法"></a>函数类属性的省略语法</h3><p>方法属性省略function    //syntax:{method(){….}}</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">   <span class="comment">//before</span></span><br><span class="line">   foo:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">"foo"</span></span><br><span class="line">   &#125;,</span><br><span class="line">   <span class="comment">//now</span></span><br><span class="line">   bar()&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="string">"bar"</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.foo</span><br><span class="line"> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">"foo"</span></span><br><span class="line">&#125;</span><br><span class="line">obj.bar</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="string">"bar"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Set集合"><a href="#Set集合" class="headerlink" title="Set集合"></a>Set集合</h2><p>在ECMAScript中，Array()表示一系列元素的有序集合，每个元素都有下标表示其在集合中的位置。而无序集合Set首次引入ECMAScript，它没有排序且元素不可重复。</p>
+<p>Set中遍历元素的方式：Set通过for…of…，而Array通过for…in…。</p>
+<table>
+<thead>
+<tr>
+<th>数组与集合的区别</th>
+<th>数组</th>
+<th>集合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>元素序列</td>
+<td>有序</td>
+<td>无序</td>
+</tr>
+<tr>
+<td>元素可重复性</td>
+<td>元素可重复</td>
+<td>元素不可重复</td>
+</tr>
+</tbody>
+</table>
+<p>集合与数组不同，集合无法像数组那样使用[]语法，不能像数组用下标取值，而需要用新建对象的方法来创建一个新的集合对象。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>const set = new Set([1,2,3])</p>
+<h3 id="set的属性"><a href="#set的属性" class="headerlink" title="set的属性"></a>set的属性</h3><pre><code>Set.prototype.size:返回Set实例的成员数量。
+Set.prototype.constructor:默认的构造Set函数。
+</code></pre><h3 id="set的方法"><a href="#set的方法" class="headerlink" title="set的方法"></a>set的方法</h3><pre><code>add(value):添加某个值，返回Set结构本身。
+delete(value):删除某个值，返回一个布尔值，表示删除成功。
+has(value):返回一个布尔值，表示参数是否为Set的成员。
+clear():清除所有成员，没有返回值。
+keys() :返回一个键名的遍历器
+values() :返回一个值的遍历器
+entries() :返回一个键值对的遍历器
+forEach():使用回调函数遍历每个成员
+</code></pre><h3 id="集合对象操作方法"><a href="#集合对象操作方法" class="headerlink" title="集合对象操作方法"></a>集合对象操作方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">set.add(value)	<span class="comment">//添加元素到集合内</span></span><br><span class="line"><span class="keyword">const</span> set =<span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">set.add(<span class="number">1</span>);</span><br><span class="line"><span class="comment">//Set &#123;1&#125;</span></span><br><span class="line"></span><br><span class="line">set.delete(value)  <span class="comment">//删除集合内指定的元素</span></span><br><span class="line">set.delete(<span class="number">1</span>);</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(set)</span><br><span class="line"><span class="comment">//Set &#123;&#125;</span></span><br><span class="line"></span><br><span class="line">set.clear()	<span class="comment">//清空集合内的元素</span></span><br><span class="line">set.clear();</span><br><span class="line"></span><br><span class="line">set.forEach(callbackFn[,context])  /遍历集合中的所有元素，并作为第一参数调用callbackFn</span><br><span class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</span><br><span class="line">set.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(item)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//1 2 3 4</span></span><br><span class="line"></span><br><span class="line">set.has(value)	/检查集合内是否含有某元素</span><br><span class="line">set.has(<span class="number">1</span>)</span><br><span class="line"><span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<h2 id="Map集合"><a href="#Map集合" class="headerlink" title="Map集合"></a>Map集合</h2><p>映射类型Map有很多种叫法，如Map、Hash，映射类型在计算机科学中的定义属于关联数组，而关联数组的定义是若干键值对—key/value组成的集合，每个key只能出现一次。</p>
+<h4 id="使用语法-创建一个实例来使用。"><a href="#使用语法-创建一个实例来使用。" class="headerlink" title="使用语法 创建一个实例来使用。"></a>使用语法 创建一个实例来使用。</h4><pre><code>const map = new Map();
+</code></pre><p>在创建映射对象时，可以将一个以二元数组（键值对）作为元素的数组传入到构建函数中其中每个键值对都会加入到该映射对象中。如果存在相同的键，则该键的最后一个值为最终值。</p>
+<p>const map = new Map([[“foo”,1],[“foo”,2]])<br>console.log(map.get(“foo”)) //2</p>
+<h4 id="映射对象操作方法"><a href="#映射对象操作方法" class="headerlink" title="映射对象操作方法"></a>映射对象操作方法</h4><table>
+<thead>
+<tr>
+<th>操作方法(语法)</th>
+<th>方法内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>map.set(key,value)</td>
+<td>添加键值对到映射中</td>
+</tr>
+<tr>
+<td>map.get(key)</td>
+<td>获取映射中某一键的对应的值</td>
+</tr>
+<tr>
+<td>map.delete(key)</td>
+<td>将某一键值对删除</td>
+</tr>
+<tr>
+<td>map.clear()</td>
+<td>清空映射中所有键值对</td>
+</tr>
+<tr>
+<td>map.entries</td>
+<td>返回一个以二元数组（键值对）作为元素的数组</td>
+</tr>
+<tr>
+<td>map.has(key)</td>
+<td>检查映射中是否包含某键值对</td>
+</tr>
+<tr>
+<td>map.keys()</td>
+<td>返回一个以当前映射中所有键作为元素的可迭代对象</td>
+</tr>
+<tr>
+<td>map.values()</td>
+<td>返回一个以当前映射中所有值作为元素的可迭代对象</td>
+</tr>
+<tr>
+<td>map.size()</td>
+<td>映射中键值对的数量</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> map =<span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">map.set(<span class="string">"foo"</span>,<span class="string">"hello"</span>);</span><br><span class="line">map.set(<span class="string">"bar"</span>,<span class="string">"world"</span>);</span><br><span class="line">map.set(<span class="string">"bar"</span>,<span class="string">"ES2015"</span>);<span class="comment">//因键相同，覆盖同一个键对应的value</span></span><br><span class="line"><span class="comment">//Map &#123;"foo" =&gt; "hello", "bar" =&gt; "ES2015"&#125;</span></span><br><span class="line"></span><br><span class="line">map.get(<span class="string">"foo"</span>); <span class="comment">//获取键为foo所对应的值</span></span><br><span class="line"><span class="comment">//"hello"</span></span><br><span class="line"></span><br><span class="line">map.delete(<span class="string">"foo"</span>) <span class="comment">//true  删除键为foo的键值对</span></span><br><span class="line"><span class="built_in">console</span>.log(map);</span><br><span class="line"><span class="comment">//Map &#123;"bar" =&gt; "ES2015"&#125;</span></span><br><span class="line"></span><br><span class="line">map.has(<span class="string">"foo"</span>)	<span class="comment">//检查映射对象中的键值对是否存在</span></span><br><span class="line"><span class="comment">//false</span></span><br><span class="line"></span><br><span class="line">##### 遍历映射对象中的键值对</span><br><span class="line">可以通过<span class="keyword">for</span>-<span class="keyword">of</span>循环语句对其中的键值对进行遍历，也可以使用forEach</span><br><span class="line"></span><br><span class="line">map.clear(); <span class="comment">//清空map中所有的键值对</span></span><br><span class="line"><span class="built_in">console</span>.log(map);</span><br><span class="line"><span class="comment">//Map &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="映射对象和Object的区别"><a href="#映射对象和Object的区别" class="headerlink" title="映射对象和Object的区别"></a>映射对象和Object的区别</h4><ul>
+<li>映射对象可以使用任意对象作为键，而Object不行。</li>
+<li>在JSON序列化结果中，Object的JSON序列化结果是标准的对象字面量形式，而映射对象的JSON序列化结果则是以<code>关联数组</code>的形式。</li>
 </ul>
-<h1 id="二、使用ant-design-Pro"><a href="#二、使用ant-design-Pro" class="headerlink" title="二、使用ant design Pro"></a>二、使用ant design Pro</h1><p>以一个ant design Table组件展示数据为例。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164898bf659b926d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>这样一个页面，可以看到：左边是导航栏menu组件，右边是主体BasicLayout组件。至于什么是layout，同样，在ant design Pro官网找得到。当你刚安装好antdp的时候已经有几个页面可以参考了。此处：在页面中，有几个按钮，按钮下方是ant design 的Table组件。</p>
-<h2 id="一、新建一个页面。"><a href="#一、新建一个页面。" class="headerlink" title="一、新建一个页面。"></a>一、新建一个页面。</h2><p>1.在路由中新建一条页面的配置。先不要管报错，因为路由对应的component和models你还没有，继续往下看。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648993196568bf6?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.新增一条之后，需要去对应的路径新建页面。一般都放在routes文件夹中</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899504863164d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>例如我新建了一个角色管理的页面，使用connect进行关联models。</p>
-<p>3.然后再去models文件夹中新建一个model层文件，注意namespace要对应connect的component</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648996437cdd086?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<h2 id="二、数据交互。"><a href="#二、数据交互。" class="headerlink" title="二、数据交互。"></a>二、数据交互。</h2><p>这个表格页面使用antd 的table 组件，自己去官网拷贝代码。这里不再赘述。主要提一下，数据是怎样交互的。</p>
-<p>Table组件里面的行数据就是是columns，它有自己的数据格式，你需要把数据格式转换成他规定的那种。在刚装好的项目中有表格的例子你可以参考一下，只不过案例是写死的静态数据。试试看：你把columns里面的数据删除掉，然后从外部获取到数据替换掉。</p>
-<p>1.使用生命周期函数componentDidMount在组件挂载时，去请求表格的数据。这里发起一个dispatch 触发action，type的值就是models层中的。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899dce523beae?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.在models中会使用antd封装好的方法去请求api.js中定义好的接口地址，然后等待返回就可以处理数据。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899eaeaf27d29?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>此处response拿到服务端返回的结果。你可以在此处对数据进行处理。比如后端返回的并非是你需要的数据格式，或者你可以进行更高层次的封装。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/16489a0f04e1bf8c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>3.再调用reducers中的save方法将数据存储。通过在UIcomponent中已经进行关联，此时this.props能够取到你传送过去的数据。然后放入Table组件即可。</p>
-<p>此处可能讲得不是很详细，比如上述代码各种方法是做什么用的，如果你有仔细看过文章开头列举的文档，尤其是dva文档，心中应该略知一二。此处只介绍了一个很粗略的开发流程，后续我会详细讲解。</p>
-<p>三、个人开发思想及心得<br>1.在使用这套框架开发几个页面之后会明显感觉到，框架有点像MVC分层，十分规范！</p>
-<p>M层models负责控制数据</p>
-<p>V层UIComponent ，and design以及为你准备了丰富的组件库。</p>
-<p>C层control，我个人理解为是api层的管理，将所有的需要请求后台数据的接口统一起来，很直观也方便调用和修改。</p>
-<p>2.ant design Pro几乎已经为你做好了一切，你只需要替换数据、接口，开箱即用。在你切完数个页面之后会发现一个问题：如何进行更高层次的封装呢？不能每次都要复制粘贴很多重复的组件代码呢？</p>
-<p>我个人是这样做的：比如说上面举例的表格页面。</p>
-<p>首先，我会封装一个函数，函数接收各种字段。比如后端返回一系列的input各种类型的字段给你，你在函数中对字段进行匹配，每个字段对应到ant design的组件，将数据与组件关联，然后return这个组件。最后将所有的组件push到一个数组中，然后放入render函数，即可渲染出整个页面。</p>
-<p>这个函数有点类似于React的HOC高阶组件（传组件和props进去，rerurn新的组件出来）概念，区别是我这里传入的是每个组件所需的数据而非组件，而return出的是一个组件。</p>
-<p>3.多利用无状态组件、函数组件。表格上最后一行，编辑/删除按钮。我是在models层进行处理的，因为columns（Table组件的数据对象）在UIcomponents层已经进行渲染了，个人认为UI组件应该尽量简化，它只负责渲染数据。我在models层中将columns中的数据进行遍历，在本地构建一个对象（编辑按钮组件、删除按钮组件）与服务端返回的对象进行合并。同时，两个按钮的组件应该本身具备自有的功能，比如在任何一个表格中调用该组件即可使用其功能。合并后将新的colums对象丢给表格组件，这样进行了一个小小的抽象。</p>
-<p>在表格上方的按钮，同样是通过函数来输出的按钮组件。按钮具有各自的属性、功能，通过入参来传递给函数，然后通过props设置给组件，来达到复用的目的。</p>
-<p>最后，页面上有哪些组件、哪些按钮该如何规定呢？你需要和后端协商好字段、属性，比如一个表单页面有很多种input类型，input会有type、rules（验证规则）….后端返回给你一段组件所需的属性之后，你根据这些数据即可渲染出整个页面的组件。</p>
-<p>以上是本人萌新使用ant design Pro的小小经验，可能创建页面的案例讲的不太清晰、抽象封装的思想不知道各位能否明白我所说的。</p>
-<p>希望各位大佬们多多指教。如何进行更高层次的封装呢？每个页面需要对应路由、models、api接口地址、能否再进行封装达到动态的目的呢？这样连修改接口的重复工作也省了。</p>
-<p>感谢阅读。</p>
+<h2 id="类语法-Classes"><a href="#类语法-Classes" class="headerlink" title="类语法 Classes"></a>类语法 Classes</h2><p>在之前，我们使用函数原型来实现类系统,如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span>(<span class="params">family,specie,hue</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.family = family;</span><br><span class="line">   <span class="keyword">this</span>.specie = specie;</span><br><span class="line">   <span class="keyword">this</span>.hue = hue</span><br><span class="line">&#125;</span><br><span class="line">Animal.prototype.yell = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="keyword">this</span>.hue)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> dog = <span class="keyword">new</span> Animal(<span class="string">"k"</span>,<span class="string">"eat"</span>,<span class="string">"woug"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(dog)</span><br><span class="line"><span class="comment">//Animal &#123;family: "k", specie: "eat", hue: "woug"&#125;</span></span><br><span class="line">dog.yell()</span><br><span class="line"><span class="comment">//woug</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="使用语法-class-name-…"><a href="#使用语法-class-name-…" class="headerlink" title="使用语法  class name{…}"></a>使用语法  class name{…}</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span></span>&#123;</span><br><span class="line">	<span class="comment">//在ES2015中，原本的构造函数被类的constructor方法替代，其余本需要定义在prototype中的方法则可以直接定义在class内</span></span><br><span class="line">	<span class="keyword">constructor</span>(family,specie,hue)&#123;</span><br><span class="line">		<span class="keyword">this</span>.family = family</span><br><span class="line">		<span class="keyword">this</span>.specie = specie</span><br><span class="line">		<span class="keyword">this</span>.hue = hue</span><br><span class="line">	&#125;</span><br><span class="line">	yell()&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.hue)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dog = <span class="keyword">new</span> Animal(<span class="string">"kiki"</span>,<span class="string">"candsjh"</span>,<span class="string">"woug"</span>);</span><br><span class="line">dog.yell();</span><br><span class="line"><span class="comment">//woug</span></span><br></pre></td></tr></table></figure>
+<h4 id="继承语法-class-SubClass-extends-SuperClass"><a href="#继承语法-class-SubClass-extends-SuperClass" class="headerlink" title="继承语法  class SubClass extends SuperClass()"></a>继承语法  class SubClass extends SuperClass()</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point2D</span></span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>(x,y)&#123;</span><br><span class="line">		<span class="keyword">this</span>.x = x</span><br><span class="line">		<span class="keyword">this</span>.y = y</span><br><span class="line">	&#125;</span><br><span class="line">	toString()&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">`(<span class="subst">$&#123;<span class="keyword">this</span>.x&#125;</span>,<span class="subst">$&#123;<span class="keyword">this</span>.y&#125;</span>)`</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point3D</span> <span class="keyword">extends</span> <span class="title">Point2D</span></span>&#123;</span><br><span class="line">	<span class="keyword">constructor</span>(x,y,z)&#123;</span><br><span class="line">		<span class="keyword">super</span>(x,y)</span><br><span class="line">		<span class="keyword">this</span>.x = x</span><br><span class="line">	&#125;</span><br><span class="line">	toString()&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">`(<span class="subst">$&#123;<span class="keyword">this</span>.x&#125;</span>,<span class="subst">$&#123;<span class="keyword">this</span>.y&#125;</span>,<span class="subst">$&#123;<span class="keyword">this</span>.z&#125;</span>)`</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
 
@@ -423,7 +579,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">《实战ES2015》</a>
         		</li>
       		
 		</ul>
@@ -433,83 +589,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-《你不知道的JavaScript-下卷》阅读笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/">《你不知道的JavaScript-下卷》阅读笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/" class="archive-article-date">
-  	<time datetime="2018-05-20T08:18:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/COkv.nP.LHbZizbCvAUIjEbrIlFOQ8cUk1hDpfxv*Aw!/b/dDABAAAAAAAA&bo=VQhABsAP0AsRKRE!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h2 id="隐式转换-见中卷第一部分第四章"><a href="#隐式转换-见中卷第一部分第四章" class="headerlink" title="隐式转换 见中卷第一部分第四章"></a>隐式转换 见中卷第一部分第四章</h2><h2 id="作用域-见上卷第一部分前三章"><a href="#作用域-见上卷第一部分前三章" class="headerlink" title="作用域  见上卷第一部分前三章"></a>作用域  见上卷第一部分前三章</h2><h3 id="值与类型"><a href="#值与类型" class="headerlink" title="值与类型"></a>值与类型</h3><p>Js的值有类型，但变量无类型，变量只是值的容器。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">《你不知道的JavaScript》</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/03/31/《实战ES2015》-阅读笔记-一/">展开全文 >></a>
         </p>
       
 
@@ -541,7 +621,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
     </nav>
   
 

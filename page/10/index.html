@@ -11,7 +11,7 @@
   <meta name="description" content="这是萌新的博客,请多指教呢">
 <meta property="og:type" content="website">
 <meta property="og:title" content="我的地盘听我的">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:url" content="http://yoursite.com/page/10/index.html">
 <meta property="og:site_name" content="我的地盘听我的">
 <meta property="og:description" content="这是萌新的博客,请多指教呢">
 <meta property="og:locale" content="zh-Hans">
@@ -141,151 +141,127 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-React进阶之路" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Ajax-梳理" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/15/React进阶之路/">《React进阶之路》阅读笔记</a>
+      <a class="article-title" href="/2017/05/31/Ajax-梳理/">Ajax 梳理</a>
     </h1>
   
 
         
-        <a href="/2018/07/15/React进阶之路/" class="archive-article-date">
-  	<time datetime="2018-07-15T12:29:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-15</time>
+        <a href="/2017/05/31/Ajax-梳理/" class="archive-article-date">
+  	<time datetime="2017-05-31T05:47:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-31</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/AvskgQFU55RO5jNMCxwaT5hQzOf6PIga9eq3iMTwPac!/b/dEYBAAAAAAAA&bo=OQxABuodTA8RWak!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h1 id="React基础"><a href="#React基础" class="headerlink" title="React基础"></a>React基础</h1><h2 id="props和state"><a href="#props和state" class="headerlink" title="props和state"></a>props和state</h2><p>props是组件对外的接口，组件通过props接收外部传入的数据；<br><br>state是组件内部对内接口，组件内部状态的变化通过state来反应。<br><br>props是只读的，不能在组件内修改props；<br><br>state是可变的，组件的变化通过修改state来实现。</p>
-<p>在开发React应用时，要思考哪些组件应该设计成有状态组件，哪些组件应该设计成无状态组件。应该尽可能使用无状态组件，无状态组件不用关心状态的变化，只聚焦UI展示，所以更容易复用。</p>
-<p>通过定义少数的有状态组件管理整个应用的状态变化，并且将状态通过props传递给其余无状态组件，由无状态组件完成页面大部分UI渲染。</p>
-<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><p>只有类组件才具有生命周期方法，函数组件没有生命周期方法。</p>
-<ul>
-<li>挂载阶段：组件被创建，执行初始化，并被挂载到DOM中，完成组建的第一次渲染。</li>
-<li>更新阶段：组件被挂载到DOM后，组件的props或state可以引起组件更新。</li>
-<li>卸载阶段：组件从DOM中被卸载的过程</li>
-</ul>
-<h3 id="挂载阶段"><a href="#挂载阶段" class="headerlink" title="挂载阶段"></a>挂载阶段</h3><ol>
-<li>constructor：ES6构造方法，组件被创建时，首先调用此方法。该方法接收props参数，是从父组件中传入的属性对象。在这个方法中调用super(props)才能保证props被传入组件中。此方法通常用于初始化组件的state以及绑定事件。</li>
-<li>componentWillMount</li>
-<li>render：返回一个React元素而非组件的实际渲染工作，render是一个纯函数，不可在里面调用this.setState</li>
-<li>componentDidMount：组件被挂载到DOM后调用，通常用于向服务器请求数据。</li>
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b62Hd8cf/lkj8bmhjFevx5Sor9khFqCBoJoGFOdHov.IdE3H76nk!/b/dLIAAAAAAAAA&bo=NQmwBDUJsAQFNxQ!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<h2 id="XMLHttpRequest对象"><a href="#XMLHttpRequest对象" class="headerlink" title="XMLHttpRequest对象"></a>XMLHttpRequest对象</h2><p>XHR为向服务器发送请求和解析服务器响应提供了接口, 能够以异步方式从服务器获取新数据。<br>可以在浏览器console打印一个new XMLHttpRequest() 对象来查看该对象的属性和方法</p>
+<p>试运行以下代码.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest(),</span><br><span class="line">   i=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> xhr)&#123;</span><br><span class="line">    <span class="keyword">if</span>(xhr.hasOwnProperty(key))&#123;</span><br><span class="line">       i++;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i);<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(XMLHttpRequest.prototype.hasOwnProperty(<span class="string">'timeout'</span>));<span class="comment">//true</span></span><br></pre></td></tr></table></figure><br>可见, XMLHttpRequest 实例对象没有自有属性. 实际上, 它的所有属性均来自于 XMLHttpRequest.prototype .<br>追根溯源, XMLHttpRequest 实例对象具有如下的继承关系. (下面以a&lt;&lt;b表示a继承b)<br>xhr &lt;&lt; XMLHttpRequest.prototype &lt;&lt; XMLHttpRequestEventTarget.prototype &lt;&lt; EventTarget.prototype &lt;&lt; Object.prototype</p>
+<h3 id="主要属性："><a href="#主要属性：" class="headerlink" title="主要属性："></a>主要属性：</h3><ol>
+<li>Number readyState 状态值（ 整数）， 可以确定请求 / 响应过程的当前活动阶段</li>
 </ol>
-<h3 id="更新阶段"><a href="#更新阶段" class="headerlink" title="更新阶段"></a>更新阶段</h3><ol>
-<li>componentWillReceiveProps：在props引起组件更新过程中调用。state引起更新不会触发该方法。</li>
-<li>shouldComponentUpdate：决定组件是否继续执行更新过程。</li>
-<li>componentWillUpadte：在组件render调用前执行</li>
-<li>componentDidUpdate：组件更新后被调用</li>
+<ul>
+<li>0： 请求已建立,未初始化。 未调用open() 方法</li>
+<li>1： 请求已建立, 但未发送。 已经调用open() 方法</li>
+<li>2： 请求已发送。 已经调用send() 方法， 未接收到响应</li>
+<li>3： 接收。 已经接收到部分数据</li>
+<li>4： 完成。 已经接收到全部数据， 可以在客户端使用</li>
+</ul>
+<ol start="2">
+<li><p>Function onreadystatechange 当readyState的值改变时自动触发执行其对应的函数（ 回调函数）</p>
+</li>
+<li><p>String responseText 作为响应主体被返回的文本（ 字符串类型）</p>
+</li>
+<li><p>XmlDocument responseXML 服务器返回的数据（ Xml对象）</p>
+</li>
+<li><p>Number states 状态码（ 整数）， 如： 200、 404…</p>
+</li>
+<li><p>String statesText 状态文本（ 字符串）， 如： OK、 NotFound…</p>
+</li>
 </ol>
-<h3 id="卸载阶段"><a href="#卸载阶段" class="headerlink" title="卸载阶段"></a>卸载阶段</h3><ol>
-<li>componentWillUnmount：组件被卸载前调用</li>
+<h3 id="主要方法："><a href="#主要方法：" class="headerlink" title="主要方法："></a>主要方法：</h3><ol>
+<li><p>void open(String method, String url, Boolen async)<br>用于创建请求<br>参数：<br>method： 请求方式（ 字符串类型）， 如： POST、 GET、 DELETE…<br>url： 要请求的地址（ 字符串类型）<br>async： 是否异步（ 布尔类型）</p>
+</li>
+<li><p>void send(String body)<br>用于发送请求<br>参数：<br>body： 要发送的数据（ 字符串类型）</p>
+</li>
+<li><p>void setRequestHeader(String header, String value)<br>用于设置请求头<br>参数：<br>header： 请求头的key（ 字符串类型）<br>vlaue： 请求头的value（ 字符串类型）</p>
+</li>
+<li><p>String getAllResponseHeaders()<br>获取所有响应头<br>返回值：<br>响应头数据（ 字符串类型）</p>
+</li>
+<li><p>String getResponseHeader(String header)<br>获取响应头中指定header的值<br>如果 readyState 小于 3， 这个方法返回 null， 否则， 它返回服务器发送的所有 HTTP 响应的头部。<br>头部作为单个的字符串返回， 一行一个头部。 每行用换行符 “\r\n”<br>隔开<br>参数：<br>header： 响应头的key（ 字符串类型）<br>返回值：<br>响应头中指定的header对应的值</p>
+</li>
+<li><p>void abort()<br>终止请求<br>这个方法把 XMLHttpRequest 对象的readyState属性重置为0</p>
+</li>
 </ol>
-<h1 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h1><p>如果一个表单元素的值是由React来管理，它就是一个受控组件。非受控制组件指表单元素的状态依然由表单元素自己管理，而不是交给React组件管理，使用非受控组件使用属性ref来获取元素的值。<br><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"text"</span> ref=&#123; (input) =&gt; <span class="keyword">this</span>.input = input &#125; /&gt;</span><br></pre></td></tr></table></figure></p>
-<h1 id="高阶组件"><a href="#高阶组件" class="headerlink" title="高阶组件"></a>高阶组件</h1><p>HOC接收React组件作为参数，并且返回一个新的React组件。本质是一个函数，并不是组件。本质是装饰者设计模式。</p>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
-<li>操作props：在被包装组件接收props前，高阶组件可以先拦截到props，对props操作后再传递给被包装组件。</li>
-<li>通过ref访问组件实例</li>
-<li>组件状态提升</li>
-<li>用其他元素包装组件</li>
+<p>MSXML， IE7及更高版本浏览器可以直接使用BOM的 XMLHttpRequest 对象.IE6及更低版本浏览器只能使用 ActiveXObject 对象来创建 XMLHttpRequest 对象实例.创建时需要指明一个类似” Microsoft.XMLHTTP” 这样的ProgID.</p>
+<p>IE5, IE5 .5, IE6, IE7, IE8, IE9, IE10, IE edge等浏览器, IE5及之后的浏览器均可以通过如下语句获取xhr对象: var xhr = new ActiveXObject(“Msxml2.XMLHTTP”);</p>
+<p>全平台兼容的XMLHttpRequest对象<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getXHR</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> xhr = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.XMLHttpRequest) &#123;</span><br><span class="line">        xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">window</span>.ActiveXObject) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            xhr = <span class="keyword">new</span> ActiveXObject(<span class="string">"Msxml2.XMLHTTP"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                xhr = <span class="keyword">new</span> ActiveXObject(<span class="string">"Microsoft.XMLHTTP"</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                alert(<span class="string">"您的浏览器暂不支持Ajax!"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> xhr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="一、新建XHR对象、发出http请求"><a href="#一、新建XHR对象、发出http请求" class="headerlink" title="一、新建XHR对象、发出http请求"></a>一、新建XHR对象、发出http请求</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getXHR</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> xhr = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.XMLHttpRequest) &#123;</span><br><span class="line">        xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">window</span>.ActiveXObject) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            xhr = <span class="keyword">new</span> ActiveXObject(<span class="string">"Msxml2.XMLHTTP"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                xhr = <span class="keyword">new</span> ActiveXObject(<span class="string">"Microsoft.XMLHTTP"</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                alert(<span class="string">"您的浏览器暂不支持Ajax!"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> xhr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//发送请求 requset</span></span><br><span class="line">xmlHttpRequest.open(<span class="string">"GET"</span>, url, <span class="literal">true</span>)</span><br><span class="line">    <span class="comment">//参数1，http request请求方法，要大写。</span></span><br><span class="line">    <span class="comment">//参数2，请求页面的url，</span></span><br><span class="line">    <span class="comment">//参数3，决定此request是否不同步进行，设定为true表示即使服务器未传回资料也会继续执行其他程序</span></span><br><span class="line">xmlHttpRequest.send(data);</span><br><span class="line"><span class="comment">//send以POST发出请求时，资料以查询字符串的方式列出：name=value&amp;anothername=othervalue&amp;so=on</span></span><br><span class="line"><span class="comment">//如果想用POST方式传送资料，必须先将MIME形态改好，否則伺服器就不會理你傳過來的資料了。</span></span><br><span class="line">httpRequest.setRequestHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/x-www-form-urlencoded'</span>);</span><br></pre></td></tr></table></figure>    
+<h3 id="二、处理服务器传回的资料"><a href="#二、处理服务器传回的资料" class="headerlink" title="二、处理服务器传回的资料"></a>二、处理服务器传回的资料</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//傳出 request 時必須提供處理傳回值的函數名稱，這個函數是用來處理服务器的回應。</span></span><br><span class="line">xmlHttpRequest.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//这个函数首先该做什么？必须检查request目前的状态，如果状态为4代表服务器已经传回所有资料了，便可以开始解析所有资料</span></span><br><span class="line">    <span class="keyword">if</span> (xmlHttpRequest.readyState == <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="comment">//一切ok，继续解析</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//还没完成</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//readyState所有可能的值：0 (還沒開始) 1 (讀取中) 2 (已讀取) 3 (資訊交換中) 4 (一切完成)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//接下来检查HTTP状态码，我们只要200 OK这种状态</span></span><br><span class="line">    <span class="keyword">if</span> (xmlHttpRequest.status &gt;= <span class="number">200</span> &amp;&amp; xhr.status &lt; <span class="number">300</span>) || xmlHttpRequest.status == <span class="number">304</span>) &#123;</span><br><span class="line">        <span class="comment">//万事俱备</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 似乎有點問題，或許伺服器傳回了 404 (查無此頁) 或者 500 (內部錯誤) 什麼的 </span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//檢查傳回的 HTTP 狀態碼後，要怎麼處理傳回的資料就由你決定了。有兩種存取資料的方式：</span></span><br><span class="line">    httpRequest.responseText <span class="comment">//這樣會把傳回值視為字串用</span></span><br><span class="line">    httpRequest.responseXML <span class="comment">//這樣會把傳回值視為 XMLDocument 物件， 而後可用 JavaScript DOM 相關函式處理</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>对于一个ajax请求, js引擎首先生成 XMLHttpRequest 实例对象, open过后再调用send方法. 至此, 所有的语句都是同步执行. 但从send方法内部开始, 浏览器为将要发生的网络请求创建了新的http请求线程, 这个线程独立于js引擎线程, 于是网络请求异步被发送出去了. 另一方面, js引擎并不会等待 ajax 发起的http请求收到结果, 而是直接顺序往下执行.</p>
+<p>当ajax请求被服务器响应并且收到response后, 浏览器事件触发线程捕获到了ajax的回调事件 onreadystatechange (当然也可能触发onload, 或者 onerror等等) . 该回调事件并没有被立即执行, 而是被添加到 任务队列 的末尾. 直到js引擎空闲了, 任务队列 的任务才被捞出来, 按照添加顺序, 挨个执行, 当然也包括刚刚append到队列末尾的 onreadystatechange 事件.</p>
+<h4 id="通过这样的一种方式-ajax并没有破坏js的单线程机制"><a href="#通过这样的一种方式-ajax并没有破坏js的单线程机制" class="headerlink" title="通过这样的一种方式, ajax并没有破坏js的单线程机制."></a>通过这样的一种方式, ajax并没有破坏js的单线程机制.</h4><h5 id="XHR一级"><a href="#XHR一级" class="headerlink" title="XHR一级"></a>XHR一级</h5><p>XHR1 即 XMLHttpRequest Level 1. XHR1时, xhr对象具有如下缺点:</p>
+<ul>
+<li>仅支持文本数据传输, 无法传输二进制数据.</li>
+<li>传输数据时, 没有进度信息提示, 只能提示是否完成.</li>
+<li>受浏览器 同源策略 限制, 只能请求同域资源.</li>
+<li>没有超时机制, 不方便掌控ajax请求节奏.<h5 id="XHR二级"><a href="#XHR二级" class="headerlink" title="XHR二级"></a>XHR二级</h5>XHR2 即 XMLHttpRequest Level 2. XHR2针对XHR1的上述缺点做了如下改进:</li>
+<li>支持二进制数据, 可以上传文件, 可以使用FormData对象管理表单.</li>
+<li>提供进度提示, 可通过 xhr.upload.onprogress 事件回调方法获取传输进度.</li>
+<li>依然受 同源策略 限制, 这个安全机制不会变. XHR2新提供 Access-Control-Allow-Origin 等headers, 设置为 * 时表示允许任何域名请求, 从而实现跨域CORS访问(有关CORS详细介绍请耐心往下读).</li>
+<li>可以设置timeout 及 ontimeout, 方便设置超时时长和超时后续处理.</li>
 </ul>
-<p>高阶组件的实现方式：由高阶组件处理通用逻辑，然后将相关属性传递给被包装组件，这种实现方式为属性代理。还可以通过继承方式实现高阶组件：通过继承被包装组件实现逻辑的复用。继承方式实现的高阶组件常用于渲染劫持。例如当用户处于登录状态时，允许组件渲染， 否则渲染一个空组件。</p>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
-<li>为了区分高阶组件，应该把被包装组件的名称也包到高阶组件的名称中，如withPersistentData</li>
-<li>不要在组件的render方法中使用高阶组件，尽量不要在组件的其他生命周期方法中使用高阶组件。因为调用高阶组件每次返回一个新组件，于是每次render前一次高阶组件创建的组件都会被卸载，然后重新挂载本次创建的新组件，影响效率。</li>
-<li>如果需要使用被包装组件的静态方法，需要手动复制这些静态方法，因为高阶组件返回的新组件不包含被包装组件的静态方法。</li>
+<p>目前, 主流浏览器基本上都支持XHR2, 除了IE系列需要IE10及更高版本. 因此IE10以下是不支持XHR2的.<br>那么问题来了, IE7, 8,9的用户怎么办? 很遗憾, 这些用户是比较尴尬的. 对于IE8,9而言, 只有一个阉割版的 XDomainRequest 可用,IE7则没有. 估计IE7用户只能哭晕在厕所了.</p>
+<h4 id="XDomainRequest"><a href="#XDomainRequest" class="headerlink" title="XDomainRequest"></a>XDomainRequest</h4><p>XDomainRequest 对象是IE8,9折腾出来的, 用于支持CORS请求非成熟的解决方案. 以至于IE10中直接移除了它, 并重新回到了 XMLHttpRequest 的怀抱.<br>XDomainRequest 仅可用于发送 GET和 POST 请求. 如下即创建过程.<br>    var xdr = new XDomainRequest();<br>xdr具有如下属性:<br>timeout<br>responseText</p>
+<p>如下方法:<br>open: 只能接收Method,和url两个参数. 只能发送异步请求.<br>send<br>abort</p>
+<p>如下事件回调:<br>onprogress<br>ontimeout<br>onerror<br>onload</p>
+<p>除了缺少一些方法外, XDomainRequest 基本上就和 XMLHttpRequest 的使用方式保持一致.<br>必须要明确的是:<br>XDomainRequest 不支持跨域传输cookie.<br>只能设置请求头的Content-Type字段, 且不能访问响应头信息.</p>
+<h2 id="jQuery中的Ajax"><a href="#jQuery中的Ajax" class="headerlink" title="jQuery中的Ajax"></a>jQuery中的Ajax</h2><ol>
+<li><p>jQuery.get(…)<br>所有参数：<br>url: 待载入页面的URL地址<br>data: 待发送 Key / value 参数。<br>success: 载入成功时回调函数。<br>dataType: 返回内容格式， xml, json, script, text, html</p>
+</li>
+<li><p>jQuery.post(…)<br>所有参数：<br>url: 待载入页面的URL地址<br>data: 待发送 Key / value 参数<br>success: 载入成功时回调函数<br>dataType: 返回内容格式， xml, json, script, text, html</p>
+</li>
+<li><p>jQuery.getJSON(…)<br>所有参数：<br>url: 待载入页面的URL地址<br>data: 待发送 Key / value 参数。<br>success: 载入成功时回调函数。</p>
+</li>
+<li><p>jQuery.getScript(…)<br>所有参数：<br>url: 待载入页面的URL地址<br>data: 待发送 Key / value 参数。<br>success: 载入成功时回调函数。</p>
+</li>
+<li><p>jQuery.ajax(…)<br>部分参数：<br>url： 请求地址<br>type： 请求方式， GET、 POST（ 1.9 .0 之后用method）<br>headers： 请求头<br>data： 要发送的数据<br>contentType： 即将发送信息至服务器的内容编码类型(默认: “application/x-www-form-urlencoded; charset=UTF-8”)<br>async： 是否异步<br>timeout： 设置请求超时时间（ 毫秒）<br>beforeSend： 发送请求前执行的函数(全局)<br>complete： 完成之后执行的回调函数(全局)<br>success： 成功之后执行的回调函数(全局)<br>error： 失败之后执行的回调函数(全局)<br>accepts： 通过请求头发送给服务器， 告诉服务器当前客户端课接受的数据类型<br>dataType： 将服务器端返回的数据转换成指定类型<br> “xml”: 将服务器端返回的内容转换成xml格式 “text”: 将服务器端返回的内容转换成普通文本格式 “html”: 将服务器端返回的内容转换成普通文本格式， 在插入DOM中时， 如果包含JavaScript标签， 则会尝试去执行。 “script”: 尝试将返回值当作JavaScript去执行， 然后再将服务器端返回的内容转换成普通文本格式 “json”: 将服务器端返回的内容转换成相应的JavaScript对象 “jsonp”: JSONP 格式使用 JSONP 形式调用函数时， 如 “myurl?callback=?”<br>jQuery 将自动替换 ? 为正确的函数名， 以执行回调函数</p>
+</li>
 </ol>
-<h1 id="React-Router"><a href="#React-Router" class="headerlink" title="React Router"></a>React Router</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-router-dom</span><br></pre></td></tr></table></figure>
-<p>React Router v4 每遵循React中一切皆组件的思想，每一个Route（路由）都是一个普通的React组件</p>
-<p>React Router 通过Router和Route两个组件完成路由功能。<br><br>一个应用只需要一个Router实例，所有的路由配置组件Route都定义为Router的子组件。</p>
-<h3 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h3><p>Route是React Router中用于配置路由信息的组件，每当有一个组件需要根据URL决定是否渲染时，需要创建一个Route</p>
-<ul>
-<li>path：用来描述这个Route匹配的URL的pathname，当URL匹配一个Route时，这个Route中定义的组件将会被渲染。</li>
-<li><p>match：当URL和Route匹配时，Route会创建一个match对象作为props中的一个属性传递给被渲染的组件。对象包含以下4个属性</p>
-<ul>
-<li>params：Route的path可以包含参数。例如<route path="/foo/:id">包含一个参数id，params从path解析到参数{id:1}</route></li>
-<li>isExact：布尔值。当URL完全匹配时值为true。path=’/foo’、URL=’<a href="http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。" target="_blank" rel="noopener">http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。</a></li>
-<li>path：Route的path属性。构建嵌套路由时会使用到</li>
-<li>url：URL的匹配部分</li>
-</ul>
-</li>
-<li><p>Route渲染组件的方式：Route提供3个属性用来定义待渲染的组件：</p>
-<ul>
-<li>component 当URL和Route匹配时，component属性定义的组件就会被渲染：</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">'/foo'</span> component=&#123;Foo&#125;&gt;</span><br></pre></td></tr></table></figure>
-<p>当URL=’<a href="http://example.com/foo&#39;时，Foo组件会被渲染。" target="_blank" rel="noopener">http://example.com/foo&#39;时，Foo组件会被渲染。</a></p>
-</li>
-<li><p>render 该方式方便为待渲染组件传递额外的属性</p>
-</li>
-<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">    &lt;Route path=<span class="string">'/foo'</span> render=&#123; (props) =&gt; (</span><br><span class="line">        &lt;Foo &#123;...props&#125; data=&#123;extraProps&#125; /&gt;</span><br><span class="line">    )&#125;&gt;</span><br><span class="line">    <span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">  - children  与上述不同，children返回的组件无论路由是否匹配都会被渲染，当匹配不成功时，match属性为null</span></span><br><span class="line"><span class="string">  - `</span><span class="string">``</span>js</span><br><span class="line">    &lt;Router path=<span class="string">'/foo'</span> children=&#123; (props) =&gt; (</span><br><span class="line">        &lt;div className=&#123;props.match ? <span class="string">'active'</span> : <span class="string">''</span>&#125;&gt;</span><br><span class="line">            &lt;Foo /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;&gt;</span></span><br><span class="line"><span class="regexp">    ```  </span></span><br><span class="line"><span class="regexp">    如果Route匹配当前URL，待渲染元素的根节点div的class将被设置为active</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">- Switch 和 exact。当URL和多个Route匹配时，这些Route都会执行渲染操作。如果只想当第一个匹配的Route渲染，可以把这些Route包裹到一个Switch组件中。如果想让URL和Route完全匹配时Route才渲染，可使用Route的exact属性。Switch和exact常联合使用应用于首页的导航。</span></span><br><span class="line"><span class="regexp">    ```js</span></span><br><span class="line"><span class="regexp">    &lt;Router&gt;</span></span><br><span class="line"><span class="regexp">        &lt;Switch&gt;</span></span><br><span class="line"><span class="regexp">            &lt;Route exact path='/</span><span class="string">' component=&#123;Home&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/posts<span class="string">' component=&#123;Posts&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/:user<span class="string">' component=&#123;User&#125; /&gt;</span></span><br><span class="line"><span class="string">        &lt;/Switch&gt;</span></span><br><span class="line"><span class="string">    &lt;/Router&gt;</span></span><br></pre></td></tr></table></figure>
-<p>如果不使用Switch，当pathname为’posts’时，后面两个都会被匹配，但我们并不希望/:user被匹配。<br><br>如果不使用exact，’/‘,’/posts’…几乎所有URL都会被匹配到第一个Route,而又因为使用了Switch，后面的两个Route永远也不会被匹配。使用exact保证pathname只有完全匹配时，第一个Route才会被匹配。</p>
-</li>
-</ul>
-</li>
-<li><p>嵌套路由：是指在Route渲染的组件内部定义新的Route</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Posts = <span class="function">(<span class="params"> &#123; match&#125; </span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &#123;<span class="comment">/* 这里match.url 等于 /posts */</span>&#125;</span><br><span class="line">            &lt;Route path=&#123;<span class="string">`<span class="subst">$&#123;match.url&#125;</span>/:id`</span>&#125; component=&#123;PostDetail&#125; /&gt;</span><br><span class="line">            &lt;Route exact path=&#123;match.url&#125; component=&#123;PostList&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="链接-Link"><a href="#链接-Link" class="headerlink" title="链接 Link"></a>链接 Link</h3><p>Link是React Router提供的链接组件，一个Link组件定义了当点击该Link时，页面应该如何路由。</p>
-<p>Link使用to属性声明要导航到的URL地址。to可以是string或object类型，当to为object类型时，可以包含pathname、search、hash、state四个属性。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> Navigation = <span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    &lt;header&gt;</span><br><span class="line">        &lt;nav&gt;</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/'&gt;Home&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/posts'&gt;Posts&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">            &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>nav&gt;</span><br><span class="line">    &lt;<span class="regexp">/header&gt;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;link to &#123;</span></span><br><span class="line"><span class="regexp">    &#123;</span></span><br><span class="line"><span class="regexp">        pathname : '/</span>posts<span class="string">',</span></span><br><span class="line"><span class="string">        search : '</span>?sort=name<span class="string">',</span></span><br><span class="line">        hash : '#the-hash',</span><br><span class="line">        state : &#123; <span class="attr">fromHome</span> : <span class="literal">true</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="使用history对象手动实现导航"><a href="#使用history对象手动实现导航" class="headerlink" title="使用history对象手动实现导航"></a>使用history对象手动实现导航</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//push向浏览器历史记录新增一条</span></span><br><span class="line">history.push(path , [state])</span><br><span class="line"></span><br><span class="line"><span class="comment">//replace会用新记录替代当前记录</span></span><br><span class="line">history.replace(path , [state])</span><br></pre></td></tr></table></figure>
-<h1 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h1><p>Redux的主要思想即描述应用的状态，如何根据action进行更新。</p>
-<p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/*D.QOD9xmUP6nOTo6HZTeZy7iXJaSvMsW5dY9fC4Lp8!/b/dFYAAAAAAAAA&bo=gAZOA4AGTgMDKQw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<h3 id="Redux三大原则"><a href="#Redux三大原则" class="headerlink" title="Redux三大原则"></a>Redux三大原则</h3><ul>
-<li>只维护一个全局状态state对象，储存在Redux的store中。</li>
-<li>保持应用状态只读。不可直接修改应用状态，需要修改时必须发送action，该action描述如何修改应用状态。</li>
-<li>应用状态的改变通过纯函数reducer完成。</li>
-</ul>
-<h2 id="react-redux"><a href="#react-redux" class="headerlink" title="react-redux"></a>react-redux</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-redux</span><br></pre></td></tr></table></figure>
-<p>根据组件意图不同，可以将组件划分为两类：展示组件、容器组件。<br></p>
-<ul>
-<li>展示组件–UI展示，不关心数据。</li>
-<li>容器组件–逻辑处理，如发送网络请求、处理返回数据、将处理过的数据通过props传递给展示组件。</li>
-</ul>
-<p>当展示组件的状态变更引起源数据变化时，展示组件通过调用容器组件提供的方法同步变化。<br><b>有/无 状态组件根据是否使用state来划分，展示组件和容器组件根据组件意图划分。</b></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">connect()   <span class="comment">// 用于把React组件和Redux的store连接起来，生成一个容器组件，负责数据管理和业务逻辑</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"><span class="keyword">import</span> TodoList <span class="keyword">from</span> <span class="string">'./TodoList'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(所需应用状态 , 展示组件的状态)(TodoList);</span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(mapStateToProps , mapDispatchToProps)(TodoList);</span><br><span class="line"></span><br><span class="line">connect的两个参数的类型都是函数，前者负责从全局应用状态state中取出所需数据，映射到展示组件的props。后者负责把action映射到展示组件的props上。</span><br><span class="line"></span><br><span class="line">mapStateToProps : 把state转换成props。state是Redux store中保存的应用状态，它作为参数传递给mapStateToProps。每当store中的state更新时，mapStateToProps会重新执行，重新计算传递给展示组件的props，从而触发组件的重新渲染。</span><br><span class="line"></span><br><span class="line">mapDispatchToProps : 容器组件可以发送action更新state。该函数接收store.dispatch方法作为参数，返回展示组件用来修改state的函数</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Provider    用于容器组件获取Redux的store。该组件需要接收store属性，然后把store属性保存到context</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>Plugin</th>
-<th>README</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Dropbox</td>
-<td>[plugins/dropbox/README.md][PlDb]</td>
-</tr>
-<tr>
-<td>Github</td>
-<td>[plugins/github/README.md][PlGh]</td>
-</tr>
-<tr>
-<td>Google Drive</td>
-<td>[plugins/googledrive/README.md][PlGd]</td>
-</tr>
-<tr>
-<td>OneDrive</td>
-<td>[plugins/onedrive/README.md][PlOd]</td>
-</tr>
-<tr>
-<td>Medium</td>
-<td>[plugins/medium/README.md][PlMe]</td>
-</tr>
-<tr>
-<td>Google Analytics</td>
-<td>[plugins/googleanalytics/README.md][PlGa]</td>
-</tr>
-</tbody>
-</table>
+<h2 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a><a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener">同源策略</a></h2><p>同源策略限制了一个源（origin）中加载文本或脚本与来自其它源（origin）中资源的交互方式。</p>
+<p>比如说，浏览器的两个tab页中分别打开了<a href="http://www.baidu.com/index.html和http" target="_blank" rel="noopener">http://www.baidu.com/index.html和http</a>: //<a href="http://www.google.com/index.html，其中，JavaScript1和JavaScript3是属于百度的脚本，而" target="_blank" rel="noopener">www.google.com/index.html，其中，JavaScript1和JavaScript3是属于百度的脚本，而</a> JavaScript2是属于谷歌的脚本，当浏览器的tab1要运行一个脚本时，便会进行同源检查，只有和<a href="http://www.baidu.com同源的脚本才能被执" target="_blank" rel="noopener">www.baidu.com同源的脚本才能被执</a> 行，所谓同源，就是指域名、协议、端口相同。所以，tab1只能执行JavaScript1和JavaScript3脚本，而JavaScript2不能 执行，从而防止其他网页对本网页的非法篡改。</p>
+<h5 id="如果两个页面拥有相同的协议（protocol），端口（如果指定），和主机，那么这两个页面就属于同一个源（origin）。"><a href="#如果两个页面拥有相同的协议（protocol），端口（如果指定），和主机，那么这两个页面就属于同一个源（origin）。" class="headerlink" title="如果两个页面拥有相同的协议（protocol），端口（如果指定），和主机，那么这两个页面就属于同一个源（origin）。"></a>如果两个页面拥有相同的协议（protocol），端口（如果指定），和主机，那么这两个页面就属于同一个源（origin）。</h5><p>IE 例外<br>当涉及到同源策略时，Internet Explorer有两个主要的例外：<br>授信范围（Trust Zones）：两个相互之间高度互信的域名，如公司域名（corporate domains），不遵守同源策略的限制。<br>端口：IE未将端口号加入到同源策略的组成部分之中，因此 <a href="http://company.com:81/index.html" target="_blank" rel="noopener">http://company.com:81/index.html</a> 和<a href="http://company.com/index.html" target="_blank" rel="noopener">http://company.com/index.html</a>  属于同源并且不受任何限制。<br>这些例外是非标准的，其它浏览器也未做出支持，但会助于开发基于window RT IE的应用程序。</p>
+<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><p>由于浏览器存在同源策略机制， 同源策略阻止从一个源加载的文档或脚本获取或设置另一个源加载的文档的属性。 所以ajax本身是不可以跨域的， 通过产生一个script标签来实现跨域。 因为script标签的src属性是没有跨域的限制的。</p>
+<p>浏览器同源策略并不是对所有的请求均制约：<br>制约： XmlHttpRequest<br>不制约： img、 iframe、 script等具有src属性的标签</p>
+<p>一、 JSONP实现跨域请求<br>JSONP是一个非官方的协议， 它允许在服务器端集成Script tags返回至客户端， 通过javascript callback的形式实现跨域访问。 jsonp只能通过get方式进行跨域请求</p>
+<p>二、 CORS<br>这种方法就可以突破浏览器限制来进行传输。 当数据发送给对方域名的时候， 对方已经收到， 但是在返回的时候被浏览器给阻挡， 我们可以写一串类似于身份证的字符串， 通过浏览器的预检， 从而达到数据的传输。实际上, 浏览器不会拦截不合法的跨域请求, 而是拦截了他们的响应, 因此即使请求不合法, 很多时候, 服务器依然收到了请求.(Chrome和Firefox下https网站不允许发送http异步请求除外)</p>
+<h4 id="CORS有关的headers"><a href="#CORS有关的headers" class="headerlink" title="CORS有关的headers"></a>CORS有关的headers</h4><p>1) HTTP Response Header(服务器提供):<br>Access-Control-Allow-Origin: 指定允许哪些源的网页发送请求.<br>Access-Control-Allow-Credentials: 指定是否允许cookie发送.<br>Access-Control-Allow-Methods: 指定允许哪些请求方法.<br>Access-Control-Allow-Headers: 指定允许哪些常规的头域字段, 比如说 Content-Type.<br>Access-Control-Expose-Headers: 指定允许哪些额外的头域字段, 比如说 X-Custom-Header.<br>该字段可省略. CORS请求时, xhr.getResponseHeader() 方法默认只能获取6个基本字段: Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma . 如果需要获取其他字段, 就需要在Access-Control-Expose-Headers 中指定. 如上, 这样xhr.getResponseHeader(‘X-Custom-Header’) 才能返回X-Custom-Header字段的值.(该部分摘自阮一峰老师博客)<br>Access-Control-Max-Age: 指定preflight OPTIONS请求的有效期, 单位为秒.</p>
+<p>2) HTTP Request Header(浏览器OPTIONS请求默认自带):<br>Access-Control-Request-Method: 告知服务器,浏览器将发送哪种请求, 比如说POST.<br>Access-Control-Request-Headers: 告知服务器, 浏览器将包含哪些额外的头域字段.</p>
+<h4 id="CORS请求分为简单请求和非简单请求"><a href="#CORS请求分为简单请求和非简单请求" class="headerlink" title="CORS请求分为简单请求和非简单请求"></a>CORS请求分为简单请求和非简单请求</h4><p>简单请求只一次请求， 而复杂请求是两次请求， 在发送数据之前会先发一次请求用于做“ 预检”， 只有“ 预检” 通过后才再发送一次请求用于数据传输。</p>
+<p>简单请求：<br>1) 请求是以下三种之一:<br>1、 请求方式： HEAD、 GET、 POST<br>2、 http头域不超出以下几种字段:<br>Accept 浏览器能够处理的内容类型；<br>Accept - Language 浏览器当前设置的语言；<br>Content - Language<br>Last - Event - ID<br>Content - Type 对应的值是以下三个中的任意一个<br>application / x - www - form - urlencoded<br>multipart / form - data<br>text / plain<br>注意： 同时满足以上两个条件时， 则是简单请求， 否则为复杂请求</p>
+<p>对于简单请求, 浏览器将发送一次http请求, 同时在Request头域中增加 Origin 字段, 用来标示请求发起的源, 服务器根据这个源采取不同的响应策略. 若服务器认为该请求合法, 那么需要往返回的 HTTP Response 中添加 Access-Control-<em> 等字段.( Access-Control-</em> 相关字段解析请阅读我之前写的<a href="http://louiszhai.github.io/2016/01/11/cross-domain/#CORS__u8DE8_u57DF_u8BBF_u95EE]" target="_blank" rel="noopener">CORS 跨域访问</a></p>
+<p>复杂请求： 由于复杂请求时， 首先会发送“ 预检” 请求， 如果“ 预检” 成功， 则发送真实数据。</p>
+<p>“ 预检” 请求时， 允许请求方式则需服务器设置响应头： Access - Control - Request - Method“<br>预检” 请求时， 允许请求头则需服务器设置响应头： Access - Control - Request - Headers“<br>预检” 缓存时间， 服务器设置响应头： Access - Control - Max - Age</p>
+<p>对于非简单请求, 比如Method为POST且Content-Type值为 application/json 的请求或者Method为 PUT 或 DELETE 的请求, 浏览器将发送两次http请求. 第一次为preflight预检(Method: OPTIONS),主要验证来源是否合法. 值得注意的是:OPTION请求响应头同样需要包含 Access-Control-* 字段等. 第二次才是真正的HTTP请求. 所以服务器必须处理OPTIONS应答(通常需要返回20X的状态码, 否则xhr.onerror事件将被触发).</p>
+<p>跨域传输cookie：<br>在跨域请求中， 默认情况下， HTTP Authentication信息， Cookie头以及用户的SSL证书无论在预检请求中或是在实际请求都是不会被发送。<br>如果想要发送：<br>浏览器端： XMLHttpRequest的withCredentials为true<br>服务器端： Access - Control - Allow - Credentials为true<br>注意： 服务器端响应的 Access - Control - Allow - Origin 不能是通配符 *</p>
+<h2 id="Axios"><a href="#Axios" class="headerlink" title="Axios"></a>Axios</h2><p>如果你仅仅只是想要一个不错的http库, 相比于庞大臃肿的jquery, 短小精悍的<a href="http://www.bootcdn.cn/axios/readme/" target="_blank" rel="noopener">Axios</a>可能更加适合你.</p>
+<p>Axios支持node, jquery并不支持.<br>Axios基于promise语法, jq3.0才开始全面支持.<br>Axios短小精悍, 更加适合http场景, jquery大而全, 加载较慢.</p>
+<p>语法上Axios基本就和promise一样, 在then方法中处理回调, 在catch方法中处理异常. 如下:</p>
+<pre><code>axios.get(&quot;https://api.github.com/users/louiszhai&quot;)
+  .then(function(response){
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+</code></pre><p>参考资料： http: //louiszhai.github.io/2016/11/02/ajax/</p>
 
       
 
@@ -299,7 +275,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Ajax</a>
         		</li>
       		
 		</ul>
@@ -309,7 +285,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/15/React进阶之路/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/05/31/Ajax-梳理/">展开全文 >></a>
         </p>
       
 
@@ -339,153 +315,60 @@
 
 
   
-    <article id="post-使用ant-design-Pro开发项目的小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-《你不知道的JavaScript-上卷》阅读笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">使用ant design Pro开发项目的小结</a>
+      <a class="article-title" href="/2017/05/21/《你不知道的JavaScript-上卷》阅读笔记/">《你不知道的JavaScript 上卷》阅读笔记</a>
     </h1>
   
 
         
-        <a href="/2018/07/11/使用ant-design-Pro开发项目的小结/" class="archive-article-date">
-  	<time datetime="2018-07-11T14:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-11</time>
+        <a href="/2017/05/21/《你不知道的JavaScript-上卷》阅读笔记/" class="archive-article-date">
+  	<time datetime="2017-05-21T05:58:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/ptCDi2wSCRmTt8JmZjcS4dcLslpSrG0Er3YejnV*Ixw!/b/dFMBAAAAAAAA&bo=oAU4BAAAAAARF7k!&rf=viewer_4&t=5" width="100%"></p>
-<h1 id="一、关于上手。"><a href="#一、关于上手。" class="headerlink" title="一、关于上手。"></a>一、关于上手。</h1><ol>
-<li><p>关于ant design Pro的介绍，自己看官网，大致上可以理解为ant design（组件库） + ant design Pro （完整的项目）+ dva（路由+数据流管理）的组合拳。总之这个Pro是一个已经帮你打通了从搭建到测试打包发布的一整套完整的项目，你只需要站在巨人的肩膀上开发就好了。</p>
-</li>
-<li><p>按照官网安装好项目之后，就能看到几个页面。进行开发之前，你需要一定的react语法、Js(ES6)、dva的基础。啥？全家桶都不会？没关系，写页面又不需要你精通全家桶，看完以下链接就开始写页面吧，遇到不会的再去查，这样学比较快。请按照以下顺序食用</p>
-</li>
-</ol>
-<ul>
-<li><a href="https://dvajs.com/knowledgemap/#javascript-%E8%AF%AD%E8%A8%80" target="_blank" rel="noopener">dva知识地图</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-javascript" target="_blank" rel="noopener">js快速预览</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-react" target="_blank" rel="noopener">react快速预览</a></li>
-<li><a href="http://huziketang.mangojuice.top/books/react/lesson9" target="_blank" rel="noopener">react小书</a></li>
-<li><a href="https://dvajs.com/guide/concepts.html" target="_blank" rel="noopener">dva文档</a></li>
-<li><a href="https://doc.react-china.org/docs/hello-world.html" target="_blank" rel="noopener">react中文文档</a></li>
-<li><a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">ES6</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect" target="_blank" rel="noopener">MDN ？？？ MDN有什么好看的？如果你js不太熟，MDN有很全的API可以查阅</a> </li>
-</ul>
-<h1 id="二、使用ant-design-Pro"><a href="#二、使用ant-design-Pro" class="headerlink" title="二、使用ant design Pro"></a>二、使用ant design Pro</h1><p>以一个ant design Table组件展示数据为例。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164898bf659b926d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>这样一个页面，可以看到：左边是导航栏menu组件，右边是主体BasicLayout组件。至于什么是layout，同样，在ant design Pro官网找得到。当你刚安装好antdp的时候已经有几个页面可以参考了。此处：在页面中，有几个按钮，按钮下方是ant design 的Table组件。</p>
-<h2 id="一、新建一个页面。"><a href="#一、新建一个页面。" class="headerlink" title="一、新建一个页面。"></a>一、新建一个页面。</h2><p>1.在路由中新建一条页面的配置。先不要管报错，因为路由对应的component和models你还没有，继续往下看。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648993196568bf6?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.新增一条之后，需要去对应的路径新建页面。一般都放在routes文件夹中</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899504863164d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>例如我新建了一个角色管理的页面，使用connect进行关联models。</p>
-<p>3.然后再去models文件夹中新建一个model层文件，注意namespace要对应connect的component</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648996437cdd086?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<h2 id="二、数据交互。"><a href="#二、数据交互。" class="headerlink" title="二、数据交互。"></a>二、数据交互。</h2><p>这个表格页面使用antd 的table 组件，自己去官网拷贝代码。这里不再赘述。主要提一下，数据是怎样交互的。</p>
-<p>Table组件里面的行数据就是是columns，它有自己的数据格式，你需要把数据格式转换成他规定的那种。在刚装好的项目中有表格的例子你可以参考一下，只不过案例是写死的静态数据。试试看：你把columns里面的数据删除掉，然后从外部获取到数据替换掉。</p>
-<p>1.使用生命周期函数componentDidMount在组件挂载时，去请求表格的数据。这里发起一个dispatch 触发action，type的值就是models层中的。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899dce523beae?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.在models中会使用antd封装好的方法去请求api.js中定义好的接口地址，然后等待返回就可以处理数据。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899eaeaf27d29?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>此处response拿到服务端返回的结果。你可以在此处对数据进行处理。比如后端返回的并非是你需要的数据格式，或者你可以进行更高层次的封装。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/16489a0f04e1bf8c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>3.再调用reducers中的save方法将数据存储。通过在UIcomponent中已经进行关联，此时this.props能够取到你传送过去的数据。然后放入Table组件即可。</p>
-<p>此处可能讲得不是很详细，比如上述代码各种方法是做什么用的，如果你有仔细看过文章开头列举的文档，尤其是dva文档，心中应该略知一二。此处只介绍了一个很粗略的开发流程，后续我会详细讲解。</p>
-<p>三、个人开发思想及心得<br>1.在使用这套框架开发几个页面之后会明显感觉到，框架有点像MVC分层，十分规范！</p>
-<p>M层models负责控制数据</p>
-<p>V层UIComponent ，and design以及为你准备了丰富的组件库。</p>
-<p>C层control，我个人理解为是api层的管理，将所有的需要请求后台数据的接口统一起来，很直观也方便调用和修改。</p>
-<p>2.ant design Pro几乎已经为你做好了一切，你只需要替换数据、接口，开箱即用。在你切完数个页面之后会发现一个问题：如何进行更高层次的封装呢？不能每次都要复制粘贴很多重复的组件代码呢？</p>
-<p>我个人是这样做的：比如说上面举例的表格页面。</p>
-<p>首先，我会封装一个函数，函数接收各种字段。比如后端返回一系列的input各种类型的字段给你，你在函数中对字段进行匹配，每个字段对应到ant design的组件，将数据与组件关联，然后return这个组件。最后将所有的组件push到一个数组中，然后放入render函数，即可渲染出整个页面。</p>
-<p>这个函数有点类似于React的HOC高阶组件（传组件和props进去，rerurn新的组件出来）概念，区别是我这里传入的是每个组件所需的数据而非组件，而return出的是一个组件。</p>
-<p>3.多利用无状态组件、函数组件。表格上最后一行，编辑/删除按钮。我是在models层进行处理的，因为columns（Table组件的数据对象）在UIcomponents层已经进行渲染了，个人认为UI组件应该尽量简化，它只负责渲染数据。我在models层中将columns中的数据进行遍历，在本地构建一个对象（编辑按钮组件、删除按钮组件）与服务端返回的对象进行合并。同时，两个按钮的组件应该本身具备自有的功能，比如在任何一个表格中调用该组件即可使用其功能。合并后将新的colums对象丢给表格组件，这样进行了一个小小的抽象。</p>
-<p>在表格上方的按钮，同样是通过函数来输出的按钮组件。按钮具有各自的属性、功能，通过入参来传递给函数，然后通过props设置给组件，来达到复用的目的。</p>
-<p>最后，页面上有哪些组件、哪些按钮该如何规定呢？你需要和后端协商好字段、属性，比如一个表单页面有很多种input类型，input会有type、rules（验证规则）….后端返回给你一段组件所需的属性之后，你根据这些数据即可渲染出整个页面的组件。</p>
-<p>以上是本人萌新使用ant design Pro的小小经验，可能创建页面的案例讲的不太清晰、抽象封装的思想不知道各位能否明白我所说的。</p>
-<p>希望各位大佬们多多指教。如何进行更高层次的封装呢？每个页面需要对应路由、models、api接口地址、能否再进行封装达到动态的目的呢？这样连修改接口的重复工作也省了。</p>
-<p>感谢阅读。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-《你不知道的JavaScript-下卷》阅读笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/">《你不知道的JavaScript-下卷》阅读笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/" class="archive-article-date">
-  	<time datetime="2018-05-20T08:18:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/COkv.nP.LHbZizbCvAUIjEbrIlFOQ8cUk1hDpfxv*Aw!/b/dDABAAAAAAAA&bo=VQhABsAP0AsRKRE!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b62Hd8cf/1PDDa8iJJdjh8BDfV6x2TCqC8ZabYl9.rBSNPef7n3o!/b/dKUAAAAAAAAA&bo=AgWAArgcVg4BGUc!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
 <p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h2 id="隐式转换-见中卷第一部分第四章"><a href="#隐式转换-见中卷第一部分第四章" class="headerlink" title="隐式转换 见中卷第一部分第四章"></a>隐式转换 见中卷第一部分第四章</h2><h2 id="作用域-见上卷第一部分前三章"><a href="#作用域-见上卷第一部分前三章" class="headerlink" title="作用域  见上卷第一部分前三章"></a>作用域  见上卷第一部分前三章</h2><h3 id="值与类型"><a href="#值与类型" class="headerlink" title="值与类型"></a>值与类型</h3><p>Js的值有类型，但变量无类型，变量只是值的容器。</p>
+<h2 id="词法作用域"><a href="#词法作用域" class="headerlink" title="词法作用域"></a>词法作用域</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b = a * <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">    &#125;</span><br><span class="line">    ;bar(b * <span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="number">2</span>);	<span class="comment">// 2 4 12</span></span><br></pre></td></tr></table></figure>
+<p>这段代码执行过程：</p>
+<ul>
+<li>首先调用foo()，传入参2，此时a = 2，</li>
+<li>进入到foo函数内部，b = 2*2&gt;4，</li>
+<li>继续往下执行，声明一个变量bar = function bar(c)，console内的a = 2，b = 4，</li>
+<li>再往下执行，调用bar(b <em> 3)，bar = function bar(c), b = 4，入参为4，可以看到，入参可以是表达式，c即是b</em>3 c = b <em> 3 &gt; 4 </em> 3 得到12 、</li>
+</ul>
+<p>输出 2 4 12</p>
+<p>作用域查找会在找到第一个匹配的标识符时停止。在多层的嵌套作用域中可以定义同名的标识符，这叫“遮蔽效应”（内部的标识符“遮蔽”了外部的标识符）</p>
+<h2 id="eval-改变词法作用域-动态执行代码会降低性能"><a href="#eval-改变词法作用域-动态执行代码会降低性能" class="headerlink" title="eval 改变词法作用域 动态执行代码会降低性能"></a>eval 改变词法作用域 动态执行代码会降低性能</h2><p>eval()可以执行一段代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">str, a</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">eval</span>(str);	<span class="comment">//修改了词法作用域</span></span><br><span class="line">    <span class="built_in">console</span>.log(a, b)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">foo(<span class="string">"var b = 3;"</span>, <span class="number">1</span>); <span class="comment">//1 , 3</span></span><br></pre></td></tr></table></figure>
+<p>可以看到此段代码，b是全局变量 = 2，而foo()的执行结果却是3，这是为什么呢？<br>在调用foo()函数时，str的入参是 “var b = 3”这段代码，而在foo函数内部，使用了eval()函数<code>执行</code>了这段表达式，此时b = 3，console.log时，作用域查找会从内部开始向外查找，因此输出 1,3。内部变量b“蒙蔽”了全局作用域中的同名变量。</p>
+<p>默认情况下，eval(..)中所执行的代码包含有一个或多个声明（无论是变量还是函数）,就会对eval(..)<code>所处的</code>词法作用域进行修改。并且是在运行期间修改。</p>
+<p>在严格模式中，eval(..)在运行时有其自己的词法作用域，意味着其中的声明无法修改所在的作用域。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span>;</span><br><span class="line">    <span class="built_in">eval</span>(str);</span><br><span class="line">    <span class="built_in">console</span>.log(a);	<span class="comment">//a is not defined</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="string">"var a = 2"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>JavaScript中还有一些功能效果和eval(..)很相似，setTimeout(..)和setInterval(..)的第一个参数可以是字符串，字符串的内容可以被解释为一段动态生成的函数代码。这些功能已经过时，不要使用。</p>
+<h2 id="with关键字-也可以修改词法作用域，不建议使用，严格模式中被完全禁止"><a href="#with关键字-也可以修改词法作用域，不建议使用，严格模式中被完全禁止" class="headerlink" title="with关键字 也可以修改词法作用域，不建议使用，严格模式中被完全禁止"></a>with关键字 也可以修改词法作用域，不建议使用，严格模式中被完全禁止</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">with</span>(obj) &#123;</span><br><span class="line">        a = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o1 = &#123;</span><br><span class="line">    a: <span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o2 = &#123;</span><br><span class="line">    b: <span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(o1)</span><br><span class="line"><span class="built_in">console</span>.log(o1.a);  <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line">foo(o2);</span><br><span class="line"><span class="built_in">console</span>.log(o2.a);  <span class="comment">//undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//2 糟糕，a被泄露到全局作用域上了</span></span><br></pre></td></tr></table></figure>
+<h2 id="函数作用域和块作用域"><a href="#函数作用域和块作用域" class="headerlink" title="函数作用域和块作用域"></a>函数作用域和块作用域</h2><p>变量冲突的一个典型例子存在于全局作用域中。</p>
+<p>所有需要暴露给外界的功能需要作为一个对象的属性，而不是将自己的标识符暴露在顶级的词法作用域中。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> my = &#123;</span><br><span class="line">	name : <span class="string">"xx"</span>,</span><br><span class="line">	doSomething : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="comment">//....</span></span><br><span class="line">	&#125;,</span><br><span class="line">	doAnotherThing : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="comment">//...</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="IIFE-立即执行函数"><a href="#IIFE-立即执行函数" class="headerlink" title="IIFE 立即执行函数"></a>IIFE 立即执行函数</h2><p>当函数被包裹在一对括号中，因此成为了一个表达式，通过在末尾加上另外一个()可以立即执行这个函数。第一个()将函数变成表达式，第二个()执行了这个函数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="title">IIFE</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(a);	<span class="comment">//3</span></span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a);	<span class="comment">//2</span></span><br></pre></td></tr></table></figure></p>
+<p>也可以这样写： (function(){….}()) ，将用来调用的()移进了用来包装的()中</p>
+<h2 id="提升"><a href="#提升" class="headerlink" title="提升"></a>提升</h2><p>只有声明本身会被提升，而赋值或其他运行逻辑会留在原地。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">foo();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>等同于：可以看到函数声明会被提升，但函数表达式不会被提升<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="built_in">console</span>.log(a);<span class="comment">//undefined</span></span><br><span class="line">a = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo()</span><br></pre></td></tr></table></figure></p>
+<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(a);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> bar;	<span class="comment">//返回bar函数本身</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> baz = foo();	<span class="comment">//把foo()函数当作一个值传递给变量baz</span></span><br><span class="line">baz();	<span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+<p>函数bar()的词法作用域能够访问foo()的内部作用域。然后我们将bar()函数本身当作一个值类型进行传递。在这个例子中，我们将bar所引用的函数对象本身当作返回值。</p>
+<p>在foo()执行后，其返回值（也就是内部的bar()函数）赋值给变量baz并调用baz(),实际上只是通过不同的标识符引用调用了内部的函数bar()</p>
+<p>bar()是在自己定义的词法作用域以外的地方执行。</p>
+<p>在foo()执行后，通常foo()整个内部作用域都被销毁，而闭包可以阻止这件事情。内部作用域依然存在，谁在使用这个内部作用域？bar()本身</p>
+<h3 id="循环和闭包"><a href="#循环和闭包" class="headerlink" title="循环和闭包"></a>循环和闭包</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">1</span>; i &lt;=<span class="number">5</span>; i++)&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(i);</span><br><span class="line">  &#125;, i *<span class="number">1000</span>);</span><br><span class="line">&#125;	<span class="comment">//每间隔1秒输出6 共5次</span></span><br></pre></td></tr></table></figure>
+<p>我们预期的是输出数字 1~5，但实际上输出了5个6。这是为什么？<br>首先解释6从哪来的，这个循环的终止条件是i不再&lt;=5，条件首次成立时i的值是6，因此，输出显示的是循环结束时i的最终值。</p>
+<p>延迟函数的回调会在循环结束时才执行。  </p>
+<p>题外话：这书实在看不下去了。。。。。。。。。。。失眠的可以看看</p>
 
       
 
@@ -509,7 +392,101 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/20/《你不知道的JavaScript-下卷》阅读笔记/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/05/21/《你不知道的JavaScript-上卷》阅读笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-《JavaScript设计模式与开发实践》阅读笔记-三" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/12/《JavaScript设计模式与开发实践》阅读笔记-三/">《JavaScript设计模式与开发实践》阅读笔记 三</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/12/《JavaScript设计模式与开发实践》阅读笔记-三/" class="archive-article-date">
+  	<time datetime="2017-05-12T13:37:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/chgGcMxG4TL3cp6gMaLJqJ19vcFI7hDuIe9Q6i2wegE!/b/dI4BAAAAAAAA&bo=VAY4BGAVQA4ROVs!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>闭包的形成与变量的作用域以及变量的生命周期密切相关。<br>变量的作用域<br>指的是变量的有效范围，最常谈到的是在函数中声明的变量作用域</p>
+<p>当在函数中声明一个变量时，没有用关键字var，该变量会成为全局变量。如果用var关键字在函数中声明变量，这时候的变量就是局部变量，只有在函数的内部才能访问到该变量，在函数外是访问不到。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span>  a =<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">&#125;</span><br><span class="line">func()</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//Uncaught ReferenceError: a is not defined</span></span><br></pre></td></tr></table></figure>
+<p>函数可以用来创造函数作用域，此时函数就行一层半透明的玻璃，在函数里面可以看到外面的变量，而在函数外面则无法看到函数里面的变量，这是因为当在函数中搜索一个变量的时候，如果该函数内并没有声明这个变量，那么此次搜索的过程会随着代码执行环境创建的作用域链往外层逐级搜索，一直搜到全局对象为止。</p>
+<p>加深对变量搜索过程的理解：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> func1 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">var</span> func2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> c = <span class="number">3</span>;</span><br><span class="line">        <span class="built_in">console</span>.log(b) <span class="comment">//2</span></span><br><span class="line">        <span class="built_in">console</span>.log(a) <span class="comment">//1</span></span><br><span class="line">    &#125;</span><br><span class="line">    func2()</span><br><span class="line">    <span class="built_in">console</span>.log(c)  <span class="comment">//Uncaught ReferenceError: c is not defined</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="变量的生存周期-也跟闭包有关"><a href="#变量的生存周期-也跟闭包有关" class="headerlink" title="变量的生存周期  也跟闭包有关"></a>变量的生存周期  也跟闭包有关</h3><p>全局变量的声明周期是永久的，除非我们主动销毁这个全局变量。函数内部用var关键字声明的局部变量在函数调用结束时被销毁。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">1</span>;  <span class="comment">//退出函数后局部变量a将被销毁</span></span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;</span><br><span class="line">func();</span><br><span class="line"></span><br><span class="line">反例：</span><br><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     a++;</span><br><span class="line">     <span class="built_in">console</span>.log(a)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> f = func();</span><br><span class="line">f();    <span class="comment">//2</span></span><br><span class="line">这段代码在退出函数后，局部变量a并没有消失，这是因为当执行 <span class="keyword">var</span> f = func();时，f返回了一个匿名函数的引用，它可以访问到func()被调用时产生的环境，而局部变量a处在这个环境里，既然局部变量所在的环境还能被外界访问，这个局部变量就有了不被销毁的理由。在这里产生了一个闭包结构，局部变量的生命看起来被延续了。</span><br></pre></td></tr></table></figure>
+<p>经典案例：假设页面上有5个div，通过循环来给每个div绑定onclick事件……<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;<span class="xml"><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/head&gt;</span></span><br><span class="line"><span class="regexp">&lt;body&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div&gt;1&lt;/</span>div&gt;</span><br><span class="line">    &lt;div&gt;<span class="number">2</span>&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div&gt;3&lt;/</span>div&gt;</span><br><span class="line">    &lt;div&gt;<span class="number">4</span>&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div&gt;5&lt;/</span>div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">var</span> nodes = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"div"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span> ;len =nodes.length();i &lt; len ; i++)&#123;</span><br><span class="line">    nodes[i].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br><span class="line">&lt;<span class="regexp">/html&gt;</span></span><br><span class="line"><span class="regexp">测试发现无论点击哪个div，结果都是5，这是因为div节点的onclick事件是被异步触发的，当事件被触发的时候，for循环已经结束。此时变量i的值已经是5，所以在div的onclick事件函数中顺着作用域链从内到外查找变量i时，查到的值总是5</span></span><br></pre></td></tr></table></figure></p>
+<p>解决办法是在闭包的帮助下，把每次循环的i值都封闭起来，当在事件函数中顺着作用域链中从内到外查找变量i时，会先找到封闭在闭包环境中的i，如果有5个div，这里的i就分别是0,1,2,3,4,<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; len = nodes.length; i&lt;len; i++)&#123;</span><br><span class="line">    (<span class="function"><span class="keyword">function</span> (<span class="params">i</span>))</span>&#123;</span><br><span class="line">        nodes[i].onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="闭包的更多作用"><a href="#闭包的更多作用" class="headerlink" title="闭包的更多作用"></a>闭包的更多作用</h3><p>1.封装变量。这样可以减少页面中的全局变量。</p>
+<p>2.延续局部变量的寿命<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">img对象用于数据上报</span><br><span class="line"><span class="keyword">var</span> report = <span class="function"><span class="keyword">function</span>(<span class="params">src</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> img =  <span class="keyword">new</span> Image()</span><br><span class="line">    img.src = src;</span><br><span class="line">&#125;</span><br><span class="line">report(<span class="string">"http://xxx.com/getUderInfo"</span>);</span><br><span class="line">有时候因为各种原因，比如网络原因导致report函数调用结束后，img变量被销毁，而此时http请求还没来得及发送....</span><br><span class="line">现在我们将img变量用闭包封闭起来</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> report = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> imgs = [];</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">src</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> img = <span class="keyword">new</span> Image();</span><br><span class="line">        imgs.push(img);</span><br><span class="line">        img.src = src;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure></p>
+<h2 id="高阶函数-至少满足下列条件之一"><a href="#高阶函数-至少满足下列条件之一" class="headerlink" title="高阶函数  至少满足下列条件之一"></a>高阶函数  至少满足下列条件之一</h2><p>函数可以作为参数被传递<br>函数可以作为返回值输出</p>
+<p>1.函数作为参数传递<br>把函数当作参数传递，这代表我们可以抽出一部分容易变化的业务逻辑，把这部分业务逻辑放在函数参数中，这样就可以分离业务代码中变化与不变的部分。其中常见的就是回调函数</p>
+<p>回调函数，在ajax异步请求的应用中，回调函数使用频繁。当我们想在ajax请求返回之后做一些事情，但并不确定请求返回的确切时间，最常见的办法就是把callback函数当作参数传入发起ajax请求的方法中，待请求完成之后执行callback函数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> getUserInfo = <span class="function"><span class="keyword">function</span>(<span class="params">userId, callback</span>)</span>&#123;</span><br><span class="line">    $.ajax(<span class="string">"http://xxx.com/getUserInfo?"</span> +userId ,<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> callback === <span class="string">"function"</span>)&#123;</span><br><span class="line">            callback(data)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getUserInfo(<span class="number">13157</span>,<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data.userName)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>回调函数的应用不仅只在异步请求中，当一个函数不适合执行一些请求时，我们可以把这些请求封装成一个函数，并把它作为参数传递给另外一个函数，“委托”给另外一个函数来执行。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">比如，在页面中创建<span class="number">100</span>个div，并将div都设置为隐藏。</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> appendDiv = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span> ; i++)&#123;</span><br><span class="line">        <span class="keyword">var</span> div = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">        div.innerHTML = i;</span><br><span class="line">        <span class="built_in">document</span>.body.appendChild(div);</span><br><span class="line">        div.style.display = <span class="string">"none"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">appendDiv()</span><br><span class="line"></span><br><span class="line">把div.style.display = <span class="string">"none"</span>的逻辑放在appendDiv是不合理的，应抽离出来，用回调函数的形式传入appendDiv方法:</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> appendDiv = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span> ; i &lt; <span class="number">100</span> ; i++)&#123;</span><br><span class="line">        <span class="keyword">var</span> div = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">        div.innerHTML = i;</span><br><span class="line">        <span class="built_in">document</span>.body.appendChild(div);</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> callback === <span class="string">"function"</span>)&#123;</span><br><span class="line">            callback(div)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">appendDiv(<span class="function"><span class="keyword">function</span>(<span class="params">node</span>)</span>&#123;</span><br><span class="line">   node.style.display = <span class="string">"none"</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">可以看出，隐藏节点的请求实际上是由客户发起的，但是客户并不知道节点什么时候会创建好，于是把隐藏节点的逻辑放在回调函数中，<span class="string">"委托"</span>给appendDiv方法，appendDiv方法在节点创建好的时候，会执行之前客户传入的回调函数。</span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>Array.prototype.sort</li>
+</ol>
+<p>接受一个函数当作参数，这个函数里封装了数组元素的排序规则。从Array.prototype.sort的使用可以看到，目的是对数组进行排序，这是不变的部分。而使用什么规则去排序，是可变的部分，把可变的部分封装在函数参数里，动态传入Array.prototype.sort，使Array.prototype.sort方法成为了一个灵活的方法<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从小到大排列</span></span><br><span class="line"></span><br><span class="line">[<span class="number">1</span>,<span class="number">4</span>,<span class="number">3</span>].sort(<span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">return</span> a - b;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//[1, 3, 4]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//从大到小排列</span></span><br><span class="line">[<span class="number">1</span>,<span class="number">4</span>,<span class="number">3</span>].sort(<span class="function"><span class="keyword">function</span>(<span class="params">a ,b</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> b - a;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// [4, 3, 1]</span></span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">《JavaScript设计模式与开发实践》</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/12/《JavaScript设计模式与开发实践》阅读笔记-三/">展开全文 >></a>
         </p>
       
 
@@ -541,7 +518,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/11/">Next &raquo;</a>
     </nav>
   
 
