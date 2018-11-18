@@ -141,6 +141,89 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-《蔡康永的说话之道》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/02/《蔡康永的说话之道》读书笔记/">《蔡康永的说话之道》读书笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/02/《蔡康永的说话之道》读书笔记/" class="archive-article-date">
+  	<time datetime="2018-05-02T12:53:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>尴尬地夸奖别人不如转述。赞赏，观察对方最渴望的部分</p>
+<p>你说什么样的话，你就是什么样的人。</p>
+<p>你老是觉得你是可怜虫，别人都在欺负你，你确实就会常常说出可怜虫心态的话。但不只如此，反过来也一样你每句话都说可怜虫才会说的话，说久了，你就会是可怜虫。</p>
+<p>不要把自己的感受摆在第一位，别人并不是为了伺候你而存在的。</p>
+<p>把无谓的胜利让给对方，不要讲到别人哑口无言，达成共识最重要，懂得认输的人很懂说话。</p>
+<p>重视别人，把对方看在眼里，放在心里。</p>
+<p>遇上对方提起了一个你完全不想接的话题，不必急着要抵抗，而是轻巧地把对方热衷的话题，连接到适合的其他方面就行了。</p>
+<p>说话、提问不能太尖锐，可以迂回倒退三步。</p>
+<p>每个说话的人，都需要从听话的那一方收到鼓励，才会更放开来往下说。只要你的反应是一种鼓励，不管对方是多有地位、多有深度的人，都会很受鼓舞，继续往下说的。</p>
+<p>你不必假装有深度，只要懂得欣赏别人的深度，已经是种美德了。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">读书是一场修行</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/02/《蔡康永的说话之道》读书笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-一些工具的使用方法" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -372,88 +455,6 @@ Math.max = ……
 
 
   
-    <article id="post-函数劫持" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/02/函数劫持/">函数劫持</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/02/函数劫持/" class="archive-article-date">
-  	<time datetime="2018-05-02T10:51:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>函数劫持，顾名思义，即在一个函数运行之前把它劫持下来，添加我们想要的功能。当这个函数实际运行的时候，它已经不是原本的函数了，而是带上了被我们添加上去的功能。这也是我们常见的钩子函数的原理之一。</p>
-<p>乍一看上去，这很像是函数的重写。函数的重写也可以理解为是函数劫持的一种，但是这种方式太恶心了。作为一个劫持者，在绑票获得好处以后也应该遵守职业道德，把人原封不动地还回去，所以我们得在合适的地方把函数原本的功能给重新调用回来。要把原来的方法进行保存，这样就不会担心原来的方法被覆盖掉而不能调用。</p>
-<p>推而广之，其实“劫持”这一概念我们经常会遇到，比方说某网站被运营商劫持了，在浏览该网站的时候会弹出运营商的广告。</p>
-<pre><code>JavaScript劫持的经典结构是这样的
-window.onload = function() {
-    var _func = func; //func指代的就是一个实际的JavaScript native方法
-    window.func = function() { //window.func=function(){}指的就是重写的内容
-    }
-}
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Js基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/02/函数劫持/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
@@ -600,7 +601,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -608,15 +617,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color5">疯言疯语</a>
               </li>
              
               <li class="article-tag-list-item">

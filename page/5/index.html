@@ -141,6 +141,88 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-函数劫持" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/02/函数劫持/">函数劫持</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/02/函数劫持/" class="archive-article-date">
+  	<time datetime="2018-05-02T10:51:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>函数劫持，顾名思义，即在一个函数运行之前把它劫持下来，添加我们想要的功能。当这个函数实际运行的时候，它已经不是原本的函数了，而是带上了被我们添加上去的功能。这也是我们常见的钩子函数的原理之一。</p>
+<p>乍一看上去，这很像是函数的重写。函数的重写也可以理解为是函数劫持的一种，但是这种方式太恶心了。作为一个劫持者，在绑票获得好处以后也应该遵守职业道德，把人原封不动地还回去，所以我们得在合适的地方把函数原本的功能给重新调用回来。要把原来的方法进行保存，这样就不会担心原来的方法被覆盖掉而不能调用。</p>
+<p>推而广之，其实“劫持”这一概念我们经常会遇到，比方说某网站被运营商劫持了，在浏览该网站的时候会弹出运营商的广告。</p>
+<pre><code>JavaScript劫持的经典结构是这样的
+window.onload = function() {
+    var _func = func; //func指代的就是一个实际的JavaScript native方法
+    window.func = function() { //window.func=function(){}指的就是重写的内容
+    }
+}
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Js基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/02/函数劫持/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Js函数防抖与节流" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -488,93 +570,6 @@
 
 
   
-    <article id="post-《技巧-如何用一年经验获得十年的经验》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/02/《技巧-如何用一年经验获得十年的经验》读书笔记/">《技巧 如何用一年经验获得十年的经验》读书笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/02/《技巧-如何用一年经验获得十年的经验》读书笔记/" class="archive-article-date">
-  	<time datetime="2018-05-02T10:36:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>农村人处于某种循环之中，城市人也在某种循环之中……我们每个人都难以超越自己的时代，自己的经济阶层，难道我们就这样任由摆布了吗？不，我们仍要努力跳出一个又一个循环。我们的伟业不是改变世界，而是改变自己，推动自己到新的高度，寻找并扩展自己的边界，改变世界这样的小事情只是我们前进步伐的副产品而已。</p>
-<p>郝老师前妻，初中肄业，奋斗史的故事令人震撼。随着时代潮流学习，不断地学习新东西，执着追求，成长并得到不错的薪水。<br>Sycx 技术总监 也许这就是天赋，我很难达到那样的境界。他们主动探索 主动学习，自驱动力强的精神值得我学习。</p>
-<p>有理想的人需要坚忍。服务器垮了，你跟服务器说再多有毛用，还不是得半夜爬起来定位问题解决问题。</p>
-<p>人都不完美，要对他人宽容，从发展的角度看他人。</p>
-<p>很多时候对自己太严苛，慢慢形成了一种错误的预期，对自己的期望越高，越难以实现，越容易产生自暴自弃的情绪。结果是看起来要求很高，但是结果是放弃了对自己的追求。明白人都不完美以后要用发展的角度来看自己，首先要承认自己并不是全能的，我们会有不足有困惑，然后我们可以根据自己的处境去设计合理的目标，步骤，和方法。过于求全，容易急躁，首先承认现状，然后慢慢改进，才能平静地追求持续稳定的改进。</p>
-<p>每个人都有压力，痛苦，你是在那里怨天尤人感慨自己的不完美呢，还是向前一步从改变自己开始，一点点逼近完美呢？选择总在你自己。</p>
-<p>保持好奇心，新鲜感，向“十万个为什么”学习，尝试和不同的人打交道，可以了解到各行各业的人和事。</p>
-<p>掌握学习曲线。不要想着一步登天，珠峰不是一天就爬得上去的，登顶失败就说自己是个失败者……为什么要这样？不要急，一开始你以为你是神，可以一个星期搞定，一旦你做不到你就会觉得什么都做不到了……丧失信心。学习曲线要平，理性设定目标，要持续的给自己正反馈，不断的给予自己成就感，这样就不会疲倦和挫折感。</p>
-<p>积累的力量是非常巨大可观的，不如从现在开始时不时，写点什么。</p>
-<p>方法论固然重要，但是没有一个方法论可以代替努力。</p>
-<p>成功并不是一个结果，或是一个毕生努力的目标。成功只是前进道路上的一个小奖励，不断完善，不断拓展自己的边界，才是最重要的。</p>
-<p>因为聪明你可能会浮躁，容易想太多，容易无法保持自己的注意力，容易想入非非，却忘了脚踏实地去努力。看到前方有无数前进方向的时候，你更容易迷惘。解决的办法只有一个，一步步走，一个字一个字地写，慢慢积累。</p>
-<p>着急的第二个问题是容易带来挫折感。<br>当你着急的时候你就会忘记自己的能力，去定一个不切实际的目标，比如一个月减肥50斤，这样就很容易失败而产生挫败感，让你觉得一无是处，自暴自弃。</p>
-<p>其实每个人都一样，区别就是有的人站出来了，优秀的人更早悟到这个道理并且比普通人做得更多，所有的大神就是在其他普通人跪下去以后才显得高大，这个世界喜欢跪的人太多，我们应该平视所有人，学习他们做事的方法，从而让自己更优秀，这才是进步，趴在地上仰视对我们没有任何意义。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/02/《技巧-如何用一年经验获得十年的经验》读书笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -721,7 +716,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -729,15 +732,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color5">疯言疯语</a>
               </li>
              
               <li class="article-tag-list-item">

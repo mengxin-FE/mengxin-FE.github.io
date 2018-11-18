@@ -6,22 +6,159 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>《JavaScript设计模式与开发实践》阅读笔记 一 | 我的地盘听我的</title>
+  <title>圳在回忆 | 我的地盘听我的</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。 多态动态类型语言如JavaScript的变量类型在运行时是可变的，一个JavaScript既可以表示A类型的对象，又可以表示B类型的对象，与生俱来的多态特性。 多态的思想实际上是把“做什么”和“谁去做”分离开来，要实现这一点，归根结底要消除类型之间的耦合关系。 多态的最根本好处在于，你不必再向对象">
-<meta name="keywords" content="《JavaScript设计模式与开发实践》">
+  <meta name="description" content="序言来深圳三年了，我和他一样，风华正茂，一起成长。 漂过这么多城市，这是我呆得最久的一座城。 换了屏幕色彩更好的电脑，尘封的作品终于浮现。记忆就像这张照片，熟悉而又模糊。回看照片，轮廓渐渐明朗，谨以此文，回忆自己在深圳的点点滴滴，细细品味这座城。 深圳很热情，像加州的阳光。 ​   只记得正式到访深圳是年初，刚下火车，迎面的热浪和湿润的空气令人稍有不适，我开始怀疑这是不是冬天。直到看见深南大道">
+<meta name="keywords" content="疯言疯语">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《JavaScript设计模式与开发实践》阅读笔记 一">
-<meta property="og:url" content="http://yoursite.com/2017/04/22/《JavaScript设计模式与开发实践》阅读笔记-一/index.html">
+<meta property="og:title" content="圳在回忆">
+<meta property="og:url" content="http://yoursite.com/2018/11/18/圳在回忆/index.html">
 <meta property="og:site_name" content="我的地盘听我的">
-<meta property="og:description" content="著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。 多态动态类型语言如JavaScript的变量类型在运行时是可变的，一个JavaScript既可以表示A类型的对象，又可以表示B类型的对象，与生俱来的多态特性。 多态的思想实际上是把“做什么”和“谁去做”分离开来，要实现这一点，归根结底要消除类型之间的耦合关系。 多态的最根本好处在于，你不必再向对象">
+<meta property="og:description" content="序言来深圳三年了，我和他一样，风华正茂，一起成长。 漂过这么多城市，这是我呆得最久的一座城。 换了屏幕色彩更好的电脑，尘封的作品终于浮现。记忆就像这张照片，熟悉而又模糊。回看照片，轮廓渐渐明朗，谨以此文，回忆自己在深圳的点点滴滴，细细品味这座城。 深圳很热情，像加州的阳光。 ​   只记得正式到访深圳是年初，刚下火车，迎面的热浪和湿润的空气令人稍有不适，我开始怀疑这是不是冬天。直到看见深南大道">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://wx2.sinaimg.cn/large/006gfOdGgy1feirsfesagj332o21tb2a.jpg">
-<meta property="og:updated_time" content="2018-06-24T14:22:50.420Z">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1101.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1070.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0505.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20170706_000150.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_6375_1_PANO.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0818.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0831.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0825.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1744.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1901.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_5336_PANO.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_5315_PANO.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_5344.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_5358.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_2193-Edit.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG20151122144326.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG20151122142548.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0870.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0874.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0897.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_5749.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_5853.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_5753.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_5757.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/20170805_120200.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0497_1_PANO.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0514_PANO.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0505.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_6973.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0434.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1052.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1049.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1064.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1070.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1066.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0449.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0451.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0452.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0455_PANO.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0435.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0423.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0422.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0443.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG20150426163015.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/20170805_110530.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1089.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1102.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0505_PANO.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0368_.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1101.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_5162.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1123.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/20170805_105913.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/P60317-200055.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/LRM_EXPORT_20170827_225712.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/20170806_204722.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/20170806_211748.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1315.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1143.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/20170806_224042.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/20170805_113159.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_6865.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_6869.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_6874.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20171004_184203.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20171004_184715.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20171004_184831.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0618.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0622.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0636.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0629.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0634.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0644.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0660.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0686.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0715.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0679_PANO.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1798.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1891.jpg">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1467-2.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1468.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1502.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1716.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_6636.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_6953.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20161113_162913_PANO.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20170820_185318.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/LRM_EXPORT_20170827_223319.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG20150412175940.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG20150412181333.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20170820_180300_01.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20170820_183939.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_1957.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0942.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/DSC02515.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG20150501174404.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20170729_151354.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0050.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20170729_170816.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20170729_165954.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20170729_174429.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_7616.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_7620.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_7646.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_7637.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_7638.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_7639.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_7704.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_6282_全景图副本.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0163.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0137.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0164.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_6313-Pano.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_6530-Pano-2.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_6556-Pano.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0555.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0558.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0658.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0651.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0649.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0562.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0561.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0560.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0607.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0619.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0628.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0635-2.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_6067.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_0810.jpg">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20170423_145152.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/UNADJUSTEDNONRAW_thumb_4c3.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_2912.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/UNADJUSTEDNONRAW_thumb_4c6.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/UNADJUSTEDNONRAW_thumb_4d2.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/UNADJUSTEDNONRAW_thumb_e3.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_5550.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_5553.jpg!thumb">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/IMG_20170908_074421.jpg!thumb">
+<meta property="og:updated_time" content="2018-11-18T11:06:49.404Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《JavaScript设计模式与开发实践》阅读笔记 一">
-<meta name="twitter:description" content="著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。 多态动态类型语言如JavaScript的变量类型在运行时是可变的，一个JavaScript既可以表示A类型的对象，又可以表示B类型的对象，与生俱来的多态特性。 多态的思想实际上是把“做什么”和“谁去做”分离开来，要实现这一点，归根结底要消除类型之间的耦合关系。 多态的最根本好处在于，你不必再向对象">
-<meta name="twitter:image" content="http://wx2.sinaimg.cn/large/006gfOdGgy1feirsfesagj332o21tb2a.jpg">
+<meta name="twitter:title" content="圳在回忆">
+<meta name="twitter:description" content="序言来深圳三年了，我和他一样，风华正茂，一起成长。 漂过这么多城市，这是我呆得最久的一座城。 换了屏幕色彩更好的电脑，尘封的作品终于浮现。记忆就像这张照片，熟悉而又模糊。回看照片，轮廓渐渐明朗，谨以此文，回忆自己在深圳的点点滴滴，细细品味这座城。 深圳很热情，像加州的阳光。 ​   只记得正式到访深圳是年初，刚下火车，迎面的热浪和湿润的空气令人稍有不适，我开始怀疑这是不是冬天。直到看见深南大道">
+<meta name="twitter:image" content="http://image-up-yun.test.upcdn.net/IMG_1101.jpg!thumb">
   
     <link rel="alternative" href="/atom.xml" title="我的地盘听我的" type="application/atom+xml">
   
@@ -143,54 +280,295 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-《JavaScript设计模式与开发实践》阅读笔记-一" class="article article-type-post " itemscope="" itemprop="blogPost">
+            <article id="post-圳在回忆" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      《JavaScript设计模式与开发实践》阅读笔记 一
+      圳在回忆
     </h1>
   
 
         
-        <a href="/2017/04/22/《JavaScript设计模式与开发实践》阅读笔记-一/" class="archive-article-date">
-  	<time datetime="2017-04-22T01:54:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-22</time>
+        <a href="/2018/11/18/圳在回忆/" class="archive-article-date">
+  	<time datetime="2018-11-18T11:06:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://wx2.sinaimg.cn/large/006gfOdGgy1feirsfesagj332o21tb2a.jpg" width="100%" height="100%" align="center" alt="图片来自微博"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>动态类型语言如JavaScript的变量类型在运行时是可变的，一个JavaScript既可以表示A类型的对象，又可以表示B类型的对象，与生俱来的多态特性。</p>
-<p>多态的思想实际上是把“做什么”和“谁去做”分离开来，要实现这一点，归根结底要消除类型之间的耦合关系。</p>
-<p>多态的最根本好处在于，你不必再向对象询问“你是什么类型”而后根据得到的答案调用对象的某个行为—你只管调用该行为就是了，其他的一切多态机制会为你安排妥当。</p>
-<p>多态最根本的作用就是通过把过程化的条件分支语句转换为对象的多态性，从而消除这些分支语句。</p>
-<p>在电影的拍摄现场，当导演喊出“action”时，主角开始背台词，照明师负责打灯光，后面的群众演员假装中枪倒地，道具师往镜头里撒雪花。在得到同一个消息时，每个对象都知道自己应该做什么。如果不利于对象的多态性，而是用面向过程的方式来编写这段代码，那么相当于在电影开始拍摄之后，导演每次都要走到每个人的面前，确认他们的职业分工，然后告诉他们要做什么，如果映射到程序中，那么程序中将充斥着条件分之语句。</p>
-<p>利用对象的多态性，导演在发布消息时，就不必考虑各个对象接到消息后应该做什么。对象应该做什么并不是临时决定的，而是已经事先约定和排练完毕的。每个对象应该做什么，已经成为了该对象的一个方法，被安排在对象的内部，每个对象负责它们自己的行为。所以这些对象可以根据同一个消息，有条不紊地分别进行各自的工作。</p>
-<p>利用对象的多态性，导演在发布消息时就不必考虑各个对象接到消息后应该做什么。对象应该做什么不是临时决定的，而是已经事先约定和排练完毕的。每个对象应该做什么，已经成了该对象的一个方法，被安装在对象的内部，每个对象负责它们自己的行为。所以这些对象可以根据同一个消息分别进行各自的工作。</p>
-<p>将行为分布在各个对象中，并让这些对象各自负责自己的行为，这正是面向对象设计的优点。</p>
-<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><h4 id="封装数据"><a href="#封装数据" class="headerlink" title="封装数据"></a>封装数据</h4><p>封装的目的是将信息隐藏，一般而言是由语法解析来实现，这些语言提供了private、public、protected等关键字来提供不同的访问权限。</p>
-<p>但JavaScript没有提供对这些关键字的支持，只能依赖变量的作用域来实现封装特性，而且只能模拟出public、private这两种封装性。</p>
-<p>除了ES6提供的let之外，一般我们通过函数来创建作用域：</p>
-<pre><code>var myObject = (function(){
-    var _name = &quot;sven&quot;;//私有(private)变量
-    return{
-        getName : function(){
-            return _name;
-        }
-    }
-})();
-console.log(myObject)    //myObject保存的是立即执行函数返回的对象，对象中没有_name变量 
-console.log(myObject.getName());    //输出：sven
-console.log(myObject._name);    //输出：undefined
-</code></pre><p>ES6还可以通过Symbol创建私有属性。 <a href="https://github.com/lukehoban/es6features" target="_blank" rel="noopener">es6features</a></p>
-<h2 id="基于原型继承的JavaScript对象系统"><a href="#基于原型继承的JavaScript对象系统" class="headerlink" title="基于原型继承的JavaScript对象系统"></a>基于原型继承的JavaScript对象系统</h2><p>在以类为中心的面向对象编程语言中，类和对象的关系就可以想象成铸模和铸件的关系，对象总是从类中创建而来。而在原型编程的思想中， 对象未必需要从类中创建，一个对象是通过克隆另外一个对象所得到的。<br>在面向对象编程中，如果我们需要创建一个对象，先指定它的类型，然后通过类来创建这个对象。在原型模式中，我们不再关心对象的具体类型，而是找到一个对象，然后通过克隆来创建一个一模一样的对象。</p>
-<p>ECMAScript5提供了Object.create方法可以用来克隆对象。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Plane = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.blood = <span class="number">100</span>;</span><br><span class="line">    <span class="keyword">this</span>.attackLevel =<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">this</span>.defenseLevel =<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> plane = <span class="keyword">new</span> Plane();</span><br><span class="line"></span><br><span class="line">plane.blood =<span class="number">500</span>;</span><br><span class="line">plane.attackLevel =<span class="number">10</span>;</span><br><span class="line">plane.defenseLevel =<span class="number">7</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> clonePlane = <span class="built_in">Object</span>.create(plane);</span><br><span class="line"><span class="built_in">console</span>.log(clonePlane.blood)   <span class="comment">//500</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//不支持Object.create方法的浏览器</span></span><br><span class="line"><span class="built_in">Object</span>.create = <span class="built_in">Object</span>.create || <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">    F.prototype =obj;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>目前我们一直在讨论的“对象的原型“，只能说对象的构造器有原型。某个对象的<strong>__proto</strong>属性默认会指向它的构造器的原型对象，即{Constructor}.prototype 。<strong>__proto</strong>就是对象跟“对象构造器的原型”联系起来的纽带。</p>
+        <p><img src="http://image-up-yun.test.upcdn.net/IMG_1101.jpg!thumb" alt=""></p>
+<h3 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h3><p>来深圳三年了，我和他一样，风华正茂，一起成长。</p>
+<p>漂过这么多城市，这是我呆得最久的一座城。</p>
+<p>换了屏幕色彩更好的电脑，尘封的作品终于浮现。记忆就像这张照片，熟悉而又模糊。回看照片，轮廓渐渐明朗，谨以此文，回忆自己在深圳的点点滴滴，细细品味这座城。</p>
+<h3 id="深圳很热情，像加州的阳光。"><a href="#深圳很热情，像加州的阳光。" class="headerlink" title="深圳很热情，像加州的阳光。"></a>深圳很热情，像加州的阳光。</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_1070.jpg!thumb" alt=""></p>
+<p>​   只记得正式到访深圳是年初，刚下火车，迎面的热浪和湿润的空气令人稍有不适，我开始怀疑这是不是冬天。直到看见深南大道两旁繁盛的绿树，强壮的根蔓延开来，高大的棕榈树排成排……我真的来到了南方。</p>
+<p>   原来深圳没有冬天，也不会下雪。</p>
+<p>​    身着大衣穿行在薄衬衫的人群中，地铁的语音播报居然有粤语！墙上写着“来了就是深圳人”，不愧是大城市啊。我学会了第一句广东话——”雷猴，深圳“</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0505.jpg!thumb" alt=""></p>
+<p>​    潮湿的空气让我养成早晚洗澡，勤用洗面奶的习惯～相比北方干燥灰霾，我觉得这里简直太宜居了。</p>
+<h3 id="相比夏天，更喜欢深圳的秋天"><a href="#相比夏天，更喜欢深圳的秋天" class="headerlink" title="相比夏天，更喜欢深圳的秋天"></a>相比夏天，更喜欢深圳的秋天</h3><p>​    因为珍贵，所以珍惜。呆久了会发现深圳的秋天不会超过两个月，不会冷也不会很晒，十分清爽。是非常适合出去“浪”的，所以周末我会出去逛逛，你会选择在家里泡一杯咖啡岁月静好，还是拿上相机出门呢？</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170706_000150.jpg!thumb" alt=""></p>
+<p>谢谢自己的努力，攒钱买了这台相机。人生终于拥有了属于自己的照相机，作为初学者，这部相机确实够用，它陪我看看这世界，虽然拿起来有点重。</p>
+<p>我仍然喜欢小时候玩的胶片相机，因为每次按下快门时，你无法预测拍到的样子，这种不确定会让你珍惜每一次拍照的moment，旅途归来最让人期待的就是等待照相馆冲洗照片。</p>
+<p>照片拿在手里的质感，是数码无法比拟的真实，和味道。</p>
+<p>打开地图会发现，深圳以福田为中轴线，像一只大鹏展开翅膀，东西绵延至海。可能是因为曾经有很多山，海，沙，田 …所以地名比较接地气吗？….百闻不如一见，背上行囊即刻出发。</p>
+<h3 id="山海城"><a href="#山海城" class="headerlink" title="山海城"></a>山海城</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_6375_1_PANO.jpg!thumb" alt=""></p>
+<p>站到山上，便能看到海，顺便看看这座城市。</p>
+<p>听起来就像自家后院一样，心情不好就冲上山去，看繁星点点，就这么简单，自在，洒脱，浪漫…..</p>
+<p>没想到可以站在山上看海，这与“脚踩沙滩看浪花”有着截然不同的体验。其实垦丁，圣托里尼也是类似的，高处看海浪一层接着一层会非常慢，很安静。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0818.jpg!thumb" alt=""></p>
+<p>记得第一次参加公司团建是爬南山，来自平原的我十多年来第一次爬山，我竟是最后一个到达山顶，于是决定每周来爬南山锻炼。再后来慢慢爬完了深圳所有的山…拍下了这些照片。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0831.jpg!thumb" alt=""></p>
+<p>采菊东篱下 悠然见南山。没错，每年重阳节时来这座山打卡的人非常多。这里靠近蛇口，平时很多外国人上山健身。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0825.jpg!thumb" alt=""></p>
+<p>看那片海，似乎很忙的样子。海上居然还有楼房？</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1744.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1901.jpg!thumb" alt=""></p>
+<h3 id="当你征服一座又一座山峰时，心开始野了。"><a href="#当你征服一座又一座山峰时，心开始野了。" class="headerlink" title="当你征服一座又一座山峰时，心开始野了。"></a>当你征服一座又一座山峰时，心开始野了。</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_5336_PANO.jpg!thumb" alt=""></p>
+<p>塘朗山，山不高，但山脉很长。从南山区西丽龙珠门上山，下山已是福田梅林。</p>
+<p>走完全程大概需要4小时，前半段为阶梯，后半段是铺装路。后半段的风景更好，给坚持到最后的你奖励。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5315_PANO.jpg!thumb" alt=""></p>
+<p>梅林水库十分宁静，坐在坝上，脚踏着草坪，望着坝下的高尔夫球场，远处的高楼，晒着暖阳，不知不觉夕阳把影子拉长。伸个懒腰吧，爬山的疲劳感终于缓解。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5344.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5358.jpg!thumb" alt=""></p>
+<h3 id="又到凤凰花朵开放的时候"><a href="#又到凤凰花朵开放的时候" class="headerlink" title="又到凤凰花朵开放的时候"></a>又到凤凰花朵开放的时候</h3><p>路边火红的凤凰花开的时候，耳边总会想起林志炫的这首歌。约上三五好友，登上凤凰山，哼着这首歌。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_2193-Edit.jpg!thumb" alt=""></p>
+<p>每次说到凤凰山，就想起那次半路上下起大雨在树下躲雨的画面，狼狈不已。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG20151122144326.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG20151122142548.jpg!thumb" alt=""></p>
+<p>其实爬山的愉悦感是登上山顶歇口气的那一刻，居高临下，大汗淋漓的痛快。</p>
+<p>而了解一座城市，最简单的办法就是去高处。</p>
+<h3 id="莲花山-没有莲花"><a href="#莲花山-没有莲花" class="headerlink" title="莲花山 没有莲花"></a>莲花山 没有莲花</h3><p>但是有一片鲜红色的桃花林，相比老家的淡雅桃花显得充满浓烈诱惑。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0870.jpg!thumb" alt=""></p>
+<p>深圳是东门老区先发展起来的，在莲花山可以看见曾经的地标。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0874.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0897.jpg!thumb" alt=""></p>
+<p>有些建筑的风格在致敬香港，比如金中环就挺像的，有点意思。</p>
+<h3 id="梧桐山-没有梧桐"><a href="#梧桐山-没有梧桐" class="headerlink" title="梧桐山 没有梧桐"></a>梧桐山 没有梧桐</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_5749.jpg!thumb" alt=""></p>
+<p>早闻深圳最高的山就是此山，海拔近1000米。因为这山就在海边，所以是实打实的1000米高啊朋友们。记得第一次去挑战它的时候我只爬到小梧桐山顶就天色渐晚，打道回府，回到家后一整个星期都浑身酸痛，那酸爽…..</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5853.jpg!thumb" alt=""></p>
+<p>有了第一次的经验，第二次起了个大早就上山了，阳光看起来不是很强烈，有些轻雾，顺利走完了全程，下山刚刚天黑。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5753.jpg!thumb" alt=""></p>
+<p>然而我还是太年轻，低估了紫外线的能力，回到家才发现皮肤晒得发红，火辣辣的感觉。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5757.jpg!thumb" alt=""></p>
+<p>EF-S18-135 这颗初级镜头这时候倒挺好用，一镜走天下哈哈，135mm长焦乘以佳能1.6倍转换系数等效得216mm焦段，不然想想背着大长焦镜头爬山其实挺累的，站在小梧桐山顶可以拍到几十公里外的罗湖区。</p>
+<h3 id="深圳湾-每个深圳人都会去的地方"><a href="#深圳湾-每个深圳人都会去的地方" class="headerlink" title="深圳湾 每个深圳人都会去的地方"></a>深圳湾 每个深圳人都会去的地方</h3><p>它是市中心地段的一条海岸线，虽然不像珠海情侣路那样有十里银滩，但这里有无敌海景骑行道，是非常棒的慢行步道。</p>
+<p>没有走过深圳湾全程不算来过深圳，快约上三五好友，即刻出发。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/20170805_120200.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0497_1_PANO.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0514_PANO.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0505.jpg!thumb" alt=""></p>
+<p>观桥公园可以看到全深圳CBD,完全不亚于维多利亚港。清新的海风吹呀吹，静待夕阳和云彩邂逅。你在桥上看风景，没准有个女孩子正在看你。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_6973.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0434.jpg!thumb" alt=""></p>
+<p>如果你想去香港，我更推荐你走这条路线，从深港大桥而过，可以在海上看到深圳的样子，看着渐行渐远的大陆，驶向海洋是一种微妙的感觉。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1052.jpg!thumb" alt=""></p>
+<p>没错就是这座桥了，它的对岸就是香港，就是这么近！</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1049.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1064.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1070.jpg!thumb" alt=""></p>
+<p>我真的很喜欢湾厦，因为这里的晚霞很美。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1066.jpg!thumb" alt=""></p>
+<p>南山后海CBD，曾经一段时间晚上常去那边玩到半夜～</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0449.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0451.jpg!thumb" alt=""></p>
+<p>人才公园，去过的都是人才。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0452.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0455_PANO.jpg!thumb" alt=""></p>
+<p>夕阳确实壮美，毕竟难能可贵，转瞬即逝。拍摄这种大场面的照片，需要超广角镜头。如果没有的话，拍摄多张然后合成全景也是不错的。</p>
+<h3 id="sea-world-海上世界"><a href="#sea-world-海上世界" class="headerlink" title="sea world 海上世界"></a>sea world 海上世界</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_0435.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0423.jpg!thumb" alt=""></p>
+<p>再一次叹服这滨海长廊的设计，时常能够亲近自然是我喜欢深圳的一个原因。</p>
+<p>心情不悦时，沿着海滨栈道走走，让自己和内心对话，远离城市的喧嚣和浮躁，闭上眼睛，且听风吟。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0422.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0443.jpg!thumb" alt=""></p>
+<p>也许是深圳最后的几条渔船，停在港湾，静待时间。看到这种画面，我会觉得很踏实。都说广东人勤劳务实，手里几栋房的阿伯照样出海打鱼开烧腊店。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG20150426163015.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/20170805_110530.jpg!thumb" alt=""></p>
+<h3 id="霓虹"><a href="#霓虹" class="headerlink" title="霓虹"></a>霓虹</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_1089.jpg!thumb" alt=""></p>
+<p>感谢爱迪生发明了电灯，世上竟有比天上的星星更闪耀的光。坐在南山顶上，亦或是深圳湾草坪，静待晚霞，望着城市的轮廓渐渐模糊，日落矣华灯初上，海风轻拂脸庞，你亦如画，一切的等待都是值得的。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1102.jpg!thumb" alt=""></p>
+<p>迷离的灯光 就像一个黑洞 有着无穷的魅力 吸引着你 </p>
+<p>霓虹灯，其实最早在香港非常流行，我觉得这是港味独特之一。</p>
+<p>霓虹灯一闪一闪，飘逸的楷书，行书，隶书，加上繁体字，一横一竖，一撇一捺都十分到位，严谨工整。</p>
+<p>看着满街都是这种风格，会有一种说不出来的微妙的感觉。毕竟是我们曾经使用过的字体，只是现在开始用宋体，简体，霓虹被LED替代，少了那份手工制作的厚重和仪式感。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0505_PANO.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0368_.jpg!thumb" alt=""></p>
+<p>深圳人才公园，可见深圳是多么求贤若渴，深爱人才，圳等你来。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1101.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5162.jpg!thumb" alt=""></p>
+<p>摄影和画画一样，相机只是你手中的创作工具，画出怎样的画面最重要的还是镜头后面的那个头。不要因没有相机而气馁。好的作品能够感动人心，而无关画质。</p>
+<p>你能看出这些照片哪些是用iPhone拍摄的吗？</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1123.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/20170805_105913.jpg!thumb" alt=""></p>
+<p>走在木质的栈道上会有嗒嗒的声音，栏杆也是木质的，和自然的融合感愈加深刻。</p>
+<h3 id="人间烟火"><a href="#人间烟火" class="headerlink" title="人间烟火"></a>人间烟火</h3><p><img src="http://image-up-yun.test.upcdn.net/P60317-200055.jpg!thumb" alt=""></p>
+<p>长达10个月需要开冷气的夏季，终于让我摆脱了厚重的衣服，全身心都自在轻松了呢。这里气候确实很像加州，阳光很热情，不知不觉我晒成了咖喱色。</p>
+<p>“哪凉快哪呆着去”有时候是真的关心你。短T 沙滩裤 人字拖 成了深圳人的日常。渐渐的，白天我很少出去晃悠了，夜幕降临，深圳的一天才刚刚开始。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/LRM_EXPORT_20170827_225712.jpg!thumb" alt=""></p>
+<p>海岸城 最适合晚上来逛，美食，商场因有尽有。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/20170806_204722.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/20170806_211748.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1315.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1143.jpg!thumb" alt=""></p>
+<p>海上世界 华丽的喷泉表演 很值得一看。你没有看错，那确实是一艘游轮，明华轮 始于1962<br>想吃世界美食可以来这里逛逛，东南亚海鲜居多。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/20170806_224042.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/20170805_113159.jpg!thumb" alt=""></p>
+<p>海景豪宅下的渔港，这种鲜明对比，在香港也曾见过。</p>
+<h3 id="海上升明月"><a href="#海上升明月" class="headerlink" title="海上升明月"></a>海上升明月</h3><p>脑海里一直有个画面，就是希望能够爬到城市的后山上，坐下来欣赏车水马龙。终于实现了。搭配周杰伦的星晴这首歌，很安逸。</p>
+<p>不愧是国际都市，天空都被照亮了。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_6865.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_6869.jpg!thumb" alt=""></p>
+<p>月亮钻出云的时候，海面上也撒上了月光，亲眼见过才明白什么是月光。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_6874.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20171004_184203.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20171004_184715.jpg!thumb" alt=""></p>
+<p>夜晚的深圳湾，海面被灯光照亮。晚上有很多人在这里沿海跑步，真羡慕他们住在这附近。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20171004_184831.jpg!thumb" alt=""></p>
+<h3 id="有一种日出叫-海上日出"><a href="#有一种日出叫-海上日出" class="headerlink" title="有一种日出叫 海上日出"></a>有一种日出叫 海上日出</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_0618.jpg!thumb" alt=""></p>
+<p>文艺青年说没看过日出，人生就不算完整。</p>
+<p>于是我决定疯一把，和同学约好，大半夜打车到深圳湾看日出。不负有心人，如愿看到了人生第一次海上日出，确实非常震撼，云彩像火一样燃烧。也是后来才知道，看日出，晚霞，火烧云，都是需要运气，真的是难忘的经历。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0622.jpg!thumb" alt=""></p>
+<p>天还未亮，城市的灯光仍未熄灭。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0636.jpg!thumb" alt=""></p>
+<p>慢慢的，天开始亮了起来。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0629.jpg!thumb" alt=""></p>
+<p>烈焰般的朝霞映衬下，这座城市还未完全苏醒，只见得一些轮廓，无与伦比。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0634.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0644.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0660.jpg!thumb" alt=""></p>
+<p>静静地望着，望着</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0686.jpg!thumb" alt=""></p>
+<p>太阳出来了</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0715.jpg!thumb" alt=""></p>
+<p>海面和天空披上了金色，还真是难以分辨出是日出还是日落呢。</p>
+<p>原来海上入日出是这样的。</p>
+<h3 id="一座城池"><a href="#一座城池" class="headerlink" title="一座城池"></a>一座城池</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_0679_PANO.jpg!thumb" alt=""></p>
+<p>有些时候，平平淡淡才是真。坐下来慢慢品味，这才是生活。</p>
+<p>自然风光拍得多了，没有更多的灵感，我会尝试拍一些其他的题材。小景，静物，人像这些需要把握细节的东西是我还没有尝试过的，我想女生可能更擅长把握这些，你需要和它产生对话和共鸣，注入情感和灵魂。</p>
+<p>很想去尝试，但是只停留在“想”。</p>
+<p>我想拍城市风光，想去爬楼，但是我没有时间，我的相机不够好，害怕被保安拦住……首先给自己设定了重重障碍的思路是不对的。成功的人找办法，失败的人找借口。我觉得道理差不多。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1798.jpg!thumb" alt=""></p>
+<p>一桥连深港，半岛城邦之下是渔船的港湾。不过现在的渔港已经开始拆除了，可能质朴的它不太适合这种奢华的黄金地段吧。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1891.jpg" alt=""></p>
+<p>万物生长，大厦屹立入云。其实仔细看上去，这里的环境和发展是和谐共处的，海湾 绿植都保护的得很好。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1467-2.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1468.jpg!thumb" alt=""></p>
+<p>看这些房子，像不像积木，想伸手把它们推倒。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1502.jpg!thumb" alt=""></p>
+<p>钢铁森林，其实也没有那么压抑了，我觉得比上海满是高架桥要好很多。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1716.jpg!thumb" alt=""></p>
+<p>像不像“小人国”～</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_6636.jpg!thumb" alt=""></p>
+<p>半山别墅，好羡慕这环境。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_6953.jpg!thumb" alt=""></p>
+<p>西部的海岸不是那么常见，宝安中心区就在这一块，天气好的时候据说能够看到广州小蛮腰…</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20161113_162913_PANO.jpg!thumb" alt=""></p>
+<p>科技园，多少人的青春在这里奋斗，当然也包括我。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170820_185318.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/LRM_EXPORT_20170827_223319.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG20150412175940.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG20150412181333.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170820_180300_01.jpg!thumb" alt=""></p>
+<p>人生不就像这浪花吗。起起伏伏，慢慢习惯就好了</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170820_183939.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1957.jpg!thumb" alt=""></p>
+<p>有人说深圳是文化沙漠，我是不认同的。虽然不像广州那般有百年文化底蕴，只是深圳是一座新城，一切都是崭新的。大大小小的图书馆，书店600多个，覆盖了所有街区。拿起一本书，在cafe坐一下午也是很多人的生活方式。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0942.jpg!thumb" alt=""></p>
+<h3 id="翻山越岭来看海"><a href="#翻山越岭来看海" class="headerlink" title="翻山越岭来看海"></a>翻山越岭来看海</h3><p>感谢你坚持读到这里，我们终于来到了深圳的最东部。</p>
+<p>来了滨海城市，最想看的肯定就是大海了。</p>
+<p>相信你和我一样，憧憬中的大海应该是像斯里兰卡，帕劳那样清澈见底的，蓝的深邃的…..脚踩银沙，捡贝壳 海星，海螺，捉招潮蟹，听听海螺里面的声音，躺在椰树之间的吊床上，悠闲地喝着椰汁…..</p>
+<p>带上装备，坐上旅游专线巴士，横穿整个深圳，经过一个多小时，终于来到了著名的大梅沙。看着满眼的人群～这落差 哈哈哈哈 犹如晴天霹雳的感觉</p>
+<p><img src="http://image-up-yun.test.upcdn.net/DSC02515.jpg!thumb" alt=""></p>
+<p>其实再往前走，有一条海滨栈道，一路的风景会更好。从高处看海滩的样子，看海浪缓缓铺上沙滩，就像微风拂过女孩的刘海。</p>
+<p>沿着步道往前走就是小梅沙，人群会少很多。到了这里，不如再往前。</p>
+<p>再坐一小时巴士就到了大鹏半岛，没错，这边是一个半岛，海滩数不胜数。每年我都会去这里春游。</p>
+<h4 id="西涌-xi-chong"><a href="#西涌-xi-chong" class="headerlink" title="西涌 xi chong"></a>西涌 xi chong</h4><p>相对于小梅沙，这里人烟稀少，尽情倾听大海的声音吧。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG20150501174404.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170729_151354.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0050.jpg!thumb" alt=""></p>
+<p>海上有一座小岛，叫情人岛～ 可以坐快艇过去，请务必穿拖鞋上岸啊，小石子很扎脚。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170729_170816.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170729_165954.jpg!thumb" alt=""></p>
+<p>金毛救生犬family 在那边呆了好多年，每次去都会碰到。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170729_174429.jpg!thumb" alt=""></p>
+<p>因为这里远离市区，餐厅很少，可以沙滩烧烤，我的经验是烤玉米最简单，手艺不好烤其他很容易糊喔。</p>
+<p>傍晚租帐篷露营，记得带防蚊喷雾。手机信号可能不太好，存几部电影吧。躺在防潮垫上，抬头看天空，是浩瀚无垠的星河，很久没有见过这样的满天星斗，请脑补星晴BGM，浪漫至极。</p>
+<p>第二天早早起来还可以欣赏日出，岂不美哉，不过我一次都没见过，每次都阴天，笑cry。</p>
+<h4 id="西涌还有一个玩法就是——穿越东西涌"><a href="#西涌还有一个玩法就是——穿越东西涌" class="headerlink" title="西涌还有一个玩法就是——穿越东西涌"></a>西涌还有一个玩法就是——穿越东西涌</h4><p>如果你和我一样，在沙滩上看海已经看腻了，可以试试从高处鸟瞰。<br>穿越东西涌就是一个选择。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7616.jpg!thumb" alt=""></p>
+<p>先说明一下这个玩法需要三人以上同行，而且最好有一名有过户外相关经验，遇到恶劣天气或不熟悉路线稍微会有一些危险性。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7620.jpg!thumb" alt=""></p>
+<p>没有比人更高的山</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7646.jpg!thumb" alt=""></p>
+<p>面对自然的力量，一定要有敬畏之心。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7637.jpg!thumb" alt=""></p>
+<p>穿越东西涌要穿长袖长裤运动鞋，头戴遮阳帽，可以防止皮肤被树枝划伤。全程基本上没有路，只是驴友们走得多了 便有了“路”。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7638.jpg!thumb" alt=""></p>
+<p>一路上翻山越岭，基本是走在丛林中或悬崖边，中国南海尽收眼底，一眼看不到边界，只听得海浪深沉的咆哮声。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7639.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7704.jpg!thumb" alt=""></p>
+<p>那次去的时候顶着9级大风，烟波浩渺，非常凉爽。听闻香港麦理浩径也是这般，有机会也想去看看。</p>
+<h4 id="杨梅坑-amp-鹿咀山庄-amp-较场尾"><a href="#杨梅坑-amp-鹿咀山庄-amp-较场尾" class="headerlink" title="杨梅坑 &amp; 鹿咀山庄 &amp; 较场尾"></a>杨梅坑 &amp; 鹿咀山庄 &amp; 较场尾</h4><p>绕着半岛行驶半小时就到杨梅坑了，鹿嘴山庄就在杨梅坑的尽头。这边相对于西涌，开发得更完善一些。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_6282_全景图副本.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0163.jpg!thumb" alt=""></p>
+<p>清澈的海水 捧起来尝尝 真的是咸的 笑cay</p>
+<p>喜欢去杨梅坑环海骑单车，下水摸石头，去鹿咀山庄看万丈悬崖，什么海枯石烂 山盟海誓  应该就是如此吧，</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0137.jpg!thumb" alt=""></p>
+<p>小石头被海水打磨得圆圆的</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0164.jpg!thumb" alt=""></p>
+<p>路旁的芦苇草</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_6313-Pano.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_6530-Pano-2.jpg!thumb" alt=""></p>
+<p>拍摄这张照片 需要翻到悬崖下面，从船的高度对比来看，离下面的礁石其实还有几十米高呢，挺危险的。</p>
+<p>第一次见悬崖 真美</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_6556-Pano.jpg!thumb" alt=""></p>
+<p>等待客人的渔夫</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0555.jpg!thumb" alt=""></p>
+<p>较场尾则在杨梅坑所在的大鹏半岛的对面，那里有很多特色民宿和小吃店，酒吧电影院应有尽有。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0558.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0658.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0651.jpg!thumb" alt=""></p>
+<p>蛋挞甜点，水果芋圆，看起来好好吃啊！</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0649.jpg!thumb" alt=""></p>
+<p>其实都是假的！模型！哈哈哈哈 笑cry 把我都骗了！想吃就按模型来点就好啦</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0562.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0561.jpg!thumb" alt=""></p>
+<p>这些串串是真的，不要怀疑，大胆吃。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0560.jpg!thumb" alt=""></p>
+<p>木牌说出了多少人的心声</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0607.jpg!thumb" alt=""></p>
+<p>形单影只</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0619.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0628.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0635-2.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_6067.jpg!thumb" alt=""></p>
+<p>短暂的停留后，我找到了新的攀登目标</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_0810.jpg" alt=""></p>
+<h3 id="新生"><a href="#新生" class="headerlink" title="新生"></a>新生</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_20170423_145152.jpg!thumb" alt=""></p>
+<p>仅有的一些靠打渔为生的渔民也要离开这里了，这里即将诞生一个新的商区。有谁还记得曾经的深圳是一个小渔村呢？但我认为，合理开发 是值得的。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/UNADJUSTEDNONRAW_thumb_4c3.jpg!thumb" alt=""></p>
+<p>荒废的渔船，碎生蚝壳，记录了深圳速度。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_2912.jpg!thumb" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/UNADJUSTEDNONRAW_thumb_4c6.jpg!thumb" alt=""></p>
+<p>期待全新的你</p>
+<p><img src="http://image-up-yun.test.upcdn.net/UNADJUSTEDNONRAW_thumb_4d2.jpg!thumb" alt=""></p>
+<p>大铲湾 </p>
+<p>刚搬到宝安区住的时候，找这个地方找了很久。终于不用再横穿整个深圳去看海了，挺欣喜的。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/UNADJUSTEDNONRAW_thumb_e3.jpg!thumb" alt=""></p>
+<p>没有沙滩的海，搭配杂乱的礁石，杂草。海上还有电线杆子～或许这就是原生态，说不出来的感觉。繁忙的飞机会从头顶掠过，周末出门散散步却是好去处。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5550.jpg!thumb" alt=""></p>
+<p>载着全家希望的小船</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5553.jpg!thumb" alt=""></p>
+<h3 id="城中村-看不到希望-寄托着无数希望"><a href="#城中村-看不到希望-寄托着无数希望" class="headerlink" title="城中村 看不到希望 寄托着无数希望"></a>城中村 看不到希望 寄托着无数希望</h3><p>在来深圳之前，只听说过“关内,关外”,不知道有什么区别。从未听过“城中村”,”握手楼“。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170908_074421.jpg!thumb" alt=""></p>
+<p>指甲盖大小的土地上生长出2100栋自建楼，从空中看一定是像曼哈顿般密集的水泥森林。房子与房子之间触手可及，抬头只见得一线天这里像是一块“自留地”，和外界有非常大的区别…..</p>
+<p>其实应该感谢城中村，给了年轻人第一次落脚的地方。随着旧改，城中村也许会慢慢消失，但年轻人的梦想不会退却。</p>
+<p>未来，可期。</p>
 
       
 
@@ -235,7 +613,7 @@ console.log(myObject._name);    //输出：undefined
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">《JavaScript设计模式与开发实践》</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">疯言疯语</a>
         		</li>
       		
 		</ul>
@@ -291,7 +669,7 @@ console.log(myObject._name);    //输出：undefined
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2017/04/22/《JavaScript设计模式与开发实践》阅读笔记-一/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/11/18/圳在回忆/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -305,18 +683,9 @@ console.log(myObject._name);    //输出：undefined
   
 <nav id="article-nav">
   
-    <a href="/2017/05/11/《JavaScript设计模式与开发实践》阅读笔记-二/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          《JavaScript设计模式与开发实践》阅读笔记 二
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/03/31/《实战ES2015》-阅读笔记-一/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">《实战ES2015》 阅读笔记 一</div>
+    <a href="/2018/11/03/移动web开发小结/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">移动web开发小结</div>
       <i class="icon-circle-right"></i>
     </a>
   
