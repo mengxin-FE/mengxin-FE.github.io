@@ -141,6 +141,129 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-《深入浅出React和Redux》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/22/《深入浅出React和Redux》读书笔记/">《深入浅出React和Redux》读书笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2018/09/22/《深入浅出React和Redux》读书笔记/" class="archive-article-date">
+  	<time datetime="2018-09-22T07:21:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b60EL1ED/rVBHNtIu6hlb2Et65.W8gS0GVndyHDy1BfLg5j7DTHE!/b/dFoAAAAAAAAA&bo=VQhABsAP0AsROQE!&rf=viewer_4&t=5" width="100%"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<h1 id="React新的前端思维"><a href="#React新的前端思维" class="headerlink" title="React新的前端思维"></a>React新的前端思维</h1><h3 id="HTML-DOM-树"><a href="#HTML-DOM-树" class="headerlink" title="HTML = DOM 树"></a>HTML = DOM 树</h3><p>jQuery不好吗？</p>
+<p>前不久，Github从代码中移除了jQuery代码。</p>
+<p>j 就是js、Query 就是查找，这种思维模式写页面就是查找页面DOM节点，对他进行一些操作，异步获取数据拼接字符串插入DOM，也就是DOM操作，很容易写成面条式的代码，而且频繁操作dom会导致性能低下，页面状态比较多时难以管理和维护。</p>
+<h3 id="UI-render-data"><a href="#UI-render-data" class="headerlink" title="UI = render( data )"></a>UI = render( data )</h3><p>扭转思维，数据驱动页面。</p>
+<p>React是声明式，并不直接操作DOM，你要达成什么效果，办什么事，告诉那个人，他自己去办好，不需要你主动去做。React只关心渲染，不关心如何渲染。</p>
+<p>UI界面呈现什么，取决于输入数据。React使用虚拟DOM，不直接操作DOM，变动时，对比虚拟DOM差异，修改真实DOM最小化。</p>
+<h1 id="如何设计高质量的React组件"><a href="#如何设计高质量的React组件" class="headerlink" title="如何设计高质量的React组件"></a>如何设计高质量的React组件</h1><p>就和一个人最好一次只专注做一件事一样，一个组件只做一件事。</p>
+<p>高内聚：把逻辑紧密相关的内容放在一个数组中，CSS、JS、JSX放在一起。</p>
+<p>低耦合：不同组件之间的依赖关系尽量弱化，每个组件尽量独立。</p>
+<p>差劲的程序员操心代码，优秀的程序员操心数据结构和它们之间的关系。——Linus</p>
+<p>设计一个组件的时候，对外用prop，内部用state。</p>
+<p>prop用于定义外部接口，state用于记录内部状态。</p>
+<p>组件不应该改变prop的值，而state存在的目的就是让组件来改变。</p>
+<h2 id="组件的声明周期"><a href="#组件的声明周期" class="headerlink" title="组件的声明周期"></a>组件的声明周期</h2><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/AblTWyXTRo0p*Pb8*TV.YdUUCWbX8w48cXiAinu*JLU!/b/dFMBAAAAAAAA&bo=VgUAA1YFAAMDaUw!&rf=viewer_4&t=5" width="100%"></p>
+<h3 id="装载过程-Mount"><a href="#装载过程-Mount" class="headerlink" title="装载过程 Mount"></a>装载过程 Mount</h3><ol>
+<li><p>constructor ：也就是ES6中每个类的构造函数，要创建组件类的实例，当然会调用对应的构造函数。（无状态组件不需要定义构造函数）</p>
+<p>目的：初始化state、绑定成员函数的this环境</p>
+</li>
+<li><p>getInitialState 和 getDefaultProps ：在ES6的方法定义的React组件中不会用到</p>
+</li>
+<li><p>render ：render函数并不做实际的渲染动作，他只是返回一个JSX描述的结构，最终由React来操作渲染过程。</p>
+<p>render函数应该是纯函数，完全根据this.prop和sthis.state来决定返回的结果，而且不要产生副作用，如在render函数中调用this.setState是错误的。因为一个纯函数不应该引起状态的改变。</p>
+</li>
+<li><p>componentWillMount 和 componentDidMount  前者在render函数之前被调用，后者在调用render函数之后被调用。<strong>componentWillMount 可以在服务器端调用，这在同构时将会有用。</strong></p>
+<p>注意：<b>render函数被调用完之后，componentDidMount函数并不是立即被调用</b>，componentDidMount被调用的时候，render函数返回的东西已经引发了渲染，组件已经被装到了DOM树上。</p>
+<p>之前说过，render函数本身并不直接往DOM树上渲染或者装载内容，它只是返回一个JSX表示的对象，然后由Reacr库来根据返回对象决定如何渲染。而React库要把所有组件返回的结果综合起来，才知道该如何产生对应的DOM修改。</p>
+<p><strong>React和其他UI库配合时，例如jQuery，需要利用componentDidMount函数</strong>，当它被执行时，React组件对应的DOM已经处在，所有事件处理函数已经设置好，这时候就可以调用jQuery，让jQuery在宜家绘制的DOM基础上使用。</p>
+</li>
+</ol>
+<h3 id="更新过程-Update"><a href="#更新过程-Update" class="headerlink" title="更新过程 Update"></a>更新过程 Update</h3><p>组件随着用户操作改变内容，当props或state被修改时，引发组件更新状态。</p>
+<p><strong>并不是所有的更新过程都会执行全部函数</strong></p>
+<ol>
+<li><p>componentWillReceiveProps(nextProps) ：只有父组件的render函数被调用，在render函数里被选入的子组件就会经历更新过程，不管父组件传给子组件的props有没有改变，都会触发子组件的该函数。</p>
+<p>通过this.setState方法触发的更新过程不会调用该函数。因为该函数适合根据参数nextProps来计算是否要更新内部状态state，而更新组件内部状态的方法也就是this.setState，此时如果setState导致该函数再次被调用就会死循环。</p>
+</li>
+<li><p>shouldComponentUpdate ：决定一个组件什么时候不需要渲染，该函数返回一个布尔值，告诉React这个组件在这次更新过程中是否要继续。在更新过程中，React先调用该函数，如果返回true，则继续更新，就饿下来调用render，反正得到false就会停止更新，也不会引发后续的渲染。该函数可以大幅提高React组件的性能——如果发现没必要重新渲染，就不用渲染。</p>
+<p>shouldComponentUpdate的参数就是接下来的props和state值。根据这两个参数判断true和false。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">shouldComponentUpdate ( nextProps , nextState )&#123;</span><br><span class="line">	// 当caption改变时才返回true。当它的值没变化时，或组件内部状态没改变时，不会调用render函数，没有必要重新绘制</span><br><span class="line">	return ( nextProps.caption !== this.props.caption ) || ( nextState.count !== this.state.count )</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>componentWillUpdate 和 componentDidUpdate 。</p>
+<p>如果组件的shouldComponentUpdate函数返回true，React接下来会调用对应组件的componentWillUpdate 、render、componentDidUpdate 。<strong>这一对函数在使用服务器端渲染时都可以被执行。</strong></p>
+<p><em>上述说到可以利用componentDidMount函数执行其他UI库的代码，当React组件被更新时，原有内容被重新绘制，此时需要在componentDidUpdate函数再次调用jQuery代码。</em></p>
+</li>
+</ol>
+<h3 id="卸载过程-Unmount"><a href="#卸载过程-Unmount" class="headerlink" title="卸载过程 Unmount"></a>卸载过程 Unmount</h3><p>componentWillUnmount ：当React组件要从DOM树中删除掉之前，对应的componentWillUnmount函数会被调用，所以这个函数适合做一些清理性的工作。</p>
+<h1 id="Flux-和-Redux-架构"><a href="#Flux-和-Redux-架构" class="headerlink" title="Flux 和 Redux 架构"></a>Flux 和 Redux 架构</h1><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/uCHQXWn7W0kY18JssbwDzRM9Q3.*OmqOH6aCubQ6DHM!/b/dDcBAAAAAAAA&bo=VgUAA1YFAAMDaUw!&rf=viewer_4&t=5" width="100%"></p>
+<p>Flux和MVC对比发现，dispatcher相当于MCV的controller，store相当于model，view还是view，多出来的action可以看作是用户请求。</p>
+<p>在Flux理念中，要改变界面，必须改变Stroe中的状态，如要改变Store中的状态，必须派发一个action对象，这就是规矩。Store只有get方法，没有set方法，所以杜绝了直接修改其内部状态，而view也只能通过get方法获取store的状态，无法直接修改状态。这种现实禁止了数据流混乱的可能。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/22/《深入浅出React和Redux》读书笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-面试题" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -843,133 +966,9 @@ alert(foo)
 
 
   
-    <article id="post-使用ant-design-Pro开发项目的小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">使用ant design Pro开发项目的小结</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/11/使用ant-design-Pro开发项目的小结/" class="archive-article-date">
-  	<time datetime="2018-07-11T14:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/ptCDi2wSCRmTt8JmZjcS4dcLslpSrG0Er3YejnV*Ixw!/b/dFMBAAAAAAAA&bo=oAU4BAAAAAARF7k!&rf=viewer_4&t=5" width="100%"></p>
-<h1 id="一、关于上手。"><a href="#一、关于上手。" class="headerlink" title="一、关于上手。"></a>一、关于上手。</h1><ol>
-<li><p>关于ant design Pro的介绍，自己看官网，大致上可以理解为ant design（组件库） + ant design Pro （完整的项目）+ dva（路由+数据流管理）的组合拳。总之这个Pro是一个已经帮你打通了从搭建到测试打包发布的一整套完整的项目，你只需要站在巨人的肩膀上开发就好了。</p>
-</li>
-<li><p>按照官网安装好项目之后，就能看到几个页面。进行开发之前，你需要一定的react语法、Js(ES6)、dva的基础。啥？全家桶都不会？没关系，写页面又不需要你精通全家桶，看完以下链接就开始写页面吧，遇到不会的再去查，这样学比较快。请按照以下顺序食用</p>
-</li>
-</ol>
-<ul>
-<li><a href="https://dvajs.com/knowledgemap/#javascript-%E8%AF%AD%E8%A8%80" target="_blank" rel="noopener">dva知识地图</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-javascript" target="_blank" rel="noopener">js快速预览</a></li>
-<li><a href="https://alibaba.github.io/ice/docs/basis/intro-react" target="_blank" rel="noopener">react快速预览</a></li>
-<li><a href="http://huziketang.mangojuice.top/books/react/lesson9" target="_blank" rel="noopener">react小书</a></li>
-<li><a href="https://dvajs.com/guide/concepts.html" target="_blank" rel="noopener">dva文档</a></li>
-<li><a href="https://doc.react-china.org/docs/hello-world.html" target="_blank" rel="noopener">react中文文档</a></li>
-<li><a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">ES6</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect" target="_blank" rel="noopener">MDN ？？？ MDN有什么好看的？如果你js不太熟，MDN有很全的API可以查阅</a> </li>
-</ul>
-<h1 id="二、使用ant-design-Pro"><a href="#二、使用ant-design-Pro" class="headerlink" title="二、使用ant design Pro"></a>二、使用ant design Pro</h1><p>以一个ant design Table组件展示数据为例。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164898bf659b926d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>这样一个页面，可以看到：左边是导航栏menu组件，右边是主体BasicLayout组件。至于什么是layout，同样，在ant design Pro官网找得到。当你刚安装好antdp的时候已经有几个页面可以参考了。此处：在页面中，有几个按钮，按钮下方是ant design 的Table组件。</p>
-<h2 id="一、新建一个页面。"><a href="#一、新建一个页面。" class="headerlink" title="一、新建一个页面。"></a>一、新建一个页面。</h2><p>1.在路由中新建一条页面的配置。先不要管报错，因为路由对应的component和models你还没有，继续往下看。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648993196568bf6?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.新增一条之后，需要去对应的路径新建页面。一般都放在routes文件夹中</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899504863164d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>例如我新建了一个角色管理的页面，使用connect进行关联models。</p>
-<p>3.然后再去models文件夹中新建一个model层文件，注意namespace要对应connect的component</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648996437cdd086?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<h2 id="二、数据交互。"><a href="#二、数据交互。" class="headerlink" title="二、数据交互。"></a>二、数据交互。</h2><p>这个表格页面使用antd 的table 组件，自己去官网拷贝代码。这里不再赘述。主要提一下，数据是怎样交互的。</p>
-<p>Table组件里面的行数据就是是columns，它有自己的数据格式，你需要把数据格式转换成他规定的那种。在刚装好的项目中有表格的例子你可以参考一下，只不过案例是写死的静态数据。试试看：你把columns里面的数据删除掉，然后从外部获取到数据替换掉。</p>
-<p>1.使用生命周期函数componentDidMount在组件挂载时，去请求表格的数据。这里发起一个dispatch 触发action，type的值就是models层中的。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899dce523beae?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>2.在models中会使用antd封装好的方法去请求api.js中定义好的接口地址，然后等待返回就可以处理数据。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899eaeaf27d29?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>此处response拿到服务端返回的结果。你可以在此处对数据进行处理。比如后端返回的并非是你需要的数据格式，或者你可以进行更高层次的封装。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/16489a0f04e1bf8c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
-<p>3.再调用reducers中的save方法将数据存储。通过在UIcomponent中已经进行关联，此时this.props能够取到你传送过去的数据。然后放入Table组件即可。</p>
-<p>此处可能讲得不是很详细，比如上述代码各种方法是做什么用的，如果你有仔细看过文章开头列举的文档，尤其是dva文档，心中应该略知一二。此处只介绍了一个很粗略的开发流程，后续我会详细讲解。</p>
-<p>三、个人开发思想及心得<br>1.在使用这套框架开发几个页面之后会明显感觉到，框架有点像MVC分层，十分规范！</p>
-<p>M层models负责控制数据</p>
-<p>V层UIComponent ，and design以及为你准备了丰富的组件库。</p>
-<p>C层control，我个人理解为是api层的管理，将所有的需要请求后台数据的接口统一起来，很直观也方便调用和修改。</p>
-<p>2.ant design Pro几乎已经为你做好了一切，你只需要替换数据、接口，开箱即用。在你切完数个页面之后会发现一个问题：如何进行更高层次的封装呢？不能每次都要复制粘贴很多重复的组件代码呢？</p>
-<p>我个人是这样做的：比如说上面举例的表格页面。</p>
-<p>首先，我会封装一个函数，函数接收各种字段。比如后端返回一系列的input各种类型的字段给你，你在函数中对字段进行匹配，每个字段对应到ant design的组件，将数据与组件关联，然后return这个组件。最后将所有的组件push到一个数组中，然后放入render函数，即可渲染出整个页面。</p>
-<p>这个函数有点类似于React的HOC高阶组件（传组件和props进去，rerurn新的组件出来）概念，区别是我这里传入的是每个组件所需的数据而非组件，而return出的是一个组件。</p>
-<p>3.多利用无状态组件、函数组件。表格上最后一行，编辑/删除按钮。我是在models层进行处理的，因为columns（Table组件的数据对象）在UIcomponents层已经进行渲染了，个人认为UI组件应该尽量简化，它只负责渲染数据。我在models层中将columns中的数据进行遍历，在本地构建一个对象（编辑按钮组件、删除按钮组件）与服务端返回的对象进行合并。同时，两个按钮的组件应该本身具备自有的功能，比如在任何一个表格中调用该组件即可使用其功能。合并后将新的colums对象丢给表格组件，这样进行了一个小小的抽象。</p>
-<p>在表格上方的按钮，同样是通过函数来输出的按钮组件。按钮具有各自的属性、功能，通过入参来传递给函数，然后通过props设置给组件，来达到复用的目的。</p>
-<p>最后，页面上有哪些组件、哪些按钮该如何规定呢？你需要和后端协商好字段、属性，比如一个表单页面有很多种input类型，input会有type、rules（验证规则）….后端返回给你一段组件所需的属性之后，你根据这些数据即可渲染出整个页面的组件。</p>
-<p>以上是本人萌新使用ant design Pro的小小经验，可能创建页面的案例讲的不太清晰、抽象封装的思想不知道各位能否明白我所说的。</p>
-<p>希望各位大佬们多多指教。如何进行更高层次的封装呢？每个页面需要对应路由、models、api接口地址、能否再进行封装达到动态的目的呢？这样连修改接口的重复工作也省了。</p>
-<p>感谢阅读。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1057,15 +1056,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Js基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1073,7 +1068,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1081,11 +1084,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
+                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
+                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1109,10 +1112,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
               </li>
              
@@ -1121,15 +1120,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">

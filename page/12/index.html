@@ -141,6 +141,107 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-《JavaScript设计模式与开发实践》阅读笔记-一" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/22/《JavaScript设计模式与开发实践》阅读笔记-一/">《JavaScript设计模式与开发实践》阅读笔记 一</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/22/《JavaScript设计模式与开发实践》阅读笔记-一/" class="archive-article-date">
+  	<time datetime="2017-04-22T01:54:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://wx2.sinaimg.cn/large/006gfOdGgy1feirsfesagj332o21tb2a.jpg" width="100%" height="100%" align="center" alt="图片来自微博"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>动态类型语言如JavaScript的变量类型在运行时是可变的，一个JavaScript既可以表示A类型的对象，又可以表示B类型的对象，与生俱来的多态特性。</p>
+<p>多态的思想实际上是把“做什么”和“谁去做”分离开来，要实现这一点，归根结底要消除类型之间的耦合关系。</p>
+<p>多态的最根本好处在于，你不必再向对象询问“你是什么类型”而后根据得到的答案调用对象的某个行为—你只管调用该行为就是了，其他的一切多态机制会为你安排妥当。</p>
+<p>多态最根本的作用就是通过把过程化的条件分支语句转换为对象的多态性，从而消除这些分支语句。</p>
+<p>在电影的拍摄现场，当导演喊出“action”时，主角开始背台词，照明师负责打灯光，后面的群众演员假装中枪倒地，道具师往镜头里撒雪花。在得到同一个消息时，每个对象都知道自己应该做什么。如果不利于对象的多态性，而是用面向过程的方式来编写这段代码，那么相当于在电影开始拍摄之后，导演每次都要走到每个人的面前，确认他们的职业分工，然后告诉他们要做什么，如果映射到程序中，那么程序中将充斥着条件分之语句。</p>
+<p>利用对象的多态性，导演在发布消息时，就不必考虑各个对象接到消息后应该做什么。对象应该做什么并不是临时决定的，而是已经事先约定和排练完毕的。每个对象应该做什么，已经成为了该对象的一个方法，被安排在对象的内部，每个对象负责它们自己的行为。所以这些对象可以根据同一个消息，有条不紊地分别进行各自的工作。</p>
+<p>利用对象的多态性，导演在发布消息时就不必考虑各个对象接到消息后应该做什么。对象应该做什么不是临时决定的，而是已经事先约定和排练完毕的。每个对象应该做什么，已经成了该对象的一个方法，被安装在对象的内部，每个对象负责它们自己的行为。所以这些对象可以根据同一个消息分别进行各自的工作。</p>
+<p>将行为分布在各个对象中，并让这些对象各自负责自己的行为，这正是面向对象设计的优点。</p>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><h4 id="封装数据"><a href="#封装数据" class="headerlink" title="封装数据"></a>封装数据</h4><p>封装的目的是将信息隐藏，一般而言是由语法解析来实现，这些语言提供了private、public、protected等关键字来提供不同的访问权限。</p>
+<p>但JavaScript没有提供对这些关键字的支持，只能依赖变量的作用域来实现封装特性，而且只能模拟出public、private这两种封装性。</p>
+<p>除了ES6提供的let之外，一般我们通过函数来创建作用域：</p>
+<pre><code>var myObject = (function(){
+    var _name = &quot;sven&quot;;//私有(private)变量
+    return{
+        getName : function(){
+            return _name;
+        }
+    }
+})();
+console.log(myObject)    //myObject保存的是立即执行函数返回的对象，对象中没有_name变量 
+console.log(myObject.getName());    //输出：sven
+console.log(myObject._name);    //输出：undefined
+</code></pre><p>ES6还可以通过Symbol创建私有属性。 <a href="https://github.com/lukehoban/es6features" target="_blank" rel="noopener">es6features</a></p>
+<h2 id="基于原型继承的JavaScript对象系统"><a href="#基于原型继承的JavaScript对象系统" class="headerlink" title="基于原型继承的JavaScript对象系统"></a>基于原型继承的JavaScript对象系统</h2><p>在以类为中心的面向对象编程语言中，类和对象的关系就可以想象成铸模和铸件的关系，对象总是从类中创建而来。而在原型编程的思想中， 对象未必需要从类中创建，一个对象是通过克隆另外一个对象所得到的。<br>在面向对象编程中，如果我们需要创建一个对象，先指定它的类型，然后通过类来创建这个对象。在原型模式中，我们不再关心对象的具体类型，而是找到一个对象，然后通过克隆来创建一个一模一样的对象。</p>
+<p>ECMAScript5提供了Object.create方法可以用来克隆对象。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Plane = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.blood = <span class="number">100</span>;</span><br><span class="line">    <span class="keyword">this</span>.attackLevel =<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">this</span>.defenseLevel =<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> plane = <span class="keyword">new</span> Plane();</span><br><span class="line"></span><br><span class="line">plane.blood =<span class="number">500</span>;</span><br><span class="line">plane.attackLevel =<span class="number">10</span>;</span><br><span class="line">plane.defenseLevel =<span class="number">7</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> clonePlane = <span class="built_in">Object</span>.create(plane);</span><br><span class="line"><span class="built_in">console</span>.log(clonePlane.blood)   <span class="comment">//500</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//不支持Object.create方法的浏览器</span></span><br><span class="line"><span class="built_in">Object</span>.create = <span class="built_in">Object</span>.create || <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">    F.prototype =obj;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>目前我们一直在讨论的“对象的原型“，只能说对象的构造器有原型。某个对象的<strong>__proto</strong>属性默认会指向它的构造器的原型对象，即{Constructor}.prototype 。<strong>__proto</strong>就是对象跟“对象构造器的原型”联系起来的纽带。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">《JavaScript设计模式与开发实践》</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/04/22/《JavaScript设计模式与开发实践》阅读笔记-一/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-《实战ES2015》-阅读笔记-一" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -519,94 +620,9 @@ forEach():使用回调函数遍历每个成员
 
 
   
-    <article id="post-《JavaScript面向对象编程指南》阅读笔记-六" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/15/《JavaScript面向对象编程指南》阅读笔记-六/">《JavaScript面向对象编程指南》阅读笔记 六</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/15/《JavaScript面向对象编程指南》阅读笔记-六/" class="archive-article-date">
-  	<time datetime="2017-03-15T01:45:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/eJ1BugQz26*Gk*ekGXg2tQG7ilVQj6fVaYa61ylYEhY!/b/dG0BAAAAAAAA&bo=1ASwBNQEsAQRNwA!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h2 id="继承的多种方式"><a href="#继承的多种方式" class="headerlink" title="继承的多种方式"></a>继承的多种方式</h2><p>题外话：JavaScript没有类的概念，但可以用构造器函数来实现相同的功能。有封装吗？对象本身就包括数据及方法。有聚合吗？一个对象中可以包含其他对象，对象是靠函数来实现的，而函数本身也就是对象。</p>
-<h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p>每个函数都有一个prototype属性，该属性指向某一个对象。函数被new操作符调用时会创建并返回一个对象，并且该对象中会有一个指向其原型对象的<strong>proto</strong>，通过该链接可以在新建的对象中调用相关原型对象的属性和方法。</p>
-<p>例如对象A的属性中有一个<strong>proto</strong>隐藏属性，它指向了对象B，B的<strong>proto</strong>属性指向对象C，直到链条末端的Object对象。<br>这意义在于：如果某属性不在对象A中而在对象B中，依然可以来访问，这就是继承的作用，能够使每个对象都能访问其继承链上的任何一个属性。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//首先，新建三个构造函数</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Shape</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	  <span class="keyword">this</span>.name = <span class="string">"shape"</span>;</span><br><span class="line">	  <span class="keyword">this</span>.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	     <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">	  &#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">TwoDShape</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	   <span class="keyword">this</span>.name = <span class="string">"2D Shape"</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Triangle</span>(<span class="params">side,height</span>)</span>&#123;</span><br><span class="line">	   <span class="keyword">this</span>.name = <span class="string">"Triangle"</span>;</span><br><span class="line">	   <span class="keyword">this</span>.side = side;</span><br><span class="line">	   <span class="keyword">this</span>.height = height;</span><br><span class="line">	   <span class="keyword">this</span>.getArea = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	     <span class="keyword">return</span> <span class="keyword">this</span>.side * <span class="keyword">this</span>.height /<span class="number">2</span>;</span><br><span class="line">	   &#125;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//把TwoDShape的prototype属性指向Shape</span></span><br><span class="line">	TwoDShape.prototype = <span class="keyword">new</span> Shape();</span><br><span class="line">	<span class="comment">//TwoDShape拥有了Shape的name属性和toString方法</span></span><br><span class="line">	<span class="comment">//Shape &#123;name: "shape"&#125;</span></span><br><span class="line">		<span class="comment">//name: "shape"</span></span><br><span class="line">		<span class="comment">//toString: function()</span></span><br><span class="line">		<span class="comment">//__proto__: Object</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">//把Triangle的prototype属性指向TwoDShape</span></span><br><span class="line">	Triangle.prototype = <span class="keyword">new</span> TwoDShape()</span><br><span class="line">	<span class="comment">//Triangle拥有了TwoDShape对象从Shape对象继承而来的name属性、toString方法、</span></span><br><span class="line">	<span class="comment">//Shape &#123;name: "2D Shape"&#125;</span></span><br><span class="line">		<span class="comment">//name: "2D Shape"</span></span><br><span class="line">		<span class="comment">//__proto__: Shape</span></span><br><span class="line">		<span class="comment">//name: "shape"</span></span><br><span class="line">		<span class="comment">//toString: function()</span></span><br><span class="line">		<span class="comment">//__proto__: Object</span></span><br></pre></td></tr></table></figure>
-<p>在此，我们将对象直接创建在TwoDShape对象的prototype属性中，并没有拓展这些对象的原有原型。我们用构造器Shape()通过new操作符另新建了一个新对象，然后用它覆盖TwoDshape构造器的prototype属性。</p>
-<p><code>JavaScript没有类的概念，因此我们需要直接用new Shape()构造一个实体，然后才能通过该实体的属性完成继承，而不能直接继承Shape()构造器。</code></p>
-<p>这也确保了在继承实现后，我们对Shape()所进行的任何修改、重写甚至删除，都不会对TwoDShape()产生影响，<code>因为我们所继承的只是由该构造器所建的一个实体。</code></p>
-<p><code>注意：当我们对对象的prototype属性进行修改时，有可能会对对象constructor属性产生影响，所有，我们在完成继承关系设定后，要对这些对象的constructor属性进行重置</code></p>
-<pre><code>TwoDShape.prototype.constructor = TwoDShape;
-Triangle.prototype.constructor = Triangle;
-</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//创建一个Triangle对象，调用它的getArea方法</span></span><br><span class="line"><span class="keyword">var</span> my =<span class="keyword">new</span> Triangle(<span class="number">5</span>,<span class="number">10</span>);</span><br><span class="line"><span class="built_in">console</span>.log(my);</span><br><span class="line"><span class="comment">//Triangle &#123;name: "Triangle", side: 5, height: 10&#125;</span></span><br><span class="line">	<span class="comment">//getArea: function()</span></span><br><span class="line">	<span class="comment">//height: 10</span></span><br><span class="line">	<span class="comment">//name: "Triangle"</span></span><br><span class="line">	<span class="comment">//side: 5</span></span><br><span class="line">	<span class="comment">//__proto__: TwoDShape</span></span><br><span class="line">		<span class="comment">//constructor: function Triangle(side,height)</span></span><br><span class="line">		<span class="comment">//name: "2D Shape"</span></span><br><span class="line">		<span class="comment">//__proto__: Shape</span></span><br><span class="line">		<span class="comment">//constructor: function TwoDShape()</span></span><br><span class="line">		<span class="comment">//name: "shape"</span></span><br><span class="line">		<span class="comment">//toString: function()</span></span><br><span class="line">		<span class="comment">//__proto__: Object</span></span><br><span class="line"></span><br><span class="line">my.getArea()</span><br><span class="line"><span class="comment">//25</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//尽管Triangle对象没有toString方法，但是它继承了TwoDShape()所继承的Shape()，试着调用一下。</span></span><br><span class="line">my.toString();</span><br><span class="line"><span class="comment">//"Triangle"</span></span><br><span class="line"><span class="comment">//分析：在调用my.toString()时发生了什么：</span></span><br><span class="line"><span class="comment">//首先它会遍历my对象中的所有属性，但没有toString方法，接着再去看my.__proto__所指向的对象，该对象是在继承关系构建过程中由new TwoDShape()所创建的实体。</span></span><br><span class="line"><span class="built_in">console</span>.log(my.__proto__)</span><br><span class="line"><span class="comment">//TwoDShape &#123;name: "2D Shape"&#125;</span></span><br><span class="line"><span class="comment">//constructor: function Triangle(side,height)</span></span><br><span class="line"><span class="comment">//name: "2D Shape"</span></span><br><span class="line"><span class="comment">//__proto__: Shape	</span></span><br><span class="line">	<span class="comment">//constructor: function TwoDShape()</span></span><br><span class="line">	<span class="comment">//name: "shape"</span></span><br><span class="line">	<span class="comment">//toString: function()</span></span><br><span class="line">	<span class="comment">//__proto__: Object</span></span><br><span class="line"><span class="comment">//显然，在TwoDShape实体中也没有找到toString方法，然后它会继续检查该实体的__proto__属性。这时候，该__proto__属性所指向的实体是由new Shape()所创建的。</span></span><br><span class="line"><span class="built_in">console</span>.log(my.__proto__.__proto__)</span><br><span class="line"><span class="comment">//Shape &#123;name: "shape"&#125;</span></span><br><span class="line"><span class="comment">//constructor: function TwoDShape()</span></span><br><span class="line">   <span class="comment">//name: "shape"</span></span><br><span class="line"><span class="comment">//toString: function()</span></span><br><span class="line"><span class="comment">//__proto__: Object</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//此时，在new Shape()所创建的实体中找到了toString()方法，最后该方法就会在my对象中被调用，并且其this指向my</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果我们向my对象询问：“您的构造器函数是哪一个？”，它能够给出正确答案，因为我们在构建继承关系时已经对相关的constructor属性进行了重置。</span></span><br><span class="line">my.constructor</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Triangle</span>(<span class="params">side,height</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.name = <span class="string">"Triangle"</span>;</span><br><span class="line">   <span class="keyword">this</span>.side = side;</span><br><span class="line">   <span class="keyword">this</span>.height = height;</span><br><span class="line">   <span class="keyword">this</span>.getArea = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.side * <span class="keyword">this</span>.height /<span class="number">2</span>;</span><br><span class="line">   &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//通过instanceof操作符可以验证my对象是上述三个构造器函数的实例</span></span><br><span class="line"><span class="comment">//instanceof操作符用来检测一个对象是否是由某指定的构造器函数创建的</span></span><br><span class="line">my <span class="keyword">instanceof</span> Triangle</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line">my <span class="keyword">instanceof</span> TwoDShape</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line">my <span class="keyword">instanceof</span> Shape</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用isPrototypeOf()方法检测当前对象是否是另一个对象的原型。</span></span><br><span class="line">Triangle.prototype.isPrototypeOf(my)</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line">TwoDShape.prototype.isPrototypeOf(my)</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line">Shape.prototype.isPrototypeOf(my)</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">《JavaScript面向对象编程指南》</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/15/《JavaScript面向对象编程指南》阅读笔记-六/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/11/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/13/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/11/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/13/">Next &raquo;</a>
     </nav>
   
 
@@ -694,15 +710,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Js基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -710,7 +722,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -718,11 +738,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
+                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
+                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -746,10 +766,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
               </li>
              
@@ -758,15 +774,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">

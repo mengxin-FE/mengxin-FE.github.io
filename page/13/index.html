@@ -141,6 +141,91 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-《JavaScript面向对象编程指南》阅读笔记-六" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/15/《JavaScript面向对象编程指南》阅读笔记-六/">《JavaScript面向对象编程指南》阅读笔记 六</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/15/《JavaScript面向对象编程指南》阅读笔记-六/" class="archive-article-date">
+  	<time datetime="2017-03-15T01:45:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/eJ1BugQz26*Gk*ekGXg2tQG7ilVQj6fVaYa61ylYEhY!/b/dG0BAAAAAAAA&bo=1ASwBNQEsAQRNwA!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<h2 id="继承的多种方式"><a href="#继承的多种方式" class="headerlink" title="继承的多种方式"></a>继承的多种方式</h2><p>题外话：JavaScript没有类的概念，但可以用构造器函数来实现相同的功能。有封装吗？对象本身就包括数据及方法。有聚合吗？一个对象中可以包含其他对象，对象是靠函数来实现的，而函数本身也就是对象。</p>
+<h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p>每个函数都有一个prototype属性，该属性指向某一个对象。函数被new操作符调用时会创建并返回一个对象，并且该对象中会有一个指向其原型对象的<strong>proto</strong>，通过该链接可以在新建的对象中调用相关原型对象的属性和方法。</p>
+<p>例如对象A的属性中有一个<strong>proto</strong>隐藏属性，它指向了对象B，B的<strong>proto</strong>属性指向对象C，直到链条末端的Object对象。<br>这意义在于：如果某属性不在对象A中而在对象B中，依然可以来访问，这就是继承的作用，能够使每个对象都能访问其继承链上的任何一个属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//首先，新建三个构造函数</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Shape</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	  <span class="keyword">this</span>.name = <span class="string">"shape"</span>;</span><br><span class="line">	  <span class="keyword">this</span>.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	     <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">	  &#125;;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">TwoDShape</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	   <span class="keyword">this</span>.name = <span class="string">"2D Shape"</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Triangle</span>(<span class="params">side,height</span>)</span>&#123;</span><br><span class="line">	   <span class="keyword">this</span>.name = <span class="string">"Triangle"</span>;</span><br><span class="line">	   <span class="keyword">this</span>.side = side;</span><br><span class="line">	   <span class="keyword">this</span>.height = height;</span><br><span class="line">	   <span class="keyword">this</span>.getArea = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	     <span class="keyword">return</span> <span class="keyword">this</span>.side * <span class="keyword">this</span>.height /<span class="number">2</span>;</span><br><span class="line">	   &#125;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//把TwoDShape的prototype属性指向Shape</span></span><br><span class="line">	TwoDShape.prototype = <span class="keyword">new</span> Shape();</span><br><span class="line">	<span class="comment">//TwoDShape拥有了Shape的name属性和toString方法</span></span><br><span class="line">	<span class="comment">//Shape &#123;name: "shape"&#125;</span></span><br><span class="line">		<span class="comment">//name: "shape"</span></span><br><span class="line">		<span class="comment">//toString: function()</span></span><br><span class="line">		<span class="comment">//__proto__: Object</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">//把Triangle的prototype属性指向TwoDShape</span></span><br><span class="line">	Triangle.prototype = <span class="keyword">new</span> TwoDShape()</span><br><span class="line">	<span class="comment">//Triangle拥有了TwoDShape对象从Shape对象继承而来的name属性、toString方法、</span></span><br><span class="line">	<span class="comment">//Shape &#123;name: "2D Shape"&#125;</span></span><br><span class="line">		<span class="comment">//name: "2D Shape"</span></span><br><span class="line">		<span class="comment">//__proto__: Shape</span></span><br><span class="line">		<span class="comment">//name: "shape"</span></span><br><span class="line">		<span class="comment">//toString: function()</span></span><br><span class="line">		<span class="comment">//__proto__: Object</span></span><br></pre></td></tr></table></figure>
+<p>在此，我们将对象直接创建在TwoDShape对象的prototype属性中，并没有拓展这些对象的原有原型。我们用构造器Shape()通过new操作符另新建了一个新对象，然后用它覆盖TwoDshape构造器的prototype属性。</p>
+<p><code>JavaScript没有类的概念，因此我们需要直接用new Shape()构造一个实体，然后才能通过该实体的属性完成继承，而不能直接继承Shape()构造器。</code></p>
+<p>这也确保了在继承实现后，我们对Shape()所进行的任何修改、重写甚至删除，都不会对TwoDShape()产生影响，<code>因为我们所继承的只是由该构造器所建的一个实体。</code></p>
+<p><code>注意：当我们对对象的prototype属性进行修改时，有可能会对对象constructor属性产生影响，所有，我们在完成继承关系设定后，要对这些对象的constructor属性进行重置</code></p>
+<pre><code>TwoDShape.prototype.constructor = TwoDShape;
+Triangle.prototype.constructor = Triangle;
+</code></pre><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//创建一个Triangle对象，调用它的getArea方法</span></span><br><span class="line"><span class="keyword">var</span> my =<span class="keyword">new</span> Triangle(<span class="number">5</span>,<span class="number">10</span>);</span><br><span class="line"><span class="built_in">console</span>.log(my);</span><br><span class="line"><span class="comment">//Triangle &#123;name: "Triangle", side: 5, height: 10&#125;</span></span><br><span class="line">	<span class="comment">//getArea: function()</span></span><br><span class="line">	<span class="comment">//height: 10</span></span><br><span class="line">	<span class="comment">//name: "Triangle"</span></span><br><span class="line">	<span class="comment">//side: 5</span></span><br><span class="line">	<span class="comment">//__proto__: TwoDShape</span></span><br><span class="line">		<span class="comment">//constructor: function Triangle(side,height)</span></span><br><span class="line">		<span class="comment">//name: "2D Shape"</span></span><br><span class="line">		<span class="comment">//__proto__: Shape</span></span><br><span class="line">		<span class="comment">//constructor: function TwoDShape()</span></span><br><span class="line">		<span class="comment">//name: "shape"</span></span><br><span class="line">		<span class="comment">//toString: function()</span></span><br><span class="line">		<span class="comment">//__proto__: Object</span></span><br><span class="line"></span><br><span class="line">my.getArea()</span><br><span class="line"><span class="comment">//25</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//尽管Triangle对象没有toString方法，但是它继承了TwoDShape()所继承的Shape()，试着调用一下。</span></span><br><span class="line">my.toString();</span><br><span class="line"><span class="comment">//"Triangle"</span></span><br><span class="line"><span class="comment">//分析：在调用my.toString()时发生了什么：</span></span><br><span class="line"><span class="comment">//首先它会遍历my对象中的所有属性，但没有toString方法，接着再去看my.__proto__所指向的对象，该对象是在继承关系构建过程中由new TwoDShape()所创建的实体。</span></span><br><span class="line"><span class="built_in">console</span>.log(my.__proto__)</span><br><span class="line"><span class="comment">//TwoDShape &#123;name: "2D Shape"&#125;</span></span><br><span class="line"><span class="comment">//constructor: function Triangle(side,height)</span></span><br><span class="line"><span class="comment">//name: "2D Shape"</span></span><br><span class="line"><span class="comment">//__proto__: Shape	</span></span><br><span class="line">	<span class="comment">//constructor: function TwoDShape()</span></span><br><span class="line">	<span class="comment">//name: "shape"</span></span><br><span class="line">	<span class="comment">//toString: function()</span></span><br><span class="line">	<span class="comment">//__proto__: Object</span></span><br><span class="line"><span class="comment">//显然，在TwoDShape实体中也没有找到toString方法，然后它会继续检查该实体的__proto__属性。这时候，该__proto__属性所指向的实体是由new Shape()所创建的。</span></span><br><span class="line"><span class="built_in">console</span>.log(my.__proto__.__proto__)</span><br><span class="line"><span class="comment">//Shape &#123;name: "shape"&#125;</span></span><br><span class="line"><span class="comment">//constructor: function TwoDShape()</span></span><br><span class="line">   <span class="comment">//name: "shape"</span></span><br><span class="line"><span class="comment">//toString: function()</span></span><br><span class="line"><span class="comment">//__proto__: Object</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//此时，在new Shape()所创建的实体中找到了toString()方法，最后该方法就会在my对象中被调用，并且其this指向my</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果我们向my对象询问：“您的构造器函数是哪一个？”，它能够给出正确答案，因为我们在构建继承关系时已经对相关的constructor属性进行了重置。</span></span><br><span class="line">my.constructor</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Triangle</span>(<span class="params">side,height</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.name = <span class="string">"Triangle"</span>;</span><br><span class="line">   <span class="keyword">this</span>.side = side;</span><br><span class="line">   <span class="keyword">this</span>.height = height;</span><br><span class="line">   <span class="keyword">this</span>.getArea = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.side * <span class="keyword">this</span>.height /<span class="number">2</span>;</span><br><span class="line">   &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//通过instanceof操作符可以验证my对象是上述三个构造器函数的实例</span></span><br><span class="line"><span class="comment">//instanceof操作符用来检测一个对象是否是由某指定的构造器函数创建的</span></span><br><span class="line">my <span class="keyword">instanceof</span> Triangle</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line">my <span class="keyword">instanceof</span> TwoDShape</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line">my <span class="keyword">instanceof</span> Shape</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//使用isPrototypeOf()方法检测当前对象是否是另一个对象的原型。</span></span><br><span class="line">Triangle.prototype.isPrototypeOf(my)</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line">TwoDShape.prototype.isPrototypeOf(my)</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line">Shape.prototype.isPrototypeOf(my)</span><br><span class="line"><span class="comment">//true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">《JavaScript面向对象编程指南》</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/15/《JavaScript面向对象编程指南》阅读笔记-六/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-《JavaScript面向对象编程指南》阅读笔记-五" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -514,298 +599,9 @@ s.split(&quot; &quot;)
 
 
   
-    <article id="post-《JavaScript面向对象编程指南》阅读笔记-三" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/04/《JavaScript面向对象编程指南》阅读笔记-三/">《JavaScript面向对象编程指南》阅读笔记 三</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/04/《JavaScript面向对象编程指南》阅读笔记-三/" class="archive-article-date">
-  	<time datetime="2017-03-04T02:42:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://b366.photo.store.qq.com/psb?/V10qN6b63c9MK4/r9FcEgNTccYRyUXagrHS0nGCWwGD2E5.jQb8NYtokkI!/b/dG4BAAAAAAAA&bo=VAY4BGAVQA4BKVs!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>在定义一个函数时会设置该函数所需的调用参数。如果设定了参数但在调用时忘了传递相关的参数值，就会自动设定为undefined。</p>
-<pre><code>function sum(a,b){
-    return a+b;
-}
-
-sum(1+2);
-</code></pre><p>形参指定义函数时所用的参数，实参指的是调用函数时所传递的那些参数。</p>
-<p>在这里，a和b是形参，1和2是实参。即使传递多余的参数也会被默默忽略，如：</p>
-<pre><code>sum(1,2,3,4,5);
-//3
-</code></pre><h4 id="arguments"><a href="#arguments" class="headerlink" title="arguments"></a>arguments</h4><pre><code>function args(){
-    return arguments;
-}
-args(1,2,3,4,5,&apos;Bob&apos;);
-//[1, 2, 3, 4, 5, &quot;Bob&quot;]
-</code></pre><h4 id="变量的作用域"><a href="#变量的作用域" class="headerlink" title="变量的作用域"></a>变量的作用域</h4><p>全局变量指的是在所有函数之外的变量，与之相对的是局部变量，指在某个函数中定义的变量。<code>声明变量未使用var语句该变量即全局变量</code></p>
-<pre><code>var global =1;
-function f(){
-    var local = 2;
-    global++;
-    return global;
-}
-f();
-//2
-local;
-//Uncaught ReferenceError: local is not defined
-</code></pre><h4 id="变量提示"><a href="#变量提示" class="headerlink" title="变量提示"></a>变量提示</h4><pre><code>var a = 123;
-
-function f(){
-    alert(a);
-    var a = 1;
-    alert(a);
-}
-f();
-
-//undefined 
-//1
-</code></pre><p>因为函数域优先于全局域，所以局部变量a会覆盖掉所以与它同名的全局变量。尽管在alert()第一次被调用时a还没有被正式定义(即该值为undefined)，但该变量本身已经存在于本地空间，这种现象叫做变量提升。</p>
-<p>当JavaScript执行过程进入新的函数时，函数内被声明的所有变量都会被移动（提升）到函数最开始的地方。<code>注意：被提升的只有变量的声明，而没有赋值</code> 如上述例子，局部变量被提升到了函数开始处，但并没有在开始处被赋值为1。</p>
-<pre><code>//等价为
-var a = 123;
-function f(){
-    var a;
-    alert(a);//undefined
-    a = 1;
-    alert(a);//1
-}
-</code></pre><h4 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h4><pre><code>var global = 1;
-function outer(){
-    var outer_local = 2;
-    function inner(){
-        var inner_local = 3;
-        return inner_local + outer_local + global;
-    }
-    return inner();
-}
-outer();
-//6
-</code></pre><p>在函数outer中定义了另一个函数inner，在inner中可以访问的变量既有自身作用域中的，也可来自其”父级”作用域，因而形成了一条作用域链。</p>
-<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><pre><code>var inner
-var F = function(){
-    var b = &quot;local variable&quot;;
-    var N = function(){
-       return b;
-    };
-    inner = N;
-};
-F()
-//undefined
-N()
-//Uncaught ReferenceError: N is not defined
-inner()
-//&quot;local variable&quot;
-</code></pre><p>F()中定义了一个新的函数N()，并且将N赋值给了全局变量inner。由于N()是在F()内部定义的，它可以访问F()的作用域，所以即使该函数后来升级成了全局函数，它依然保留对F()作用域的访问权。</p>
-<p>如果一个函数会在其父级函数返回之后留住对父级作用域的链接的话，相关闭包就会被创建。</p>
-<pre><code>function F(param){
-  var N = function(){
-    return param;
-  };
-  param++;
-  return N;
-}
-var inner = F(1);
-inner()
-//2
-</code></pre><p>当我们的返回函数被调用时，(N被赋值时函数并没有被调用，调用时在N被求职，即执行return N语句时发生的)param++已经被执行过一次。所以inner()返回的是更新后的值。由此可看出函数所绑定的是作用域本身而非函数定义时该作用域中的变量或变量当前所返回的值。</p>
-<h4 id="使用函数参数理解闭包"><a href="#使用函数参数理解闭包" class="headerlink" title="使用函数参数理解闭包"></a>使用函数参数理解闭包</h4><p>创建了一个函数F,该函数将返回一个子函数，而这个子函数返回的则是其父函数的参数。</p>
-<pre><code>function F(param){
-  var N = function(){
-    return param;
-  };
-  param++;
-  return N;
-}
-var inner = F(1)
-//undefined
-inner()
-//2
-</code></pre><p>F(1)执行时返回的是函数N，将这个函数保存在inner中，然后执行该函数，该函数返回的是F的参数，即可得出2。</p>
-<p>(实际上inner没有存在的必要性，直接F(1)()即可。而此处F函数的用处是可以根据不同参数来生成不同的函数–函数生成器)</p>
-<pre><code>function F(num){
-     var N = function(a){
-         return a * num;
-     };
-      return N; 
-}
-var inner = F(2);
-inner(5);
-//10
-inner(10);
-//20
-var generator = F(10);
-generator(10);
-//100
-</code></pre><h4 id="循环中的闭包"><a href="#循环中的闭包" class="headerlink" title="循环中的闭包"></a>循环中的闭包</h4><pre><code>function F(){
-    var arr = [] , i;
-    for(i=0;i&lt;3;i++){
-        arr[i] = function(){
-            return i;
-        };
-    }
-    return arr;
-}
-var arr = F();
-console.log(arr);
-//[function, function, function]
-arr[0]();
-//3
-arr[1]();
-//3
-arr[2]();
-//3
-</code></pre><p>三次循坏操作，它在每次迭代中都会创建一个返回当前循环序号的新函数。该函数会被添加到一个数组中，并最终返回。    </p>
-<p>我们拥有了一个包含三个函数的数组，可以通过在每个数组元素后面加()来调用它们。按通常的估计它们应该会依照循环顺序分别输出0、1、2，但事与愿违</p>
-<p>原来在此创建了三个闭包，而它们都指向了一个共同的局部变量i，但是闭包并不会记录它们的值，它们所拥有的只是相关域在创建时的一个引用。在这个例子中，变量i巧合存在于定义这三个函数域中，对这三个函数中的任何一个而言，当它要去获取某个变量时，他会从其所在的域开始逐级寻找那个距离最近的i值。由于循环结束时i的值为3，所以这三个函数都指向了这一共同值。</p>
-<p>换一种闭包形式</p>
-<pre><code>function F(){
-  var arr = [] , i;
-  for(i=0;i&lt;3;i++){
-     arr[i] = (function(x){
-        return function(){
-          return x;
-        }
-     }(i));
-   }
-  return arr;
-}
-var arr = F();
-arr[0]();
-//0
-arr[1]();
-//1
-arr[2]();
-//2
-</code></pre><p>在这里我们不再直接创建一个返回i的函数，而是将i传递给另一个即时执行函数，在该函数中，i就被赋值给了局部变量x，这一来，每次迭代中的x就会拥有各自不同的值了。</p>
-<p>或者，不使用即时执行函数，在每次迭代操作中，要在中间函数内将i的值“本地化”</p>
-<pre><code>function F(){
-  function binder(x){
-     return function(){
-        return x;
-     };
-  }
-  var arr = [] , i;
-  for(i = 0; i&lt;3; i++){
-    arr[i] = binder(i);
-  }
-  return arr;
-}
-
-var arr = F();
-
-arr[0]();
-//0
-arr[1]();
-//1
-arr[2]();
-//2
-</code></pre><h4 id="getter与setter"><a href="#getter与setter" class="headerlink" title="getter与setter"></a>getter与setter</h4><p>假设有一个变量，它所表示的是某类特定值，我们不想将该变量暴露给外部。否则，其他部分的代码就有直接修改它的可能，所以我们需要将它保护在相关函数的内部，然后提供两个额外的函数—-一个用于获取变量值，另一个用于给变量重新赋值。并在函数中引入某种验证措施，以便在赋值之前给予变量一定的保护。</p>
-<pre><code>var getValue, setValue;
-(function(){
-    var secret = 0;
-    getValue = function(){
-        return secret;
-    }
-    setValue = function(v){
-        if(typeof v === &quot;number&quot;){
-            secret = v;
-        }
-    };
-}());
-</code></pre><p>在这里，一切通过一个即时函数来实现，在其中定义了全局函数getValue()和setValue()，并以此来确保局部变量secret的不可直接访问性。</p>
-<pre><code>getValue()
-//0
-setValue(123);
-getValue()
-//123
-setValue(false)
-getValue()
-//123
-</code></pre><h4 id="闭包实现迭代器"><a href="#闭包实现迭代器" class="headerlink" title="闭包实现迭代器"></a>闭包实现迭代器</h4><pre><code>function setup(x){
-    var i = 0;
-    return function(){
-        return x[i++];
-    };
-}
-</code></pre><p>现在，我们用一组数据来调用setup()，就可以创建出我们所需要的next()函数</p>
-<pre><code>var next = setup([&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]);
-</code></pre><p>重复调用这个函数就可以不停地获取下一个元素。</p>
-<pre><code>next();
-//&quot;a&quot;
-next();
-//&quot;b&quot;
-next();
-//&quot;c&quot;
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">《JavaScript面向对象编程指南》</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/04/《JavaScript面向对象编程指南》阅读笔记-三/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/12/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/14/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/12/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/14/">Next &raquo;</a>
     </nav>
   
 
@@ -893,15 +689,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Js基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -909,7 +701,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -917,11 +717,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
+                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
+                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -945,10 +745,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
               </li>
              
@@ -957,15 +753,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">

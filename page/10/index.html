@@ -141,6 +141,82 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-vue-JS第二天" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/21/vue-JS第二天/">vue.JS第二天</a>
+    </h1>
+  
+
+        
+        <a href="/2017/06/21/vue-JS第二天/" class="archive-article-date">
+  	<time datetime="2017-06-21T02:44:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="主入口-main-js"><a href="#主入口-main-js" class="headerlink" title="主入口 main.js"></a>主入口 main.js</h2><p>src目录中的main.js—程序的主入口</p>
+<p>其中使用了ES6语法，使用<code>import</code>来导入包，这里导入了vue包，还有两个文件，分别是router.js和App.vue，.js和.vue后缀可省略<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"></span><br><span class="line">Vue.config.productionTip = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* eslint-disable no-new */</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#app'</span>,</span><br><span class="line">  router,</span><br><span class="line">  template: <span class="string">'&lt;App/&gt;'</span>,</span><br><span class="line">  components: &#123; App &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以看到在new Vue()时传入了一个对象，但是这个对象却不是键值对，</span></span><br><span class="line">是这样，这是ES6的一种语法，当引用的变量名和键名相同时，就可以简写成这样</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  router: router,</span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">&#125;).$mount(<span class="string">'app'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 被简写成了</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  router, <span class="comment">// 这是ES6对象的简写，扩展开就是router: router</span></span><br><span class="line">  <span class="comment">// 箭头函数(=&gt;)是ES6的新语法</span></span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(App) <span class="comment">// 这里扩展开就是render: (h) =&gt; &#123; return h(App) &#125;</span></span><br><span class="line">&#125;).$mount(<span class="string">'app'</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="router"><a href="#router" class="headerlink" title="router"></a>router</h2><p>router—index.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 告诉vue要使用router</span></span><br><span class="line">Vue.use(VueRouter)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例化router对象</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line"></span><br><span class="line">routes <span class="comment">// 挂载路由集合</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出router对象</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Vue.JS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/06/21/vue-JS第二天/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-vue.JS第一天" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -409,116 +485,9 @@ npm run dev
 
 
   
-    <article id="post-《你不知道的JavaScript-上卷》阅读笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/21/《你不知道的JavaScript-上卷》阅读笔记/">《你不知道的JavaScript 上卷》阅读笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2017/05/21/《你不知道的JavaScript-上卷》阅读笔记/" class="archive-article-date">
-  	<time datetime="2017-05-21T05:58:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b62Hd8cf/1PDDa8iJJdjh8BDfV6x2TCqC8ZabYl9.rBSNPef7n3o!/b/dKUAAAAAAAAA&bo=AgWAArgcVg4BGUc!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h2 id="词法作用域"><a href="#词法作用域" class="headerlink" title="词法作用域"></a>词法作用域</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b = a * <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">    &#125;</span><br><span class="line">    ;bar(b * <span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="number">2</span>);	<span class="comment">// 2 4 12</span></span><br></pre></td></tr></table></figure>
-<p>这段代码执行过程：</p>
-<ul>
-<li>首先调用foo()，传入参2，此时a = 2，</li>
-<li>进入到foo函数内部，b = 2*2&gt;4，</li>
-<li>继续往下执行，声明一个变量bar = function bar(c)，console内的a = 2，b = 4，</li>
-<li>再往下执行，调用bar(b <em> 3)，bar = function bar(c), b = 4，入参为4，可以看到，入参可以是表达式，c即是b</em>3 c = b <em> 3 &gt; 4 </em> 3 得到12 、</li>
-</ul>
-<p>输出 2 4 12</p>
-<p>作用域查找会在找到第一个匹配的标识符时停止。在多层的嵌套作用域中可以定义同名的标识符，这叫“遮蔽效应”（内部的标识符“遮蔽”了外部的标识符）</p>
-<h2 id="eval-改变词法作用域-动态执行代码会降低性能"><a href="#eval-改变词法作用域-动态执行代码会降低性能" class="headerlink" title="eval 改变词法作用域 动态执行代码会降低性能"></a>eval 改变词法作用域 动态执行代码会降低性能</h2><p>eval()可以执行一段代码</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">str, a</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">eval</span>(str);	<span class="comment">//修改了词法作用域</span></span><br><span class="line">    <span class="built_in">console</span>.log(a, b)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">foo(<span class="string">"var b = 3;"</span>, <span class="number">1</span>); <span class="comment">//1 , 3</span></span><br></pre></td></tr></table></figure>
-<p>可以看到此段代码，b是全局变量 = 2，而foo()的执行结果却是3，这是为什么呢？<br>在调用foo()函数时，str的入参是 “var b = 3”这段代码，而在foo函数内部，使用了eval()函数<code>执行</code>了这段表达式，此时b = 3，console.log时，作用域查找会从内部开始向外查找，因此输出 1,3。内部变量b“蒙蔽”了全局作用域中的同名变量。</p>
-<p>默认情况下，eval(..)中所执行的代码包含有一个或多个声明（无论是变量还是函数）,就会对eval(..)<code>所处的</code>词法作用域进行修改。并且是在运行期间修改。</p>
-<p>在严格模式中，eval(..)在运行时有其自己的词法作用域，意味着其中的声明无法修改所在的作用域。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span>;</span><br><span class="line">    <span class="built_in">eval</span>(str);</span><br><span class="line">    <span class="built_in">console</span>.log(a);	<span class="comment">//a is not defined</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="string">"var a = 2"</span>)</span><br></pre></td></tr></table></figure></p>
-<p>JavaScript中还有一些功能效果和eval(..)很相似，setTimeout(..)和setInterval(..)的第一个参数可以是字符串，字符串的内容可以被解释为一段动态生成的函数代码。这些功能已经过时，不要使用。</p>
-<h2 id="with关键字-也可以修改词法作用域，不建议使用，严格模式中被完全禁止"><a href="#with关键字-也可以修改词法作用域，不建议使用，严格模式中被完全禁止" class="headerlink" title="with关键字 也可以修改词法作用域，不建议使用，严格模式中被完全禁止"></a>with关键字 也可以修改词法作用域，不建议使用，严格模式中被完全禁止</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">with</span>(obj) &#123;</span><br><span class="line">        a = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o1 = &#123;</span><br><span class="line">    a: <span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o2 = &#123;</span><br><span class="line">    b: <span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(o1)</span><br><span class="line"><span class="built_in">console</span>.log(o1.a);  <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line">foo(o2);</span><br><span class="line"><span class="built_in">console</span>.log(o2.a);  <span class="comment">//undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//2 糟糕，a被泄露到全局作用域上了</span></span><br></pre></td></tr></table></figure>
-<h2 id="函数作用域和块作用域"><a href="#函数作用域和块作用域" class="headerlink" title="函数作用域和块作用域"></a>函数作用域和块作用域</h2><p>变量冲突的一个典型例子存在于全局作用域中。</p>
-<p>所有需要暴露给外界的功能需要作为一个对象的属性，而不是将自己的标识符暴露在顶级的词法作用域中。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> my = &#123;</span><br><span class="line">	name : <span class="string">"xx"</span>,</span><br><span class="line">	doSomething : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="comment">//....</span></span><br><span class="line">	&#125;,</span><br><span class="line">	doAnotherThing : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="comment">//...</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="IIFE-立即执行函数"><a href="#IIFE-立即执行函数" class="headerlink" title="IIFE 立即执行函数"></a>IIFE 立即执行函数</h2><p>当函数被包裹在一对括号中，因此成为了一个表达式，通过在末尾加上另外一个()可以立即执行这个函数。第一个()将函数变成表达式，第二个()执行了这个函数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="title">IIFE</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(a);	<span class="comment">//3</span></span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a);	<span class="comment">//2</span></span><br></pre></td></tr></table></figure></p>
-<p>也可以这样写： (function(){….}()) ，将用来调用的()移进了用来包装的()中</p>
-<h2 id="提升"><a href="#提升" class="headerlink" title="提升"></a>提升</h2><p>只有声明本身会被提升，而赋值或其他运行逻辑会留在原地。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">foo();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>等同于：可以看到函数声明会被提升，但函数表达式不会被提升<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="built_in">console</span>.log(a);<span class="comment">//undefined</span></span><br><span class="line">a = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo()</span><br></pre></td></tr></table></figure></p>
-<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(a);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> bar;	<span class="comment">//返回bar函数本身</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> baz = foo();	<span class="comment">//把foo()函数当作一个值传递给变量baz</span></span><br><span class="line">baz();	<span class="comment">//2</span></span><br></pre></td></tr></table></figure>
-<p>函数bar()的词法作用域能够访问foo()的内部作用域。然后我们将bar()函数本身当作一个值类型进行传递。在这个例子中，我们将bar所引用的函数对象本身当作返回值。</p>
-<p>在foo()执行后，其返回值（也就是内部的bar()函数）赋值给变量baz并调用baz(),实际上只是通过不同的标识符引用调用了内部的函数bar()</p>
-<p>bar()是在自己定义的词法作用域以外的地方执行。</p>
-<p>在foo()执行后，通常foo()整个内部作用域都被销毁，而闭包可以阻止这件事情。内部作用域依然存在，谁在使用这个内部作用域？bar()本身</p>
-<h3 id="循环和闭包"><a href="#循环和闭包" class="headerlink" title="循环和闭包"></a>循环和闭包</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">1</span>; i &lt;=<span class="number">5</span>; i++)&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(i);</span><br><span class="line">  &#125;, i *<span class="number">1000</span>);</span><br><span class="line">&#125;	<span class="comment">//每间隔1秒输出6 共5次</span></span><br></pre></td></tr></table></figure>
-<p>我们预期的是输出数字 1~5，但实际上输出了5个6。这是为什么？<br>首先解释6从哪来的，这个循环的终止条件是i不再&lt;=5，条件首次成立时i的值是6，因此，输出显示的是循环结束时i的最终值。</p>
-<p>延迟函数的回调会在循环结束时才执行。  </p>
-<p>题外话：这书实在看不下去了。。。。。。。。。。。失眠的可以看看</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">《你不知道的JavaScript》</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/05/21/《你不知道的JavaScript-上卷》阅读笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/11/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/11/">Next &raquo;</a>
     </nav>
   
 
@@ -606,15 +575,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Js基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -622,7 +587,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -630,11 +603,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
+                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
+                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -658,10 +631,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
               </li>
              
@@ -670,15 +639,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">

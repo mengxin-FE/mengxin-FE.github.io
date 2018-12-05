@@ -141,6 +141,122 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-《图解HTTP》阅读笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/04/《图解HTTP》阅读笔记/">《图解HTTP》阅读笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2018/04/04/《图解HTTP》阅读笔记/" class="archive-article-date">
+  	<time datetime="2018-04-04T07:48:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b62Hd8cf/rbyPLQzkx50VIodiYv1PU0ziGwOKPqNeP66V2ptSC4Y!/b/dHwBAAAAAAAA&bo=VAY4BGAVQA4BOUs!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<p>计算机要与网络设备相互通信，双方必须基于相同的方法。比如，如何探测到通信目标，由哪一边先发起通信，使用哪种语言进行通信，怎样结束通信等规则都需要事先确定。所有这些规则称为<b>协议(protocol)。</b></p>
+<p><b>HTTP是TCP/IP协议族的一个子集。</b> TCP/IP是DNS、TCP、HTTP、FTP….互联网各类协议族的总称。</p>
+<p>TCP/IP协议族按层次分别为：<b>应用层、传输层、网络层、数据链路层。</b></p>
+<p>应用层：决定了向用户提供应用服务，比如HTTP、DNS、FTP</p>
+<p>传输层：提供处于网络连接中的计算机之间的数据传输。TCP、UDP</p>
+<p>网络层：处理网络上流动的数据包。该层规定了通过怎样的路径到达对方计算机，并把数据包传送给对方。</p>
+<p>链路层：用来处理连接网络的硬件部分。</p>
+<p><b>TCP/IP通信传输流</b></p>
+<p>客户端》 HTTP客户端（应用层）》 TCP(传输层)》 IP（网络层） 》 网络（链路层） 》网络 》 IP 》 TCP 》 HTTP服务器 》 服务器</p>
+<p></p><h4>负责传输的IP协议</h4><br>IP协议位于网络层，作用是把数据包发送给对方，需要对方的IP地址和MAC地址。<br>IP地址指明了节点被分配到的地址，MAC地址是指网卡所属的固定地址。<p></p>
+<p></p><h4>TCP协议</h4><br>TCP协议位于传输层，提供字节流服务，即把大文件分割成报文段为单位的数据包。能够确认数据是否送达到对方。<p></p>
+<p><b>三次握手</b> 发送端先发送一个带SYN标志的数据给对方，接收端收到后回传一个带有SYN标志的数据包以表示确认信息。最好，发送端再回传一个带有ACK标志的数据包，代表“握手”结束。</p>
+<p></p><h4>负责域名解析的DNS服务</h4><br>DNS服务是和HTTP协议一样位于应用层的协议，它提供域名到IP地址之间的解析服务。<p></p>
+<p>DNS通过解析域名查到IP地址，或者逆向从IP地址反查域名。</p>
+<p></p><h4>URI和URL</h4><br><b>URI</b>统一资源标识符，<b>URL</b>是URI的子集即统一资源定位符<p></p>
+<p>URI：协议名称/服务器地址/服务器端口号/带层次的文件路径/查询字符串</p>
+<p></p><h2>HTTP协议</h2><br>HTTP协议规定请求由客户端发出，最后由服务器响应该请求并返回。<p></p>
+<p>请求报文是由请求方法、请求URI、协议版本、可选的请求首部字段和内容实体构成。</p>
+<p>POST /form/entry HTTP/1.1<br>Host: hackr.jp<br>Connection: keep-alive</p>
+<p><b>请遵循REST标准</b></p>
+<p>HTTP/1.1默认是<b>长连接</b>， 特点是：只要任意一端没有明确提出断开连接，则保持TCP连接状态。</p>
+<p>持久连接使得多数请求管线化成为可能，这样可以做到并行发送多个请求，而不需要一个接一个地等待响应。</p>
+<p>HTTP是<b>无状态协议</b>,需要使用Cookie来进行<b>状态管理</b>,通过在请求和响应报文中写入Cookie信息来控制客户端的状态。</p>
+<p>Cookie根据从服务器端发送的响应报文内的一个叫Set-Cookie的首部字段信息，通知客户端保存Cookie。当下次客户端再往该服务器发送请求时，客户端会自动在请求报文中加入Cookie值后发送出去。</p>
+<p>服务器端发现客户端发送过来的Cookie后，会去检查是从哪一个客户端发送来连接请求，然后对比服务器上的信息，最后得到之前的状态信息。</p>
+<h1 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h1><p>跨源资源共享标准的工作方式是添加新的HTTP头，允许服务器描述允许使用web浏览器读取该信息的起源集。</p>
+<h2 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h2><p>有些请求不会触发CORS预检。在本文中，这些被称为“简单请求”。GET/POST/HEAD</p>
+<p>除了由用户代理自动设置的头部之外，例如Connection, User-Agent, or any of the other headers with names defined in the Fetch spec as a “forbidden header name”,唯一允许手动设置的标题是Fetch规范定义为“CORS-safelisted请求头”的标题，也就是<br>Accept<br>Accept-Language<br>Content-Language<br>Content-Type (but note the additional requirements below)<br>Last-Event-ID<br>DPR<br>Save-Data<br>Viewport-Width<br>Width</p>
+<p>唯一允许设置Content-Type的值是application/x-www-form-urlencoded<br>multipart/form-data<br>text/plain</p>
+<p><img src="https://mdn.mozillademos.org/files/14293/simple_req.png"></p>
+<p>Access-Control-Allow-Origin: * 起源头和访问控制允许源的使用显示了访问控制协议的最简单用法。在这种情况下，服务器响应一个访问控制允许的来源：这意味着资源可以通过跨站点的方式被任何域访问。Access-Control-Allow-Origin头部应该包含在请求的起源头中发送的值</p>
+<h3 id="预检"><a href="#预检" class="headerlink" title="预检"></a>预检</h3><p>请求首先通过选项方法向另一个域中的资源发送一个HTTP请求，以确定实际的请求是否安全发送。如果请求是这些类型，将进行预检。PUT<br>DELETE<br>CONNECT<br>OPTIONS<br>TRACE<br>PATCH</p>
+<p><img src="https://mdn.mozillademos.org/files/14289/prelight.png"></p>
+<p>客户端：</p>
+<p>Access-Control-Request-Method: POST:通知服务器作为7预检请求的一部分，当实际的请求被发送时，它将被发送一个POST请求方法</p>
+<p>Access-Control-Request-Headers: X-PINGOTHER, Content-Type<br>通知服务器，当实际的请求被发送时，它将被发送到一个X-PINGOTHER和Content-Type定制头。服务器现在有机会确定它是否希望在这种情况下接受请求</p>
+<p>服务端：表明请求方法（POST）和请求头（X-PINGOTHER）是可以接受的。</p>
+<p>Access-Control-Allow-Origin: <a href="http://foo.example" target="_blank" rel="noopener">http://foo.example</a></p>
+<p>Access-Control-Allow-Methods: POST, GET  服务器允许使用POST GET方法请求数据。</p>
+<p>Access-Control-Allow-Headers: X-PINGOTHER, Content-Type 服务器还发送带有“X-PINGOTHER、Content-Type”的access-control-allow-header，确认这些是允许的头与实际的请求一起使用。与访问控制允许方法一样，access-control-allow-header是一个逗号分隔的可接受标题列表</p>
+<p>Access-Control-Max-Age: 86400  提供了几秒钟的值，以便在不发送另一个预检请求的情况下，可以缓存对预检请求的响应时间。在这种情况下，86400秒是24小时。注意，每个浏览器都有一个最大的内部值，当访问-控制-max-age更大时，它优先考虑</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">图解HTTP</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/04/《图解HTTP》阅读笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-《JavaScript编程精解》阅读笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -495,811 +611,9 @@ console.log(o.average, o.sum); // logs 2, 6
 
 
   
-    <article id="post-《深入理解ES6》" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/22/《深入理解ES6》/">《深入理解ES6》读书笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/22/《深入理解ES6》/" class="archive-article-date">
-  	<time datetime="2018-01-22T15:06:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b62Hd8cf/yGUda3uVVLGEJzxX7J6dGezq0oULx4S7Cijtp2Y2xjI!/b/dPMAAAAAAAAA&bo=5AgABQAPcAgRKYA!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h1 id="块级作用域绑定"><a href="#块级作用域绑定" class="headerlink" title="块级作用域绑定"></a>块级作用域绑定</h1><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/DONqFTHt1buXMdc7OQqSegmpVBm4bw9bQsg3zKhbNB0!/b/dF4BAAAAAAAA&bo=1QNsAdUDbAEDGTw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<h4>var声明及变量提升Hoisting机制</h4>
-
-<p>在函数作用域或全局作用域中通过var声明的变量，都会被当成在当前作用域顶部声明的变量，这就是提升机制。</p>
-<pre><code>function getValue(condition) {
-    if (condition) {
-        var value = &apos;red&apos;;
-        return null;
-    }
-    eles {
-        //此处可以访问到value，值为undefined
-        return null;
-    }
-    //此处可以访问到value，值为undefined
-}
-</code></pre><p>如果你以为condition为true时才创建 value变量那就大错特错了，事实上，Js引擎在预编译时会把value变量声明提升到函数内部最顶端。而初始化操作会在原处执行，所以else也可以访问该变量，但值是undefined。</p>
-<pre><code>function getValue(condition) {
-    var vlue;
-    if (condition) {
-        value = &apos;red&apos;;
-        return value;
-    }
-    eles {
-        return null;
-    }
-}
-</code></pre><h4 id="块级声明-用于声明在指定块的作用域之外无法访问的变量。块级作用域（词法作用域）存在于：函数内部、块中。"><a href="#块级声明-用于声明在指定块的作用域之外无法访问的变量。块级作用域（词法作用域）存在于：函数内部、块中。" class="headerlink" title="块级声明 用于声明在指定块的作用域之外无法访问的变量。块级作用域（词法作用域）存在于：函数内部、块中。"></a>块级声明 用于声明在指定块的作用域之外无法访问的变量。块级作用域（词法作用域）存在于：函数内部、块中。</h4><h2 id="let声明-可以把变量的作用域限制在当前代码块中"><a href="#let声明-可以把变量的作用域限制在当前代码块中" class="headerlink" title="let声明 可以把变量的作用域限制在当前代码块中"></a>let声明 可以把变量的作用域限制在当前代码块中</h2><p>let声明<b>不会被提升</b>，<b>不可在同一作用域重复声明</b>，通常将let语句放在封闭代码块顶部，便于整个代码块都可以访问。</p>
-<pre><code>function getValue(condition) {
-    if (condition) {
-        let value = &apos;red&apos;;    //变量在此处，在if块中
-        return value;
-    }
-    eles {
-        //变量在此处不存在
-        return null;
-    }
-    //变量在此处不存在
-}
-</code></pre><h2 id="const声明-常量-一旦设置不可修改，声明时需要初始化，和let一样也是块级标识符，只在当前代码块内有效。"><a href="#const声明-常量-一旦设置不可修改，声明时需要初始化，和let一样也是块级标识符，只在当前代码块内有效。" class="headerlink" title="const声明  常量 一旦设置不可修改，声明时需要初始化，和let一样也是块级标识符，只在当前代码块内有效。"></a>const声明  常量 一旦设置不可修改，声明时需要初始化，和let一样也是块级标识符，只在当前代码块内有效。</h2><pre><code>const Max = 30;
-</code></pre><h4>用const声明对象，对象的值可以修改，但不允许修改绑定</h4>
-
-<pre><code>const person = {
-  name : &apos;jack&apos;
-}
-
-person.name = &apos;abc&apos;
-//语法错误
-person = {
-  name : &apos;123&apos;
-}
-</code></pre><p>绑定person的值是一个包含一个name属性的变量，改变person.name的值是允许的，直接给person赋值则会出错</p>
-<h3 id="最佳实践：默认使用const，有改变变量的需求时再使用let。"><a href="#最佳实践：默认使用const，有改变变量的需求时再使用let。" class="headerlink" title="最佳实践：默认使用const，有改变变量的需求时再使用let。"></a>最佳实践：默认使用const，有改变变量的需求时再使用let。</h3><h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/X5LTEVY44WURtq38eWxcXPQBLfO7au.BEN7VA9AYp9A!/b/dGoBAAAAAAAA&bo=8QaAAtMJigMDKSo!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p></p><h4>模板字面量 ` ：支持多行字符串、字符串格式化（将变量的值嵌入字符串）、HTML转义</h4><br><b>多行字符串,旧的实现方式</b><p></p>
-<pre><code>var message = &quot;m \
-string&quot;;
-console.log(message);   //&quot;m string&quot;
-//如果想换行，需要手动添加换行符
-var message = &quot;a \n\
-string&quot;;
-console.log(message);   //&quot;a&quot; 
-                        //&quot;string&quot;
-</code></pre><p><b>使用ES6的模板字面量 `，反撇号中所有空白符都属于字符串一部分，要小心缩进</b></p>
-<pre><code>let message = `a
-string`;
-console.log(message);   //&quot;a&quot; 
-                        //&quot;string&quot;
-</code></pre><p><b>字符串占位符 将Js表达式嵌入占位符中并作为字符串输出</b></p>
-<pre><code>let name = &quot;jim&quot;,
-    message = `hello,${name}`;
-    console.log(message);   //&quot;hello,jim&quot;
-
-let count = 10,
-    price=0.25,
-    message = `${count} items cost $${(count * price).toFixed(2)}`; //第一个$会被原样输出因为后面没有括号
-    console.log(message);   //10 items cost $2.50
-</code></pre><p><b>嵌套</b></p>
-<pre><code>let name = &quot;jim&quot;,
-    message = `Hello,${ `my name is ${name}` }`;
-    console.log(message);   //Hello,my name is jim
-</code></pre><p><b>标签模板：执行模板字面量上的转换并返回字符串</b></p>
-<pre><code>let message = tag`Hello world`
-//tag是模板标签，应用于模板字面量`Hello world`
-</code></pre><p><b>定义标签</b></p>
-<p>标签可以是函数，调用时传入加工过的模板字面量各部分数据。</p>
-<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/B9*B.t4qcMo*BrXBQTQViq3IRDesNXXNag41Xzm9EAU!/b/dFYBAAAAAAAA&bo=BgWAAh8ICwQDKZU!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>Js在函数定义中无论定义了多少个形参，都可以传入任意个参数，还可以指定参数的默认值。</p>
-<pre><code>function request(url,timeout,callback){
-    timeout = timeout || 2000;
-    callback = callback || function(){};
-}
-
-function request(url,timeout,callback){
-    timeout = (typeof timeout !== &quot;undefined&quot;) ? timeout : 2000;
-    callback = (typeof callback !== &quot;undefined&quot;) ? callback : function(){};
-}
-</code></pre><p>此函数中，timeout、callback是可选参数，如果不传入，则会自动赋予默认值，当前一个操作数的值为假时，返回后一个值。</p>
-<p><b>ES6默认参数值</b>，如果没有为参数传入值则提供一个默认值</p>
-<pre><code>function request(url,timeout = 2000,callback = function(){}){
-
-}
-</code></pre><p><b>默认参数表达式</b>，非原始值传参</p>
-<pre><code>function getV(){
-    return 5;
-}
-
-function add(first,second = getV()){
-    return first + second
-}
-
-add(1,1);   //2 指定了两个参数，不使用默认值
-add(1);     //6 second参数未指定，使用了默认值
-</code></pre><p><b>只允许引用前面参数的值</b></p>
-<pre><code>function getV(value){
-    return value + 5;
-}
-
-function add(first,second = getV(first)){
-    return first + second
-}
-
-add(1); //7 没传入第二个参数，使用默认参数表达式，该表达式调用了前面参数的值
-add(1,1);   //2  传入两个参数，不使用默认参数
-</code></pre><h2 id="不定参数…"><a href="#不定参数…" class="headerlink" title="不定参数…"></a>不定参数…</h2><p>在函数的命名参数前添加…  表明这是一个不定参数，该参数为一个数组，包含着自它之后传入的所有参数，通过这个数组名即可访问里面的参数</p>
-<pre><code>function pick(object,...keys){
-    let result = Object.create(null);
-
-    for(let i=0,len=keys.length;i&lt;len;i++){
-        result[keys[i]] = object[keys[i]];
-    }
-
-    return result;
-}
-</code></pre><p><b>在此处，不定参数keys包含object之后传入的所有参数，而arguments对象包含的是所有传入的参数即包括object</b>，好处在于可以直观看出可以处理的参数数量。</p>
-<p><b>每个函数只能声明一个不定参数，而且必须放在参数的末尾</b></p>
-<h2 id="展开运算符"><a href="#展开运算符" class="headerlink" title="展开运算符"></a>展开运算符</h2><p>可以让你指定一个数组，将它们打散后作为各自独立的参数传入函数，简化使用数组给函数传参的过程</p>
-<pre><code>let values = [1,2,3,4,5,100];
-Math.max(...values);    //100
-</code></pre><p><b>Js函数内部有两个方法[[Call]]、[[Construct]]  <br>当通过new关键字调用函数时，执行的是[[Construct]]函数，它负责创建一个实例然后再执行函数体，将this绑定到实例上，具有[[Construct]]方法的函数称为构造函数。<br>如果不通过new关键字调用函数，则执行[[Call]]函数。</b></p>
-<h2 id="判断函数是否通过new关键字被调用-判断该函数是否作为构造函数被调用"><a href="#判断函数是否通过new关键字被调用-判断该函数是否作为构造函数被调用" class="headerlink" title="判断函数是否通过new关键字被调用/判断该函数是否作为构造函数被调用"></a>判断函数是否通过new关键字被调用/判断该函数是否作为构造函数被调用</h2><p>—使用instanceof</p>
-<p><b>new.target属性</b> 为了解决判断函数是否通过new关键字调用的问题<br><br>当调用函数的[[Construct]] 方法时，new.target被赋予为new操作符的目标，通常是新创建的对象实例；如果调用[[Call]]方法，则new.target的值为undefined</p>
-<pre><code>function Person(name){
-    if(typeof new.target !== &quot;undefined&quot;){
-        this.name = name;
-    }else{
-        throw new Error(&quot;必须通过new关键字来调用Person&quot;)
-    }
-}
-
-var person = new Person(&quot;jim&quot;);
-var notPerson = Person.call(person,&quot;cook&quot;)
-</code></pre><p>检查new.target是否被某个特定构造函数所调用</p>
-<pre><code>function Person(name){
-    if(new.target === Person){
-        this.name = name;
-    }else{
-        throw new Error(&quot;必须通过new关键字来调用Person&quot;)
-    }
-}
-
-function AnotherPerson(name){
-    Person.call(this,name)
-}
-
-var person = new Person(&quot;jim&quot;);
-var anotherPerson = new AnotherPerson(&quot;cook&quot;);
-</code></pre><h2 id="块级函数"><a href="#块级函数" class="headerlink" title="块级函数"></a>块级函数</h2><p>在ES6版本之前，在代码块中声明一个块级函数是语法错误。但在ES6中，可以声明块级函数，可以在定义该函数的代码块中调用它。</p>
-<pre><code>&quot;use strict&quot;;
-if(true){
-    console.log(typeof doSomething);    //function
-    //在代码块中，块级函数被提升至顶部，所以可以访问到值为function，即使在函数定义之前的位置调用
-
-    function doSomething(){}
-
-    doSomething();
-}
-//代码块之外，函数将不存在
-console.log(typeof doSomething);    //undefined
-</code></pre><p><b>块级函数和let函数表达式类似，一旦执行过程流出代码块，函数就会移除。二者区别在于：块级函数会被提升至块的顶部，而let定义的函数表达式则不会</b></p>
-<pre><code>&quot;use strict&quot;;
-if(true){
-    console.log(typeof doSomething);    //错误，let定义的函数表达式不会被提升至代码块顶部
-
-    let doSomething=function(){}
-
-    doSomething();
-}
-
-console.log(typeof doSomething);
-</code></pre><p><b>因此，需要将函数提升至代码块顶部则用块级函数，否则用let表达式</b><br><br><b>在非严格模式下，函数会提升至外围或全局作用域的顶部，而非代码块的顶部。</b></p>
-<h2 id="箭头函数-gt"><a href="#箭头函数-gt" class="headerlink" title="箭头函数 =&gt;"></a>箭头函数 =&gt;</h2><ul><br>    <li>没有this、super、arguments、new.target绑定</li><br>    <li>不能通过new关键字调用。箭头函数没有[[Construct]]方法，所以不能被用作构造函数</li><br>    <li>没有原型，没有prototype属性</li><br>    <li>不可改变this的绑定</li><br>    <li>必须通过命名参数和不定参数这两张形式访问函数的参数。没有arguments绑定</li><br>    <li>不支持重复的命名参数</li><br></ul>
-
-<p>箭头函数：函数参数、箭头、函数体</p>
-<pre><code>let re = value =&gt;value;
-//相当于
-let re = function(value){
-    return values;
-}
-</code></pre><p>当箭头函数只有一个参数时，可以直接写参数名，箭头紧跟其后，箭头右侧的表达式被求值后返回。<b>如果要传入两个以上参数，要在参数两侧加小括号。</b></p>
-<pre><code>let sum = (num1 , num2) =&gt; num1 + num2;
-sum(1,2);   //3
-//相当于
-let sum = function(num1,num2){
-    return num1 + num2;
-}
-</code></pre><p><b>如果没有参数，需要写小括号</b></p>
-<pre><code>let getName = () =&gt; &quot;jim&quot;;
-//相当于
-let getName = function(){
-    return &quot;jim&quot;
-}
-</code></pre><p><b>空函数</b></p>
-<pre><code>let doNothing = () =&gt;{};
-//相当于
- let doNothing = function(){};
-</code></pre><p><b>箭头函数返回一个对象字面量,需要将字面量放在小括号中</b></p>
-<pre><code>let getItem = id =&gt;({id:id,name:&quot;jim&quot;});
-//相当于
-let getItem = function(id){
-    return{
-        id:id,
-        name:&quot;jim&quot;
-    };
-};
-</code></pre><p><b>创建立即执行函数表达式IIFE</b></p>
-<pre><code>let person = function(name){
-    return{
-        getName : function(){
-            return name;
-        }
-    };
-}(&quot;jim&quot;);
-
-console.log(person.getName());    //&quot;jim&quot;
-</code></pre><p>相当于：</p>
-<pre><code>let person = ((name) =&gt; {
-    return{
-        getName : function(){
-            return name;
-        }
-    };
-})(&quot;jim&quot;);
-
-console.log(person.getName());    //&quot;jim&quot;
-</code></pre><p><b>尾调用优化</b><br>尾调用指的是函数作为另一个函数的最后一条语句被调用</p>
-<pre><code>function doSomething(){
-    return doSomething();   //尾调用
-}
-</code></pre><h1 id="扩展对象的功能性"><a href="#扩展对象的功能性" class="headerlink" title="扩展对象的功能性"></a>扩展对象的功能性</h1><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/6xvqn1HpytV2nmwU4vTWGyNY2iGqvJXYzWXV*4BVR6Q!/b/dFYBAAAAAAAA&bo=.gWAAvcHVQMDKdc!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<h2 id="对象字面量语法扩展"><a href="#对象字面量语法扩展" class="headerlink" title="对象字面量语法扩展"></a>对象字面量语法扩展</h2><h3 id="属性初始值的简写当属性名和属性值相同时，可以简写。"><a href="#属性初始值的简写当属性名和属性值相同时，可以简写。" class="headerlink" title="属性初始值的简写当属性名和属性值相同时，可以简写。"></a>属性初始值的简写当属性名和属性值相同时，可以简写。</h3><pre><code>function createPerson(name,age){
-    return{
-        name : name,
-        age  : age
-    }
-}
-
-//简写为
-
-function createPerson(name,age){
-    return{
-        name,
-        age
-    }
-}
-</code></pre><p>当对象字面量里只有一个属性的名称时，js引擎会在可访问作用域中寻找同名变量，如果找到则该变量的值会赋予对象字面量的同名属性。</p>
-<h3 id="对象方法的简写去掉了冒号和function关键字"><a href="#对象方法的简写去掉了冒号和function关键字" class="headerlink" title="对象方法的简写去掉了冒号和function关键字"></a>对象方法的简写去掉了冒号和function关键字</h3><pre><code>var pseron = {
-    name : &quot;jim&quot;,
-    sayName : function(){
-        console.log(this.name)
-    }
-}
-
-//简写为
-
-var person = {
-    name : &quot;jim&quot;,
-    sayName(){
-        console.log(this.name)
-    }
-}
-</code></pre><h3 id="可计算属性名"><a href="#可计算属性名" class="headerlink" title="可计算属性名"></a>可计算属性名</h3><p>在ES6以前，想要通过计算得到属性名，需要用方括号代替点。在对象字面量中，可以直接使用字符串字面量作为属性名称。</p>
-<pre><code>var person = {
-    &quot;first name&quot; : &quot;jim&quot;
-};
-
-console.log(person[&quot;first name&quot;])   //&quot;jim&quot;
-</code></pre><p>这种模式适用于<b>属性名提前已知或可被字符串字面量表示的情况</b>。如果属性名称”first name”被包含在一个变量中，或者需要计算才能得到，那么，只有ES6能够做到。</p>
-<pre><code>let lastName = &quot;last name&quot;;
-
-let person = {
-    &quot;first name&quot; : &quot;jim&quot;,
-    [lastName]   : &quot;zii&quot;    //在对象字面量中使用方括号表示的该属性名称是可计算的，它的内容将被求值并被转化为一个字符串，因此可以用表达式来写属性名称
-}
-
-console.log(person[&quot;first name&quot;]);  //&quot;jim&quot;
-console.log(person[lastName]);  //&quot;zii&quot;
-</code></pre><p><b>字符串+变量 计算得出的属性名</b>求值后属性名为”firstname” “lastname”</p>
-<pre><code>var suffix = &quot;name&quot;;
-
-var person = {
-    [&quot;first&quot; + suffix] : &quot;jim&quot;,
-    [&quot;last&quot; + suffix] : &quot;zii&quot;,
-}
-
-console.log(person[&quot;firstname&quot;]);  //&quot;jim&quot;
-console.log(person[&quot;lastname&quot;]);  //&quot;zii&quot;
-</code></pre><h2 id="新增方法"><a href="#新增方法" class="headerlink" title="新增方法"></a>新增方法</h2><h3 id="Object-assign-接受一个对象和任意数量的源对象，并按指定的顺序将属性复制到接受对象中。如果多个源对象存在同名属性，则排位靠后的源对象会覆盖前面的。"><a href="#Object-assign-接受一个对象和任意数量的源对象，并按指定的顺序将属性复制到接受对象中。如果多个源对象存在同名属性，则排位靠后的源对象会覆盖前面的。" class="headerlink" title="Object.assign() 接受一个对象和任意数量的源对象，并按指定的顺序将属性复制到接受对象中。如果多个源对象存在同名属性，则排位靠后的源对象会覆盖前面的。"></a>Object.assign() 接受一个对象和任意数量的源对象，并按指定的顺序将属性复制到接受对象中。如果多个源对象存在同名属性，则排位靠后的源对象会覆盖前面的。</h3><pre><code>function EventTarget(){}
-
-EventTarget.prototype = {
-    constructor : EventTarget,
-    emit        : function(){},
-    on          : function(){}
-}
-
-var myObject = {}
-
-Object.assign(myObject,EventTarget.prototype);
-</code></pre><h2 id="允许重复的对象字面量属性，后者覆盖前者"><a href="#允许重复的对象字面量属性，后者覆盖前者" class="headerlink" title="允许重复的对象字面量属性，后者覆盖前者"></a>允许重复的对象字面量属性，后者覆盖前者</h2><pre><code>var person = {
-    name : &quot;jim&quot;,
-    name : &quot;tina&quot;
-}
-console.log(pseron.name);   //&quot;tina&quot;
-</code></pre><h2 id="增强对象原型"><a href="#增强对象原型" class="headerlink" title="增强对象原型"></a>增强对象原型</h2><p><b>改变对象的原型：Object.setPrototypeOf()</b>，接受两个参数：被改变原型的对象、替代第一个参数原型的对象</p>
-<pre><code>let person = {
-    getGreeting(){
-        return &quot;Hello&quot;;
-    }
-}
-
-let dog = {
-    getGreeting(){
-        return &quot;woof&quot;;
-    }
-}
-
-let friend = Object.create(person);
-console.log(friend.getGreeting());  //Hello
-console.log(Object.getPrototypeOf(friend) === person);  //true
-
-//将原型改为dog
-
-Object.setPrototypeOf(friend,dog);
-console.log(friend.getGreeting());  //&quot;woof&quot;
-console.log(Object.getPrototypeOf(friend) === dog); //&quot;true&quot;
-</code></pre><h2 id="Super-简化原型访问-必须在简写方法的对象中使用"><a href="#Super-简化原型访问-必须在简写方法的对象中使用" class="headerlink" title="Super 简化原型访问 必须在简写方法的对象中使用"></a>Super 简化原型访问 必须在简写方法的对象中使用</h2><pre><code>let person = {
-    getGreeting(){
-        return &quot;Hello&quot;;
-    }
-}
-
-let dog = {
-    getGreeting(){
-        return &quot;woof&quot;;
-    }
-}
-
-let friend = {
-    getGreeting(){
-        return Object.getPrototypeOf(this).getGreeting.call(this) + &quot;,hi!&quot;;
-    }
-}
-
-//将原型设置为person
-Object.setPrototypeOf(friend,person);
-console.log(friend.getGreeting());  //&quot;Hello,hi!&quot;
-console.log(Object.getPrototypeOf(friend) === person);  //true
-
-//将原型设置为dog
-Object.setPrototypeOf(friend,dog);
-console.log(friend.getGreeting());  //&quot;woof,hi!&quot;
-console.log(Object.getPrototypeOf(friend) === dog);  //true
-</code></pre><p>以上，friend对象的getGreeting()方法调用了同名原型方法。Object.getPrototypeOf()方法可以确保调用正确的原型，.call(this)可以确保正确设置原型方法中的this值。<br><br>以上过程太复杂，因此ES6引入了super关键字，Super引用相当于指向对象原型的指针，也就是Object.getPrototypeOf(this)的值。</p>
-<pre><code>let friend = {
-    getGreeting(){
-        return super.getGreeting + &quot;,hi!&quot;;
-    }
-}
-</code></pre><p>super.getGreeting相当于在当前上下文中调用Object.getPrototypeOf(this).getGreeting.call(this)</p>
-<p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/GndtvJPVBbG4EUjHVd*MfXMnUbltK9uKNKpD4dtsu8Q!/b/dGcBAAAAAAAA&bo=iwc4BLYPyggDOdc!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<h2 id="解构"><a href="#解构" class="headerlink" title="解构"></a>解构</h2><p>想象一下，从对象中提取属性，需要写很多重复代码。如果包含嵌套解构，还必须深挖整个数据结构才能找到所需信息。<br>因此，ES6给对象和数组提供了解构功能。将数据结构打散，更容易获取所需信息。</p>
-<h2 id="对象解构-语法是：在一个赋值操作符左边放置一个对象字面量"><a href="#对象解构-语法是：在一个赋值操作符左边放置一个对象字面量" class="headerlink" title="对象解构 语法是：在一个赋值操作符左边放置一个对象字面量"></a>对象解构 语法是：在一个赋值操作符左边放置一个对象字面量</h2><pre><code>let node = {
-    type : &quot;Identifier&quot;,
-    name : &quot;foo&quot;
-}
-
-let {type,name} = node;
-console.log(type);  //&quot;Identifier&quot; node.type的值被存储在type变量中
-console.log(name);  //&quot;foo&quot; node.name的值被存储在type变量中
-</code></pre><h3 id="解构赋值-给变量赋值时使用解构语法，例如在定义变量后想要修改它们的值"><a href="#解构赋值-给变量赋值时使用解构语法，例如在定义变量后想要修改它们的值" class="headerlink" title="解构赋值 给变量赋值时使用解构语法，例如在定义变量后想要修改它们的值"></a>解构赋值 给变量赋值时使用解构语法，例如在定义变量后想要修改它们的值</h3><pre><code>let node = {
-    type : &quot;Identifier&quot;,
-    name : &quot;foo&quot;
-},
-
-type = &quot;jim&quot;,
-name = 5;
-//使用解构语法为多个变量赋值
-({type , name} = node); 
-
-console.log(type);  //&quot;Identifier&quot;
-console.log(name);  //&quot;foo&quot;
-</code></pre><h3 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h3><p>当解构赋值时，指定的局部变量名在对象中不存在，那么这个局部变量会被赋值为undefined，<br>或者你可以在属性名称后加 = 默认值</p>
-<pre><code>let node = {
-    type : &quot;Identifier&quot;,
-    name : &quot;foo&quot;
-}
-
-//使用解构语法为多个变量赋值
-//node中没有value变量，给value赋默认值为true
-let {type , name , value = true} = node; 
-
-console.log(type);  //&quot;Identifier&quot;
-console.log(name);  //&quot;foo&quot;
-console.log(value);  //true
-</code></pre><h3 id="为非同名局部变量赋值-语法类似对象字面量"><a href="#为非同名局部变量赋值-语法类似对象字面量" class="headerlink" title="为非同名局部变量赋值 语法类似对象字面量"></a>为非同名局部变量赋值 语法类似对象字面量</h3><pre><code>let node = {
-    type : &quot;Identifier&quot;,
-    name : &quot;foo&quot;
-}
-//解构赋值声明变量localType、localName
-let {
-    type : localType,    //读取名为type的属性并将其值存储在变量localType
-    name : localName    
-
-}= node;
-
-console.log(localType); //&quot;Identifier&quot;
-console.log(localName); //&quot;foo&quot;
-</code></pre><h3 id="嵌套对象解构"><a href="#嵌套对象解构" class="headerlink" title="嵌套对象解构"></a>嵌套对象解构</h3><pre><code>let node = {
-    type : &quot;Identifier&quot;,
-    name : &quot;foo&quot;,
-    loc  : {
-        start :{
-            line : 1,
-            column : 4
-        }
-    }
-};
-//提取node.loc.start
-let {loc : {start : localStart}}= node;
-//node.loc.start被存储在新的局部变量localstart中
-console.log(localStart.line);
-console.log(localStart.column);
-</code></pre><h2 id="数组解构"><a href="#数组解构" class="headerlink" title="数组解构"></a>数组解构</h2><pre><code>//按顺序解构数组的前两个值，提供两个变量即可
-let colors = [&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;];
-let [firstColor,secondColor] = colors;
-console.log(firstColor);    //&quot;red&quot;
-console.log(secondColor);   //&quot;green&quot;
-
-//选取第3个值，则不需要提供前两个变量名称 
-
-let [, , thirdColor] = color;
-console.log(thirdColor);    //&quot;blue&quot;
-</code></pre><h3 id="解构赋值"><a href="#解构赋值" class="headerlink" title="解构赋值"></a>解构赋值</h3><pre><code>let colors = [&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;],
-    firstColor = &quot;black&quot;,
-    secondColor = &quot;white&quot;;
-
-[firstColor,secondColor] = colors;
-
-console.log(firstColor);    //&quot;red&quot;
-console.log(secondColor);   //&quot;green&quot;
-</code></pre><h3 id="变量交换"><a href="#变量交换" class="headerlink" title="变量交换"></a>变量交换</h3><p>在ES6以前，a、b两个变量交换值需要第3个临时变量<br>而在ES6，可以直接：</p>
-<pre><code>let a = 1,
-    b = 2;
-
-[a,b] = [b,a];
-console.log(a); //2
-console.log(b); //1
-</code></pre><p>左侧是一个解构模式，右侧是一个为交换过程创建的临时数组字面量。先解构临时数组，再将b和a的值复制到左侧数组的前两个位置。</p>
-<h3 id="默认值-1"><a href="#默认值-1" class="headerlink" title="默认值"></a>默认值</h3><pre><code>let colors = [&quot;red&quot;];
-let [first,second=&quot;blue&quot;] = colors    //赋予了second默认值：blue
-
-console.log(first);
-console.log(second);
-</code></pre><h3 id="嵌套数组解构"><a href="#嵌套数组解构" class="headerlink" title="嵌套数组解构"></a>嵌套数组解构</h3><pre><code>let colors = [&quot;red&quot;,[&quot;green&quot;,&quot;lightgreen&quot;],&quot;blue&quot;];
-
-let [first ,[second]] = colors;
-
-console.log(first); //&quot;red&quot;
-console.log(second);    //&quot;green&quot;
-</code></pre><h3 id="不定元素-可以通过…语法将数组中的其余元素复制给特定的变量"><a href="#不定元素-可以通过…语法将数组中的其余元素复制给特定的变量" class="headerlink" title="不定元素  可以通过…语法将数组中的其余元素复制给特定的变量"></a>不定元素  可以通过…语法将数组中的其余元素复制给特定的变量</h3><pre><code>let colors = [&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;];
-let [first , ...restColors] = colors;    //将除了第一个元素，其余元素赋值给了restColor
-
-console.log(first);    //&quot;red&quot;
-console.log(restColors.length);    //2
-console.log(restColors);    //[&quot;green&quot;, &quot;blue&quot;]
-</code></pre><h3 id="复制数组"><a href="#复制数组" class="headerlink" title="复制数组"></a>复制数组</h3><pre><code>var colors = [&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;];
-var clone = colors.concat();
-console.log(clone); //[&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;]
-</code></pre><p>concat()方法本身用于连接字符串，如果调用时不传递参数，就会返回当前数组的副本。</p>
-<p>ES6通过不定参数也可以实现。</p>
-<pre><code>let colors = [&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;];
-let [...cloneArray] = colors;
-console.log(cloneArray);    //[&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;]
-</code></pre><h2 id="Set集合和Map集合-为创建非数值型索引、非数组对象而生的一种数据结构"><a href="#Set集合和Map集合-为创建非数值型索引、非数组对象而生的一种数据结构" class="headerlink" title="Set集合和Map集合  为创建非数值型索引、非数组对象而生的一种数据结构"></a>Set集合和Map集合  为创建非数值型索引、非数组对象而生的一种数据结构</h2><h3 id="Set-一种无重复元素的有序的列表，通常不会逐一访问每个元素，一般用来检测给定元素是否存在于该集合中"><a href="#Set-一种无重复元素的有序的列表，通常不会逐一访问每个元素，一般用来检测给定元素是否存在于该集合中" class="headerlink" title="Set 一种无重复元素的有序的列表，通常不会逐一访问每个元素，一般用来检测给定元素是否存在于该集合中"></a>Set 一种无重复元素的有序的列表，通常不会逐一访问每个元素，一般用来检测给定元素是否存在于该集合中</h3><p><b>new Set()</b>创建Set集合，<br><br><b>add()</b>方法向集合中添加元素，<b>传入相同的值将被忽略。</b><br><br><b>size()</b>属性获取集合元素数量，<br><br><b>has()</b>方法检测集合中是否存在某个值<br><br><b>delete()</b>用于移除某一元素，<b>clear()</b>用于清空集合</p>
-<pre><code>let set = new Set();
-set.add(&quot;a&quot;);
-set.add(&quot;b&quot;);
-set.add(1);
-console.log(set);    //Set {&quot;a&quot;, &quot;b&quot;, 1}
-console.log(set.size);    //3
-
-//忽略相同的值
-let set =new Set([1,1,1,1,1,1]);
-console.log(set);    //1
-console.log(set.has(1));    //true
-console.log(set.has(2));    //false
-</code></pre><p>Set接受可迭代对象（eg:数组、Set集合、Map集合）作为参数，<b>含有重复元素的数组通过Set可以去重</b></p>
-<h3 id="forEach-遍历Set集合"><a href="#forEach-遍历Set集合" class="headerlink" title="forEach()遍历Set集合"></a>forEach()遍历Set集合</h3><pre><code>let set =new Set([&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;]);
-//回调函数接受三个参数：Set集合中下一次索引的位置、与第一个参数一样的值、被遍历的Set集合本身
-set.forEach(function(value,key,ownerSet){
-    console.log(key + &quot; &quot; + value);
-    console.log(ownerSet === set);
-});
-</code></pre><p>回调函数每次执行时，输出的键和值都保持一致，ownerSet 与set相等</p>
-<p><b>虽然Set集合可以用forEach()操作集合中的每个元素，但是不能像数组那样通过索引访问元素，如有需要，先将Set集合转成一个数组。</b></p>
-<h3 id="将Set集合转换为数组"><a href="#将Set集合转换为数组" class="headerlink" title="将Set集合转换为数组"></a>将Set集合转换为数组</h3><p>将数组转换为Set集合只需要给Set构造函数传入数组。<br><br>将Set集合转换为数组需要用展开运算符(…)</p>
-<pre><code>let set = new Set([1,2,3,4,5]),
-    array = [...set];
-console.log(set);   //Set {1, 2, 3, 4, 5}
-console.log(array); //[1, 2, 3, 4, 5]
-</code></pre><p>封装一个数组去重的方法（返回的是原数组的副本）</p>
-<pre><code>function e(items){
-    return [...new Set(items)];    //Set集合在此用于去重复
-}
-
-let numbers = [1,1,1,2,3,4,5,6,3,4,5],
-    noe = e(numbers);
-console.log(noe);
-</code></pre><p>Set实例中的对象保持了引用</p>
-<pre><code>let set =new Set(),
-    key = {};
-
-set.add(key);
-//移除原始引用
-key = null;
-console.log(set.size);  //1
-//重新取回原始引用
-key = [...set][0];  
-console.log(key);   //Object {}
-</code></pre><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/Yvv9*VpZLR0GX7tI2ABoL1YkIWSvUo.XbkzgH361Hmk!/b/dHMAAAAAAAAA&bo=zAV.AswFfgIDKQw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<h2 id="Map集合-是一个存放了若干个键值对的有序列表，通常用于缓存频繁取用的数据。"><a href="#Map集合-是一个存放了若干个键值对的有序列表，通常用于缓存频繁取用的数据。" class="headerlink" title="Map集合 是一个存放了若干个键值对的有序列表，通常用于缓存频繁取用的数据。"></a>Map集合 是一个存放了若干个键值对的有序列表，通常用于缓存频繁取用的数据。</h2><p><b>set()</b>方法传入键值两个参数来向Map集合添加新元素<br><br><b>get()</b>获取</p>
-<pre><code>let map = new Map();
-map.set(&quot;title&quot;,&quot;es6&quot;);
-map.set(&quot;name&quot;,&quot;jim&quot;);
-console.log(map);    //Map {&quot;title&quot; =&gt; &quot;es6&quot;, &quot;name&quot; =&gt; &quot;jim&quot;}
-map.get(&quot;title&quot;);    //&quot;es6&quot;
-
-//无法用作对象属性的却可以用作Map的键名,例如把key1、key2对象作为键名
-let key1 = {};
-let key2 = {};
-map.set(key1,1);
-map.set(key2,2);
-console.log(map);    //Map {&quot;title&quot; =&gt; &quot;es6&quot;, &quot;name&quot; =&gt; &quot;jim&quot;, Object {} =&gt; 1, Object {} =&gt; 2}
-console.log(map.get(key1));    //1
-</code></pre><h3 id="初始化Map集合—-给Map构造函数传入数组的方式"><a href="#初始化Map集合—-给Map构造函数传入数组的方式" class="headerlink" title="初始化Map集合—-给Map构造函数传入数组的方式"></a>初始化Map集合—-给Map构造函数传入数组的方式</h3><p>数组中的每个元素都是一个子数组，子数组中包含一个键值对，因此整个Map集合中包含的全是这样的两元素数组：</p>
-<pre><code>let map = new Map([ [&quot;name&quot;,&quot;es6&quot;] , [&quot;age&quot;,&quot;12&quot;] ,[&quot;sex&quot;,&quot;boy&quot;]  ])
-console.log(map);    //Map {&quot;name&quot; =&gt; &quot;es6&quot;, &quot;age&quot; =&gt; &quot;12&quot;, &quot;sex&quot; =&gt; &quot;boy&quot;}
-</code></pre><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/nlBrfeGy1YVGgoVUd9LY49sThP*wOXGkLyFVd7qsbHk!/b/dGsBAAAAAAAA&bo=xgOQAcYDkAEDGTw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<h1 id="类"><a href="#类" class="headerlink" title="类"></a>类</h1><pre><code>class PersonClass{
-    //通过constructor方法定义构造函数
-    //等价于PersonType构造函数  function PersonType(name){ this.name =name;}
-    constructor(name){
-        this.name = name;
-    }
-
-    //等价于PersonType.prototype.sayName =function(){console.log(this.name)}
-    sayName(){
-        console.log(this.name);
-    } 
-}    
-
-let person = new PersonClass(&quot;jim&quot;);
-person.name();  //&quot;jim&quot;
-</code></pre><p>自有属性是实例中的属性，不会出现在原型上，且只能在类的构造函数或方法中创建，在此处name就是一个自有属性。</p>
-<p>注意点：</p>
-<ul><br>    <li>函数声明可以被提升，而类声明与let声明类似，不能被提升；</li><br>    <li>类声明中的所有代码自动运行在严格模式下</li><br>    <li>在自定义类中，需要通过object.defineProperty()方法手工指定某个方法为不可枚举，而在类中，所有方法都不可枚举。</li><br>    <li>使用除关键字new以外的方式调用类的构造函数会导致程序抛出错误</li><br></ul>
-
-
-<h3 id="类表达式"><a href="#类表达式" class="headerlink" title="类表达式"></a>类表达式</h3><p>类和函数都有两种存在形式：声明形式和表达式形式。声明形式的函数和类都应由相应的关键字（分别为function和class）进行定义，随后紧跟一个标识符；表达式形式的函数和类与之类似，只是不需要再关键字后添加标识符。类表达式的设计初衷是为了声明相应变量或传入函数作为参数。</p>
-<pre><code>let PersonClass = class{
-    //等价于PersonType构造函数  function PersonType(name){ this.name =name;}
-    constructor(name){
-        this.name = name;
-    }
-
-    //等价于PersonType.prototype.sayName =function(){console.log(this.name)}
-    sayName(){
-        console.log(this.name);
-    } 
-}
-
-let person = new PersonClass(&quot;jim&quot;);
-person.name();  //&quot;jim&quot;
-</code></pre><h3 id="访问器属性"><a href="#访问器属性" class="headerlink" title="访问器属性"></a>访问器属性</h3><pre><code>Class Customers{
-    constructor (element){
-        this.element = element;
-    }
-
-    get html(){
-        return this.element.innerHTML;
-    }
-
-    set html(value){
-        this.element.innerHTML = value;
-    }
-}
-</code></pre><h3 id="类的继承-使用extends关键字指定类继承的函数。原型会自动调整，通过调用super-方法即可访问基类的构造函数。"><a href="#类的继承-使用extends关键字指定类继承的函数。原型会自动调整，通过调用super-方法即可访问基类的构造函数。" class="headerlink" title="类的继承 使用extends关键字指定类继承的函数。原型会自动调整，通过调用super()方法即可访问基类的构造函数。"></a>类的继承 使用extends关键字指定类继承的函数。原型会自动调整，通过调用super()方法即可访问基类的构造函数。</h3><pre><code>class Rec{
-    constructor(length,width){
-        this.length = length;
-        this.width = width;
-    }
-
-    getArea(){
-        return this.length * this.width
-    }
-}
-
-//通过关键字继承Rec类
-class Sq extends Rec{
-    constructor(length){
-        //通过super()调用Rec构造函数并传入相应参数
-        super(length , length)
-    }
-}
-
-var square = new Sq(3);
-console.log(square.getArea());  //9
-console.log(square instanceof Sq);  //true
-</code></pre><p>继承自其他类的类被称为派生类，如果在派生类中指定了构造函数则必须调用super()。如果选择不使用构造函数，则当创建新的类实例时会自动调用super()并传入所有参数。</p>
-<pre><code>class Sq extends Rec{
-    //没有构造函数
-}
-
-//等价于
-class Sq extends Rec{
-    constructor(...args){
-        super(...args);
-    }
-}
-</code></pre><p><b>使用super()应注意：只可在派生类的构造函数中使用super()</b><br><br><b>在构造函数中访问this之前要调用super()，它负责初始化this</b><br><br><b>如果不想调用super，可以让类的构造函数返回一个对象</b></p>
-<h3 id="类方法遮蔽"><a href="#类方法遮蔽" class="headerlink" title="类方法遮蔽"></a>类方法遮蔽</h3><p>派生类中的方法会覆盖基类中的同名方法。例如给Sq方法添加同名的getArea()方法来重新定义这个方法</p>
-<pre><code>class Sq extends Rec{
-    constructor(length){
-        super(length,length);
-    }
-
-    //覆盖了Rec.prototype.getArea()方法
-    getArea(){
-        return this.length * this.length;
-    }
-}
-</code></pre><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/X2cDJff3OsFHphDEhvtZ6rkaIF7LSIZHsJm8YZ0EfxY!/b/dGEBAAAAAAAA&bo=dgPNAXYDzQEDGTw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<h1 id="改进的数组"><a href="#改进的数组" class="headerlink" title="改进的数组"></a>改进的数组</h1><h3 id="Array-of-创建一个包含所有参数的数组。（规避用Array构造函数创建数组时的怪异行为）"><a href="#Array-of-创建一个包含所有参数的数组。（规避用Array构造函数创建数组时的怪异行为）" class="headerlink" title="Array.of() 创建一个包含所有参数的数组。（规避用Array构造函数创建数组时的怪异行为）"></a>Array.of() 创建一个包含所有参数的数组。（规避用Array构造函数创建数组时的怪异行为）</h3><pre><code>let items = Array.of(1,2);
-console.log(items)  //[1,2]
-</code></pre><h3 id="Array-from"><a href="#Array-from" class="headerlink" title="Array.from()"></a>Array.from()</h3><p>将对象转化为数组，第一个参数：可迭代对象或类数组对象 ， 第二个参数：映射函数</p>
-<pre><code>function translate(){
-    return Array.from(arguments , (value) =&gt; value + 1);
-}
-
-let num = translate(1,2,3)
-console.log(num);   //2,3,4
-</code></pre><h3 id="find-用来查找数组中特定的值，接受两个参数：一是回调函数，另一个可选，用于指定回调函数中this的值"><a href="#find-用来查找数组中特定的值，接受两个参数：一是回调函数，另一个可选，用于指定回调函数中this的值" class="headerlink" title="find() 用来查找数组中特定的值，接受两个参数：一是回调函数，另一个可选，用于指定回调函数中this的值"></a>find() 用来查找数组中特定的值，接受两个参数：一是回调函数，另一个可选，用于指定回调函数中this的值</h3><pre><code>let numbers = [10,20,25,30,35,40];
-console.log(numbers.find(n =&gt; n &gt; 33)); //35
-console.log(numbers.findIndex(n =&gt; n &gt; 22));    //2
-</code></pre><h3 id="findIndex-同上，但返回的是查到的值的索引部分。"><a href="#findIndex-同上，但返回的是查到的值的索引部分。" class="headerlink" title="findIndex() 同上，但返回的是查到的值的索引部分。"></a>findIndex() 同上，但返回的是查到的值的索引部分。</h3><h3 id="fill-按指定的元素，可以传入一个或多个数组元素。fill-方法会用这个值重写数组中的所有值。"><a href="#fill-按指定的元素，可以传入一个或多个数组元素。fill-方法会用这个值重写数组中的所有值。" class="headerlink" title="fill() 按指定的元素，可以传入一个或多个数组元素。fill()方法会用这个值重写数组中的所有值。"></a>fill() 按指定的元素，可以传入一个或多个数组元素。fill()方法会用这个值重写数组中的所有值。</h3><pre><code>let numbers= [1,2,3,4];
-number.fill(1)
-console.log(numbers);   //[1,1,1,1]
-</code></pre><h3 id="copyWithin-从数组中复制元素的值"><a href="#copyWithin-从数组中复制元素的值" class="headerlink" title="copyWithin() 从数组中复制元素的值"></a>copyWithin() 从数组中复制元素的值</h3><p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/NBq3eLsp5EHSj7FX6tdJY545Ftpryp2o5I4uH14mAHw!/b/dGsBAAAAAAAA&bo=mQWAAhkGuQIDKbY!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<h1 id="Promise-基于成功或失败的状态-让代码更容易理解和调试"><a href="#Promise-基于成功或失败的状态-让代码更容易理解和调试" class="headerlink" title="Promise  基于成功或失败的状态 让代码更容易理解和调试"></a>Promise  基于成功或失败的状态 让代码更容易理解和调试</h1><pre><code>let promise = readFile(&quot;example.txt&quot;)
-</code></pre><p>readFile()不会立即开始执行，函数会先返回一个表示异步读取操作的Promise对象，未来对该对象的操作完全取决于Promise的生命周期</p>
-<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>pending 进行中 </p>
-<pre><code>let promise = readFile(&quot;example.txt&quot;);
-
-promise.then(function(contents){
-    //完成
-    console.log(contents);
-},function(err){
-    //拒绝
-    console.log(err.message)
-})
-</code></pre><p>unsettled 未处理</p>
-<p>settled 已处理</p>
-<h3 id="创建-使用Promise构造函数创建未完成的Promise"><a href="#创建-使用Promise构造函数创建未完成的Promise" class="headerlink" title="创建  使用Promise构造函数创建未完成的Promise"></a>创建  使用Promise构造函数创建未完成的Promise</h3><p>构造函数参数：包含初始化Promise代码的执行器函数 </p>
-<p>执行器接受参数：resolve()函数【执行器完成时调用】、reject()函数【失败时调用】</p>
-<pre><code>let fs = require(&quot;fs&quot;);
-function readFile(filename){
-    //使用Promise构造函数，传入两个函数
-    return new Promise(function(resolve,reject){
-        //触发异步操作
-        fs.readFile(filename,{ecoding:&quot;utf8&quot;},function(err,contents){
-            if(err){
-                reject(err);//失败
-                return;
-            }
-            resolve(contents);
-        });
-    });
-}
-
-let promise = readFile(&quot;example.txt&quot;);
-promise.then(function(contents){
-    //完成
-    console.log(contents)
-},function(err){
-    //拒绝
-    console.log(err.message)
-});
-</code></pre><p>readFile()方法被调用时执行器会立刻执行，在执行器中，无论是调用resolve()还是reject(），都会向任务队列中添加一个任务来解决这个Promise。</p>
-<h3 id="创建已处理的Promise"><a href="#创建已处理的Promise" class="headerlink" title="创建已处理的Promise"></a>创建已处理的Promise</h3><p>方法1：使用Promise.resolve() 接受一个参数并返回一个完成态的Promise</p>
-<p>方法2：使用Promise.reject() 创建已拒绝Promise</p>
-<h1 id="代理Proxy和反射Reflection"><a href="#代理Proxy和反射Reflection" class="headerlink" title="代理Proxy和反射Reflection"></a>代理Proxy和反射Reflection</h1><p>调用new Proxy()可创建代替其他目标对象的代理，代理可以拦截JS引擎，被拦截后会触发响应特定操作的陷阱函数。代理可以覆写对象方法</p>
-<h3 id="创建代理"><a href="#创建代理" class="headerlink" title="创建代理"></a>创建代理</h3><p>用Proxy构造函数创建代理，传入两个参数：目标和处理程序。</p>
-<p>let target = {};<br>let proxy = new Proxy(target , {});</p>
-<p>proxy.name = “proxy”;<br>console.log(proxy.name);    //“proxy”<br>console.log(target.name);    //“proxy”</p>
-<p>target.name = “target”;<br>console.log(proxy.name);    //“target”<br>console.log(target.name);    //“target”</p>
-<h1 id="用模块封装代码"><a href="#用模块封装代码" class="headerlink" title="用模块封装代码"></a>用模块封装代码</h1><p>在模块顶部创建的变量不会自动被添加到全局共享作用域，该变量只存于模块顶级作用域中。而且模块必须导出一些元素提供给外部代码访问。模块也可以从其他模块导入绑定。</p>
-<p>模块的真正魔力在于仅导出导入你需要的绑定，而不是将所有东西都放到一个文件。</p>
-<h3 id="导出语法：export-var-color-“red”-导出数据"><a href="#导出语法：export-var-color-“red”-导出数据" class="headerlink" title="导出语法：export var color = “red”; 导出数据"></a>导出语法：export var color = “red”; 导出数据</h3><h4 id="导出函数"><a href="#导出函数" class="headerlink" title="导出函数"></a>导出函数</h4><pre><code>export function sum(num1,num2){
-  return num1+ num2
-}
-</code></pre><h4 id="导出类"><a href="#导出类" class="headerlink" title="导出类"></a>导出类</h4><pre><code>export Class R{
-  constructor(){}
-}
-</code></pre><h4 id="定义一个函数，之后将它导出"><a href="#定义一个函数，之后将它导出" class="headerlink" title="定义一个函数，之后将它导出"></a>定义一个函数，之后将它导出</h4><pre><code>function multiply(num1,num2){
-  return num1 *num2
-}
-
-export multiply; 导出的是引用
-</code></pre><h3 id="导入语法：import-导入的标识符-应该从哪个模块导入"><a href="#导入语法：import-导入的标识符-应该从哪个模块导入" class="headerlink" title="导入语法：import 导入的标识符 应该从哪个模块导入"></a>导入语法：import 导入的标识符 应该从哪个模块导入</h3><pre><code>import {indentfier1} from “./example.js”;
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">深入理解ES6</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/22/《深入理解ES6》/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
     </nav>
   
 
@@ -1387,15 +701,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Js基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1403,7 +713,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1411,11 +729,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
+                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
+                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1439,10 +757,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
               </li>
              
@@ -1451,15 +765,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">

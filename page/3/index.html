@@ -141,6 +141,130 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-使用ant-design-Pro开发项目的小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">使用ant design Pro开发项目的小结</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/11/使用ant-design-Pro开发项目的小结/" class="archive-article-date">
+  	<time datetime="2018-07-11T14:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/ptCDi2wSCRmTt8JmZjcS4dcLslpSrG0Er3YejnV*Ixw!/b/dFMBAAAAAAAA&bo=oAU4BAAAAAARF7k!&rf=viewer_4&t=5" width="100%"></p>
+<h1 id="一、关于上手。"><a href="#一、关于上手。" class="headerlink" title="一、关于上手。"></a>一、关于上手。</h1><ol>
+<li><p>关于ant design Pro的介绍，自己看官网，大致上可以理解为ant design（组件库） + ant design Pro （完整的项目）+ dva（路由+数据流管理）的组合拳。总之这个Pro是一个已经帮你打通了从搭建到测试打包发布的一整套完整的项目，你只需要站在巨人的肩膀上开发就好了。</p>
+</li>
+<li><p>按照官网安装好项目之后，就能看到几个页面。进行开发之前，你需要一定的react语法、Js(ES6)、dva的基础。啥？全家桶都不会？没关系，写页面又不需要你精通全家桶，看完以下链接就开始写页面吧，遇到不会的再去查，这样学比较快。请按照以下顺序食用</p>
+</li>
+</ol>
+<ul>
+<li><a href="https://dvajs.com/knowledgemap/#javascript-%E8%AF%AD%E8%A8%80" target="_blank" rel="noopener">dva知识地图</a></li>
+<li><a href="https://alibaba.github.io/ice/docs/basis/intro-javascript" target="_blank" rel="noopener">js快速预览</a></li>
+<li><a href="https://alibaba.github.io/ice/docs/basis/intro-react" target="_blank" rel="noopener">react快速预览</a></li>
+<li><a href="http://huziketang.mangojuice.top/books/react/lesson9" target="_blank" rel="noopener">react小书</a></li>
+<li><a href="https://dvajs.com/guide/concepts.html" target="_blank" rel="noopener">dva文档</a></li>
+<li><a href="https://doc.react-china.org/docs/hello-world.html" target="_blank" rel="noopener">react中文文档</a></li>
+<li><a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">ES6</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect" target="_blank" rel="noopener">MDN ？？？ MDN有什么好看的？如果你js不太熟，MDN有很全的API可以查阅</a> </li>
+</ul>
+<h1 id="二、使用ant-design-Pro"><a href="#二、使用ant-design-Pro" class="headerlink" title="二、使用ant design Pro"></a>二、使用ant design Pro</h1><p>以一个ant design Table组件展示数据为例。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164898bf659b926d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
+<p>这样一个页面，可以看到：左边是导航栏menu组件，右边是主体BasicLayout组件。至于什么是layout，同样，在ant design Pro官网找得到。当你刚安装好antdp的时候已经有几个页面可以参考了。此处：在页面中，有几个按钮，按钮下方是ant design 的Table组件。</p>
+<h2 id="一、新建一个页面。"><a href="#一、新建一个页面。" class="headerlink" title="一、新建一个页面。"></a>一、新建一个页面。</h2><p>1.在路由中新建一条页面的配置。先不要管报错，因为路由对应的component和models你还没有，继续往下看。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648993196568bf6?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
+<p>2.新增一条之后，需要去对应的路径新建页面。一般都放在routes文件夹中</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899504863164d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
+<p>例如我新建了一个角色管理的页面，使用connect进行关联models。</p>
+<p>3.然后再去models文件夹中新建一个model层文件，注意namespace要对应connect的component</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/1648996437cdd086?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
+<h2 id="二、数据交互。"><a href="#二、数据交互。" class="headerlink" title="二、数据交互。"></a>二、数据交互。</h2><p>这个表格页面使用antd 的table 组件，自己去官网拷贝代码。这里不再赘述。主要提一下，数据是怎样交互的。</p>
+<p>Table组件里面的行数据就是是columns，它有自己的数据格式，你需要把数据格式转换成他规定的那种。在刚装好的项目中有表格的例子你可以参考一下，只不过案例是写死的静态数据。试试看：你把columns里面的数据删除掉，然后从外部获取到数据替换掉。</p>
+<p>1.使用生命周期函数componentDidMount在组件挂载时，去请求表格的数据。这里发起一个dispatch 触发action，type的值就是models层中的。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899dce523beae?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
+<p>2.在models中会使用antd封装好的方法去请求api.js中定义好的接口地址，然后等待返回就可以处理数据。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/164899eaeaf27d29?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
+<p>此处response拿到服务端返回的结果。你可以在此处对数据进行处理。比如后端返回的并非是你需要的数据格式，或者你可以进行更高层次的封装。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/11/16489a0f04e1bf8c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"></p>
+<p>3.再调用reducers中的save方法将数据存储。通过在UIcomponent中已经进行关联，此时this.props能够取到你传送过去的数据。然后放入Table组件即可。</p>
+<p>此处可能讲得不是很详细，比如上述代码各种方法是做什么用的，如果你有仔细看过文章开头列举的文档，尤其是dva文档，心中应该略知一二。此处只介绍了一个很粗略的开发流程，后续我会详细讲解。</p>
+<p>三、个人开发思想及心得<br>1.在使用这套框架开发几个页面之后会明显感觉到，框架有点像MVC分层，十分规范！</p>
+<p>M层models负责控制数据</p>
+<p>V层UIComponent ，and design以及为你准备了丰富的组件库。</p>
+<p>C层control，我个人理解为是api层的管理，将所有的需要请求后台数据的接口统一起来，很直观也方便调用和修改。</p>
+<p>2.ant design Pro几乎已经为你做好了一切，你只需要替换数据、接口，开箱即用。在你切完数个页面之后会发现一个问题：如何进行更高层次的封装呢？不能每次都要复制粘贴很多重复的组件代码呢？</p>
+<p>我个人是这样做的：比如说上面举例的表格页面。</p>
+<p>首先，我会封装一个函数，函数接收各种字段。比如后端返回一系列的input各种类型的字段给你，你在函数中对字段进行匹配，每个字段对应到ant design的组件，将数据与组件关联，然后return这个组件。最后将所有的组件push到一个数组中，然后放入render函数，即可渲染出整个页面。</p>
+<p>这个函数有点类似于React的HOC高阶组件（传组件和props进去，rerurn新的组件出来）概念，区别是我这里传入的是每个组件所需的数据而非组件，而return出的是一个组件。</p>
+<p>3.多利用无状态组件、函数组件。表格上最后一行，编辑/删除按钮。我是在models层进行处理的，因为columns（Table组件的数据对象）在UIcomponents层已经进行渲染了，个人认为UI组件应该尽量简化，它只负责渲染数据。我在models层中将columns中的数据进行遍历，在本地构建一个对象（编辑按钮组件、删除按钮组件）与服务端返回的对象进行合并。同时，两个按钮的组件应该本身具备自有的功能，比如在任何一个表格中调用该组件即可使用其功能。合并后将新的colums对象丢给表格组件，这样进行了一个小小的抽象。</p>
+<p>在表格上方的按钮，同样是通过函数来输出的按钮组件。按钮具有各自的属性、功能，通过入参来传递给函数，然后通过props设置给组件，来达到复用的目的。</p>
+<p>最后，页面上有哪些组件、哪些按钮该如何规定呢？你需要和后端协商好字段、属性，比如一个表单页面有很多种input类型，input会有type、rules（验证规则）….后端返回给你一段组件所需的属性之后，你根据这些数据即可渲染出整个页面的组件。</p>
+<p>以上是本人萌新使用ant design Pro的小小经验，可能创建页面的案例讲的不太清晰、抽象封装的思想不知道各位能否明白我所说的。</p>
+<p>希望各位大佬们多多指教。如何进行更高层次的封装呢？每个页面需要对应路由、models、api接口地址、能否再进行封装达到动态的目的呢？这样连修改接口的重复工作也省了。</p>
+<p>感谢阅读。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/11/使用ant-design-Pro开发项目的小结/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-《你不知道的JavaScript-下卷》阅读笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -312,96 +436,9 @@
 
 
   
-    <article id="post-《技巧-如何用一年经验获得十年的经验》读书笔记-1" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/02/《技巧-如何用一年经验获得十年的经验》读书笔记-1/">《技巧 如何用一年经验获得十年的经验》读书笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/02/《技巧-如何用一年经验获得十年的经验》读书笔记-1/" class="archive-article-date">
-  	<time datetime="2018-05-02T12:59:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>农村人处于某种循环之中，城市人也在某种循环之中……我们每个人都难以超越自己的时代，自己的经济阶层，难道我们就这样任由摆布了吗？不，我们仍要努力跳出一个又一个循环。我们的伟业不是改变世界，而是改变自己，推动自己到新的高度，寻找并扩展自己的边界，改变世界这样的小事情只是我们前进步伐的副产品而已。</p>
-<p>郝老师前妻，初中肄业，奋斗史的故事令人震撼。随着时代潮流学习，不断地学习新东西，执着追求，成长并得到不错的薪水。<br>Sycx 技术总监 也许这就是天赋，我很难达到那样的境界。他们主动探索 主动学习，自驱动力强的精神值得我学习。</p>
-<p>有理想的人需要坚忍。服务器垮了，你跟服务器说再多有毛用，还不是得半夜爬起来定位问题解决问题。</p>
-<p>人都不完美，要对他人宽容，从发展的角度看他人。</p>
-<p>很多时候对自己太严苛，慢慢形成了一种错误的预期，对自己的期望越高，越难以实现，越容易产生自暴自弃的情绪。结果是看起来要求很高，但是结果是放弃了对自己的追求。明白人都不完美以后要用发展的角度来看自己，首先要承认自己并不是全能的，我们会有不足有困惑，然后我们可以根据自己的处境去设计合理的目标，步骤，和方法。过于求全，容易急躁，首先承认现状，然后慢慢改进，才能平静地追求持续稳定的改进。</p>
-<p>每个人都有压力，痛苦，你是在那里怨天尤人感慨自己的不完美呢，还是向前一步从改变自己开始，一点点逼近完美呢？选择总在你自己。</p>
-<p>保持好奇心，新鲜感，向“十万个为什么”学习，尝试和不同的人打交道，可以了解到各行各业的人和事。</p>
-<p>掌握学习曲线。不要想着一步登天，珠峰不是一天就爬得上去的，登顶失败就说自己是个失败者……为什么要这样？不要急，一开始你以为你是神，可以一个星期搞定，一旦你做不到你就会觉得什么都做不到了……丧失信心。学习曲线要平，理性设定目标，要持续的给自己正反馈，不断的给予自己成就感，这样就不会疲倦和挫折感。</p>
-<p>积累的力量是非常巨大可观的，不如从现在开始时不时，写点什么。</p>
-<p>方法论固然重要，但是没有一个方法论可以代替努力。</p>
-<p>成功并不是一个结果，或是一个毕生努力的目标。成功只是前进道路上的一个小奖励，不断完善，不断拓展自己的边界，才是最重要的。</p>
-<p>因为聪明你可能会浮躁，容易想太多，容易无法保持自己的注意力，容易想入非非，却忘了脚踏实地去努力。看到前方有无数前进方向的时候，你更容易迷惘。解决的办法只有一个，一步步走，一个字一个字地写，慢慢积累。</p>
-<p>着急的第二个问题是容易带来挫折感。<br>当你着急的时候你就会忘记自己的能力，去定一个不切实际的目标，比如一个月减肥50斤，这样就很容易失败而产生挫败感，让你觉得一无是处，自暴自弃。</p>
-<p>其实每个人都一样，区别就是有的人站出来了，优秀的人更早悟到这个道理并且比普通人做得更多，所有的大神就是在其他普通人跪下去以后才显得高大，这个世界喜欢跪的人太多，我们应该平视所有人，学习他们做事的方法，从而让自己更优秀，这才是进步，趴在地上仰视对我们没有任何意义。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">读书是一场修行</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/02/《技巧-如何用一年经验获得十年的经验》读书笔记-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -489,15 +526,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Js基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -505,7 +538,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -513,11 +554,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
+                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
+                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -541,10 +582,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
               </li>
              
@@ -553,15 +590,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">

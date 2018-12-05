@@ -141,6 +141,295 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-《JavaScript面向对象编程指南》阅读笔记-三" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/04/《JavaScript面向对象编程指南》阅读笔记-三/">《JavaScript面向对象编程指南》阅读笔记 三</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/04/《JavaScript面向对象编程指南》阅读笔记-三/" class="archive-article-date">
+  	<time datetime="2017-03-04T02:42:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://b366.photo.store.qq.com/psb?/V10qN6b63c9MK4/r9FcEgNTccYRyUXagrHS0nGCWwGD2E5.jQb8NYtokkI!/b/dG4BAAAAAAAA&bo=VAY4BGAVQA4BKVs!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>在定义一个函数时会设置该函数所需的调用参数。如果设定了参数但在调用时忘了传递相关的参数值，就会自动设定为undefined。</p>
+<pre><code>function sum(a,b){
+    return a+b;
+}
+
+sum(1+2);
+</code></pre><p>形参指定义函数时所用的参数，实参指的是调用函数时所传递的那些参数。</p>
+<p>在这里，a和b是形参，1和2是实参。即使传递多余的参数也会被默默忽略，如：</p>
+<pre><code>sum(1,2,3,4,5);
+//3
+</code></pre><h4 id="arguments"><a href="#arguments" class="headerlink" title="arguments"></a>arguments</h4><pre><code>function args(){
+    return arguments;
+}
+args(1,2,3,4,5,&apos;Bob&apos;);
+//[1, 2, 3, 4, 5, &quot;Bob&quot;]
+</code></pre><h4 id="变量的作用域"><a href="#变量的作用域" class="headerlink" title="变量的作用域"></a>变量的作用域</h4><p>全局变量指的是在所有函数之外的变量，与之相对的是局部变量，指在某个函数中定义的变量。<code>声明变量未使用var语句该变量即全局变量</code></p>
+<pre><code>var global =1;
+function f(){
+    var local = 2;
+    global++;
+    return global;
+}
+f();
+//2
+local;
+//Uncaught ReferenceError: local is not defined
+</code></pre><h4 id="变量提示"><a href="#变量提示" class="headerlink" title="变量提示"></a>变量提示</h4><pre><code>var a = 123;
+
+function f(){
+    alert(a);
+    var a = 1;
+    alert(a);
+}
+f();
+
+//undefined 
+//1
+</code></pre><p>因为函数域优先于全局域，所以局部变量a会覆盖掉所以与它同名的全局变量。尽管在alert()第一次被调用时a还没有被正式定义(即该值为undefined)，但该变量本身已经存在于本地空间，这种现象叫做变量提升。</p>
+<p>当JavaScript执行过程进入新的函数时，函数内被声明的所有变量都会被移动（提升）到函数最开始的地方。<code>注意：被提升的只有变量的声明，而没有赋值</code> 如上述例子，局部变量被提升到了函数开始处，但并没有在开始处被赋值为1。</p>
+<pre><code>//等价为
+var a = 123;
+function f(){
+    var a;
+    alert(a);//undefined
+    a = 1;
+    alert(a);//1
+}
+</code></pre><h4 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h4><pre><code>var global = 1;
+function outer(){
+    var outer_local = 2;
+    function inner(){
+        var inner_local = 3;
+        return inner_local + outer_local + global;
+    }
+    return inner();
+}
+outer();
+//6
+</code></pre><p>在函数outer中定义了另一个函数inner，在inner中可以访问的变量既有自身作用域中的，也可来自其”父级”作用域，因而形成了一条作用域链。</p>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><pre><code>var inner
+var F = function(){
+    var b = &quot;local variable&quot;;
+    var N = function(){
+       return b;
+    };
+    inner = N;
+};
+F()
+//undefined
+N()
+//Uncaught ReferenceError: N is not defined
+inner()
+//&quot;local variable&quot;
+</code></pre><p>F()中定义了一个新的函数N()，并且将N赋值给了全局变量inner。由于N()是在F()内部定义的，它可以访问F()的作用域，所以即使该函数后来升级成了全局函数，它依然保留对F()作用域的访问权。</p>
+<p>如果一个函数会在其父级函数返回之后留住对父级作用域的链接的话，相关闭包就会被创建。</p>
+<pre><code>function F(param){
+  var N = function(){
+    return param;
+  };
+  param++;
+  return N;
+}
+var inner = F(1);
+inner()
+//2
+</code></pre><p>当我们的返回函数被调用时，(N被赋值时函数并没有被调用，调用时在N被求职，即执行return N语句时发生的)param++已经被执行过一次。所以inner()返回的是更新后的值。由此可看出函数所绑定的是作用域本身而非函数定义时该作用域中的变量或变量当前所返回的值。</p>
+<h4 id="使用函数参数理解闭包"><a href="#使用函数参数理解闭包" class="headerlink" title="使用函数参数理解闭包"></a>使用函数参数理解闭包</h4><p>创建了一个函数F,该函数将返回一个子函数，而这个子函数返回的则是其父函数的参数。</p>
+<pre><code>function F(param){
+  var N = function(){
+    return param;
+  };
+  param++;
+  return N;
+}
+var inner = F(1)
+//undefined
+inner()
+//2
+</code></pre><p>F(1)执行时返回的是函数N，将这个函数保存在inner中，然后执行该函数，该函数返回的是F的参数，即可得出2。</p>
+<p>(实际上inner没有存在的必要性，直接F(1)()即可。而此处F函数的用处是可以根据不同参数来生成不同的函数–函数生成器)</p>
+<pre><code>function F(num){
+     var N = function(a){
+         return a * num;
+     };
+      return N; 
+}
+var inner = F(2);
+inner(5);
+//10
+inner(10);
+//20
+var generator = F(10);
+generator(10);
+//100
+</code></pre><h4 id="循环中的闭包"><a href="#循环中的闭包" class="headerlink" title="循环中的闭包"></a>循环中的闭包</h4><pre><code>function F(){
+    var arr = [] , i;
+    for(i=0;i&lt;3;i++){
+        arr[i] = function(){
+            return i;
+        };
+    }
+    return arr;
+}
+var arr = F();
+console.log(arr);
+//[function, function, function]
+arr[0]();
+//3
+arr[1]();
+//3
+arr[2]();
+//3
+</code></pre><p>三次循坏操作，它在每次迭代中都会创建一个返回当前循环序号的新函数。该函数会被添加到一个数组中，并最终返回。    </p>
+<p>我们拥有了一个包含三个函数的数组，可以通过在每个数组元素后面加()来调用它们。按通常的估计它们应该会依照循环顺序分别输出0、1、2，但事与愿违</p>
+<p>原来在此创建了三个闭包，而它们都指向了一个共同的局部变量i，但是闭包并不会记录它们的值，它们所拥有的只是相关域在创建时的一个引用。在这个例子中，变量i巧合存在于定义这三个函数域中，对这三个函数中的任何一个而言，当它要去获取某个变量时，他会从其所在的域开始逐级寻找那个距离最近的i值。由于循环结束时i的值为3，所以这三个函数都指向了这一共同值。</p>
+<p>换一种闭包形式</p>
+<pre><code>function F(){
+  var arr = [] , i;
+  for(i=0;i&lt;3;i++){
+     arr[i] = (function(x){
+        return function(){
+          return x;
+        }
+     }(i));
+   }
+  return arr;
+}
+var arr = F();
+arr[0]();
+//0
+arr[1]();
+//1
+arr[2]();
+//2
+</code></pre><p>在这里我们不再直接创建一个返回i的函数，而是将i传递给另一个即时执行函数，在该函数中，i就被赋值给了局部变量x，这一来，每次迭代中的x就会拥有各自不同的值了。</p>
+<p>或者，不使用即时执行函数，在每次迭代操作中，要在中间函数内将i的值“本地化”</p>
+<pre><code>function F(){
+  function binder(x){
+     return function(){
+        return x;
+     };
+  }
+  var arr = [] , i;
+  for(i = 0; i&lt;3; i++){
+    arr[i] = binder(i);
+  }
+  return arr;
+}
+
+var arr = F();
+
+arr[0]();
+//0
+arr[1]();
+//1
+arr[2]();
+//2
+</code></pre><h4 id="getter与setter"><a href="#getter与setter" class="headerlink" title="getter与setter"></a>getter与setter</h4><p>假设有一个变量，它所表示的是某类特定值，我们不想将该变量暴露给外部。否则，其他部分的代码就有直接修改它的可能，所以我们需要将它保护在相关函数的内部，然后提供两个额外的函数—-一个用于获取变量值，另一个用于给变量重新赋值。并在函数中引入某种验证措施，以便在赋值之前给予变量一定的保护。</p>
+<pre><code>var getValue, setValue;
+(function(){
+    var secret = 0;
+    getValue = function(){
+        return secret;
+    }
+    setValue = function(v){
+        if(typeof v === &quot;number&quot;){
+            secret = v;
+        }
+    };
+}());
+</code></pre><p>在这里，一切通过一个即时函数来实现，在其中定义了全局函数getValue()和setValue()，并以此来确保局部变量secret的不可直接访问性。</p>
+<pre><code>getValue()
+//0
+setValue(123);
+getValue()
+//123
+setValue(false)
+getValue()
+//123
+</code></pre><h4 id="闭包实现迭代器"><a href="#闭包实现迭代器" class="headerlink" title="闭包实现迭代器"></a>闭包实现迭代器</h4><pre><code>function setup(x){
+    var i = 0;
+    return function(){
+        return x[i++];
+    };
+}
+</code></pre><p>现在，我们用一组数据来调用setup()，就可以创建出我们所需要的next()函数</p>
+<pre><code>var next = setup([&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]);
+</code></pre><p>重复调用这个函数就可以不停地获取下一个元素。</p>
+<pre><code>next();
+//&quot;a&quot;
+next();
+//&quot;b&quot;
+next();
+//&quot;c&quot;
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">《JavaScript面向对象编程指南》</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/04/《JavaScript面向对象编程指南》阅读笔记-三/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Sass-之复习" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -897,164 +1186,9 @@ if(a === 1){
 
 
   
-    <article id="post-《JavaScript面向对象编程指南》阅读笔记-一" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/17/《JavaScript面向对象编程指南》阅读笔记-一/">《JavaScript面向对象编程指南》阅读笔记(一)</a>
-    </h1>
-  
-
-        
-        <a href="/2017/02/17/《JavaScript面向对象编程指南》阅读笔记-一/" class="archive-article-date">
-  	<time datetime="2017-02-17T14:37:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://a3.qpic.cn/psb?/V10qN6b62Hd8cf/f0Hj6QCHodFtBxuFbA6b.I1*qNs9tkm079DminyhAKE!/b/dI8AAAAAAAAA&bo=oAU4BAASgA0FACU!&rf=viewer_4&t=5" width="100%" height="100%" alt="图片名称" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<p>在面向对象程序设计(OOP)中最常用到的概念：</p>
-<ul>
-<li>对象、方法、属性;</li>
-<li>类；</li>
-<li>封装；</li>
-<li>聚合；</li>
-<li>重用与继承；</li>
-<li>多态。</li>
-</ul>
-<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>既然这种程序设计风格叫做面向对象，那么其重点就应该在对象上。</p>
-<p>例如“猫”这种对象，我们可以看到它们具有某些特征（颜色、名字、体型），能执行某些动作（喵喵叫、睡觉、躲起来、逃跑等）。在OOP语义中，对象特征叫做属性，而动作则被称为方法。</p>
-<p>此外，我们还有一个口语方面的类比。</p>
-<ul>
-<li>对象往往是用名词来表示的（如book、person）</li>
-<li>方法一般都是动词（read、run）</li>
-<li>属性则往往是些形容词</li>
-</ul>
-<p>try：“The black cat sleeps on my head”,the cat就是一个对象，black是一个颜色属性值，sleep则是动作也就是OOP语义中的方法。</p>
-<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>相似对象之间往往有一些共同的特征。例如蜂鸟和鹰都具有鸟类的特征，因此它们统称为鸟类。“对象”这个词，我们有时候也叫“实例”，所以我们可以说老鹰是鸟类的实例。可以基于同一个类创建很多不同的对象，因为类是一种模板，而对象则是在这些模板的基础上被创建出来的实体。</p>
-<p>JavaScript与Java这种传统的面向对象语言不同，它压根儿没有类。该语言的一切都是基于对象，依靠的是一套原型（prototype）系统。在传统面向对象语言中，我们一般这样描述：“我基于Person类创建了一个叫做Bob的新对象”。而在这种基于原型的面向对象语言中，我们则这样描述：“我将现有的Person对象扩展成了一个叫做Bob的新对象”。</p>
-<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>封装是另一个与OOP相关的概念，其主要用于阐述对象中所包含的内容。封装概念通常由两部分组成：</p>
-<ul>
-<li>相关的数据 （用于存储属性）</li>
-<li>基于这些数据所能做的事情（所能调用的方法）</li>
-</ul>
-<p>除此之外，这个术语还有另一层意思。因此在理解这个概念时应注意语境。</p>
-<p>以一个mp3播放器为例。假设它是一个对象，作为该对象的用户，我们需要一些类似于按钮、显示屏这样的工作接口。这些接口会帮助我们使用该对象（如播放歌曲等）。至于它的内部是如何工作的，我们并不清楚，也无需关心。换句话说，这些接口的实现对我们来说是隐藏的。同样的，在OOP中也是如此，当我们在调用一个对象的方法时，无论该对象来自于我们自己编写的代码还是某个第三方库，我们都不需要知道该方法是如何工作的。即我们只需要知道所操作对象的接口，不必关心它的具体实现。</p>
-<h2 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h2><p>聚合有时候也称之为组合，实际上就是指我们把几个现有的对象合并成一个新对象的过程。这个概念所强调的就是将多个对象合而为一的能力。通过聚合这种强有力的方法，我们可以将一个问题分解成多个更小的问题，各个击破。</p>
-<p>例如，个人电脑是一个复杂的对象，我们不可能知道它启动时所发生的全部事情。但如果我们将这个问题的抽象级别降低，只关注它几个组件对象的初始化工作，例如显示器对象，鼠标对象，键盘对象等，我们就很容易深入了解这些子对象情况，然后再将这些部分的结果合并起来，之前那个复杂问题就迎刃而解。</p>
-<p>例如Book是由一个或多个author对象、publisher对象、若干chapter对象等组合（聚合）而成的对象。</p>
-<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>通过继承我们可以优雅地实现代码重用。例如，我们有一个Person对象，其中包含姓名、出生日期等属性，以及一些功能性函数，如步行、谈话、睡觉、吃饭等。然后我们发现自己需要一个programmer对象时，当然，这时候你可以再将Person对象中所有的属性和方法再实现一遍，但除此之外有一种更聪明的办法：即我们让programmer对象继承自Person，这样就节省很多工作，因为programmer对象只需要实现自己的那部分特殊功能，如（编写代码）。其他的只需重用Person的实现即可。</p>
-<p>传统OOP环境中，继承通常指的是类与类之间的关系，但由于JavaScript不存在类，因此它的继承只能发生在对象之间。</p>
-<p>当一个对象继承自另一个对象时，通常会往其中添加新的方法，以扩展被继承的老对象。我们通常将这一过程称之为“B继承自A”或者“B扩展自A”，新对象也可以根据自身需要重新定义继承过来的方法，这样做并不会改变对象的接口，因为其方法名是相同的，这样重定义继承方法的过程叫做重写。</p>
-<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>Programmer对象继承了Person的所有方法，意味着这两个对象都实现了“talk”等方法。现在我们的代码中有一个叫做“Bob”的变量直接调用该对象的“talk”方法，不必担心这会影响代码正常工作，类似这种不同对象通过相同的方法调用来实现各自行为的能力，我们称之为多态。</p>
-<table>
-<thead>
-<tr>
-<th>特征描述</th>
-<th>相应概念</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Bob是一个男人</td>
-<td>对象</td>
-</tr>
-<tr>
-<td>Bob出生于1980年，男性，黄头发</td>
-<td>属性</td>
-</tr>
-<tr>
-<td>Bob能吃饭、睡觉、打豆豆</td>
-<td>方法</td>
-</tr>
-<tr>
-<td>Bob是Programmer类的一个实例</td>
-<td>传统OOP中的类</td>
-</tr>
-<tr>
-<td>Bob是一个由Programmer对象扩展而来的新对象</td>
-<td>基于原型OOP中的原型对象</td>
-</tr>
-<tr>
-<td>Bob对象中包含了数据（例如生日）和基于这些数据的方法（例如记录年龄）</td>
-<td>封装</td>
-</tr>
-<tr>
-<td>Bob只是整个web开发团队对象中的一部分，此外开发团队对象还包含了一个Designer对象Jill</td>
-<td>聚合、组合</td>
-</tr>
-<tr>
-<td>Designer、ProjectManager、Programmer都是分别扩展自Person对象的新对象</td>
-<td>继承</td>
-</tr>
-<tr>
-<td>我们可以随时调用Bob、Jill、Jack这三个对象各自的talk方法，它们都可以正常工作。这些方法可能产生的结果不同。（比如Bob可能谈的是代码，Jill谈论的是购物，Jack在撩妹）</td>
-<td>多态、方法的重写</td>
-</tr>
-</tbody>
-</table>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">《JavaScript面向对象编程指南》</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/02/17/《JavaScript面向对象编程指南》阅读笔记-一/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/13/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span>
+      <a class="extend prev" rel="prev" href="/page/13/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/15/">Next &raquo;</a>
     </nav>
   
 
@@ -1142,15 +1276,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Js基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+                <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1158,7 +1288,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">React.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1166,11 +1304,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
+                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
+                <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1194,10 +1332,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
               </li>
              
@@ -1206,15 +1340,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">
