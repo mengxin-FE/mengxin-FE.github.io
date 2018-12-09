@@ -141,6 +141,180 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Ajax-梳理" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/31/Ajax-梳理/">Ajax 梳理</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/31/Ajax-梳理/" class="archive-article-date">
+  	<time datetime="2017-05-31T05:47:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b62Hd8cf/lkj8bmhjFevx5Sor9khFqCBoJoGFOdHov.IdE3H76nk!/b/dLIAAAAAAAAA&bo=NQmwBDUJsAQFNxQ!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<h2 id="XMLHttpRequest对象"><a href="#XMLHttpRequest对象" class="headerlink" title="XMLHttpRequest对象"></a>XMLHttpRequest对象</h2><p>XHR为向服务器发送请求和解析服务器响应提供了接口, 能够以异步方式从服务器获取新数据。<br>可以在浏览器console打印一个new XMLHttpRequest() 对象来查看该对象的属性和方法</p>
+<p>试运行以下代码.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest(),</span><br><span class="line">   i=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> xhr)&#123;</span><br><span class="line">    <span class="keyword">if</span>(xhr.hasOwnProperty(key))&#123;</span><br><span class="line">       i++;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i);<span class="comment">//0</span></span><br><span class="line"><span class="built_in">console</span>.log(XMLHttpRequest.prototype.hasOwnProperty(<span class="string">'timeout'</span>));<span class="comment">//true</span></span><br></pre></td></tr></table></figure><br>可见, XMLHttpRequest 实例对象没有自有属性. 实际上, 它的所有属性均来自于 XMLHttpRequest.prototype .<br>追根溯源, XMLHttpRequest 实例对象具有如下的继承关系. (下面以a&lt;&lt;b表示a继承b)<br>xhr &lt;&lt; XMLHttpRequest.prototype &lt;&lt; XMLHttpRequestEventTarget.prototype &lt;&lt; EventTarget.prototype &lt;&lt; Object.prototype</p>
+<h3 id="主要属性："><a href="#主要属性：" class="headerlink" title="主要属性："></a>主要属性：</h3><ol>
+<li>Number readyState 状态值（ 整数）， 可以确定请求 / 响应过程的当前活动阶段</li>
+</ol>
+<ul>
+<li>0： 请求已建立,未初始化。 未调用open() 方法</li>
+<li>1： 请求已建立, 但未发送。 已经调用open() 方法</li>
+<li>2： 请求已发送。 已经调用send() 方法， 未接收到响应</li>
+<li>3： 接收。 已经接收到部分数据</li>
+<li>4： 完成。 已经接收到全部数据， 可以在客户端使用</li>
+</ul>
+<ol start="2">
+<li><p>Function onreadystatechange 当readyState的值改变时自动触发执行其对应的函数（ 回调函数）</p>
+</li>
+<li><p>String responseText 作为响应主体被返回的文本（ 字符串类型）</p>
+</li>
+<li><p>XmlDocument responseXML 服务器返回的数据（ Xml对象）</p>
+</li>
+<li><p>Number states 状态码（ 整数）， 如： 200、 404…</p>
+</li>
+<li><p>String statesText 状态文本（ 字符串）， 如： OK、 NotFound…</p>
+</li>
+</ol>
+<h3 id="主要方法："><a href="#主要方法：" class="headerlink" title="主要方法："></a>主要方法：</h3><ol>
+<li><p>void open(String method, String url, Boolen async)<br>用于创建请求<br>参数：<br>method： 请求方式（ 字符串类型）， 如： POST、 GET、 DELETE…<br>url： 要请求的地址（ 字符串类型）<br>async： 是否异步（ 布尔类型）</p>
+</li>
+<li><p>void send(String body)<br>用于发送请求<br>参数：<br>body： 要发送的数据（ 字符串类型）</p>
+</li>
+<li><p>void setRequestHeader(String header, String value)<br>用于设置请求头<br>参数：<br>header： 请求头的key（ 字符串类型）<br>vlaue： 请求头的value（ 字符串类型）</p>
+</li>
+<li><p>String getAllResponseHeaders()<br>获取所有响应头<br>返回值：<br>响应头数据（ 字符串类型）</p>
+</li>
+<li><p>String getResponseHeader(String header)<br>获取响应头中指定header的值<br>如果 readyState 小于 3， 这个方法返回 null， 否则， 它返回服务器发送的所有 HTTP 响应的头部。<br>头部作为单个的字符串返回， 一行一个头部。 每行用换行符 “\r\n”<br>隔开<br>参数：<br>header： 响应头的key（ 字符串类型）<br>返回值：<br>响应头中指定的header对应的值</p>
+</li>
+<li><p>void abort()<br>终止请求<br>这个方法把 XMLHttpRequest 对象的readyState属性重置为0</p>
+</li>
+</ol>
+<p>MSXML， IE7及更高版本浏览器可以直接使用BOM的 XMLHttpRequest 对象.IE6及更低版本浏览器只能使用 ActiveXObject 对象来创建 XMLHttpRequest 对象实例.创建时需要指明一个类似” Microsoft.XMLHTTP” 这样的ProgID.</p>
+<p>IE5, IE5 .5, IE6, IE7, IE8, IE9, IE10, IE edge等浏览器, IE5及之后的浏览器均可以通过如下语句获取xhr对象: var xhr = new ActiveXObject(“Msxml2.XMLHTTP”);</p>
+<p>全平台兼容的XMLHttpRequest对象<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getXHR</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> xhr = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.XMLHttpRequest) &#123;</span><br><span class="line">        xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">window</span>.ActiveXObject) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            xhr = <span class="keyword">new</span> ActiveXObject(<span class="string">"Msxml2.XMLHTTP"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                xhr = <span class="keyword">new</span> ActiveXObject(<span class="string">"Microsoft.XMLHTTP"</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                alert(<span class="string">"您的浏览器暂不支持Ajax!"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> xhr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="一、新建XHR对象、发出http请求"><a href="#一、新建XHR对象、发出http请求" class="headerlink" title="一、新建XHR对象、发出http请求"></a>一、新建XHR对象、发出http请求</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getXHR</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> xhr = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.XMLHttpRequest) &#123;</span><br><span class="line">        xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">window</span>.ActiveXObject) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            xhr = <span class="keyword">new</span> ActiveXObject(<span class="string">"Msxml2.XMLHTTP"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                xhr = <span class="keyword">new</span> ActiveXObject(<span class="string">"Microsoft.XMLHTTP"</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                alert(<span class="string">"您的浏览器暂不支持Ajax!"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> xhr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//发送请求 requset</span></span><br><span class="line">xmlHttpRequest.open(<span class="string">"GET"</span>, url, <span class="literal">true</span>)</span><br><span class="line">    <span class="comment">//参数1，http request请求方法，要大写。</span></span><br><span class="line">    <span class="comment">//参数2，请求页面的url，</span></span><br><span class="line">    <span class="comment">//参数3，决定此request是否不同步进行，设定为true表示即使服务器未传回资料也会继续执行其他程序</span></span><br><span class="line">xmlHttpRequest.send(data);</span><br><span class="line"><span class="comment">//send以POST发出请求时，资料以查询字符串的方式列出：name=value&amp;anothername=othervalue&amp;so=on</span></span><br><span class="line"><span class="comment">//如果想用POST方式传送资料，必须先将MIME形态改好，否則伺服器就不會理你傳過來的資料了。</span></span><br><span class="line">httpRequest.setRequestHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/x-www-form-urlencoded'</span>);</span><br></pre></td></tr></table></figure>    
+<h3 id="二、处理服务器传回的资料"><a href="#二、处理服务器传回的资料" class="headerlink" title="二、处理服务器传回的资料"></a>二、处理服务器传回的资料</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//傳出 request 時必須提供處理傳回值的函數名稱，這個函數是用來處理服务器的回應。</span></span><br><span class="line">xmlHttpRequest.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//这个函数首先该做什么？必须检查request目前的状态，如果状态为4代表服务器已经传回所有资料了，便可以开始解析所有资料</span></span><br><span class="line">    <span class="keyword">if</span> (xmlHttpRequest.readyState == <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="comment">//一切ok，继续解析</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//还没完成</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//readyState所有可能的值：0 (還沒開始) 1 (讀取中) 2 (已讀取) 3 (資訊交換中) 4 (一切完成)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//接下来检查HTTP状态码，我们只要200 OK这种状态</span></span><br><span class="line">    <span class="keyword">if</span> (xmlHttpRequest.status &gt;= <span class="number">200</span> &amp;&amp; xhr.status &lt; <span class="number">300</span>) || xmlHttpRequest.status == <span class="number">304</span>) &#123;</span><br><span class="line">        <span class="comment">//万事俱备</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 似乎有點問題，或許伺服器傳回了 404 (查無此頁) 或者 500 (內部錯誤) 什麼的 </span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//檢查傳回的 HTTP 狀態碼後，要怎麼處理傳回的資料就由你決定了。有兩種存取資料的方式：</span></span><br><span class="line">    httpRequest.responseText <span class="comment">//這樣會把傳回值視為字串用</span></span><br><span class="line">    httpRequest.responseXML <span class="comment">//這樣會把傳回值視為 XMLDocument 物件， 而後可用 JavaScript DOM 相關函式處理</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>对于一个ajax请求, js引擎首先生成 XMLHttpRequest 实例对象, open过后再调用send方法. 至此, 所有的语句都是同步执行. 但从send方法内部开始, 浏览器为将要发生的网络请求创建了新的http请求线程, 这个线程独立于js引擎线程, 于是网络请求异步被发送出去了. 另一方面, js引擎并不会等待 ajax 发起的http请求收到结果, 而是直接顺序往下执行.</p>
+<p>当ajax请求被服务器响应并且收到response后, 浏览器事件触发线程捕获到了ajax的回调事件 onreadystatechange (当然也可能触发onload, 或者 onerror等等) . 该回调事件并没有被立即执行, 而是被添加到 任务队列 的末尾. 直到js引擎空闲了, 任务队列 的任务才被捞出来, 按照添加顺序, 挨个执行, 当然也包括刚刚append到队列末尾的 onreadystatechange 事件.</p>
+<h4 id="通过这样的一种方式-ajax并没有破坏js的单线程机制"><a href="#通过这样的一种方式-ajax并没有破坏js的单线程机制" class="headerlink" title="通过这样的一种方式, ajax并没有破坏js的单线程机制."></a>通过这样的一种方式, ajax并没有破坏js的单线程机制.</h4><h5 id="XHR一级"><a href="#XHR一级" class="headerlink" title="XHR一级"></a>XHR一级</h5><p>XHR1 即 XMLHttpRequest Level 1. XHR1时, xhr对象具有如下缺点:</p>
+<ul>
+<li>仅支持文本数据传输, 无法传输二进制数据.</li>
+<li>传输数据时, 没有进度信息提示, 只能提示是否完成.</li>
+<li>受浏览器 同源策略 限制, 只能请求同域资源.</li>
+<li>没有超时机制, 不方便掌控ajax请求节奏.<h5 id="XHR二级"><a href="#XHR二级" class="headerlink" title="XHR二级"></a>XHR二级</h5>XHR2 即 XMLHttpRequest Level 2. XHR2针对XHR1的上述缺点做了如下改进:</li>
+<li>支持二进制数据, 可以上传文件, 可以使用FormData对象管理表单.</li>
+<li>提供进度提示, 可通过 xhr.upload.onprogress 事件回调方法获取传输进度.</li>
+<li>依然受 同源策略 限制, 这个安全机制不会变. XHR2新提供 Access-Control-Allow-Origin 等headers, 设置为 * 时表示允许任何域名请求, 从而实现跨域CORS访问(有关CORS详细介绍请耐心往下读).</li>
+<li>可以设置timeout 及 ontimeout, 方便设置超时时长和超时后续处理.</li>
+</ul>
+<p>目前, 主流浏览器基本上都支持XHR2, 除了IE系列需要IE10及更高版本. 因此IE10以下是不支持XHR2的.<br>那么问题来了, IE7, 8,9的用户怎么办? 很遗憾, 这些用户是比较尴尬的. 对于IE8,9而言, 只有一个阉割版的 XDomainRequest 可用,IE7则没有. 估计IE7用户只能哭晕在厕所了.</p>
+<h4 id="XDomainRequest"><a href="#XDomainRequest" class="headerlink" title="XDomainRequest"></a>XDomainRequest</h4><p>XDomainRequest 对象是IE8,9折腾出来的, 用于支持CORS请求非成熟的解决方案. 以至于IE10中直接移除了它, 并重新回到了 XMLHttpRequest 的怀抱.<br>XDomainRequest 仅可用于发送 GET和 POST 请求. 如下即创建过程.<br>    var xdr = new XDomainRequest();<br>xdr具有如下属性:<br>timeout<br>responseText</p>
+<p>如下方法:<br>open: 只能接收Method,和url两个参数. 只能发送异步请求.<br>send<br>abort</p>
+<p>如下事件回调:<br>onprogress<br>ontimeout<br>onerror<br>onload</p>
+<p>除了缺少一些方法外, XDomainRequest 基本上就和 XMLHttpRequest 的使用方式保持一致.<br>必须要明确的是:<br>XDomainRequest 不支持跨域传输cookie.<br>只能设置请求头的Content-Type字段, 且不能访问响应头信息.</p>
+<h2 id="jQuery中的Ajax"><a href="#jQuery中的Ajax" class="headerlink" title="jQuery中的Ajax"></a>jQuery中的Ajax</h2><ol>
+<li><p>jQuery.get(…)<br>所有参数：<br>url: 待载入页面的URL地址<br>data: 待发送 Key / value 参数。<br>success: 载入成功时回调函数。<br>dataType: 返回内容格式， xml, json, script, text, html</p>
+</li>
+<li><p>jQuery.post(…)<br>所有参数：<br>url: 待载入页面的URL地址<br>data: 待发送 Key / value 参数<br>success: 载入成功时回调函数<br>dataType: 返回内容格式， xml, json, script, text, html</p>
+</li>
+<li><p>jQuery.getJSON(…)<br>所有参数：<br>url: 待载入页面的URL地址<br>data: 待发送 Key / value 参数。<br>success: 载入成功时回调函数。</p>
+</li>
+<li><p>jQuery.getScript(…)<br>所有参数：<br>url: 待载入页面的URL地址<br>data: 待发送 Key / value 参数。<br>success: 载入成功时回调函数。</p>
+</li>
+<li><p>jQuery.ajax(…)<br>部分参数：<br>url： 请求地址<br>type： 请求方式， GET、 POST（ 1.9 .0 之后用method）<br>headers： 请求头<br>data： 要发送的数据<br>contentType： 即将发送信息至服务器的内容编码类型(默认: “application/x-www-form-urlencoded; charset=UTF-8”)<br>async： 是否异步<br>timeout： 设置请求超时时间（ 毫秒）<br>beforeSend： 发送请求前执行的函数(全局)<br>complete： 完成之后执行的回调函数(全局)<br>success： 成功之后执行的回调函数(全局)<br>error： 失败之后执行的回调函数(全局)<br>accepts： 通过请求头发送给服务器， 告诉服务器当前客户端课接受的数据类型<br>dataType： 将服务器端返回的数据转换成指定类型<br> “xml”: 将服务器端返回的内容转换成xml格式 “text”: 将服务器端返回的内容转换成普通文本格式 “html”: 将服务器端返回的内容转换成普通文本格式， 在插入DOM中时， 如果包含JavaScript标签， 则会尝试去执行。 “script”: 尝试将返回值当作JavaScript去执行， 然后再将服务器端返回的内容转换成普通文本格式 “json”: 将服务器端返回的内容转换成相应的JavaScript对象 “jsonp”: JSONP 格式使用 JSONP 形式调用函数时， 如 “myurl?callback=?”<br>jQuery 将自动替换 ? 为正确的函数名， 以执行回调函数</p>
+</li>
+</ol>
+<h2 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a><a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener">同源策略</a></h2><p>同源策略限制了一个源（origin）中加载文本或脚本与来自其它源（origin）中资源的交互方式。</p>
+<p>比如说，浏览器的两个tab页中分别打开了<a href="http://www.baidu.com/index.html和http" target="_blank" rel="noopener">http://www.baidu.com/index.html和http</a>: //<a href="http://www.google.com/index.html，其中，JavaScript1和JavaScript3是属于百度的脚本，而" target="_blank" rel="noopener">www.google.com/index.html，其中，JavaScript1和JavaScript3是属于百度的脚本，而</a> JavaScript2是属于谷歌的脚本，当浏览器的tab1要运行一个脚本时，便会进行同源检查，只有和<a href="http://www.baidu.com同源的脚本才能被执" target="_blank" rel="noopener">www.baidu.com同源的脚本才能被执</a> 行，所谓同源，就是指域名、协议、端口相同。所以，tab1只能执行JavaScript1和JavaScript3脚本，而JavaScript2不能 执行，从而防止其他网页对本网页的非法篡改。</p>
+<h5 id="如果两个页面拥有相同的协议（protocol），端口（如果指定），和主机，那么这两个页面就属于同一个源（origin）。"><a href="#如果两个页面拥有相同的协议（protocol），端口（如果指定），和主机，那么这两个页面就属于同一个源（origin）。" class="headerlink" title="如果两个页面拥有相同的协议（protocol），端口（如果指定），和主机，那么这两个页面就属于同一个源（origin）。"></a>如果两个页面拥有相同的协议（protocol），端口（如果指定），和主机，那么这两个页面就属于同一个源（origin）。</h5><p>IE 例外<br>当涉及到同源策略时，Internet Explorer有两个主要的例外：<br>授信范围（Trust Zones）：两个相互之间高度互信的域名，如公司域名（corporate domains），不遵守同源策略的限制。<br>端口：IE未将端口号加入到同源策略的组成部分之中，因此 <a href="http://company.com:81/index.html" target="_blank" rel="noopener">http://company.com:81/index.html</a> 和<a href="http://company.com/index.html" target="_blank" rel="noopener">http://company.com/index.html</a>  属于同源并且不受任何限制。<br>这些例外是非标准的，其它浏览器也未做出支持，但会助于开发基于window RT IE的应用程序。</p>
+<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><p>由于浏览器存在同源策略机制， 同源策略阻止从一个源加载的文档或脚本获取或设置另一个源加载的文档的属性。 所以ajax本身是不可以跨域的， 通过产生一个script标签来实现跨域。 因为script标签的src属性是没有跨域的限制的。</p>
+<p>浏览器同源策略并不是对所有的请求均制约：<br>制约： XmlHttpRequest<br>不制约： img、 iframe、 script等具有src属性的标签</p>
+<p>一、 JSONP实现跨域请求<br>JSONP是一个非官方的协议， 它允许在服务器端集成Script tags返回至客户端， 通过javascript callback的形式实现跨域访问。 jsonp只能通过get方式进行跨域请求</p>
+<p>二、 CORS<br>这种方法就可以突破浏览器限制来进行传输。 当数据发送给对方域名的时候， 对方已经收到， 但是在返回的时候被浏览器给阻挡， 我们可以写一串类似于身份证的字符串， 通过浏览器的预检， 从而达到数据的传输。实际上, 浏览器不会拦截不合法的跨域请求, 而是拦截了他们的响应, 因此即使请求不合法, 很多时候, 服务器依然收到了请求.(Chrome和Firefox下https网站不允许发送http异步请求除外)</p>
+<h4 id="CORS有关的headers"><a href="#CORS有关的headers" class="headerlink" title="CORS有关的headers"></a>CORS有关的headers</h4><p>1) HTTP Response Header(服务器提供):<br>Access-Control-Allow-Origin: 指定允许哪些源的网页发送请求.<br>Access-Control-Allow-Credentials: 指定是否允许cookie发送.<br>Access-Control-Allow-Methods: 指定允许哪些请求方法.<br>Access-Control-Allow-Headers: 指定允许哪些常规的头域字段, 比如说 Content-Type.<br>Access-Control-Expose-Headers: 指定允许哪些额外的头域字段, 比如说 X-Custom-Header.<br>该字段可省略. CORS请求时, xhr.getResponseHeader() 方法默认只能获取6个基本字段: Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma . 如果需要获取其他字段, 就需要在Access-Control-Expose-Headers 中指定. 如上, 这样xhr.getResponseHeader(‘X-Custom-Header’) 才能返回X-Custom-Header字段的值.(该部分摘自阮一峰老师博客)<br>Access-Control-Max-Age: 指定preflight OPTIONS请求的有效期, 单位为秒.</p>
+<p>2) HTTP Request Header(浏览器OPTIONS请求默认自带):<br>Access-Control-Request-Method: 告知服务器,浏览器将发送哪种请求, 比如说POST.<br>Access-Control-Request-Headers: 告知服务器, 浏览器将包含哪些额外的头域字段.</p>
+<h4 id="CORS请求分为简单请求和非简单请求"><a href="#CORS请求分为简单请求和非简单请求" class="headerlink" title="CORS请求分为简单请求和非简单请求"></a>CORS请求分为简单请求和非简单请求</h4><p>简单请求只一次请求， 而复杂请求是两次请求， 在发送数据之前会先发一次请求用于做“ 预检”， 只有“ 预检” 通过后才再发送一次请求用于数据传输。</p>
+<p>简单请求：<br>1) 请求是以下三种之一:<br>1、 请求方式： HEAD、 GET、 POST<br>2、 http头域不超出以下几种字段:<br>Accept 浏览器能够处理的内容类型；<br>Accept - Language 浏览器当前设置的语言；<br>Content - Language<br>Last - Event - ID<br>Content - Type 对应的值是以下三个中的任意一个<br>application / x - www - form - urlencoded<br>multipart / form - data<br>text / plain<br>注意： 同时满足以上两个条件时， 则是简单请求， 否则为复杂请求</p>
+<p>对于简单请求, 浏览器将发送一次http请求, 同时在Request头域中增加 Origin 字段, 用来标示请求发起的源, 服务器根据这个源采取不同的响应策略. 若服务器认为该请求合法, 那么需要往返回的 HTTP Response 中添加 Access-Control-<em> 等字段.( Access-Control-</em> 相关字段解析请阅读我之前写的<a href="http://louiszhai.github.io/2016/01/11/cross-domain/#CORS__u8DE8_u57DF_u8BBF_u95EE]" target="_blank" rel="noopener">CORS 跨域访问</a></p>
+<p>复杂请求： 由于复杂请求时， 首先会发送“ 预检” 请求， 如果“ 预检” 成功， 则发送真实数据。</p>
+<p>“ 预检” 请求时， 允许请求方式则需服务器设置响应头： Access - Control - Request - Method“<br>预检” 请求时， 允许请求头则需服务器设置响应头： Access - Control - Request - Headers“<br>预检” 缓存时间， 服务器设置响应头： Access - Control - Max - Age</p>
+<p>对于非简单请求, 比如Method为POST且Content-Type值为 application/json 的请求或者Method为 PUT 或 DELETE 的请求, 浏览器将发送两次http请求. 第一次为preflight预检(Method: OPTIONS),主要验证来源是否合法. 值得注意的是:OPTION请求响应头同样需要包含 Access-Control-* 字段等. 第二次才是真正的HTTP请求. 所以服务器必须处理OPTIONS应答(通常需要返回20X的状态码, 否则xhr.onerror事件将被触发).</p>
+<p>跨域传输cookie：<br>在跨域请求中， 默认情况下， HTTP Authentication信息， Cookie头以及用户的SSL证书无论在预检请求中或是在实际请求都是不会被发送。<br>如果想要发送：<br>浏览器端： XMLHttpRequest的withCredentials为true<br>服务器端： Access - Control - Allow - Credentials为true<br>注意： 服务器端响应的 Access - Control - Allow - Origin 不能是通配符 *</p>
+<h2 id="Axios"><a href="#Axios" class="headerlink" title="Axios"></a>Axios</h2><p>如果你仅仅只是想要一个不错的http库, 相比于庞大臃肿的jquery, 短小精悍的<a href="http://www.bootcdn.cn/axios/readme/" target="_blank" rel="noopener">Axios</a>可能更加适合你.</p>
+<p>Axios支持node, jquery并不支持.<br>Axios基于promise语法, jq3.0才开始全面支持.<br>Axios短小精悍, 更加适合http场景, jquery大而全, 加载较慢.</p>
+<p>语法上Axios基本就和promise一样, 在then方法中处理回调, 在catch方法中处理异常. 如下:</p>
+<pre><code>axios.get(&quot;https://api.github.com/users/louiszhai&quot;)
+  .then(function(response){
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+</code></pre><p>参考资料： http: //louiszhai.github.io/2016/11/02/ajax/</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Ajax</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/31/Ajax-梳理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-《你不知道的JavaScript-上卷》阅读笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -342,108 +516,6 @@
 
 
   
-    <article id="post-《JavaScript设计模式与开发实践》阅读笔记-二" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/11/《JavaScript设计模式与开发实践》阅读笔记-二/">《JavaScript设计模式与开发实践》阅读笔记 二</a>
-    </h1>
-  
-
-        
-        <a href="/2017/05/11/《JavaScript设计模式与开发实践》阅读笔记-二/" class="archive-article-date">
-  	<time datetime="2017-05-11T15:33:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://b358.photo.store.qq.com/psb?/V10qN6b63c9MK4/F0xAM7SG.aVV9H4C.dQFXFVuW0y3l.7nFFqR7L71pXQ!/b/dGYBAAAAAAAA&bo=qwYABQASgA0FKT0!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h2 id="this、call和apply"><a href="#this、call和apply" class="headerlink" title="this、call和apply"></a>this、call和apply</h2><p>JavaScript的this总是指向一个对象，而具体指向哪个对象是在运行时基于函数的执行环境动态绑定的。<br>除去不常用的with和eval的情况，this的指向大致分4种</p>
-<ol>
-<li>作为对象的方法调用</li>
-<li>作为普通函数调用</li>
-<li>构造器调用</li>
-<li>Function.prototype.call或Function.prototype.apply调用</li>
-</ol>
-<p>1.当函数作为对象的方法调用，this指向该对象：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    a : <span class="number">1</span>,</span><br><span class="line">    get : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span> === obj)</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.get()</span><br><span class="line"><span class="comment">//Object &#123;a: 1, get: function&#125;</span></span><br><span class="line"><span class="comment">//true</span></span><br><span class="line"><span class="comment">//1</span></span><br></pre></td></tr></table></figure></p>
-<p>2.当函数作为普通函数被调用，不作为对象的属性被调用，此时this指向全局对象，即window对象<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.name = <span class="string">"globalName"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> getName = &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(getName());</span><br><span class="line"><span class="comment">//globalName</span></span><br></pre></td></tr></table></figure></p>
-<p>3.构造器调用<br>大部分JavaScript函数都可以当做构造器使用，构造器的外表和普通函数一样，区别在于被调用的方式。当用new运算符调用函数时，该函数总会返回一个对象，通常情况下构造器里的this就指向返回的这个对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyClass = functio()&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"Bob"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> MyClss()</span><br><span class="line"><span class="built_in">console</span>.log(obj.name)</span><br><span class="line"><span class="comment">//Bob</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果构造器显式返回一个object类型的对象，此次运算结果最终会返回这个对象，而不是之前期待的那样</span></span><br><span class="line"><span class="keyword">var</span> MyClass = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name =<span class="string">"Bob"</span>;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        <span class="comment">//显式返回一个对象</span></span><br><span class="line">        name : <span class="string">"anne"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> MyClass()</span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br><span class="line"><span class="comment">//Object &#123;name: "anne"&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.name)</span><br><span class="line"><span class="comment">//anne</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果构造器返回一个非对象类型的数据，就不会出现问题。this指向返回的对象。</span></span><br><span class="line"><span class="keyword">var</span> MyClass = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"Bob"</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"anne"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj =<span class="keyword">new</span> MyClass();</span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br><span class="line"><span class="comment">//MyClass &#123;name: "Bob"&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.name)</span><br><span class="line"><span class="comment">//Bob</span></span><br></pre></td></tr></table></figure></p>
-<p>4.Function.prototype.call 或 Function.prototype.apply<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">call() 方法在使用一个指定的<span class="keyword">this</span>值和若干个指定的参数值的前提下调用某个函数或方法.</span><br><span class="line">该方法的作用和 apply() 方法类似，只有一个区别，就是call()方法接受的是若干个参数的列表，而apply()方法接受的是一个包含多个参数的数组。</span><br><span class="line"></span><br><span class="line">fun.call(thisArg[, arg1[, arg2[, ...]]])</span><br><span class="line">参数</span><br><span class="line">thisArg</span><br><span class="line">在fun函数运行时指定的<span class="keyword">this</span>值。需要注意的是，指定的<span class="keyword">this</span>值并不一定是该函数执行时真正的<span class="keyword">this</span>值，如果这个函数处于非严格模式下，则指定为<span class="literal">null</span>和<span class="literal">undefined</span>的<span class="keyword">this</span>值会自动指向全局对象(浏览器中就是<span class="built_in">window</span>对象)，同时值为原始值(数字，字符串，布尔值)的<span class="keyword">this</span>会指向该原始值的自动包装对象。</span><br><span class="line">arg1, arg2, ...</span><br><span class="line">指定的参数列表。</span><br><span class="line">返回值</span><br><span class="line">返回结果包括指定的<span class="keyword">this</span>值和参数。</span><br><span class="line">描述</span><br><span class="line">可以让call()中的对象调用当前对象所拥有的<span class="function"><span class="keyword">function</span>。你可以使用<span class="title">call</span>(<span class="params"></span>)来实现继承：写一个方法，然后让另外一个新的对象来继承它（而不是在新对象中再写一次这个方法）。</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">跟普通的函数调用相比，用<span class="title">Function</span>.<span class="title">prototype</span>.<span class="title">call</span>或<span class="title">Function</span>.<span class="title">prototype</span>.<span class="title">apply</span>可以动态地改变传入函数的<span class="title">this</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">var</span> <span class="title">obj</span> = </span>&#123;</span><br><span class="line">    name : <span class="string">"jay"</span>,</span><br><span class="line">    getName : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj2 =&#123;</span><br><span class="line">    name : <span class="string">"anne"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj.getName());</span><br><span class="line"><span class="comment">//jay</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.getName.call(obj2))</span><br><span class="line"><span class="comment">//anne</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//丢失的this，这是一个常见问题</span></span><br><span class="line"><span class="keyword">var</span> obj =&#123;</span><br><span class="line">    myName : <span class="string">"Bob"</span>,</span><br><span class="line">    getName : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.myName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj.getName());  <span class="comment">//此时,getName作为对象的方法被调用，this指向该对象也就是obj，输出"Bob"</span></span><br><span class="line"><span class="comment">//当调用obj.getName时，getName方法是作为obj对象的属性被调用的，此时this指向obj对象，所以obj.getName()输出"Bob"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> getName2 = obj.getName;</span><br><span class="line"></span><br><span class="line"><span class="comment">//当另外一个变量getName2引用obj.getName，并且调用getName2时，此时是普通函数调用方式，this指向全局window，所以输出undefined</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(getName2);  <span class="comment">//function ()&#123;return this.myName;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(getName2());    <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="call与apply的区别"><a href="#call与apply的区别" class="headerlink" title="call与apply的区别"></a>call与apply的区别</h3><p>在ECMAScript3中给Function的原型定义了两个方法，Function.prototype.call 和Function.prototype.apply，作用相同，仅仅是传入参数形式不同。<br>apply接受两个参数，第一个参数指定了函数体内this对象的指向，第二个参数为一个带下标的集合，这个集合可以是数组，也可以是类数组，apply方法把这个集合中的元素作为参数传递给被调用的函数：<br>当使用call或apply的时候，如果传入的第一个参数为null，函数体内的this会指向默认的宿主对象，即window</p>
-<pre><code>var func = function(a,b,c){
-    console.log([a,b,c]);
-}
-
-func.apply(null,[1,2,3]);    //[1,2,3]
-</code></pre><p>有时使用call或apply的目的不在于指定this，而是借用其他对象的方法，那我们可以传入null来替代某个具体对象<br>Math.max.apply(null,[1,2,5,3,4]);   //5</p>
-<h3 id="call和apply的用途"><a href="#call和apply的用途" class="headerlink" title="call和apply的用途"></a>call和apply的用途</h3><p>1.改变this的指向</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 =&#123;</span><br><span class="line">    name : <span class="string">"anne"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj2 =&#123;</span><br><span class="line">    name : <span class="string">"Bob"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.name = <span class="string">"jack"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line">getName() <span class="comment">//函数作为普通函数被调用,this指向全局window 输出 "jack"</span></span><br><span class="line">getName.call(obj1)  <span class="comment">//"anne"</span></span><br><span class="line"><span class="comment">//当执行getName.call(obj1) getName函数体内的this指向obj1对象</span></span><br><span class="line">getName.call(obj2)  <span class="comment">//"Bob"</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>this被不经意改变的场景：比如有一个div节点，div节点的onclick事件中的this本来指向该div</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"div1"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.id);   <span class="comment">//输出div1</span></span><br><span class="line">&#125;</span><br><span class="line">假如该事件函数中有一个内部函数func，在事件内部调用func函数时，func函数体内的<span class="keyword">this</span>就指向<span class="built_in">window</span>，而不是我们预期的div</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"div1"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.id);   <span class="comment">//输出div1</span></span><br><span class="line">    <span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.id)    <span class="comment">//输出undefined</span></span><br><span class="line">    &#125;</span><br><span class="line">    func()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">这时候使用call来修正func函数内的<span class="keyword">this</span></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"div1"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.id)    <span class="comment">//输出undefined</span></span><br><span class="line">    &#125;</span><br><span class="line">    func.call(<span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>2.Function.prototype.bind  用来指定函数内部的this指向<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">var</span> self = <span class="keyword">this</span>;  <span class="comment">//保存原函数</span></span><br><span class="line">   <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//返回一个新函数</span></span><br><span class="line">      <span class="keyword">return</span> self.apply(context , <span class="built_in">arguments</span>);<span class="comment">//执行新函数的时候，会把之前传入的context当作新函数体内的this</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj =&#123;</span><br><span class="line">  name : <span class="string">"jay"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;.bind(obj);</span><br><span class="line">func()</span><br><span class="line"><span class="comment">//jay</span></span><br><span class="line"></span><br><span class="line">通过<span class="built_in">Function</span>.prototype.bind来<span class="string">"包装"</span>func函数，并且传入一个对象context当作参数，这个context对象就是我们想修正的<span class="keyword">this</span>对象</span><br><span class="line"></span><br><span class="line">在<span class="built_in">Function</span>.prototype.bind内部，我们先把func函数的引用保存起来，然后返回一个新函数，在将来执行func函数时，实际上先执行的是刚返回的新函数，在新函数内部，self.apply(context,<span class="built_in">arguments</span>)这句代码才是执行原来的func函数，并且指定context对象为func函数体内的<span class="keyword">this</span></span><br></pre></td></tr></table></figure></p>
-<p>3.借用其他对象的方法</p>
-<p>一、借用构造函数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> A = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> B = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  A.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">B.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> B(<span class="string">"jay"</span>)</span><br><span class="line"><span class="built_in">console</span>.log(b.getName())</span><br><span class="line"><span class="comment">//jay</span></span><br></pre></td></tr></table></figure></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">《JavaScript设计模式与开发实践》</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/05/11/《JavaScript设计模式与开发实践》阅读笔记-二/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
@@ -534,15 +606,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Js基础</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Ajax</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
+                <a href="javascript:void(0)" class="js-tag color5">Js基础</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -554,7 +622,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
+                <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -562,15 +630,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">《JavaScript面向对象编程指南》</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -590,14 +662,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
               </li>
              
@@ -606,11 +670,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
