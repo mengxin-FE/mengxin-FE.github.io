@@ -141,6 +141,165 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-《React状态管理与同构实战》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/24/《React状态管理与同构实战》读书笔记/">《React状态管理与同构实战》读书笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/24/《React状态管理与同构实战》读书笔记/" class="archive-article-date">
+  	<time datetime="2019-02-24T08:47:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551612229017&di=6acbb56e00836975626351208aee5780&imgtype=0&src=http%3A%2F%2Fpic1.zhimg.com%2Fv2-46509713ee9311cbdc9276253faf9e6a_1200x500.jpg" width="100%"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<p>传统模式下的多个页面被抽象成一个个视图，原来的页面跳转由js负责切换视图，原来向后端请求整个页面，现在变成向后端请求数据接口。</p>
+<p>但这种方式的问题在于如何到达其他页面？为了实现传统URL的特点，需要在前端模拟一套路由，有了路由即可通过URL直接进入某个视图。——React Router</p>
+<p>我们可以将界面和数据与对数据操作进行分离，即Redux。</p>
+<p>组件是React的核心，组件有输入，自己的状态，输出。</p>
+<ul>
+<li>输入即props</li>
+<li>状态即state</li>
+<li>输出即render函数的返回值。</li>
+</ul>
+<h4 id="创建组建的几种方式和区别"><a href="#创建组建的几种方式和区别" class="headerlink" title="创建组建的几种方式和区别"></a>创建组建的几种方式和区别</h4><p>有些组件有自身状态；有些则没有，被称为无状态组件，也可以写成functional component 函数式组件，函数式组件就是一个普通函数，其参数是一个对象，在被调用时就是传入的props，推荐配合函数参数解构使用。</p>
+<p>如果组件是纯组件，应该使用purecomponent。</p>
+<p>传统web架构中无法直接引用HTML，而React能够很轻松的开发组件，在开发时将页面划分为若干个组件逐个开发，每个组件包含逻辑和样式。</p>
+<h4 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h4><ul>
+<li>挂载</li>
+<li>更新</li>
+<li>卸载</li>
+</ul>
+<h4 id="组件的属性和状态"><a href="#组件的属性和状态" class="headerlink" title="组件的属性和状态"></a>组件的属性和状态</h4><p>组件根据不同的输入会有不同的输出。</p>
+<h5 id="属性-props"><a href="#属性-props" class="headerlink" title="属性 props"></a>属性 props</h5><ul>
+<li>组件的输入被抽象为属性，使用组件时可以传入一些属性。属性只可读不能修改</li>
+<li>组件的属性应该有默认值</li>
+<li>组件的属性值应该校验</li>
+</ul>
+<h5 id="状态-state"><a href="#状态-state" class="headerlink" title="状态 state"></a>状态 state</h5><ul>
+<li><p>组件需要记录自身的变化，被抽象为状态。例如下拉菜单是否展开就是自身的状态。</p>
+</li>
+<li><p>存储在state中，通过this.state读取</p>
+</li>
+<li><p>组件在初始化时可以赋予默认值</p>
+</li>
+<li><p>更新state使用setState，它是异步的，当setState执行完成时会自动更新界面</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用setState实现每秒自增的时钟</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Clock</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        time : <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    componentDidMount () &#123;</span><br><span class="line">        <span class="keyword">this</span>.id = setInterval( <span class="function"><span class="params">()</span> =&gt;</span></span><br><span class="line">        	 <span class="keyword">this</span>.setState( &#123; <span class="attr">time</span>:<span class="keyword">this</span>.state0 + <span class="number">1</span> &#125; ) </span><br><span class="line">        , <span class="number">1000</span> );</span><br><span class="line">    &#125;</span><br><span class="line">    componentWillMount () &#123;</span><br><span class="line">		clearInterval( <span class="keyword">this</span>.id )</span><br><span class="line">    &#125;</span><br><span class="line">    render () &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;this.state.time&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>setState第二个参数是函数，该函数会在state更新后被调用</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Clock</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    state : &#123; <span class="attr">time</span> : <span class="number">1</span> &#125;</span><br><span class="line">    componentDidMount () &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">            time : <span class="keyword">this</span>.state.time + <span class="number">1</span> </span><br><span class="line">        &#125;,</span><br><span class="line">        () =&gt; &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.time)</span><br><span class="line">        &#125;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不要在render中使用setState，因为setState会触发render，导致死循环。</p>
+</li>
+<li>不影响UI变化的数据不需要放到state</li>
+</ul>
+<h4 id="组件与事件"><a href="#组件与事件" class="headerlink" title="组件与事件"></a>组件与事件</h4><ul>
+<li>react中的事件名称是驼峰式，如 onclick </li>
+<li>事件处理器是函数</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    onClick ()&#123;</span><br><span class="line">        <span class="built_in">console</span>.log( <span class="string">'我被点击了 '</span> )</span><br><span class="line">    &#125;</span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span> = <span class="string">&#123;</span> <span class="attr">this.onClick.bind</span>(<span class="attr">this</span>) &gt;</span>点击<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h4><h5 id="父子组件"><a href="#父子组件" class="headerlink" title="父子组件"></a>父子组件</h5><ul>
+<li>父组件向子组件传递消息：初始化时传递参数或实例化时调用方法</li>
+<li>子组件向父组件传递消息：通过回调函数或为子组件部署消息接口。部署消息接口需要一个可以发布和订阅消息的基类，子组件继承消息基类就有了发布消息的能力，然后父组件订阅子组件的消息，即可实现子组件向父组件传递消息的功能。</li>
+</ul>
+<h5 id="状态管理工具"><a href="#状态管理工具" class="headerlink" title="状态管理工具"></a>状态管理工具</h5><p>通过它把组件之间的关系和关系的处理逻辑从组件中抽象出来，并集中化到统一的地方离开处理——Redux</p>
+<h4 id="组件的抽象与复用"><a href="#组件的抽象与复用" class="headerlink" title="组件的抽象与复用"></a>组件的抽象与复用</h4><ul>
+<li>组件应该值通过属性输入，避免使用context，避免读取全局变量，I/O</li>
+<li>组件的属性应该有默认值，应该使用简单值便于维护</li>
+<li>组件考虑边界异常情况，做好属性的类型验证</li>
+<li>组件应该通用，不限制使用环境</li>
+<li>组件有一部分功能是一样的，可以抽象为一个父类，然后继承。</li>
+<li>组合组件 mixin</li>
+<li>高阶组件，接收组件并返回新组件。实现方法为调用传入的组件或继承传入的组件。一般只在传入组件的外围进行一些操作时使用调用；如果向在传入组件的内部进行一些操作则使用继承法。</li>
+</ul>
+<h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h4><p>传统web开发是基于命令式和DOM编程，而React把UI抽象为组件和状态，大部分情况都不需要命令式和DOM，但偶尔需要也提供了操作原生DOM的方法。</p>
+<ul>
+<li>ref</li>
+<li>findDOMNode</li>
+<li>dangerouslySetInnerHTML</li>
+</ul>
+<h3 id="Redux应用架构"><a href="#Redux应用架构" class="headerlink" title="Redux应用架构"></a>Redux应用架构</h3><p>Redux是一个可预测的状态的容器，只关注全局状态的管理，为实现对数据状态的管理封装提供了不同的方法，并规定了进行管理的模式，使得数据状态变得可预测，可追溯。</p>
+<p>Redux追求单一数据源，所有的状态数据都存储在store中，状态数据时只读的，当页面需要作出改变时，这个改变由action描述，并被开发者dispatch派发，然后该action被相应的reducer作为参数获取，并根据现有的页面状态数据树产生一颗新的树。当页面中各个组件根据新树抽取出自己需要的状态进行更新，并触发重新渲染，就得到我们预期的页面。</p>
+<p>页面数据状态树被存储为一个js对象，这棵页面状态数据树会随着用户的操作或异步数据到达而发生变化。这样的设计理念让我们的关注点变得简单直接。因为页面的展现内容依赖各个组件的状态数据，而状态数据存储在一个js对象中，因此我们只需要关注该对象，</p>
+<p>页面状态数据树是只读的，当页面需要新的数据状态时再生成一颗全新的状态数据树。</p>
+<p>当页面需要展现新的数据状态时，需要dispatch（派发）一个action（动作）即可，action也是js对象，包含了该动作变化的所有信息，使用reducer函数来接收action（reducer接收当前页面数据状态prevState 和 被派发的action）返回一个新的js对象，并执行页面状态数据树的变更。</p>
+<p>即：( previousState , action  ) =&gt; newState</p>
+<p>reducer必须是纯函数，纯函数的返回值只依赖其参数，不存在副作用（调用I/O，发送网络请求，在函数体内修改外部变量的值，调用存在副作用的函数等）reducer接收当前页面状态数据树和action，在不改变当前页面的状态数据树的原则下，返回一颗全新的页面状态数据树，并且这颗新的树完全可以通过旧的推测得到。这样的设计理念使得维护变得更轻松，出现任何问题一定是组件接收了不正确的state，而该state的产生出自reducer，首先确定reducer接收到的action是否正确…….这就是可预测性，可追溯性的体现。</p>
+<h5 id="store"><a href="#store" class="headerlink" title="store"></a>store</h5><p>Redux之本，可预测状态的容器，保存着整个页面状态数据树。其实是js对象，包含了若干方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">store = &#123;</span><br><span class="line">    dispatch,	<span class="comment">// 派发action</span></span><br><span class="line">    getState,	<span class="comment">// 获取当前页面数据状态树，即store中的state</span></span><br><span class="line">    subscribe,	<span class="comment">// 订阅页面数据状态，即store中的state的变化</span></span><br><span class="line">    replaceReducer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="action"><a href="#action" class="headerlink" title="action"></a>action</h5><p>描述状态变更的信息，由store.dispatch派发。其实也是js对象，Redux规定action对象拥有一个type属性作为描述该action的名称。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> action1 = &#123;</span><br><span class="line">    type = <span class="string">'read_books'</span> , </span><br><span class="line">    data : &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="dispatch"><a href="#dispatch" class="headerlink" title="dispatch"></a>dispatch</h5><p>store.dispatch方法负责派发action，这个action作为dispatch方法的参数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">store.dispatch(action1)</span><br></pre></td></tr></table></figure>
+<h5 id="reducer"><a href="#reducer" class="headerlink" title="reducer"></a>reducer</h5><p>action只是描述变化，并携带这种变化的数据，真正执行变化并产生数据状态的时候reducer方法。必须是纯函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> updateStateTree = <span class="function"><span class="keyword">function</span> (<span class="params"> previousState = &#123;&#125; , action </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> ( action.type )&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'action1'</span>:</span><br><span class="line">        	<span class="keyword">return</span> newState1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当无法匹配action时，默认返回原previousState参数，previousState设置了默认值代表初始状态。</p>
+<p>当通过Redux的createStore方法创建了store实例后，使用store.dispatch派发一个描述变化的action（该action需要开发者根据业务编写），reducer函数执行处理变化和更新数据（reducer也需要开发者编写）当页面数据状态得以更新时，store.subscribe( callbackFunction ) 方法订阅数据的更新，并由callbackFunction完成UI更新。</p>
+<h5 id="redux是独立的，可以和其他框架一起使用"><a href="#redux是独立的，可以和其他框架一起使用" class="headerlink" title="redux是独立的，可以和其他框架一起使用"></a>redux是独立的，可以和其他框架一起使用</h5>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">react</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/24/《React状态管理与同构实战》读书笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-web性能优化小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -219,13 +378,15 @@
 <h2 id="离线数据缓存localStorage"><a href="#离线数据缓存localStorage" class="headerlink" title="离线数据缓存localStorage"></a>离线数据缓存localStorage</h2><p>json 数据的缓存可以用 localStorage 缓存请求下来的数据，可以在首次显示时先用本地数据，再请求更新，这都由前端 JS 控制。</p>
 <h2 id="离线缓存-manifest"><a href="#离线缓存-manifest" class="headerlink" title="离线缓存 manifest"></a>离线缓存 manifest</h2><p>移动端或Hybrid应用，可以设置离线文件或离线包机制让静态资源请求从本地读取，加快资源载入速度，并实现离线更新</p>
 <h1 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h1><ul>
-<li>HTML代码压缩，去除注释、空白符</li>
-<li>注重标签的语义化，保持用最简洁的标签完成所需的功能</li>
-<li>最小化iframes的数目 , iframe 内资源的下载进程会阻塞父页面静态资源的下载与 CSS 及 HTML DOM 的解析</li>
+<li><p>HTML代码压缩，去除注释、空白符</p>
+</li>
+<li><p>注重标签的语义化，保持用最简洁的标签完成所需的功能</p>
+</li>
+<li><p>最小化iframes的数目 , iframe 内资源的下载进程会阻塞父页面静态资源的下载与 CSS 及 HTML DOM 的解析</p>
+</li>
 </ul>
 <h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><ul>
-<li><p>压缩CSS代码，排除重复的、未使用的CSS样式</p>
-</li>
+<li>压缩CSS代码，排除重复的、未使用的CSS样式</li>
 <li><p>使用postCSS约束CSS代码</p>
 </li>
 <li><p>将CSS标签放在JavaScript标签之前</p>
@@ -252,17 +413,28 @@
 </ul>
 <h1 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h1><ul>
 <li>JS代码压缩，js文件打包成一个文件，减小 JavaScript 包的大小，代码分模块加载</li>
-<li>使用ES Lint 进行代码检查</li>
-<li>处理长列表或者大量DOM元素时，不要绑定太多的事件监听函数。节省内存和减少监听事件的注册</li>
-<li>利用throttle和debounce函数去处理频发触发，但是不需要频发执行的函数，例如scroll,touchmove例如设置每隔16ms（60帧的帧间隔为16.7ms，因此可以合理地设置为16ms）才进行一次事件处理，避免频繁的事件调用导致移动端页面卡顿。</li>
-<li>利用setTimeout代替setInterval</li>
-<li>合理缓存DOM对象</li>
-<li>避免使用eval、with，使用join代替连接符+，推荐使用ECMAScript 6的字符串模板</li>
-<li>尽量使用ECMAScript 6+的特性来编程</li>
-<li>考虑将高耗时的 JavaScript 放到 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">Web Worker</a> 或通过 Service Worker 来缓存字体，样式，JavaScript 和图片等资源文件。</li>
-<li>考虑将 JavaScript 转换为 <a href="https://webassembly.org/" target="_blank" rel="noopener">WebAssembly</a>，这是一种二进制指令格式，可以使用 C/C++/Rust 等高级语言进行编译。</li>
-<li>不使用document.write，避免在body中部嵌入多个JavaScript代码</li>
-<li>检查JavaScript文件中的性能问题。</li>
+<li><p>使用ES Lint 进行代码检查</p>
+</li>
+<li><p>处理长列表或者大量DOM元素时，不要绑定太多的事件监听函数。节省内存和减少监听事件的注册</p>
+</li>
+<li><p>利用throttle和debounce函数去处理频发触发，但是不需要频发执行的函数，例如scroll,touchmove例如设置每隔16ms（60帧的帧间隔为16.7ms，因此可以合理地设置为16ms）才进行一次事件处理，避免频繁的事件调用导致移动端页面卡顿。</p>
+</li>
+<li><p>利用setTimeout代替setInterval</p>
+</li>
+<li><p>合理缓存DOM对象</p>
+</li>
+<li><p>避免使用eval、with，使用join代替连接符+，推荐使用ECMAScript 6的字符串模板</p>
+</li>
+<li><p>尽量使用ECMAScript 6+的特性来编程</p>
+</li>
+<li><p>考虑将高耗时的 JavaScript 放到 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">Web Worker</a> 或通过 Service Worker 来缓存字体，样式，JavaScript 和图片等资源文件。</p>
+</li>
+<li><p>考虑将 JavaScript 转换为 <a href="https://webassembly.org/" target="_blank" rel="noopener">WebAssembly</a>，这是一种二进制指令格式，可以使用 C/C++/Rust 等高级语言进行编译。</p>
+</li>
+<li><p>不使用document.write，避免在body中部嵌入多个JavaScript代码</p>
+</li>
+<li><p>检查JavaScript文件中的性能问题。</p>
+</li>
 </ul>
 <h1 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h1><ul>
 <li><p>使用工具压缩图片体积</p>
@@ -410,7 +582,7 @@
 <p><a href="https://mp.weixin.qq.com/s/JFjgRkub4K-QW6nEKQQXzQ" target="_blank" rel="noopener">手机活动页图片性能优化分享</a></p>
 <p><a href="https://github.com/xitu/gold-miner/blob/master/TODO1/front-end-performance-checklist-2019-pdf-pages-4.md" target="_blank" rel="noopener">2019 前端性能优化年度总结</a></p>
 <p><a href="https://juejin.im/post/5c46cbaee51d453f45612a2c#heading-16" target="_blank" rel="noopener">2019年前端性能优化清单</a></p>
-<p>[HTTP/2](</p>
+<p><a href="https://aotu.io/notes/2016/06/14/http2/" target="_blank" rel="noopener">HTTP/2</a></p>
 
       
 
@@ -508,156 +680,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/02/08/小程序开发小结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-港岛漫步行记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/09/港岛漫步行记/">港岛漫步行记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/09/港岛漫步行记/" class="archive-article-date">
-  	<time datetime="2018-12-09T10:59:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>周柏豪 我的宣言</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_4807_PANO.jpg" alt=""></p>
-<p>在我还没有来深圳之前，香港这座城市，给我的印象几乎是空白。</p>
-<p>我猜可能有很多内地，尤其是广东省以外的朋友和我一样，对香港的印象是既熟悉又陌生，听起来有些矛盾对吧。香港电影是大部分人对香港认识的起始，但我们对香港现今社会，文化…..其实并不理解。</p>
-<p>很少看港片，听粤语歌的我，脑海里能够想到的关键词只有：回归不久/弹丸之地/亚洲四小龙/金融中心/很多电影明星/港片…..仅此而已。这个话题甚至延伸到，我并不了解香港，广东，潮汕，客家，岭南…..的历史，文化等方方面面。</p>
-<p>我是有点不敢动笔的，毕竟了解一个地方，必须融入当地文化，且需要时间的锤炼。说来惭愧直到现在我还没有学会“白话”，而语言恰好是了解文化的桥梁，论香港，显然我还不够格。</p>
-<p>所以此文仅作为我个人的香港体验行记。</p>
-<p>2018.11.24  这次和小谢同学同行，小谢同学是位广东靓仔，“猴嗨森”有他这个朋友，一路上给我这个“北佬”科普了好多潮汕话，闽南语，香港话，还有广式英语的不同之处。有句话说广东以北都是北方，南北文化差异真的蛮大的，香港是世界大都会，很多英文单词直接就是广东话的发音得来，如果不通广东话还真搞不懂呢。比如Canton 这个单词，你知道它是什么意思吗？哈哈，答案是——广东，同样，HongKong，也可以用白话来发音…..学习广东话真的蛮有用啊！</p>
-<p>这次出发之前我做好了攻略，这里有一种迷你轻铁小火车，应该挺有意思的，于是决定首站去坐轻铁！研究了好久那个港铁线路图和轻铁线路图，奇怪它为什么弯弯曲曲呢，查了地图才知原来中间有座大山阻挡了铁路～这里要推荐一下高德地图，自己也是尝试后发现高德地图在香港能够推荐轻铁线路！甚至是小船，游轮线路！这样就不用研究地图啦</p>
-<p><img src="http://image-up-yun.test.upcdn.net/map.png" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/maplite.png" alt=""></p>
-<p>从深圳湾过了口岸后坐上B2X巴士就可以看深圳海景啦，不一会就到了天水围，然后我们去天水围地铁站附近的坑尾村轻铁站坐小火车去元朗～我们来这边的目的就是拍小火车 哈哈哈！</p>
-<h2 id="轻铁小火车"><a href="#轻铁小火车" class="headerlink" title="轻铁小火车"></a>轻铁小火车</h2><p>这就是小火车啦！果然在路上呢（废话难道在天上）我指的是它在路面上，不用专用铁道隔离，确实很特别。看到它的第一眼有点小激动，咔咔按快门。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1175.jpg" alt=""></p>
-<p>就这样穿越了铁路，来到小月台，火车来啦，快跑！</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1183.jpg" alt=""></p>
-<p>女生骑着单车越过铁路，枕木，碎石子，电线杆子，这画面真的很像日本，或者说像曾经的自己。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1184.jpg" alt=""></p>
-<p>小月台，是一个有故事的地方，看到月台总是回忆起过去的旅途，送别。</p>
-<p>LED牌上的时钟,字体，看起来是那么的和谐。香港就是这样，不需要强调，自然中就带着港味。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1187.jpg" alt=""></p>
-<p>官方叫这个小火车为“轻铁”，它确实很轻，很安静，进站了都察觉不到。不像真正的火车那样轰隆隆的。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1193.jpg" alt=""></p>
-<p>请随我上车吧，一起去元朗。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1196.jpg" alt=""></p>
-<p>上车发现内部其实和地铁差不多呢，座位稍好些。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1204.jpg" alt=""></p>
-<p>我喜欢去列车尾，看着铁轨往后倒退</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1210.jpg" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1202.jpg" alt=""></p>
-<h2 id="元朗"><a href="#元朗" class="headerlink" title="元朗"></a>元朗</h2><p>每次去香港都会路过元朗，但却未曾停留。在巴士上透过窗望着这里，竟有大片的田野和些许工厂，远处是连绵的山。初次看到这种情景会有一种复杂的感觉，不像忙碌的中环那样触不可及，这里显得更亲和，慢节奏，自给自足，回归生活的本真。</p>
-<p>对于元朗的印象，只有元朗月饼～我以为它和屯门，天水围应该差不多～</p>
-<p>这次近距离接触元朗，原来它是这样的。其实还蛮不错的，商店很多，有点像世外桃源。</p>
-<p>等巴士的队列。在香港，巴士站就是长这样，不难理解，位置太窄了嘛。一根杆子上有线路号，线路图是竖着写的，大陆过去的朋友可能会看不懂，习惯就好。所有人都会自觉排队好感+1</p>
-<p>书店开门我一定要去逛逛，不知道为什么，莫名喜欢繁体字。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1215.jpg" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1225.jpg" alt=""></p>
-<p>巴士这词来源于 bus ，看这辆红色大巴像不像英国的大巴，呵呵，你应该懂我说什么。其实香港很多这种双层巴士，它的好处就是占地方小，双层可以载更多的人，向上层空间发展，就像香港的楼宇，钢铁森林。</p>
-<p>香港有很多东西都是延续以前英国殖民时期，比如房屋用尺做单位，买菜称重用磅，这种习惯保留了下来。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1216.jpg" alt=""></p>
-<p>小火车从闹市中穿过</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1219.jpg" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1222.jpg" alt=""></p>
-<p>寸土寸金的香港，最贵的就是地皮，一楼的门面太贵了，也就诞生了“楼上店”。二楼甚至三楼也可以开店，着实神奇。另外，香港的广告牌是允许“伸出来”的，看，它们字体各式各样，是不是很有趣。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1226.jpg" alt=""></p>
-<p>站台上等车的人们</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1230.jpg" alt=""></p>
-<p>火车太高了，不然月台都可以省了呢</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1232.jpg" alt=""></p>
-<p>坐轻铁和地铁购票方式是一样的，上下车都刷一次卡，只是没有闸机，全凭自觉咯。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1233.jpg" alt=""></p>
-<p>法制社会，有规矩才成方圆，法律健全确实可以省去很多麻烦。进入铁轨罚款5000元，在公共场合抽烟丢垃圾也是。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1234.jpg" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1236.jpg" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1243.jpg" alt=""></p>
-<p>香港有无数这样的天桥，虽然看起来有些旧旧的，真的很实用很方便。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1245.jpg" alt=""></p>
-<p>马路上的字会提醒你注意那个方向的车。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1261.jpg" alt=""></p>
-<p>这次来元朗，我对它的印象完全颠覆了，原来并不是之前看到的那样荒郊野岭，这里物价低廉，交通方便，很适合“过日子”。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1246.jpg" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1250.jpg" alt=""></p>
-<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p>想体验轻铁的朋友可以参考以下线路：</p>
-<ul>
-<li>从深圳湾口岸坐B2P/B2X巴士到天盛苑，</li>
-<li>下车就可以看到一座天桥，上到天桥就是天水围地铁站，</li>
-<li>下天桥走到塘尾村轻铁站</li>
-<li>就可以坐上轻铁去元朗了，</li>
-<li>到达元朗轻铁站</li>
-<li>上楼就是元朗地铁站。</li>
-</ul>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1255.jpg" alt=""></p>
-<p>元朗站，既是轻铁站，也是地铁站。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1260.jpg" alt=""></p>
-<p>小小的短短的，有点萌。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1267.jpg" alt=""></p>
-<p>深圳坐地铁去香港一共有两条地铁，一条高铁。最经济的线路就是深圳湾口岸-b2x-天水围-尖东，比福田口岸出发要便宜很多。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">疯言疯语</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/09/港岛漫步行记/">展开全文 >></a>
         </p>
       
 
@@ -797,11 +819,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分享会</a>
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分享会</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -817,11 +843,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
+                <a href="javascript:void(0)" class="js-tag color5">《JavaScript面向对象编程指南》阅读笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">《JavaScript面向对象编程指南》阅读笔记</a>
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -829,11 +855,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">this</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">图解HTTP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">this</a>
+                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -845,19 +875,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">

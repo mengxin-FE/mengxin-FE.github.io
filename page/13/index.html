@@ -141,6 +141,108 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-《JavaScript设计模式与开发实践》阅读笔记-二" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/11/《JavaScript设计模式与开发实践》阅读笔记-二/">《JavaScript设计模式与开发实践》阅读笔记 二</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/11/《JavaScript设计模式与开发实践》阅读笔记-二/" class="archive-article-date">
+  	<time datetime="2017-05-11T15:33:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://b358.photo.store.qq.com/psb?/V10qN6b63c9MK4/F0xAM7SG.aVV9H4C.dQFXFVuW0y3l.7nFFqR7L71pXQ!/b/dGYBAAAAAAAA&bo=qwYABQASgA0FKT0!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<h2 id="this、call和apply"><a href="#this、call和apply" class="headerlink" title="this、call和apply"></a>this、call和apply</h2><p>JavaScript的this总是指向一个对象，而具体指向哪个对象是在运行时基于函数的执行环境动态绑定的。<br>除去不常用的with和eval的情况，this的指向大致分4种</p>
+<ol>
+<li>作为对象的方法调用</li>
+<li>作为普通函数调用</li>
+<li>构造器调用</li>
+<li>Function.prototype.call或Function.prototype.apply调用</li>
+</ol>
+<p>1.当函数作为对象的方法调用，this指向该对象：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    a : <span class="number">1</span>,</span><br><span class="line">    get : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span> === obj)</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.get()</span><br><span class="line"><span class="comment">//Object &#123;a: 1, get: function&#125;</span></span><br><span class="line"><span class="comment">//true</span></span><br><span class="line"><span class="comment">//1</span></span><br></pre></td></tr></table></figure></p>
+<p>2.当函数作为普通函数被调用，不作为对象的属性被调用，此时this指向全局对象，即window对象<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.name = <span class="string">"globalName"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> getName = &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(getName());</span><br><span class="line"><span class="comment">//globalName</span></span><br></pre></td></tr></table></figure></p>
+<p>3.构造器调用<br>大部分JavaScript函数都可以当做构造器使用，构造器的外表和普通函数一样，区别在于被调用的方式。当用new运算符调用函数时，该函数总会返回一个对象，通常情况下构造器里的this就指向返回的这个对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyClass = functio()&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"Bob"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> MyClss()</span><br><span class="line"><span class="built_in">console</span>.log(obj.name)</span><br><span class="line"><span class="comment">//Bob</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果构造器显式返回一个object类型的对象，此次运算结果最终会返回这个对象，而不是之前期待的那样</span></span><br><span class="line"><span class="keyword">var</span> MyClass = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name =<span class="string">"Bob"</span>;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        <span class="comment">//显式返回一个对象</span></span><br><span class="line">        name : <span class="string">"anne"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> MyClass()</span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br><span class="line"><span class="comment">//Object &#123;name: "anne"&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.name)</span><br><span class="line"><span class="comment">//anne</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果构造器返回一个非对象类型的数据，就不会出现问题。this指向返回的对象。</span></span><br><span class="line"><span class="keyword">var</span> MyClass = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">"Bob"</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"anne"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj =<span class="keyword">new</span> MyClass();</span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br><span class="line"><span class="comment">//MyClass &#123;name: "Bob"&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.name)</span><br><span class="line"><span class="comment">//Bob</span></span><br></pre></td></tr></table></figure></p>
+<p>4.Function.prototype.call 或 Function.prototype.apply<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">call() 方法在使用一个指定的<span class="keyword">this</span>值和若干个指定的参数值的前提下调用某个函数或方法.</span><br><span class="line">该方法的作用和 apply() 方法类似，只有一个区别，就是call()方法接受的是若干个参数的列表，而apply()方法接受的是一个包含多个参数的数组。</span><br><span class="line"></span><br><span class="line">fun.call(thisArg[, arg1[, arg2[, ...]]])</span><br><span class="line">参数</span><br><span class="line">thisArg</span><br><span class="line">在fun函数运行时指定的<span class="keyword">this</span>值。需要注意的是，指定的<span class="keyword">this</span>值并不一定是该函数执行时真正的<span class="keyword">this</span>值，如果这个函数处于非严格模式下，则指定为<span class="literal">null</span>和<span class="literal">undefined</span>的<span class="keyword">this</span>值会自动指向全局对象(浏览器中就是<span class="built_in">window</span>对象)，同时值为原始值(数字，字符串，布尔值)的<span class="keyword">this</span>会指向该原始值的自动包装对象。</span><br><span class="line">arg1, arg2, ...</span><br><span class="line">指定的参数列表。</span><br><span class="line">返回值</span><br><span class="line">返回结果包括指定的<span class="keyword">this</span>值和参数。</span><br><span class="line">描述</span><br><span class="line">可以让call()中的对象调用当前对象所拥有的<span class="function"><span class="keyword">function</span>。你可以使用<span class="title">call</span>(<span class="params"></span>)来实现继承：写一个方法，然后让另外一个新的对象来继承它（而不是在新对象中再写一次这个方法）。</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">跟普通的函数调用相比，用<span class="title">Function</span>.<span class="title">prototype</span>.<span class="title">call</span>或<span class="title">Function</span>.<span class="title">prototype</span>.<span class="title">apply</span>可以动态地改变传入函数的<span class="title">this</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">var</span> <span class="title">obj</span> = </span>&#123;</span><br><span class="line">    name : <span class="string">"jay"</span>,</span><br><span class="line">    getName : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj2 =&#123;</span><br><span class="line">    name : <span class="string">"anne"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj.getName());</span><br><span class="line"><span class="comment">//jay</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.getName.call(obj2))</span><br><span class="line"><span class="comment">//anne</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//丢失的this，这是一个常见问题</span></span><br><span class="line"><span class="keyword">var</span> obj =&#123;</span><br><span class="line">    myName : <span class="string">"Bob"</span>,</span><br><span class="line">    getName : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.myName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj.getName());  <span class="comment">//此时,getName作为对象的方法被调用，this指向该对象也就是obj，输出"Bob"</span></span><br><span class="line"><span class="comment">//当调用obj.getName时，getName方法是作为obj对象的属性被调用的，此时this指向obj对象，所以obj.getName()输出"Bob"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> getName2 = obj.getName;</span><br><span class="line"></span><br><span class="line"><span class="comment">//当另外一个变量getName2引用obj.getName，并且调用getName2时，此时是普通函数调用方式，this指向全局window，所以输出undefined</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(getName2);  <span class="comment">//function ()&#123;return this.myName;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(getName2());    <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="call与apply的区别"><a href="#call与apply的区别" class="headerlink" title="call与apply的区别"></a>call与apply的区别</h3><p>在ECMAScript3中给Function的原型定义了两个方法，Function.prototype.call 和Function.prototype.apply，作用相同，仅仅是传入参数形式不同。<br>apply接受两个参数，第一个参数指定了函数体内this对象的指向，第二个参数为一个带下标的集合，这个集合可以是数组，也可以是类数组，apply方法把这个集合中的元素作为参数传递给被调用的函数：<br>当使用call或apply的时候，如果传入的第一个参数为null，函数体内的this会指向默认的宿主对象，即window</p>
+<pre><code>var func = function(a,b,c){
+    console.log([a,b,c]);
+}
+
+func.apply(null,[1,2,3]);    //[1,2,3]
+</code></pre><p>有时使用call或apply的目的不在于指定this，而是借用其他对象的方法，那我们可以传入null来替代某个具体对象<br>Math.max.apply(null,[1,2,5,3,4]);   //5</p>
+<h3 id="call和apply的用途"><a href="#call和apply的用途" class="headerlink" title="call和apply的用途"></a>call和apply的用途</h3><p>1.改变this的指向</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 =&#123;</span><br><span class="line">    name : <span class="string">"anne"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj2 =&#123;</span><br><span class="line">    name : <span class="string">"Bob"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.name = <span class="string">"jack"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line">getName() <span class="comment">//函数作为普通函数被调用,this指向全局window 输出 "jack"</span></span><br><span class="line">getName.call(obj1)  <span class="comment">//"anne"</span></span><br><span class="line"><span class="comment">//当执行getName.call(obj1) getName函数体内的this指向obj1对象</span></span><br><span class="line">getName.call(obj2)  <span class="comment">//"Bob"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>this被不经意改变的场景：比如有一个div节点，div节点的onclick事件中的this本来指向该div</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"div1"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.id);   <span class="comment">//输出div1</span></span><br><span class="line">&#125;</span><br><span class="line">假如该事件函数中有一个内部函数func，在事件内部调用func函数时，func函数体内的<span class="keyword">this</span>就指向<span class="built_in">window</span>，而不是我们预期的div</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"div1"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.id);   <span class="comment">//输出div1</span></span><br><span class="line">    <span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.id)    <span class="comment">//输出undefined</span></span><br><span class="line">    &#125;</span><br><span class="line">    func()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">这时候使用call来修正func函数内的<span class="keyword">this</span></span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"div1"</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.id)    <span class="comment">//输出undefined</span></span><br><span class="line">    &#125;</span><br><span class="line">    func.call(<span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.Function.prototype.bind  用来指定函数内部的this指向<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.bind = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">var</span> self = <span class="keyword">this</span>;  <span class="comment">//保存原函数</span></span><br><span class="line">   <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  <span class="comment">//返回一个新函数</span></span><br><span class="line">      <span class="keyword">return</span> self.apply(context , <span class="built_in">arguments</span>);<span class="comment">//执行新函数的时候，会把之前传入的context当作新函数体内的this</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj =&#123;</span><br><span class="line">  name : <span class="string">"jay"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;.bind(obj);</span><br><span class="line">func()</span><br><span class="line"><span class="comment">//jay</span></span><br><span class="line"></span><br><span class="line">通过<span class="built_in">Function</span>.prototype.bind来<span class="string">"包装"</span>func函数，并且传入一个对象context当作参数，这个context对象就是我们想修正的<span class="keyword">this</span>对象</span><br><span class="line"></span><br><span class="line">在<span class="built_in">Function</span>.prototype.bind内部，我们先把func函数的引用保存起来，然后返回一个新函数，在将来执行func函数时，实际上先执行的是刚返回的新函数，在新函数内部，self.apply(context,<span class="built_in">arguments</span>)这句代码才是执行原来的func函数，并且指定context对象为func函数体内的<span class="keyword">this</span></span><br></pre></td></tr></table></figure></p>
+<p>3.借用其他对象的方法</p>
+<p>一、借用构造函数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> A = <span class="function"><span class="keyword">function</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> B = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  A.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">B.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> B(<span class="string">"jay"</span>)</span><br><span class="line"><span class="built_in">console</span>.log(b.getName())</span><br><span class="line"><span class="comment">//jay</span></span><br></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">《JavaScript设计模式与开发实践》</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/11/《JavaScript设计模式与开发实践》阅读笔记-二/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-《JavaScript设计模式与开发实践》阅读笔记-一" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -517,109 +619,6 @@ forEach():使用回调函数遍历每个成员
 
 
   
-    <article id="post-《JavaScript面向对象编程指南》阅读笔记-七" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/18/《JavaScript面向对象编程指南》阅读笔记-七/">《JavaScript面向对象编程指南》阅读笔记 七</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/18/《JavaScript面向对象编程指南》阅读笔记-七/" class="archive-article-date">
-  	<time datetime="2017-03-18T13:06:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/erHdLVUPUtgk2G4g4vl7jxrVMA7h*sPOqH5cicAafsU!/b/dGkBAAAAAAAA&bo=ewiAAucPsAQBOLI!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h2 id="BOM和DOM"><a href="#BOM和DOM" class="headerlink" title="BOM和DOM"></a>BOM和DOM</h2><p>检查一个节点是否存在子节点，可以调用该节点的hasChildNodes()方法</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.documentElement.hasChildNodes()</span><br><span class="line"><span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<p>访问子元素： .childNodes()</p>
-<p>访问父元素： .parentNode()</p>
-<p>检测元素中是否存在属性： hasAttributes()</p>
-<p>获取元素的属性值： getAttribute</p>
-<p>访问标签中的内容： .textContent  低版本IE可用innerText  .nodeValue</p>
-<p>返回下一个同胞： .nextSibling</p>
-<p>返回前一个同胞： .previousSibling</p>
-<p>创建新节点： .createElement()  .createTextNode()</p>
-<p>插入新元素到末尾 .appendChild()</p>
-<p>在您指定的已有子节点之前插入新的子节点: .insertBefore()</p>
-<p>用新节点替换某个子节点: replaceChild()</p>
-<p>克隆现有节点： cloneNode()，该方法有一个布尔型参数(true = 深拷贝，包括所有子节点；false = 浅拷贝，只针对当前节点)</p>
-<p>移除节点： .removeChild()</p>
-<p>替换节点： .replaceChild()</p>
-<p>添加事件监听： .addEventListener()</p>
-<pre><code>item.addEventListener(&quot;click&quot; , 处理事件的函数 )
-</code></pre><p><code>IE9以前没有addEventListener()方法</code>，只可以用attachEvent()方法</p>
-<p>IE事件对象中，没有用于反映触发事件目标元素的target属性，但可以用它的等效属性srcElement。</p>
-<p>移除事件监听： .removeEventListener(“click” , 处理事件的函数 ) IE使用detachEvent()方法</p>
-<p>阻止事件冒泡： .stopPropagation() IE没有此方法，可以将cancelBubble设置为true</p>
-<p>阻止默认行为： .preventDefault() IE没有此方法，可以将returnValue设置为false</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">evt</span>)</span>&#123;</span><br><span class="line">   <span class="comment">//prep work</span></span><br><span class="line">   evt = evt || <span class="built_in">window</span>.event;</span><br><span class="line">   <span class="keyword">var</span> target =evt.target || evt.srcElement;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//actual callback work</span></span><br><span class="line">   <span class="built_in">console</span>.log(target.nodeName)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//start listening for click events</span></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">document</span>.addEventListener)&#123;</span><br><span class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">"click"</span>,callback,<span class="literal">false</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(docunment.attachEvent)&#123;<span class="comment">//old IE</span></span><br><span class="line">    <span class="built_in">document</span>.attachEvent(<span class="string">"onclick"</span>,callback);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">document</span>.onclick = callback;<span class="comment">//ancient</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="XMLHttpRequest对象"><a href="#XMLHttpRequest对象" class="headerlink" title="XMLHttpRequest对象"></a>XMLHttpRequest对象</h2><p>利用JavaScript将HTTP请求发送给服务端，然后根据服务器端的响应来局部更新页面。</p>
-<p>Ajax就是异步JavaScript，在发送HTTP请求后不需要停下来等待服务器响应，可以继续执行其他任务，待服务器处理完毕返回时再处理。</p>
-<p>XHR对象就是由JavaScript创建的。</p>
-<p>XHR对象用法步骤：<br>1.发送请求。在这步，需要对XHR对象的构建，并设置事件监听。<br>2.处理响应。在这步，事件监听器会在服务器的响应信息到达后处理相关代码。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//兼容IE低版本ActiveX对象</span></span><br><span class="line"><span class="keyword">var</span> ids = [<span class="string">"MSXML2.XMLHTTP.3.0"</span>,<span class="string">"MSXML2.XMLHTTP"</span>,<span class="string">"Microsoft.XMLHTTP"</span>];</span><br><span class="line"><span class="comment">//创建xhr对象</span></span><br><span class="line"><span class="keyword">var</span> xhr;</span><br><span class="line"><span class="keyword">if</span>(XMLHttpRequest)&#123;</span><br><span class="line">   	xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	IE:<span class="comment">//try to find an ActiveX object to use</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;ids.length;i++)&#123;</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			xhr = <span class="keyword">new</span> ActiveXObject(ids[<span class="number">1</span>]);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;<span class="keyword">catch</span>(e)&#123;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//为该对象设置触发readystatechange事件的监听器</span></span><br><span class="line">xhr.onreadystatechange = myCallback;</span><br><span class="line">xhr.open(<span class="string">"GET请求的类型"</span>,<span class="string">"somefile.txt请求的URL"</span>,<span class="literal">true</span>)</span><br><span class="line">xhr.send(<span class="string">"发送请求时可附带数据"</span>)</span><br><span class="line"><span class="comment">//请求被发送出去后，我们继续执行后续任务，直到服务器端响应后，会自动启动回调函数myCallback</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//每个XHR对象中有一个readyState属性。一旦改变了该属性的值，就会触发readystatechange事件，可能的值如下：</span></span><br><span class="line">&lt;li&gt;<span class="number">0</span>----为初始化状态&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">&lt;li&gt;1----载入请求状态&lt;/</span>li&gt;</span><br><span class="line">&lt;li&gt;<span class="number">2</span>----载入完成状态&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">&lt;li&gt;3----请求交互状态&lt;/</span>li&gt;</span><br><span class="line">&lt;li&gt;<span class="number">4</span>----请求完成状态&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function myCallback()&#123;</span></span><br><span class="line"><span class="regexp">   if(xhr.readyState &lt; 4)&#123;</span></span><br><span class="line"><span class="regexp">      return;/</span><span class="regexp">/not ready yet</span></span><br><span class="line"><span class="regexp">   &#125;</span></span><br><span class="line"><span class="regexp">   if(xhr.status !== 200)&#123;</span></span><br><span class="line"><span class="regexp">      alert("Error!");</span></span><br><span class="line"><span class="regexp">      retrun;</span></span><br><span class="line"><span class="regexp">   &#125;</span></span><br><span class="line"><span class="regexp">   /</span><span class="regexp">/all is fine, do the work</span></span><br><span class="line"><span class="regexp">   alert(xhr.responseText)</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/当readyState的值为4时，意味着服务器端的响应信息response已经返回，可以开始处理了。</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/在myCallback函数中，除了确定readyState的值是4之外，还必须检查HTTP请求的状态码，通过XHR对象的status属性获取，正常情况应该是200。</span></span><br><span class="line"><span class="regexp"></span></span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">《JavaScript面向对象编程指南》阅读笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/18/《JavaScript面向对象编程指南》阅读笔记-七/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/12/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/14/">Next &raquo;</a>
@@ -730,11 +729,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分享会</a>
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分享会</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -750,11 +753,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
+                <a href="javascript:void(0)" class="js-tag color5">《JavaScript面向对象编程指南》阅读笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">《JavaScript面向对象编程指南》阅读笔记</a>
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -762,11 +765,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">this</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">图解HTTP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">this</a>
+                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -778,19 +785,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">

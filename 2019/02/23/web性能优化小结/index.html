@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="我的地盘听我的">
 <meta property="og:description" content="影响因素影响页面加载慢的原因：  CDN 服务器带宽 网络状况 静态资源请求数量太多 静态资源文件体积大 浏览器对同一域名并发请求数限制 数据库操作  网络缩短请求响应时间、减少请求数、减少请求大小。  域名收敛  网络情况差代表着，花销在域名解析上的时间会凸显，特别是当请求域名在没有被缓存的情况下（比如首次访问）  考虑使用SPDY协议、使用HTTPS、HTTP2.0协议  可以提升网络链路的复">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-23T08:29:39.771Z">
+<meta property="og:updated_time" content="2019-02-23T08:34:32.944Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="web性能优化小结">
 <meta name="twitter:description" content="影响因素影响页面加载慢的原因：  CDN 服务器带宽 网络状况 静态资源请求数量太多 静态资源文件体积大 浏览器对同一域名并发请求数限制 数据库操作  网络缩短请求响应时间、减少请求数、减少请求大小。  域名收敛  网络情况差代表着，花销在域名解析上的时间会凸显，特别是当请求域名在没有被缓存的情况下（比如首次访问）  考虑使用SPDY协议、使用HTTPS、HTTP2.0协议  可以提升网络链路的复">
@@ -219,13 +219,15 @@
 <h2 id="离线数据缓存localStorage"><a href="#离线数据缓存localStorage" class="headerlink" title="离线数据缓存localStorage"></a>离线数据缓存localStorage</h2><p>json 数据的缓存可以用 localStorage 缓存请求下来的数据，可以在首次显示时先用本地数据，再请求更新，这都由前端 JS 控制。</p>
 <h2 id="离线缓存-manifest"><a href="#离线缓存-manifest" class="headerlink" title="离线缓存 manifest"></a>离线缓存 manifest</h2><p>移动端或Hybrid应用，可以设置离线文件或离线包机制让静态资源请求从本地读取，加快资源载入速度，并实现离线更新</p>
 <h1 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h1><ul>
-<li>HTML代码压缩，去除注释、空白符</li>
-<li>注重标签的语义化，保持用最简洁的标签完成所需的功能</li>
-<li>最小化iframes的数目 , iframe 内资源的下载进程会阻塞父页面静态资源的下载与 CSS 及 HTML DOM 的解析</li>
+<li><p>HTML代码压缩，去除注释、空白符</p>
+</li>
+<li><p>注重标签的语义化，保持用最简洁的标签完成所需的功能</p>
+</li>
+<li><p>最小化iframes的数目 , iframe 内资源的下载进程会阻塞父页面静态资源的下载与 CSS 及 HTML DOM 的解析</p>
+</li>
 </ul>
 <h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><ul>
-<li><p>压缩CSS代码，排除重复的、未使用的CSS样式</p>
-</li>
+<li>压缩CSS代码，排除重复的、未使用的CSS样式</li>
 <li><p>使用postCSS约束CSS代码</p>
 </li>
 <li><p>将CSS标签放在JavaScript标签之前</p>
@@ -252,17 +254,28 @@
 </ul>
 <h1 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h1><ul>
 <li>JS代码压缩，js文件打包成一个文件，减小 JavaScript 包的大小，代码分模块加载</li>
-<li>使用ES Lint 进行代码检查</li>
-<li>处理长列表或者大量DOM元素时，不要绑定太多的事件监听函数。节省内存和减少监听事件的注册</li>
-<li>利用throttle和debounce函数去处理频发触发，但是不需要频发执行的函数，例如scroll,touchmove例如设置每隔16ms（60帧的帧间隔为16.7ms，因此可以合理地设置为16ms）才进行一次事件处理，避免频繁的事件调用导致移动端页面卡顿。</li>
-<li>利用setTimeout代替setInterval</li>
-<li>合理缓存DOM对象</li>
-<li>避免使用eval、with，使用join代替连接符+，推荐使用ECMAScript 6的字符串模板</li>
-<li>尽量使用ECMAScript 6+的特性来编程</li>
-<li>考虑将高耗时的 JavaScript 放到 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">Web Worker</a> 或通过 Service Worker 来缓存字体，样式，JavaScript 和图片等资源文件。</li>
-<li>考虑将 JavaScript 转换为 <a href="https://webassembly.org/" target="_blank" rel="noopener">WebAssembly</a>，这是一种二进制指令格式，可以使用 C/C++/Rust 等高级语言进行编译。</li>
-<li>不使用document.write，避免在body中部嵌入多个JavaScript代码</li>
-<li>检查JavaScript文件中的性能问题。</li>
+<li><p>使用ES Lint 进行代码检查</p>
+</li>
+<li><p>处理长列表或者大量DOM元素时，不要绑定太多的事件监听函数。节省内存和减少监听事件的注册</p>
+</li>
+<li><p>利用throttle和debounce函数去处理频发触发，但是不需要频发执行的函数，例如scroll,touchmove例如设置每隔16ms（60帧的帧间隔为16.7ms，因此可以合理地设置为16ms）才进行一次事件处理，避免频繁的事件调用导致移动端页面卡顿。</p>
+</li>
+<li><p>利用setTimeout代替setInterval</p>
+</li>
+<li><p>合理缓存DOM对象</p>
+</li>
+<li><p>避免使用eval、with，使用join代替连接符+，推荐使用ECMAScript 6的字符串模板</p>
+</li>
+<li><p>尽量使用ECMAScript 6+的特性来编程</p>
+</li>
+<li><p>考虑将高耗时的 JavaScript 放到 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">Web Worker</a> 或通过 Service Worker 来缓存字体，样式，JavaScript 和图片等资源文件。</p>
+</li>
+<li><p>考虑将 JavaScript 转换为 <a href="https://webassembly.org/" target="_blank" rel="noopener">WebAssembly</a>，这是一种二进制指令格式，可以使用 C/C++/Rust 等高级语言进行编译。</p>
+</li>
+<li><p>不使用document.write，避免在body中部嵌入多个JavaScript代码</p>
+</li>
+<li><p>检查JavaScript文件中的性能问题。</p>
+</li>
 </ul>
 <h1 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h1><ul>
 <li><p>使用工具压缩图片体积</p>
@@ -410,7 +423,7 @@
 <p><a href="https://mp.weixin.qq.com/s/JFjgRkub4K-QW6nEKQQXzQ" target="_blank" rel="noopener">手机活动页图片性能优化分享</a></p>
 <p><a href="https://github.com/xitu/gold-miner/blob/master/TODO1/front-end-performance-checklist-2019-pdf-pages-4.md" target="_blank" rel="noopener">2019 前端性能优化年度总结</a></p>
 <p><a href="https://juejin.im/post/5c46cbaee51d453f45612a2c#heading-16" target="_blank" rel="noopener">2019年前端性能优化清单</a></p>
-<p>[HTTP/2](</p>
+<p><a href="https://aotu.io/notes/2016/06/14/http2/" target="_blank" rel="noopener">HTTP/2</a></p>
 
       
 
@@ -524,6 +537,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/02/24/《React状态管理与同构实战》读书笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          《React状态管理与同构实战》读书笔记
+        
+      </div>
+    </a>
   
   
     <a href="/2019/02/08/小程序开发小结/" id="article-nav-older" class="article-nav-link-wrap">
@@ -666,11 +688,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分享会</a>
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分享会</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -686,11 +712,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
+                <a href="javascript:void(0)" class="js-tag color5">《JavaScript面向对象编程指南》阅读笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">《JavaScript面向对象编程指南》阅读笔记</a>
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -698,11 +724,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">this</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">图解HTTP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">this</a>
+                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -714,19 +744,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">移动前端开发进阶之路</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
               <li class="article-tag-list-item">
