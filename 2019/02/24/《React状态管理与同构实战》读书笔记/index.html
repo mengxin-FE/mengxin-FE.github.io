@@ -17,7 +17,7 @@
 <meta property="og:description" content="著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。 传统模式下的多个页面被抽象成一个个视图，原来的页面跳转由js负责切换视图，原来向后端请求整个页面，现在变成向后端请求数据接口。 但这种方式的问题在于如何到达其他页面？为了实现传统URL的特点，需要在前端模拟一套路由，有了路由即可通过URL直接进入某个视图。——React Router 我们可以将界">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551612229017&di=6acbb56e00836975626351208aee5780&imgtype=0&src=http%3A%2F%2Fpic1.zhimg.com%2Fv2-46509713ee9311cbdc9276253faf9e6a_1200x500.jpg">
-<meta property="og:updated_time" content="2019-03-03T08:37:15.883Z">
+<meta property="og:updated_time" content="2019-03-12T14:59:53.059Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《React状态管理与同构实战》读书笔记">
 <meta name="twitter:description" content="著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。 传统模式下的多个页面被抽象成一个个视图，原来的页面跳转由js负责切换视图，原来向后端请求整个页面，现在变成向后端请求数据接口。 但这种方式的问题在于如何到达其他页面？为了实现传统URL的特点，需要在前端模拟一套路由，有了路由即可通过URL直接进入某个视图。——React Router 我们可以将界">
@@ -249,7 +249,26 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> updateStateTree = <span class="function"><span class="keyword">function</span> (<span class="params"> previousState = &#123;&#125; , action </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> ( action.type )&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'action1'</span>:</span><br><span class="line">        	<span class="keyword">return</span> newState1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当无法匹配action时，默认返回原previousState参数，previousState设置了默认值代表初始状态。</p>
 <p>当通过Redux的createStore方法创建了store实例后，使用store.dispatch派发一个描述变化的action（该action需要开发者根据业务编写），reducer函数执行处理变化和更新数据（reducer也需要开发者编写）当页面数据状态得以更新时，store.subscribe( callbackFunction ) 方法订阅数据的更新，并由callbackFunction完成UI更新。</p>
-<h5 id="redux是独立的，可以和其他框架一起使用"><a href="#redux是独立的，可以和其他框架一起使用" class="headerlink" title="redux是独立的，可以和其他框架一起使用"></a>redux是独立的，可以和其他框架一起使用</h5>
+<h5 id="redux是独立的，可以和其他框架一起使用"><a href="#redux是独立的，可以和其他框架一起使用" class="headerlink" title="redux是独立的，可以和其他框架一起使用"></a>redux是独立的，可以和其他框架一起使用</h5><p>当创建一个store时，需要编写reducer函数来进行页面数据状态的变更，reducer负责根据相应的action 和 previousState 推算出最新的状态数据，且reducer必须保持纯函数特性。</p>
+<h5 id="Redux有点像发布订阅系统，但并不完全是。"><a href="#Redux有点像发布订阅系统，但并不完全是。" class="headerlink" title="Redux有点像发布订阅系统，但并不完全是。"></a>Redux有点像发布订阅系统，但并不完全是。</h5><p>为了自动触发页面更新，需要使用store.subscribe方法注册每一次数据更新后的回调逻辑，这种回调逻辑一般是对页面的渲染，也就是react需要衔接的部分。该方法接收一个响应函数作为参数，该函数会在每次派发action并更新完状态后调用，使用store.getState()获取最新数据，完成正确的页面响应。</p>
+<p>正是因为有了store.subscribe ，store数据更新后可以直接触发相关组件重新渲染。</p>
+<h5 id="函数式编程之不可变性和共享"><a href="#函数式编程之不可变性和共享" class="headerlink" title="函数式编程之不可变性和共享"></a>函数式编程之不可变性和共享</h5><p>保证数据的不可变性好处在于可回溯，副作用少。而js的引用类型即共享内存空间，我们需要注意它们的作用域。</p>
+<p>在Redux中保持不可变性——reducer在更新过程中，不直接更改原有对象，而是创建一个新的对象用来承载新的数据。亦可使用immutable.js 不可变的数据操作类库。</p>
+<h3 id="Redux-中间件和异步"><a href="#Redux-中间件和异步" class="headerlink" title="Redux 中间件和异步"></a>Redux 中间件和异步</h3><p>使得可以在派发action和执行reducer这两步<strong>之间</strong>进行更多的操作，例如日志记录，调用异步接口等。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个应用了中间件的store</span></span><br><span class="line"><span class="keyword">const</span> store = createStore( reducer , preloadedState , applyMiddleware(middleware) );</span><br><span class="line"><span class="comment">// applyMiddleware(middleware)即接入中间件</span></span><br></pre></td></tr></table></figure>
+<p>Redux-logger</p>
+<p>Redux-thunk 解决异步场景，使得dispatch可以接收一个函数作为参数，在函数体内进行异步操作，并在异步完成后再派发action。</p>
+<h5 id="Redux架构回顾"><a href="#Redux架构回顾" class="headerlink" title="Redux架构回顾"></a>Redux架构回顾</h5><ul>
+<li>确定所需的状态数据</li>
+<li>根据交互和业务需求，分析确定action</li>
+<li>根据不同的action，完成reducer函数的编写</li>
+<li>根据reducer等创建store</li>
+<li>订阅数据更新，完成视图渲染</li>
+</ul>
+<p>在Redux应用中，需要创建一个store，用来存放应用中必要的state。store有getState，dispatch，subscribe，replaceReducer等几个方法。</p>
+<p>getState用来返回应用当前的页面数据状态，dispatch用来派发action，这是引起页面数据状态更新的唯一途径，它引发reducer函数，根据action处理当前的状态。dispatch的返回值为相关action，而action是描述应用变化的js对象，必须含有有效的type属性。</p>
+<h5 id="react-redux-库"><a href="#react-redux-库" class="headerlink" title="react-redux 库"></a>react-redux 库</h5><p>它避免了在代码中直接使用store.subscribe ，store.getState，对这些方法进行了封装和增强，对React 和 Redux进行了连接。</p>
+
       
 
       
@@ -363,9 +382,18 @@
   
 <nav id="article-nav">
   
+    <a href="/2019/03/17/文件上传下载及读取等小结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          文件上传下载及读取等小结
+        
+      </div>
+    </a>
+  
   
     <a href="/2019/02/23/web性能优化小结/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">web性能优化小结</div>
+      <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -496,19 +524,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Sass</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
+                <a href="javascript:void(0)" class="js-tag color5">Sass</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -517,6 +537,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -532,15 +560,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">react</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">《你不知道的JavaScript》</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">this</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -564,11 +592,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
               </li>
              
               <li class="article-tag-list-item">

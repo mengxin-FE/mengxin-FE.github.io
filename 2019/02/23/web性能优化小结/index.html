@@ -6,19 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>web性能优化小结 | 我的地盘听我的</title>
+  <title>我的地盘听我的</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="影响因素影响页面加载慢的原因：  CDN 服务器带宽 网络状况 静态资源请求数量太多 静态资源文件体积大 浏览器对同一域名并发请求数限制 数据库操作  网络缩短请求响应时间、减少请求数、减少请求大小。  域名收敛  网络情况差代表着，花销在域名解析上的时间会凸显，特别是当请求域名在没有被缓存的情况下（比如首次访问）  考虑使用SPDY协议、使用HTTPS、HTTP2.0协议  可以提升网络链路的复">
-<meta name="keywords" content="性能优化">
 <meta property="og:type" content="article">
-<meta property="og:title" content="web性能优化小结">
+<meta property="og:title" content="我的地盘听我的">
 <meta property="og:url" content="http://yoursite.com/2019/02/23/web性能优化小结/index.html">
 <meta property="og:site_name" content="我的地盘听我的">
 <meta property="og:description" content="影响因素影响页面加载慢的原因：  CDN 服务器带宽 网络状况 静态资源请求数量太多 静态资源文件体积大 浏览器对同一域名并发请求数限制 数据库操作  网络缩短请求响应时间、减少请求数、减少请求大小。  域名收敛  网络情况差代表着，花销在域名解析上的时间会凸显，特别是当请求域名在没有被缓存的情况下（比如首次访问）  考虑使用SPDY协议、使用HTTPS、HTTP2.0协议  可以提升网络链路的复">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-23T08:34:32.944Z">
+<meta property="og:updated_time" content="2019-03-17T05:53:53.659Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="web性能优化小结">
+<meta name="twitter:title" content="我的地盘听我的">
 <meta name="twitter:description" content="影响因素影响页面加载慢的原因：  CDN 服务器带宽 网络状况 静态资源请求数量太多 静态资源文件体积大 浏览器对同一域名并发请求数限制 数据库操作  网络缩短请求响应时间、减少请求数、减少请求大小。  域名收敛  网络情况差代表着，花销在域名解析上的时间会凸显，特别是当请求域名在没有被缓存的情况下（比如首次访问）  考虑使用SPDY协议、使用HTTPS、HTTP2.0协议  可以提升网络链路的复">
   
     <link rel="alternative" href="/atom.xml" title="我的地盘听我的" type="application/atom+xml">
@@ -144,21 +143,6 @@
             <article id="post-web性能优化小结" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      web性能优化小结
-    </h1>
-  
-
-        
-        <a href="/2019/02/23/web性能优化小结/" class="archive-article-date">
-  	<time datetime="2019-02-23T08:26:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-23</time>
-</a>
-        
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="影响因素"><a href="#影响因素" class="headerlink" title="影响因素"></a>影响因素</h1><p>影响页面加载慢的原因：</p>
@@ -219,15 +203,13 @@
 <h2 id="离线数据缓存localStorage"><a href="#离线数据缓存localStorage" class="headerlink" title="离线数据缓存localStorage"></a>离线数据缓存localStorage</h2><p>json 数据的缓存可以用 localStorage 缓存请求下来的数据，可以在首次显示时先用本地数据，再请求更新，这都由前端 JS 控制。</p>
 <h2 id="离线缓存-manifest"><a href="#离线缓存-manifest" class="headerlink" title="离线缓存 manifest"></a>离线缓存 manifest</h2><p>移动端或Hybrid应用，可以设置离线文件或离线包机制让静态资源请求从本地读取，加快资源载入速度，并实现离线更新</p>
 <h1 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h1><ul>
-<li><p>HTML代码压缩，去除注释、空白符</p>
-</li>
-<li><p>注重标签的语义化，保持用最简洁的标签完成所需的功能</p>
-</li>
-<li><p>最小化iframes的数目 , iframe 内资源的下载进程会阻塞父页面静态资源的下载与 CSS 及 HTML DOM 的解析</p>
-</li>
+<li>HTML代码压缩，去除注释、空白符</li>
+<li>注重标签的语义化，保持用最简洁的标签完成所需的功能</li>
+<li>最小化iframes的数目 , iframe 内资源的下载进程会阻塞父页面静态资源的下载与 CSS 及 HTML DOM 的解析</li>
 </ul>
 <h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><ul>
-<li>压缩CSS代码，排除重复的、未使用的CSS样式</li>
+<li><p>压缩CSS代码，排除重复的、未使用的CSS样式</p>
+</li>
 <li><p>使用postCSS约束CSS代码</p>
 </li>
 <li><p>将CSS标签放在JavaScript标签之前</p>
@@ -254,28 +236,17 @@
 </ul>
 <h1 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h1><ul>
 <li>JS代码压缩，js文件打包成一个文件，减小 JavaScript 包的大小，代码分模块加载</li>
-<li><p>使用ES Lint 进行代码检查</p>
-</li>
-<li><p>处理长列表或者大量DOM元素时，不要绑定太多的事件监听函数。节省内存和减少监听事件的注册</p>
-</li>
-<li><p>利用throttle和debounce函数去处理频发触发，但是不需要频发执行的函数，例如scroll,touchmove例如设置每隔16ms（60帧的帧间隔为16.7ms，因此可以合理地设置为16ms）才进行一次事件处理，避免频繁的事件调用导致移动端页面卡顿。</p>
-</li>
-<li><p>利用setTimeout代替setInterval</p>
-</li>
-<li><p>合理缓存DOM对象</p>
-</li>
-<li><p>避免使用eval、with，使用join代替连接符+，推荐使用ECMAScript 6的字符串模板</p>
-</li>
-<li><p>尽量使用ECMAScript 6+的特性来编程</p>
-</li>
-<li><p>考虑将高耗时的 JavaScript 放到 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">Web Worker</a> 或通过 Service Worker 来缓存字体，样式，JavaScript 和图片等资源文件。</p>
-</li>
-<li><p>考虑将 JavaScript 转换为 <a href="https://webassembly.org/" target="_blank" rel="noopener">WebAssembly</a>，这是一种二进制指令格式，可以使用 C/C++/Rust 等高级语言进行编译。</p>
-</li>
-<li><p>不使用document.write，避免在body中部嵌入多个JavaScript代码</p>
-</li>
-<li><p>检查JavaScript文件中的性能问题。</p>
-</li>
+<li>使用ES Lint 进行代码检查</li>
+<li>处理长列表或者大量DOM元素时，不要绑定太多的事件监听函数。节省内存和减少监听事件的注册</li>
+<li>利用throttle和debounce函数去处理频发触发，但是不需要频发执行的函数，例如scroll,touchmove例如设置每隔16ms（60帧的帧间隔为16.7ms，因此可以合理地设置为16ms）才进行一次事件处理，避免频繁的事件调用导致移动端页面卡顿。</li>
+<li>利用setTimeout代替setInterval</li>
+<li>合理缓存DOM对象</li>
+<li>避免使用eval、with，使用join代替连接符+，推荐使用ECMAScript 6的字符串模板</li>
+<li>尽量使用ECMAScript 6+的特性来编程</li>
+<li>考虑将高耗时的 JavaScript 放到 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">Web Worker</a> 或通过 Service Worker 来缓存字体，样式，JavaScript 和图片等资源文件。</li>
+<li>考虑将 JavaScript 转换为 <a href="https://webassembly.org/" target="_blank" rel="noopener">WebAssembly</a>，这是一种二进制指令格式，可以使用 C/C++/Rust 等高级语言进行编译。</li>
+<li>不使用document.write，避免在body中部嵌入多个JavaScript代码</li>
+<li>检查JavaScript文件中的性能问题。</li>
 </ul>
 <h1 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h1><ul>
 <li><p>使用工具压缩图片体积</p>
@@ -463,17 +434,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">性能优化</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -680,19 +640,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Sass</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
+                <a href="javascript:void(0)" class="js-tag color5">Sass</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -701,6 +653,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -716,15 +676,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">react</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">《你不知道的JavaScript》</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">this</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -748,11 +708,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -141,6 +141,356 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-webpack-学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/17/webpack-学习笔记/">webpack 学习笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/17/webpack-学习笔记/" class="archive-article-date">
+  	<time datetime="2019-03-17T05:57:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://image-up-yun.test.upcdn.net/屏幕快照 2019-03-17 下午1.59.19.png" alt=""></p>
+<h1 id="webpack学习笔记"><a href="#webpack学习笔记" class="headerlink" title="webpack学习笔记"></a>webpack学习笔记</h1><p>想想webpack是一个管道，有入口和出口。</p>
+<h2 id="核心理论"><a href="#核心理论" class="headerlink" title="核心理论"></a>核心理论</h2><h3 id="Entry-入口"><a href="#Entry-入口" class="headerlink" title="Entry 入口"></a>Entry 入口</h3><p>未打包的目录，指定一个入口让webpack来操作它</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Output：输出"><a href="#Output：输出" class="headerlink" title="Output：输出"></a>Output：输出</h3><p>打包完成输出的目录，指定一个目录告诉webpack输出到哪儿，及命名规则</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),	<span class="comment">// 路径</span></span><br><span class="line">    filename: <span class="string">'my-first-webpack.bundle.js'</span>	<span class="comment">// 命名</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Loaders：loader"><a href="#Loaders：loader" class="headerlink" title="Loaders：loader"></a>Loaders：loader</h3><p>让webpack支持js和JSON以外的文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'my-first-webpack.bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123; <span class="attr">test</span>: <span class="regexp">/\.txt$/</span>, <span class="attr">use</span>: <span class="string">'raw-loader'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">上面的配置中定义了一个<span class="built_in">module</span>.rules属性，这个属性又有两个属性：test和use。这就好像告诉webpack编译器说：</span><br><span class="line"></span><br><span class="line">”Hi，webpack编译器，当你发现任何后缀为.txt的文件时，请使用raw-loader先转换一下，然后再把转换后的内容添加到打包文件中。“</span><br></pre></td></tr></table></figure>
+<h3 id="Plugins：插件"><a href="#Plugins：插件" class="headerlink" title="Plugins：插件"></a>Plugins：插件</h3><p>使用require引用插件，在plugins数组中添加插件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>); <span class="comment">//installed via npm</span></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>); <span class="comment">//to access built-in plugins</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123; <span class="attr">test</span>: <span class="regexp">/\.txt$/</span>, <span class="attr">use</span>: <span class="string">'raw-loader'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;<span class="attr">template</span>: <span class="string">'./src/index.html'</span>&#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">在上面的例子中，使用html-webpack-plugin生成一个HTML文件，这个文件就是你的应用程序。在其中已经自动引用好了打包的文件。</span><br></pre></td></tr></table></figure>
+<h3 id="Mode：模式"><a href="#Mode：模式" class="headerlink" title="Mode：模式"></a>Mode：模式</h3><p>通过设置<code>mode</code>属性，可以启动webpack内置的优化。</p>
+<h3 id="Browser-Compatibility：浏览器兼容"><a href="#Browser-Compatibility：浏览器兼容" class="headerlink" title="Browser Compatibility：浏览器兼容"></a>Browser Compatibility：浏览器兼容</h3><p>webpack 支持所有基于ES5的浏览器，但是IE8及以下是不支持的。因为webpack需要<code>import()</code>和<code>require()</code>。如果需要支持老版本浏览器，可以使用loader解决。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>创建一个目录并安装webpack及cli（并非全局安装）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir webpack-demo &amp;&amp; <span class="built_in">cd</span> webpack-demo</span><br><span class="line">npm init -y</span><br><span class="line">npm install webpack webpack-cli --save-dev</span><br></pre></td></tr></table></figure>
+<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p>传统web开发中，<script>标记之间存在隐式依赖关系。用这种方式管理JavaScript项目存在一些问题:</p>
+<ul>
+<li>脚本是否依赖于外部库并不明显。</li>
+<li>如果缺少依赖项，或者以错误的顺序包含依赖项，应用程序将无法正常运行。</li>
+<li>如果包含但没有使用依赖项，浏览器将被迫下载不必要的代码。</li>
+</ul>
+<p>让我们使用webpack来管理这些脚本，在webpack中，每个模块都会声明所引用的依赖，这样就避免了打包没有使用到的模块。另外通过配置，可以避免重复打包相同的引用，提高打包效率。通过loader，webpack可以引入任何其他的非JavaScript文件。例如，加载css、图片、字体、JSON、XML等。</p>
+<ul>
+<li>src 即 source ，是我们将要编写和编辑的代码</li>
+<li>dist 即 distribution ， 是我们构建过程中最小化和优化的输出，最终将加载到浏览器中</li>
+<li>在安装将被捆绑到<strong>生产</strong>包中的包时，应该使用npm install——save。</li>
+<li>如果安装<strong>用于开发目的</strong>的包(例如linter、测试库等)，那么应该使用npm install——save-dev</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npx webpack  或  npx webpack --config webpack.config.js</span><br><span class="line">将以脚本的src/index.js作为入口点，并生成dist/main.js作为输出</span><br></pre></td></tr></table></figure>
+<h5 id="webpack-仅支持-import-、export-、Module-API，如果要使用ES6-需要配合Babel这样的loader"><a href="#webpack-仅支持-import-、export-、Module-API，如果要使用ES6-需要配合Babel这样的loader" class="headerlink" title="webpack 仅支持 import 、export 、Module API，如果要使用ES6 需要配合Babel这样的loader"></a>webpack 仅支持 import 、export 、Module API，如果要使用ES6 需要配合Babel这样的loader</h5><p>通过在package.json中配置下列代码，可以使用 npm script来运行webpack 替代上面的npx命令</p>
+<p>使用 <strong>scripts</strong> 可以像引用npx一样通过名称引用本地安装的npm包 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">      "test": "echo \"Error: no test specified\" &amp;&amp; exit 1",</span><br><span class="line">      "build": "webpack"</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+<p>然后使用以下命令，也可以编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+<p>推荐 CSS loaders 有 postcss 、sass 、 less</p>
+<p>参考：</p>
+<p><a href="https://webpack.js.org/guides/getting-started/">webpack.js.org</a></p>
+<p><a href="https://juejin.im/post/5c11bf4ee51d45171643974c">webpack入门学习手记</a></p>
+</script></p>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">webpack</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/17/webpack-学习笔记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-文件上传下载及读取等小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/17/文件上传下载及读取等小结/">文件上传下载及读取等小结</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/17/文件上传下载及读取等小结/" class="archive-article-date">
+  	<time datetime="2019-03-17T05:55:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552812511690&di=bec36f527a47de773877d97c9479a470&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F47%2F02%2F065743389902c92.jpg"></p>
+<h1 id="文件上传、下载、保存、解析、压缩…小结"><a href="#文件上传、下载、保存、解析、压缩…小结" class="headerlink" title="文件上传、下载、保存、解析、压缩…小结"></a>文件上传、下载、保存、解析、压缩…小结</h1><h2 id="PC页面端"><a href="#PC页面端" class="headerlink" title="PC页面端"></a>PC页面端</h2><h3 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h3><p>想要实现文件上传，首先需要提供一个按钮让用户选择文件，或者<a href="https://juejin.im/post/5a193b4bf265da43052e528a?utm_source=gold_browser_extension" target="_blank" rel="noopener">拖拽</a>，或者复制到编辑框中。然后读取文件并编码，再进行上传操作。之所以这么设计是担心打开个网页就能把用户电脑上的文件偷光了，所以需要通过用户触发。</p>
+<p>在这一个过程中可以延伸出如何控制可选取的文件类型、大小等操作；如何支持单文件、多文件同步/异步上传；实时显示上传进度；读取文件；文件压缩…等一系列问题。</p>
+<h5 id="input-type-“-file-“"><a href="#input-type-“-file-“" class="headerlink" title="input type= “ file “"></a>input type= “ file “</h5><p><strong>首先要理解一点——图片是文件的其中一种格式，因此图片上传是文件上传的“子集”而已。</strong></p>
+<p><input> type 类型为 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/Input/file" target="_blank" rel="noopener">file</a> 的 input 元素使得用户可以选择一个或多个元素以提交表单的方式上传到服务器上，或者通过 Javascript 的 File API 对文件进行操作</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"avatar"</span>&gt;</span>Choose a profile picture:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"avatar"</span> <span class="attr">name</span>=<span class="string">"avatar"</span> <span class="attr">accept</span>=<span class="string">"image/gif,image/jpeg,image/jpg,image/png"</span> <span class="attr">multiple</span>=<span class="string">"true"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="File-对象-获取文件的信息-并允许js访问其内容-继承自Blob对象"><a href="#File-对象-获取文件的信息-并允许js访问其内容-继承自Blob对象" class="headerlink" title="File 对象 获取文件的信息 并允许js访问其内容 继承自Blob对象"></a>File 对象 获取文件的信息 并允许js访问其内容 继承自Blob对象</h5><p>File 对象是来自用户在一个 <input> 元素上选择文件后返回的 FileList 对象,也可以是来自由拖放操作生成的 DataTransfer 对象，或者来自 HTMLCanvasElement 上的 mozGetAsFile() API。</p>
+<p><code>File</code> 对象是特殊类型的 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Blob" target="_blank" rel="noopener"><code>Blob</code></a>，且可以用在任意的 Blob 类型的 context 中。比如说， <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader" target="_blank" rel="noopener"><code>FileReader</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/URL/createObjectURL" target="_blank" rel="noopener"><code>URL.createObjectURL()</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/ImageBitmapFactories/createImageBitmap" target="_blank" rel="noopener"><code>createImageBitmap()</code></a>, 及 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest#send(" target="_blank" rel="noopener"><code>XMLHttpRequest.send()</code></a>) 都能处理 <code>Blob</code> 和<code>File</code>。</p>
+<p>每次选取的文件，即 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/File" target="_blank" rel="noopener">File</a> 对象。FileList对象即用户选择的文件列表。</p>
+<p>file对象的属性：</p>
+<ul>
+<li>name : 文件名，不包含路径。</li>
+<li>type : 文件类型。图片类型的文件都会以 image/ 开头，可以由此来限制只允许上传图片。</li>
+<li>size : 文件大小。可以根据文件大小来进行其他操作。</li>
+<li>lastModified : 文件最后修改的时间。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"files"</span> <span class="attr">multiple</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> elem = <span class="built_in">document</span>.getElementById(<span class="string">'files'</span>);</span></span><br><span class="line"><span class="javascript">    elem.onchange = <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">var</span> files = event.target.files;</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; files.length; i++) &#123;</span></span><br><span class="line"><span class="javascript">    	    <span class="comment">// 文件类型为 image 并且文件大小小于 200kb</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">if</span>(files[i].type.indexOf(<span class="string">'image/'</span>) !== <span class="number">-1</span> &amp;&amp; files[i].size &lt; <span class="number">204800</span>)&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(files[i].name);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">    	&#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>它是一个window.File的实例，包含了文件的修改时间、文件名、文件的大小、文件的mime类型等。如果需要限制上传文件的大小就可以通过判断size属性有没有超，单位是字节，而要判断是否为图片文件就可以通过type类型是否以image开头。通过判断文件名的后缀可能会不准，而通过这种判断会比较准。</p>
+<h5 id="Blob-对象-表示一个不可变、原始数据的类文件对象"><a href="#Blob-对象-表示一个不可变、原始数据的类文件对象" class="headerlink" title="Blob 对象 表示一个不可变、原始数据的类文件对象"></a>Blob 对象 表示一个不可变、原始数据的类文件对象</h5><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Blob" target="_blank" rel="noopener">Blob</a> 对象相当于一个容器，可以用于存放二进制数据。它有两个属性，size 属性表示字节长度，type 属性表示 MIME 类型。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Blob 对象可以使用 Blob() 构造函数来创建。</span></span><br><span class="line"><span class="keyword">var</span> blob = <span class="keyword">new</span> Blob([<span class="string">'hello'</span>], &#123;<span class="attr">type</span>:<span class="string">"text/plain"</span>&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Blob 构造函数中的第一个参数是一个数组，可以存放 ArrayBuffer对象、ArrayBufferView 对象、Blob对象和字符串。</span></span><br><span class="line"><span class="comment">// Blob 对象可以通过 slice() 方法来返回一个新的 Blob 对象。 </span></span><br><span class="line"><span class="comment">// 第一个参数代表要从Blob对象中的二进制数据的起始位置开始复制，第二个参数代表复制的结束位置，第三个参数为 Blob 对象的 MIME 类型。</span></span><br><span class="line"><span class="keyword">var</span> newblob = blob.slice(<span class="number">0</span>,<span class="number">5</span>, &#123;<span class="attr">type</span>:<span class="string">"text/plain"</span>&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//canvas.toBlob() 也可以创建 Blob 对象。toBlob() 使用三个参数，第一个为回调函数，第二个为图片类型，默认为 image/png，第三个为图片质量，值在0到1之间。</span></span><br><span class="line"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line">canvas.toBlob(<span class="function"><span class="keyword">function</span>(<span class="params">blob</span>)</span>&#123; <span class="built_in">console</span>.log(blob); &#125;, <span class="string">"image/jpeg"</span>, <span class="number">0.5</span>);</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/wxyyxc1992/coding-snippets/blob/master/web/dom/blob/convertToBlob.js" target="_blank" rel="noopener">将 Base64 编码的字符串或者 DataUrl 转化为 Blob 对象</a></p>
+<p>Blob 对象能够添加到表单中，作为上传数据使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">formData.append(<span class="string">'webmasterfile'</span>, blob);</span><br></pre></td></tr></table></figure>
+<h5 id="Blob对象显示图片"><a href="#Blob对象显示图片" class="headerlink" title="Blob对象显示图片"></a>Blob对象显示图片</h5><p>获取到的图片是Blob格式的，如何显示在html中？答案还是将Blob对象转换为DataUrl的形式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">canvas.toBlob(<span class="function"><span class="keyword">function</span> (<span class="params">blobObj</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> imgSrc = <span class="built_in">window</span>.URL.createObjectURL(blobObj)</span><br><span class="line">	<span class="built_in">document</span>.getElementById(<span class="string">'img'</span>).src = imgSrc</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h5 id="FormData-对象-（IE10以下不兼容）"><a href="#FormData-对象-（IE10以下不兼容）" class="headerlink" title="FormData 对象 （IE10以下不兼容）"></a>FormData 对象 （IE10以下不兼容）</h5><p>文件需要通过 FormData 来承载并通过 xhr 发送给服务端。</p>
+<p><strong>在控制台中打印会发现是空的，并不是说它的内容是空的，只是它对前端开发人员是透明的，无法查看、修改、删除里面的内容，只能append添加字段。想要查看内容请使用FileReader</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line">formData.append(<span class="string">"fileName"</span>, <span class="string">"photo.png"</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="实现ajax发送"><a href="#实现ajax发送" class="headerlink" title="实现ajax发送"></a>实现ajax发送</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用ajax发送出去</span></span><br><span class="line">xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"><span class="comment">/*新增进度条监听函数*/</span></span><br><span class="line">xhr.upload.addEventListener(<span class="string">"progress"</span>, _self.uploadProgress, <span class="literal">false</span>);</span><br><span class="line">xhr.addEventListener(<span class="string">"load"</span>, _self.uploadComplete, <span class="literal">false</span>);</span><br><span class="line">xhr.addEventListener(<span class="string">"error"</span>, _self.uploadFailed, <span class="literal">false</span>);</span><br><span class="line">xhr.addEventListener(<span class="string">"abort"</span>, _self.uploadCanceled, <span class="literal">false</span>);</span><br><span class="line">xhr.open(<span class="string">"POST"</span>, url);</span><br><span class="line">xhr.send(param);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用jQuery发送，要设置两个属性为false：因为jQuery会自动把内容做一些转义，并且根据data自动设置请求mime类型，这里告诉jQuery直接用xhr.send发出去就行了。</span></span><br><span class="line">$.ajax(&#123;</span><br><span class="line">    url: <span class="string">"/upload"</span>,</span><br><span class="line">    type: <span class="string">"POST"</span>,</span><br><span class="line">    data: formData,</span><br><span class="line">    processData: <span class="literal">false</span>,  <span class="comment">// 不处理数据</span></span><br><span class="line">    contentType: <span class="literal">false</span>   <span class="comment">// 不设置内容类型</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>观察控制台发请求的数据：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2017/11/25/15ff349b104c3494?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="img"></p>
+<p>可以看到这是一种区别于用&amp;连接参数的方式，它的编码格式是multipart/form-data，就是上传文件form表单写的enctype：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;form enctype=<span class="string">"multipart/form-data"</span> method=<span class="string">"post"</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">"file"</span> name=<span class="string">"fileContent"</span>&gt;</span><br><span class="line">&lt;<span class="regexp">/form&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果xhr.send的是FormData类型话，它会自动设置enctype，如果你用默认表单提交上传文件的话就得在form上面设置这个属性，因为上传文件只能使用POST的这种编码。常用的POST编码是application/x-www-form-urlencoded，它和GET一样，发送的数据里面，参数和参数之间使用&amp;连接，如：</p>
+<p>key1=value1&amp;key2=value2</p>
+<p>特殊字符做转义，这个数据POST是放在请求body里的，而GET是拼在url上面的，如果用jq的话，jq会帮你拼并做转义。</p>
+<p>而上传文件用的这种multipart/form-data，参数和参数之间是且一个相同的字符串隔开的，上面的是使用：</p>
+<blockquote>
+<p>——WebKitFormBoundary72yvM25iSPYZ4a3F</p>
+</blockquote>
+<p>这个字符通常会取得比较长、比较随机，因为要保证正常的内容里面不会出现这个字符串，这样内容的特殊字符就不用做转义了。</p>
+<p>请求的contentType被浏览器设置成：</p>
+<blockquote>
+<p>Content-Type:</p>
+<p>multipart/form-data; boundary=—-WebKitFormBoundary72yvM25iSPYZ4a3F</p>
+</blockquote>
+<p>后端服务通过这个就知道怎么解析这么一段数据了。（通常是使用的框架处理了，而具体的接口不需要关心应该怎么解析）</p>
+<p>如果读取结果是ArrayBuffer的话，也是可以直接用xhr.send发送出去的，但是一般我们不会直接把一个文件的内容发出去，而是用某个字段名等于文件内容的方式。如果你读取为ArrayBuffer的话再上传的话其实作用不是很大，还不如直接用formData添加一个File对象的内容，因为上面三种方式都可以拿到File对象。如果一开始就是一个ArrayBuffer了，那么可以转成blob然后再append到FormData里面。</p>
+<p>使用比较多的应该是base64，因为前端经常要处理图片，读取为base64之后就可以把它画到一个canvas里面，然后就可以做一些处理，如压缩、裁剪、旋转等。最后再用canvas导出一个base64格式的图片，那怎么上传base64格式的呢？</p>
+<p>第一种是拼一个表单上传的multipart/form-data的格式，再用xhr.sendAsBinary发出去，如下代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> base64Data = base64Data.replace(<span class="regexp">/^data:image\/[^;]+;base64,/</span>, <span class="string">""</span>);</span><br><span class="line"><span class="keyword">let</span> boundary = <span class="string">"----------boundaryasoifvlkasldvavoadv"</span>;</span><br><span class="line">xhr.sendAsBinary([</span><br><span class="line">    <span class="comment">// name=data</span></span><br><span class="line">    boundary,</span><br><span class="line">        <span class="string">'Content-Disposition: form-data; name="data"; filename="'</span> + fileName + <span class="string">'"'</span>,</span><br><span class="line">        <span class="string">'Content-Type: '</span> + <span class="string">"image/"</span> + fileType, <span class="string">''</span>,</span><br><span class="line">        atob(base64Data), boundary,</span><br><span class="line">    <span class="comment">//name=imageType</span></span><br><span class="line">    boundary,</span><br><span class="line">        <span class="string">'Content-Disposition: form-data; name="imageType"'</span>, <span class="string">''</span>,</span><br><span class="line">        fileType,</span><br><span class="line">    boundary + <span class="string">'--'</span></span><br><span class="line">].join(<span class="string">'\r\n'</span>));复制代码</span><br></pre></td></tr></table></figure>
+<p>上面代码使用了window.atob的api，它可以把base64还原成原始内容的字符串表示，如下图所示：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2017/11/25/15ff349b4c18f7d8?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="img"></p>
+<p>btoa是把内容转化成base64编码，而atob是把base64还原。在调atob之前，需要把表示内容格式的不属于base64内容的字符串去掉，即上面代码第一行的replace处理。</p>
+<p>这样就和使用formData类似了，但是由于sendAsBinary已经被deprecated了，所以新代码不建议再使用这种方式。那怎么办呢？</p>
+<p>可以把base64转化成blob，然后再append到一个formData里面，下面的函数（来自<a href="https://link.juejin.im?target=https%3A%2F%2Fgithub.com%2Fjeremybanks%2Fb64-to-blob" target="_blank" rel="noopener">b64-to-blob</a>）可以把base64转成blob：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b64toBlob</span>(<span class="params">b64Data, contentType, sliceSize</span>) </span>&#123;</span><br><span class="line">    contentType = contentType || <span class="string">''</span>;</span><br><span class="line">    sliceSize = sliceSize || <span class="number">512</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> byteCharacters = atob(b64Data);</span><br><span class="line">    <span class="keyword">var</span> byteArrays = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> offset = <span class="number">0</span>; offset &lt; byteCharacters.length; offset += sliceSize) &#123;</span><br><span class="line">      <span class="keyword">var</span> slice = byteCharacters.slice(offset, offset + sliceSize);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> byteNumbers = <span class="keyword">new</span> <span class="built_in">Array</span>(slice.length);</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; slice.length; i++) &#123;</span><br><span class="line">        byteNumbers[i] = slice.charCodeAt(i);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> byteArray = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(byteNumbers);</span><br><span class="line"></span><br><span class="line">      byteArrays.push(byteArray);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> blob = <span class="keyword">new</span> Blob(byteArrays, &#123;<span class="attr">type</span>: contentType&#125;);</span><br><span class="line">    <span class="keyword">return</span> blob;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后就可以append到formData里面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let blob = b64toBlob(b64Data, &quot;image/png&quot;),</span><br><span class="line">    formData = new FormData();</span><br><span class="line">formData.append(&quot;fileContent&quot;, blob);复制代码</span><br></pre></td></tr></table></figure>
+<p>这样就不用自己去拼一个multipart/form-data的格式数据了。</p>
+<h5 id="低版本浏览器上传解决方案-前端本地文件操作与上传"><a href="#低版本浏览器上传解决方案-前端本地文件操作与上传" class="headerlink" title="低版本浏览器上传解决方案  前端本地文件操作与上传"></a><a href="http://jdc.jd.com/archives/4395" target="_blank" rel="noopener">低版本浏览器上传解决方案</a>  <a href="https://juejin.im/post/5a193b4bf265da43052e528a?utm_source=gold_browser_extension" target="_blank" rel="noopener">前端本地文件操作与上传</a></h5><h3 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h3><p>利用ajax或者新生的axios去提交请求，后端会返回一个线上的文件地址，前端可以通过原生的window.open打开这个地址就可以实现下载；也可以通过a标签设置href以及download属性，并自动点击实现其下载功能，关于其兼容性问题，可以判断download属性是否存在来弥补。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参考方案</span></span><br><span class="line">$.ajax(&#123;</span><br><span class="line">    type: <span class="string">"post"</span>,</span><br><span class="line">    url: <span class="string">"/xxx"</span>,</span><br><span class="line">    data: data,</span><br><span class="line">    success: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">        tool.loadingend();</span><br><span class="line">        <span class="keyword">if</span>(res.Status)&#123;</span><br><span class="line">            <span class="comment">// window.open或者a标签下载 </span></span><br><span class="line">            <span class="keyword">var</span> isSupportDownload = <span class="string">'download'</span> <span class="keyword">in</span> <span class="built_in">document</span>.createElement(<span class="string">'a'</span>);</span><br><span class="line">            <span class="keyword">if</span>(isSupportDownload)&#123;</span><br><span class="line">                <span class="keyword">var</span> $a = $(<span class="string">"&lt;a&gt;"</span>) ;</span><br><span class="line">                $a.attr(&#123;<span class="attr">href</span>:res.url,<span class="attr">download</span>:<span class="string">'filename'</span>&#125;).hide().appendTo($(<span class="string">"body"</span>))[<span class="number">0</span>].click();</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="built_in">window</span>.open(res.url)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            tool.tip(res.Message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>利用form表单提交下载文件(ajax无法直接处理返回的文件类型),用于解决window.open方案被浏览器拦截的情况。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> $form = $(<span class="string">"&lt;form&gt;"</span>) ;</span><br><span class="line">$form.attr(&#123;<span class="attr">method</span>:<span class="string">"get"</span>,<span class="attr">action</span>:res.Message&#125;).hide();</span><br><span class="line"><span class="keyword">let</span> queryStr = res.Message.split(<span class="string">"?"</span>)[<span class="number">1</span>];</span><br><span class="line"><span class="keyword">let</span> queryObj = qs.parse(queryStr) ;</span><br><span class="line">$(<span class="string">"body"</span>).append($form);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> p <span class="keyword">in</span> queryObj)&#123;</span><br><span class="line">    <span class="keyword">let</span> $input =$(<span class="string">"&lt;input type='hidden'&gt;"</span>) ;</span><br><span class="line">    $input.attr(&#123;<span class="string">"name"</span>:p,<span class="attr">value</span>:queryObj[p]&#125;).appendTo($form);</span><br><span class="line">&#125;</span><br><span class="line">$form.submit().remove();</span><br></pre></td></tr></table></figure>
+<h5 id="利用download模块进行下载"><a href="#利用download模块进行下载" class="headerlink" title="利用download模块进行下载"></a>利用download模块进行下载</h5><ul>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fnpm.taobao.org%2Fpackage%2Fdownload" target="_blank" rel="noopener">download模块下载</a></li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fjohnculviner%2Fjquery.fileDownload%2Fblob%2Fmaster%2Fsrc%2FScripts%2Fjquery.fileDownload.js" target="_blank" rel="noopener">jquery-download 插件</a></li>
+</ul>
+<p>Blob 对象可以通过 window.URL 对象生成一个网络地址，结合 a 标签的 download 属性来实现下载文件功能。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 比如把 canvas 下载为一个图片文件。</span></span><br><span class="line"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line">canvas.toBlob(<span class="function"><span class="keyword">function</span>(<span class="params">blob</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 使用 createObjectURL 生成地址，格式为 blob:null/fd95b806-db11-4f98-b2ce-5eb16b38ba36</span></span><br><span class="line">    <span class="keyword">var</span> url = URL.createObjectURL(blob);</span><br><span class="line">    <span class="keyword">var</span> a = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>);</span><br><span class="line">    a.download = <span class="string">'canvas'</span>;</span><br><span class="line">    a.href = url;</span><br><span class="line">    <span class="comment">// 模拟a标签点击进行下载</span></span><br><span class="line">    a.click();</span><br><span class="line">    <span class="comment">// 下载后告诉浏览器不再需要保持这个文件的引用了</span></span><br><span class="line">    URL.revokeObjectURL(url);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>html中一张用DataURL形式显示出来的图片，可以下载到本地吗？答案是使用一个a标签，并设置download属性，模拟点击。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">downloadImg</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> aLink = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>)</span><br><span class="line">	aLink.download = <span class="string">'fileName.png'</span> <span class="comment">// 文件名后缀需要和dataurl表示的相同，否则可能乱码</span></span><br><span class="line">	aLink.href = dataUrl</span><br><span class="line">	aLink.click()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 下载方法。</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *@param imgSrc 文件链接可以是一个dataURL 也可以是一个 blob 对象。</span></span><br><span class="line"><span class="comment"> *@param imgName  下载后的文件名字。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">downloadImg</span> (<span class="params">imgSrc, imgName</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> elem = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>);</span><br><span class="line">    elem.setAttribute(<span class="string">'href'</span>, imgSrc);</span><br><span class="line">    elem.setAttribute(<span class="string">'download'</span>, imgName);</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(elem);</span><br><span class="line">    elem.click();</span><br><span class="line">    <span class="built_in">document</span>.body.removeChild(elem);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：当绘制下载一个比较大的图片时，浏览器就会提示下载失败。原因是使用dataURL进行下载会有大小限制。这时可以使用 blob 进行下载。即上述将canvas转为blob</strong></p>
+<p>由于跨域会导致a标签在部分浏览器中会直接打开新标签页，所以改进如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">downloadIamge</span>(<span class="params">selector, name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> image = <span class="keyword">new</span> Image()</span><br><span class="line">    <span class="comment">// 解决跨域 Canvas 污染问题</span></span><br><span class="line">    image.setAttribute(<span class="string">'crossOrigin'</span>, <span class="string">'anonymous'</span>)</span><br><span class="line">    image.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>)</span><br><span class="line">        canvas.width = image.width</span><br><span class="line">        canvas.height = image.height</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> context = canvas.getContext(<span class="string">'2d'</span>)</span><br><span class="line">        context.drawImage(image, <span class="number">0</span>, <span class="number">0</span>, image.width, image.height)</span><br><span class="line">        <span class="keyword">var</span> url = canvas.toDataURL(<span class="string">'image/png'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 生成一个a元素</span></span><br><span class="line">        <span class="keyword">var</span> a = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>)</span><br><span class="line">        <span class="comment">// 创建一个单击事件</span></span><br><span class="line">        <span class="keyword">var</span> event = <span class="keyword">new</span> MouseEvent(<span class="string">'click'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将a的download属性设置为我们想要下载的图片名称，若name不存在则使用‘下载图片名称’作为默认名称</span></span><br><span class="line">        a.download = name || <span class="string">'下载图片名称'</span></span><br><span class="line">        <span class="comment">// 将生成的URL设置为a.href属性</span></span><br><span class="line">        a.href = url</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 触发a的单击事件</span></span><br><span class="line">        a.dispatchEvent(event)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    image.src = <span class="built_in">document</span>.querySelector(selector).src</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用方式</span></span><br><span class="line"><span class="comment">// 参数一： 选择器，代表img标签</span></span><br><span class="line"><span class="comment">// 参数二： 图片名称，可选</span></span><br><span class="line">downloadIamge(<span class="string">'canvas'</span>, <span class="string">'图片名称'</span>)</span><br></pre></td></tr></table></figure>
+<p>我们主要使用的是a标签的download属性, 下面为MDN给出的说明：</p>
+<blockquote>
+<p>此属性指示浏览器下载URL而不是导航到URL，因此将提示用户将其保存为本地文件。<br>如果属性有一个值，它将在保存提示中用作预先填写的文件名 (用户仍然可以根据需要更改文件名)。对允许的值没有限制，但是/和\被转换为下划线。大多数文件系统限制文件名中的一些标点符号，浏览器会相应地调整建议的名称。</p>
+</blockquote>
+<p>需要注意的地方：</p>
+<ul>
+<li>此属性仅适用于同源 URLs。</li>
+<li>可以使用 blob: URLs 和 data: URLs 以方便用户下载 JavaScript 方式生成的内容（例如使用在线绘图的Web应用创建的照片）。</li>
+<li>如果HTTP头的Content-Disposition：存在，并且赋予了一个和这个属性不同的文件名，HTTP头优先于此属性。</li>
+<li>如果这个属性存在 Content-Disposition 被设置为 inline，火狐优先 Content-Disposition，像之前文件名的情况下，而Chrome则优先 download 属性。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Download</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//cavas 保存图片到本地  js 实现</span></span><br><span class="line">    <span class="comment">//------------------------------------------------------------------------</span></span><br><span class="line">    <span class="comment">//1.确定图片的类型  获取到的图片格式 data:image/Png;base64,......</span></span><br><span class="line">    <span class="keyword">var</span> type =<span class="string">'png'</span>;<span class="comment">//你想要什么图片格式 就选什么吧</span></span><br><span class="line">    <span class="keyword">var</span> d=<span class="built_in">document</span>.querySelector(<span class="string">'#view canvas'</span>);</span><br><span class="line">    <span class="keyword">var</span> imgdata=d.toDataURL(type);</span><br><span class="line">    <span class="comment">//2.0 将mime-type改为image/octet-stream,强制让浏览器下载</span></span><br><span class="line">    <span class="keyword">var</span> fixtype=<span class="function"><span class="keyword">function</span>(<span class="params">type</span>)</span>&#123;</span><br><span class="line">        type=type.toLocaleLowerCase().replace(<span class="regexp">/jpg/i</span>,<span class="string">'jpeg'</span>);</span><br><span class="line">        <span class="keyword">var</span> r=type.match(<span class="regexp">/png|jpeg|bmp|gif/</span>)[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'image/'</span>+r;</span><br><span class="line">    &#125;;</span><br><span class="line">    imgdata=imgdata.replace(fixtype(type),<span class="string">'image/octet-stream'</span>);</span><br><span class="line">    <span class="comment">//3.0 将图片保存到本地</span></span><br><span class="line">    <span class="keyword">var</span> savaFile=<span class="function"><span class="keyword">function</span>(<span class="params">data,filename</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> save_link=<span class="built_in">document</span>.createElementNS(<span class="string">'http://www.w3.org/1999/xhtml'</span>, <span class="string">'a'</span>);</span><br><span class="line">        save_link.href=data;</span><br><span class="line">        save_link.download=filename;</span><br><span class="line">        <span class="keyword">var</span> event=<span class="built_in">document</span>.createEvent(<span class="string">'MouseEvents'</span>);</span><br><span class="line">        event.initMouseEvent(<span class="string">'click'</span>,<span class="literal">true</span>,<span class="literal">false</span>,<span class="built_in">window</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="literal">false</span>,<span class="literal">false</span>,<span class="literal">false</span>,<span class="literal">false</span>,<span class="number">0</span>,<span class="literal">null</span>);</span><br><span class="line">        save_link.dispatchEvent(event);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> filename=<span class="string">''</span>+<span class="keyword">new</span> <span class="built_in">Date</span>().getDate()+<span class="string">'.'</span>+type;</span><br><span class="line">    <span class="comment">//直接用当前几号做的图片名字</span></span><br><span class="line">    savaFile(imgdata,filename);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><a href="https://juejin.im/post/5bd1b0aa6fb9a05d2c43f004" target="_blank" rel="noopener">在Chrome浏览器下，模拟点击创建的<code>&lt;a&gt;</code>元素即使不<code>append</code>到页面中，也是可以触发下载的，但是在Firefox浏览器中却不行</a></p>
+<p><a href="https://juejin.im/post/5c53e5636fb9a049f36287c2" target="_blank" rel="noopener">前端文件下载和浏览器自动嗅探</a>  <a href="https://juejin.im/post/5bf543d851882518eb1f5cc4" target="_blank" rel="noopener">前端实现文件下载和拖拽上传</a> <a href="https://segmentfault.com/a/1190000018143902" target="_blank" rel="noopener">前端js实现字符串/图片/excel文件下载</a></p>
+<h3 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h3><h4 id="FileReader"><a href="#FileReader" class="headerlink" title="FileReader"></a><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader" target="_blank" rel="noopener">FileReader</a></h4><p>该对象主要用来把文件读入内存，并且读取文件中的数据。该对象有以下方法：</p>
+<ul>
+<li>abort：中断读取操作。</li>
+<li>readAsArrayBuffer：读取文件内容到ArrayBuffer对象中。</li>
+<li>readAsBinaryString：将文件读取为二进制数据。</li>
+<li>readAsDataURL：将文件读取为data: URL格式的字符串。</li>
+<li>readAsText：将文件读取为文本。</li>
+</ul>
+<p>img标签的src将会是像这样：<code>&quot;data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAADDhn8LAAA==</code>，能够正常显示。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">"file"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">"img"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">	<span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">		<span class="keyword">let</span> $img = <span class="built_in">document</span>.getElementById(<span class="string">'img'</span>)</span></span><br><span class="line"><span class="javascript">		file.onchange = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">			<span class="built_in">console</span>.log(e.target.files[<span class="number">0</span>])</span></span><br><span class="line"><span class="javascript">			<span class="keyword">let</span> file = e.target.files[<span class="number">0</span>]</span></span><br><span class="line"><span class="javascript">			<span class="keyword">const</span> fr = <span class="keyword">new</span> FileReader(file)</span></span><br><span class="line"><span class="undefined">			fr.readAsDataURL(file)</span></span><br><span class="line"><span class="javascript">			fr.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">			 	$img.src = <span class="keyword">this</span>.result</span></span><br><span class="line"><span class="undefined">			&#125;</span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 打印原始File对象</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.files[<span class="number">0</span>]);</span></span><br><span class="line"><span class="javascript">        <span class="comment">// base64方式读取</span></span></span><br><span class="line"><span class="javascript">        fileReader.readAsDataURL(<span class="keyword">this</span>.files[<span class="number">0</span>]);    </span></span><br><span class="line"><span class="undefined">	&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="图片上传预览"><a href="#图片上传预览" class="headerlink" title="图片上传预览"></a>图片上传预览</h5><p>客户端上传图片之后通过 readAsDataURL() 来显示图片。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"files"</span> <span class="attr">accept</span>=<span class="string">"image/jpeg,image/jpg,image/png"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"blank.gif"</span> <span class="attr">id</span>=<span class="string">"preview"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> elem = <span class="built_in">document</span>.getElementById(<span class="string">'files'</span>),</span></span><br><span class="line"><span class="javascript">        img = <span class="built_in">document</span>.getElementById(<span class="string">'preview'</span>);</span></span><br><span class="line"><span class="javascript">    elem.onchange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">var</span> files = elem.files,</span></span><br><span class="line"><span class="javascript">    	    reader = <span class="keyword">new</span> FileReader();</span></span><br><span class="line"><span class="javascript">    	<span class="keyword">if</span>(files &amp;&amp; files[<span class="number">0</span>])&#123;</span></span><br><span class="line"><span class="javascript">    	    reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>) </span>&#123;</span></span><br><span class="line"><span class="undefined">    	        img.src = ev.target.result;</span></span><br><span class="line"><span class="undefined">    	    &#125;</span></span><br><span class="line"><span class="undefined">    	    reader.readAsDataURL(files[0]);</span></span><br><span class="line"><span class="undefined">    	&#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将文件读取为 DataURL</span></span><br><span class="line"><span class="keyword">const</span> previewFile = <span class="function">(<span class="params">file: File, callback: <span class="built_in">Function</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">  reader.onloadend = <span class="function"><span class="params">()</span> =&gt;</span> callback(reader.result);</span><br><span class="line">  reader.readAsDataURL(file);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置文件的 DataUrl</span></span><br><span class="line">previewFile(file.originFileObj, (previewDataUrl: string) =&gt; &#123;</span><br><span class="line">  file.thumbUrl = previewDataUrl;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// JSX</span></span><br><span class="line">&lt;img src=&#123;file.thumbUrl || file.url&#125; alt=&#123;file.name&#125; /&gt;;</span><br></pre></td></tr></table></figure>
+<h5 id="canvas-转为DataURL"><a href="#canvas-转为DataURL" class="headerlink" title="canvas 转为DataURL"></a>canvas 转为DataURL</h5><p>canvas画出来的图片，在html中的其他地方显示。将canvas输出为Dataurl的来放到img标签中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> imgSrc = canvas.toDataURL(<span class="string">'image/png'</span>)</span><br><span class="line"><span class="comment">// canvas.toDataURL('image/jpeg')</span></span><br></pre></td></tr></table></figure>
+<h5 id="使用canvas做缩略图"><a href="#使用canvas做缩略图" class="headerlink" title="使用canvas做缩略图"></a>使用canvas做缩略图</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.createElement(<span class="string">"canvas"</span>);</span><br><span class="line"><span class="keyword">var</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line"><span class="keyword">var</span> MAX_WIDTH = <span class="number">800</span>;</span><br><span class="line"><span class="keyword">var</span> MAX_HEIGHT = <span class="number">600</span>;</span><br><span class="line"><span class="keyword">var</span> width = img.width;</span><br><span class="line"><span class="keyword">var</span> height = img.height;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> (width &gt; height) &#123;</span><br><span class="line">  <span class="keyword">if</span> (width &gt; MAX_WIDTH) &#123;</span><br><span class="line">    height *= MAX_WIDTH / width;</span><br><span class="line">    width = MAX_WIDTH;</span><br><span class="line">  &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (height &gt; MAX_HEIGHT) &#123;</span><br><span class="line">    width *= MAX_HEIGHT / height;</span><br><span class="line">    height = MAX_HEIGHT;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">canvas.width = width;</span><br><span class="line">canvas.height = height;</span><br><span class="line">ctx.drawImage(img, <span class="number">0</span>, <span class="number">0</span>, width, height);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数主要有image对象，图片类型，图片的最大宽度和最大高度。调用方法时填入图片允许的最大宽度或者是最大的高度，进行等比绘制到canvas中，然后通过toDataURL来转换成base64格式返回，此时的图片就是压缩过后的图片。 </span></span><br><span class="line">resizeMe(img,type, max_width, max_height) &#123;</span><br><span class="line">        <span class="keyword">var</span> canvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span><br><span class="line">        <span class="keyword">var</span> width = img.width;</span><br><span class="line">        <span class="keyword">var</span> height = img.height;</span><br><span class="line">        max_width = !<span class="built_in">isNaN</span>(max_width)?max_width:<span class="number">0</span>;</span><br><span class="line">        max_height = !<span class="built_in">isNaN</span>(max_height)?max_height:<span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 在这里图片是等比例缩放的，调用方法时填入图片允许的最大宽度或者是最大的高度</span></span><br><span class="line">        <span class="comment">//如果最大宽度为0 则按照最大高度固定，宽度自适应的方式来实现</span></span><br><span class="line">        <span class="comment">//如果是最大高度为0，则按照最大的宽度来实现</span></span><br><span class="line">        <span class="keyword">if</span>(max_width==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span> (height &gt; max_height) &#123;</span><br><span class="line">                width = <span class="built_in">Math</span>.round(width *= max_height / height);</span><br><span class="line">                height = max_height;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(max_height==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span> (width &gt; max_width) &#123;</span><br><span class="line">                height = <span class="built_in">Math</span>.round(height *= max_width / width);</span><br><span class="line">                width = max_width;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        canvas.width =width;</span><br><span class="line">        canvas.height = height;</span><br><span class="line">        <span class="keyword">var</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line">        canvas.width =width;</span><br><span class="line">        canvas.height = height;</span><br><span class="line">        ctx.drawImage(img,<span class="number">0</span>,<span class="number">0</span>, width, height);</span><br><span class="line">        type = type === <span class="string">'jpg'</span>?<span class="string">"jpeg"</span>:type;</span><br><span class="line">        <span class="keyword">return</span> canvas.toDataURL(<span class="string">"image/"</span>+type, <span class="number">0.7</span>);<span class="comment">//这里的0.7值的是图片的质量</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">selectFileImage(el)&#123;</span><br><span class="line">     <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">    <span class="keyword">var</span> file = el.target.files[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">var</span> fileName = file.name;</span><br><span class="line">    <span class="keyword">var</span> fileType = file.name.split(<span class="string">"."</span>)[<span class="number">1</span>];</span><br><span class="line">        reader.readAsArrayBuffer(file);</span><br><span class="line"></span><br><span class="line">        reader.onload = <span class="function">(<span class="params">ev</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> blob = <span class="keyword">new</span> Blob([ev.target[<span class="string">'result'</span>]]);</span><br><span class="line">            <span class="built_in">window</span>[<span class="string">'URL'</span>] = <span class="built_in">window</span>[<span class="string">'URL'</span>] || <span class="built_in">window</span>[<span class="string">'webkitURL'</span>];</span><br><span class="line">            <span class="keyword">var</span> blobURL = <span class="built_in">window</span>[<span class="string">'URL'</span>].createObjectURL(blob);</span><br><span class="line">            <span class="keyword">var</span> image = <span class="keyword">new</span> Image();</span><br><span class="line">            image.src = blobURL;</span><br><span class="line">            image.onload = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">var</span> thumb = <span class="keyword">this</span>.resizeMe(image,fileType, <span class="number">400</span>, <span class="number">0</span>);<span class="comment">//获得的路径是将图片转换成了base64</span></span><br><span class="line">                axios.post(<span class="string">"http://127.0.0.1:3003/useasync/upload"</span>,&#123;<span class="attr">file</span>:thumb,<span class="attr">fileName</span>:fileName&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (res.data.code == <span class="number">200</span>) &#123;</span><br><span class="line">                       <span class="built_in">console</span>.log(res)</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="built_in">console</span>.log(res)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://juejin.im/post/5bddac7d6fb9a049ee7fe452" target="_blank" rel="noopener">解决canvas合成图片大小错误、模糊以及跨域的问题</a>  <a href="https://juejin.im/post/5c6276956fb9a04a06055925" target="_blank" rel="noopener">前端图片压缩及上传</a></p>
+<h5 id="canvas上传缩略图"><a href="#canvas上传缩略图" class="headerlink" title="canvas上传缩略图"></a>canvas上传缩略图</h5><p>canvas生成的图片，如何上传到服务器？答案是将canvas输出为Blob对象，这样就可以像File对象一样操作它了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">canvas.toBlob(<span class="function"><span class="keyword">function</span>(<span class="params">blob</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> form = <span class="keyword">new</span> FormData();</span><br><span class="line">  form.append(<span class="string">'file'</span>, blob);</span><br><span class="line">  fetch(<span class="string">'/api/upload'</span>, &#123;<span class="attr">method</span>: <span class="string">'POST'</span>, <span class="attr">body</span>: form&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/blueimp/JavaScript-Canvas-to-Blob" target="_blank" rel="noopener">canvas toBlob兼容解决方案</a></p>
+<h5 id="图片上传时被旋转、压缩的解决方案"><a href="#图片上传时被旋转、压缩的解决方案" class="headerlink" title="图片上传时被旋转、压缩的解决方案"></a><a href="https://github.com/lin-xin/blog/issues/18" target="_blank" rel="noopener">图片上传时被旋转、压缩的解决方案</a></h5><h5 id="数据备份与恢复"><a href="#数据备份与恢复" class="headerlink" title="数据备份与恢复"></a>数据备份与恢复</h5><p>FileReader 对象的 readAsText() 可以读取文件的文本，结合 Blob 对象下载文件的功能，那就可以实现将数据导出文件备份到本地，当数据要恢复时，通过 input 把备份文件上传，使用 readAsText() 读取文本，恢复数据。</p>
+<h4 id="URL-createObjectURL"><a href="#URL-createObjectURL" class="headerlink" title="URL.createObjectURL()"></a><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/URL/createObjectURL" target="_blank" rel="noopener">URL.createObjectURL()</a></h4><p><strong>URL.createObjectURL()</strong> 静态方法会创建一个 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/DOMString" target="_blank" rel="noopener"><code>DOMString</code></a>，其中包含一个表示参数中给出的对象的URL。这个 URL 的生命周期和创建它的窗口中的 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document" target="_blank" rel="noopener"><code>document</code></a> 绑定。这个新的URL 对象表示指定的 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/File" target="_blank" rel="noopener"><code>File</code></a> 对象或 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Blob" target="_blank" rel="noopener"><code>Blob</code></a> 对象。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">objectURL = URL.createObjectURL(blob);</span><br><span class="line"></span><br><span class="line">当选择图片后，生成的img src类似"blob:null/4304d4f3-c13b-43e8-83f6-8c80426520ff"，能正常显示图片。</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">"file"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">"img"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">	<span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">		<span class="keyword">let</span> $img = <span class="built_in">document</span>.getElementById(<span class="string">'img'</span>)</span></span><br><span class="line"><span class="javascript">		file.onchange = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">			<span class="built_in">console</span>.log(e.target.files[<span class="number">0</span>])</span></span><br><span class="line"><span class="javascript">			<span class="keyword">let</span> file = e.target.files[<span class="number">0</span>]</span></span><br><span class="line"><span class="javascript">			<span class="keyword">let</span> fileUrl = <span class="built_in">window</span>.URL.createObjectURL(file)</span></span><br><span class="line"><span class="undefined">			$img.src = fileUrl</span></span><br><span class="line"><span class="javascript">			img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">			    <span class="comment">// 手动回收</span></span></span><br><span class="line"><span class="undefined">			    URL.revokeObjectURL(fileUrl)</span></span><br><span class="line"><span class="undefined">			&#125;</span></span><br><span class="line"><span class="undefined">		&#125;</span></span><br><span class="line"><span class="undefined">	&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="srcObject"><a href="#srcObject" class="headerlink" title="srcObject"></a><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLMediaElement/srcObject" target="_blank" rel="noopener">srcObject</a></h4><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLMediaElement" target="_blank" rel="noopener"><code>HTMLMediaElement</code></a> 接口的 <strong>srcObject</strong> 属性设定或返回一个对象，这个对象提供了一个与<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLMediaElement" target="_blank" rel="noopener"><code>HTMLMediaElement</code></a>关联的媒体源，这个对象通常是 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MediaStream" target="_blank" rel="noopener"><code>MediaStream</code></a> ，但根据规范可以是 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MediaSource" target="_blank" rel="noopener"><code>MediaSource</code></a>， <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Blob" target="_blank" rel="noopener"><code>Blob</code></a> 或者 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/File" target="_blank" rel="noopener"><code>File</code></a>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mediaStream = HTMLMediaElement.srcObject</span><br><span class="line">HTMLMediaElement.srcObject = mediaStream</span><br></pre></td></tr></table></figure>
+<h1 id="移动web端"><a href="#移动web端" class="headerlink" title="移动web端"></a>移动web端</h1><p>a标签有一个download属性，可以将指定的资源下载下来，但该方法只适用于pc端，移动端基本不支持（Safari会打开一个base64的网页，而在微信中甚至不会有任何响应，更不用提众多的安卓机）。</p>
+<p>绝大多数的移动端浏览器都支持长按图片唤起下拉菜单来保存（只有在图片上长按才有效），因此我们可以通过文案提示用户进行操作，但它的弊端是没有API来调用，也就是说只能提示用户自发地进行长按保存操作，而我们对于用户是否保存了图片是无感知的。</p>
+<h1 id="小程序端"><a href="#小程序端" class="headerlink" title="小程序端"></a>小程序端</h1><h3 id="文件上传-1"><a href="#文件上传-1" class="headerlink" title="文件上传"></a>文件上传</h3><p><a href="https://www.jianshu.com/p/5479041607fa" target="_blank" rel="noopener">https://www.jianshu.com/p/5479041607fa</a> <a href="https://www.jianshu.com/p/c1e0574ee63d" target="_blank" rel="noopener">https://www.jianshu.com/p/c1e0574ee63d</a></p>
+<h1 id="文件压缩"><a href="#文件压缩" class="headerlink" title="文件压缩"></a>文件压缩</h1><p>核心API就是使用<code>canvas</code>的<code>drawImage()</code> 改变图片的宽高</p>
+<p><a href="https://www.zhangxinxu.com/wordpress/2017/07/html5-canvas-image-compress-upload/" target="_blank" rel="noopener">canvas实现图片前端JS压缩</a></p>
+<h1 id="文件编码格式"><a href="#文件编码格式" class="headerlink" title="文件编码格式"></a>文件编码格式</h1><ul>
+<li><p>base64编码</p>
+<p>在 HTML5 中新增了 atob 和 btoa 方法来支持 Base64 编码。它们的命名也很简单，b to a 和 a to b，即代表着编码和解码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">"https://lin-xin.github.io"</span>;</span><br><span class="line"><span class="keyword">var</span> b = btoa(a);</span><br><span class="line"><span class="keyword">var</span> c = atob(b);</span><br><span class="line"><span class="built_in">console</span>.log(a);     <span class="comment">// https://lin-xin.github.io</span></span><br><span class="line"><span class="built_in">console</span>.log(b);     <span class="comment">// aHR0cHM6Ly9saW4teGluLmdpdGh1Yi5pbw==</span></span><br><span class="line"><span class="built_in">console</span>.log(c);     <span class="comment">// https://lin-xin.github.io</span></span><br></pre></td></tr></table></figure>
+<p>btoa 方法对字符串 a 进行编码，不会改变 a 的值，返回一个编码后的值。<br>atob 方法对编码后的字符串进行解码。</p>
+<p>但是参数中带中文，已经超出了8位ASCII编码的字符范围，浏览器就会报错。所以需要先对中文进行 encodeURIComponent 编码处理。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">"哈喽 世界"</span>;</span><br><span class="line"><span class="keyword">var</span> b = btoa(<span class="built_in">encodeURIComponent</span>(a));</span><br><span class="line"><span class="keyword">var</span> c = <span class="built_in">decodeURIComponent</span>(atob(b));</span><br><span class="line"><span class="built_in">console</span>.log(b);     <span class="comment">// JUU1JTkzJTg4JUU1JTk2JUJEJTIwJUU0JUI4JTk2JUU3JTk1JThD</span></span><br><span class="line"><span class="built_in">console</span>.log(c);     <span class="comment">// 哈喽 世界</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="https://www.zhangxinxu.com/wordpress/2013/10/understand-domstring-document-formdata-blob-file-arraybuffer/" target="_blank" rel="noopener">理解DOMString、Document、FormData、Blob、File、ArrayBuffer数据类型</a></p>
+<h1 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h1><p><a href="https://uppy.io/" target="_blank" rel="noopener">Uppy File Uploader</a></p>
+<p><a href="https://html2canvas.hertzen.com/" target="_blank" rel="noopener">html2canvas</a> </p>
+<h5 id="1-截图模糊"><a href="#1-截图模糊" class="headerlink" title="1.截图模糊"></a><strong>1.截图模糊</strong></h5><p>主要解决思路：</p>
+<p>1）将canvas的width和height属性放大为2倍。</p>
+<p>2）将canvas的CSS样式width和height设置为原先1倍的大小。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;canvas width=<span class="string">"200"</span> height=<span class="string">"100"</span> style=<span class="string">"width:100px;height:50px;"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="2-截图不全"><a href="#2-截图不全" class="headerlink" title="2.截图不全"></a><strong>2.截图不全</strong></h5><p>源码获取dom高度不准确，修改源码，获取高度后手动传，修改方式如下：</p>
+<p>源码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> renderDocument(node.ownerDocument, options, node.ownerDocument.defaultView.innerWidth, node.ownerDocument.defaultView.innerHeight, index).then(<span class="function"><span class="keyword">function</span>(<span class="params">canvas</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span>(options.onrendered) === <span class="string">"function"</span>) &#123;</span><br><span class="line">            log(<span class="string">"options.onrendered is deprecated, html2canvas returns a Promise containing the canvas"</span>);</span><br><span class="line">            options.onrendered(canvas);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> canvas;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">修改后</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加自定义高度宽度</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> width = options.width != <span class="literal">null</span> ? options.width : node.ownerDocument.defaultView.innerWidth;</span><br><span class="line">    <span class="keyword">var</span> height = options.height != <span class="literal">null</span> ? options.height : node.ownerDocument.defaultView.innerHeight;</span><br><span class="line">    <span class="keyword">return</span> renderDocument(node.ownerDocument, options, width, height, index).then(<span class="function"><span class="keyword">function</span> (<span class="params">canvas</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span>(options.onrendered) === <span class="string">"function"</span>) &#123;</span><br><span class="line">            log(<span class="string">"options.onrendered is deprecated, html2canvas returns a Promise containing the canvas"</span>);</span><br><span class="line">            options.onrendered(canvas);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> canvas;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="3-截图慢"><a href="#3-截图慢" class="headerlink" title="3.截图慢"></a><strong>3.截图慢</strong></h5><p>截图慢得从html2canvas的原理说起，html2canvas并不是真正的截图，而是遍历加载的页面DOM，收集所有元素的信息，然后基于从DOM读取的属性使用canvas来绘制。</p>
+<p>基于这个截图原理，慢的问题优化空间不大，而且html2canvas还有些CSS的限制，它只能正确地呈现它支持的CSS属性，完整的CSS属性支持列表，可以在官网查看。</p>
+<p>关于慢，最简单的解决方案是在用户操作前提前生成截图。</p>
+<h5 id="4-crash"><a href="#4-crash" class="headerlink" title="4.crash"></a><strong>4.crash</strong></h5><p>html2canvas截图后，将图片的base64传到客户端的分享组件，当base64超过500k可能导致客户端卡死或crash，如果慢的问题还能忍，那这个问题是真的没法接受的。</p>
+<p><a href="https://github.com/tsayen/dom-to-image" target="_blank" rel="noopener"><strong>dom-to-image</strong></a></p>
+<h1 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h1><p><a href="https://blog.csdn.net/u010977934/article/details/56284589" target="_blank" rel="noopener">如何将canvas转化为图片</a></p>
+<p><a href="https://juejin.im/post/5b8409b451882543094b30c2" target="_blank" rel="noopener">纯前端 Canvas 实现 HTML 转图片，自动生成微信阅读卡片</a> <a href="https://github.com/brickyang/reading-card-generator" target="_blank" rel="noopener"><strong>reading-card-generator</strong></a></p>
+<p><a href="https://juejin.im/post/5c3c4b3551882524a5420119" target="_blank" rel="noopener">这应该是你见过的最全前端下载总结</a></p>
+<p><a href="https://mp.weixin.qq.com/s/Jc3DmfNaTC51fZ_ZBN9TZg" target="_blank" rel="noopener">JavaScript实现图片合成下载</a></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/Input/file" target="_blank" rel="noopener">input type=”file” MDN</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/File" target="_blank" rel="noopener">File对象</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Blob" target="_blank" rel="noopener">Blob对象</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader" target="_blank" rel="noopener">FileReader对象</a></p>
+<p><a href="http://blog.gdfengshuo.com/article/18/" target="_blank" rel="noopener">HTML5 进阶系列</a></p>
+<p><a href="https://www.zhangxinxu.com/wordpress/2017/07/html5-canvas-image-compress-upload/" target="_blank" rel="noopener">HTML5 file API加canvas实现图片前端JS压缩并上传</a></p>
+<p><a href="https://www.jianshu.com/p/823ceea1506c" target="_blank" rel="noopener">HTML5 之图片上传预处理</a></p>
+<p><a href="https://juejin.im/post/5b544b01f265da0f800ddece" target="_blank" rel="noopener">Web 开发中 Blob 与 FileAPI 使用简述</a></p>
+<p><a href="https://juejin.im/post/5b5187da51882519ec07fa41" target="_blank" rel="noopener">前端图片canvas，file，blob，DataURL等格式转换</a></p>
+<p><a href="https://juejin.im/post/5c6276956fb9a04a06055925" target="_blank" rel="noopener">你知道前端对图片的处理方式吗？</a></p>
+<p><a href="https://juejin.im/post/5a193b4bf265da43052e528a?utm_source=gold_browser_extension" target="_blank" rel="noopener">前端本地文件操作与上传</a></p>
+<p><a href="https://juejin.im/post/5bd5547a6fb9a05cdd2d5109" target="_blank" rel="noopener">前端文件下载通识篇</a></p>
+<p><a href="https://juejin.im/post/5bd1b0aa6fb9a05d2c43f004" target="_blank" rel="noopener">纯JS生成并下载各种文本文件或图片</a></p>
+<p><a href="https://juejin.im/post/5c652085f265da2d993d6da0" target="_blank" rel="noopener">Fusion Next 之 Upload 上传组件设计思路</a></p>
+<p><a href="https://cloud.tencent.com/developer/article/1047886" target="_blank" rel="noopener">web实时长图实践 QQ音乐</a></p>
+<p><a href="https://tgideas.qq.com/gicp/news/475/6544110.html?from=list" target="_blank" rel="noopener">图片合成类H5总结 tgideas</a></p>
+<p><a href="https://juejin.im/post/5a17c5e26fb9a04527254689" target="_blank" rel="noopener">一次 H5 「保存页面为图片」 的踩坑之旅 丁香医生</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">HTML5</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/17/文件上传下载及读取等小结/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-《React状态管理与同构实战》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -247,7 +597,26 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> updateStateTree = <span class="function"><span class="keyword">function</span> (<span class="params"> previousState = &#123;&#125; , action </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> ( action.type )&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'action1'</span>:</span><br><span class="line">        	<span class="keyword">return</span> newState1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>当无法匹配action时，默认返回原previousState参数，previousState设置了默认值代表初始状态。</p>
 <p>当通过Redux的createStore方法创建了store实例后，使用store.dispatch派发一个描述变化的action（该action需要开发者根据业务编写），reducer函数执行处理变化和更新数据（reducer也需要开发者编写）当页面数据状态得以更新时，store.subscribe( callbackFunction ) 方法订阅数据的更新，并由callbackFunction完成UI更新。</p>
-<h5 id="redux是独立的，可以和其他框架一起使用"><a href="#redux是独立的，可以和其他框架一起使用" class="headerlink" title="redux是独立的，可以和其他框架一起使用"></a>redux是独立的，可以和其他框架一起使用</h5>
+<h5 id="redux是独立的，可以和其他框架一起使用"><a href="#redux是独立的，可以和其他框架一起使用" class="headerlink" title="redux是独立的，可以和其他框架一起使用"></a>redux是独立的，可以和其他框架一起使用</h5><p>当创建一个store时，需要编写reducer函数来进行页面数据状态的变更，reducer负责根据相应的action 和 previousState 推算出最新的状态数据，且reducer必须保持纯函数特性。</p>
+<h5 id="Redux有点像发布订阅系统，但并不完全是。"><a href="#Redux有点像发布订阅系统，但并不完全是。" class="headerlink" title="Redux有点像发布订阅系统，但并不完全是。"></a>Redux有点像发布订阅系统，但并不完全是。</h5><p>为了自动触发页面更新，需要使用store.subscribe方法注册每一次数据更新后的回调逻辑，这种回调逻辑一般是对页面的渲染，也就是react需要衔接的部分。该方法接收一个响应函数作为参数，该函数会在每次派发action并更新完状态后调用，使用store.getState()获取最新数据，完成正确的页面响应。</p>
+<p>正是因为有了store.subscribe ，store数据更新后可以直接触发相关组件重新渲染。</p>
+<h5 id="函数式编程之不可变性和共享"><a href="#函数式编程之不可变性和共享" class="headerlink" title="函数式编程之不可变性和共享"></a>函数式编程之不可变性和共享</h5><p>保证数据的不可变性好处在于可回溯，副作用少。而js的引用类型即共享内存空间，我们需要注意它们的作用域。</p>
+<p>在Redux中保持不可变性——reducer在更新过程中，不直接更改原有对象，而是创建一个新的对象用来承载新的数据。亦可使用immutable.js 不可变的数据操作类库。</p>
+<h3 id="Redux-中间件和异步"><a href="#Redux-中间件和异步" class="headerlink" title="Redux 中间件和异步"></a>Redux 中间件和异步</h3><p>使得可以在派发action和执行reducer这两步<strong>之间</strong>进行更多的操作，例如日志记录，调用异步接口等。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个应用了中间件的store</span></span><br><span class="line"><span class="keyword">const</span> store = createStore( reducer , preloadedState , applyMiddleware(middleware) );</span><br><span class="line"><span class="comment">// applyMiddleware(middleware)即接入中间件</span></span><br></pre></td></tr></table></figure>
+<p>Redux-logger</p>
+<p>Redux-thunk 解决异步场景，使得dispatch可以接收一个函数作为参数，在函数体内进行异步操作，并在异步完成后再派发action。</p>
+<h5 id="Redux架构回顾"><a href="#Redux架构回顾" class="headerlink" title="Redux架构回顾"></a>Redux架构回顾</h5><ul>
+<li>确定所需的状态数据</li>
+<li>根据交互和业务需求，分析确定action</li>
+<li>根据不同的action，完成reducer函数的编写</li>
+<li>根据reducer等创建store</li>
+<li>订阅数据更新，完成视图渲染</li>
+</ul>
+<p>在Redux应用中，需要创建一个store，用来存放应用中必要的state。store有getState，dispatch，subscribe，replaceReducer等几个方法。</p>
+<p>getState用来返回应用当前的页面数据状态，dispatch用来派发action，这是引起页面数据状态更新的唯一途径，它引发reducer函数，根据action处理当前的状态。dispatch的返回值为相关action，而action是描述应用变化的js对象，必须含有有效的type属性。</p>
+<h5 id="react-redux-库"><a href="#react-redux-库" class="headerlink" title="react-redux 库"></a>react-redux 库</h5><p>它避免了在代码中直接使用store.subscribe ，store.getState，对这些方法进行了封装和增强，对React 和 Redux进行了连接。</p>
+
       
 
       
@@ -300,418 +669,9 @@
 
 
   
-    <article id="post-web性能优化小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/23/web性能优化小结/">web性能优化小结</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/23/web性能优化小结/" class="archive-article-date">
-  	<time datetime="2019-02-23T08:26:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="影响因素"><a href="#影响因素" class="headerlink" title="影响因素"></a>影响因素</h1><p>影响页面加载慢的原因：</p>
-<ul>
-<li>CDN</li>
-<li>服务器带宽</li>
-<li>网络状况</li>
-<li>静态资源请求数量太多</li>
-<li>静态资源文件体积大</li>
-<li>浏览器对同一域名并发请求数限制</li>
-<li>数据库操作</li>
-</ul>
-<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p><strong>缩短请求响应时间、减少请求数、减少请求大小</strong>。</p>
-<ul>
-<li><p>域名收敛 </p>
-<p>网络情况差代表着，花销在域名解析上的时间会凸显，特别是当请求域名在没有被缓存的情况下（比如首次访问）</p>
-</li>
-<li><p>考虑使用SPDY协议、使用HTTPS、<a href="https://developers.google.cn/web/fundamentals/performance/http2/?hl=zh-cn" target="_blank" rel="noopener">HTTP2.0协议</a>  可以提升网络链路的复用性，提升资源加载效率， HTTP/2 可解决 HTTP/1.1 的许多固有性能问题，例如并发请求限制和缺乏标头压缩。</p>
-<p><em>在 HTTP/1 环境中，常见的做法是将样式和脚本捆绑成较大软件包。 这么做是因为大量请求会对性能带来不利影响。 使用 HTTP/2 后就不需要再这么做，因为同时发送多个请求的成本更低。 考虑使用 webpack 中的代码拆分来限制仅下载当前页面或视图需要的脚本数。 将您的 CSS 拆分为较小的模板或组件专用文件，且仅在可能使用的地方纳入这些资源。</em></p>
-</li>
-<li><p>避免混用http及https协议</p>
-</li>
-<li><p>预解析DNS，通过dns-prefetch属性可以让浏览器提前解析资源或接口对应的服务器IP地址，避免在请求中发起DNS解析请求，节省请求时间。</p>
-<!-- cdn域名预解析 -->
-<p><meta http-equiv="x-dns-prefetch-control" content="on"></p>
-<link rel="dns-prefetch" href="//cdn.domain.com">
-</li>
-<li><p>减少页面重定向，重定向用301而非304，不允许404、500；设置HSTS Header</p>
-</li>
-<li><p>尽可能减少TTFB——浏览器在接收数据之前等待的时间。<a href="https://scaleyourcode.com/blog/article/27" target="_blank" rel="noopener">What is Waiting (TTFB)</a>  <a href="https://varvy.com/pagespeed/ttfb.html" target="_blank" rel="noopener">Time to First Byte (TTFB)</a></p>
-</li>
-<li><p>减少cookie体积及数量</p>
-</li>
-<li><p>CDN分发资源、nginx部署</p>
-</li>
-<li><p>分域存放资源：由于浏览器同一域名并行下载数有限，利用多域名主机存放静态资源，增加并行下载数，缩短资源加载时间</p>
-</li>
-<li><p><a href="https://developers.google.cn/web/fundamentals/performance/resource-prioritization?hl=zh-cn" target="_blank" rel="noopener">资源预加载</a> : 利用preload，prefetch，preconnect属性我们可以在<code>&lt;head&gt;</code>内部声明式的书写资源获取请求，提前加载非首屏但又较重要的资源，避免在满足首屏优先加载的情况下，反而忽略了其他次重要资源的加载</p>
-<p><a href="https://github.com/GoogleChromeLabs/quicklink" target="_blank" rel="noopener">Google quicklink </a> 通过在空闲时间预取in-viewport链接，可以更快地加载后续页面 <a href="https://juejin.im/post/5c21f8435188256d12597789" target="_blank" rel="noopener">quicklink：实现原理</a></p>
-</li>
-<li><p>降低请求量：合并JS/CSS/图片资源，减少 HTTP 请求数，minify / 开启gzip 压缩，lazyLoad。</p>
-</li>
-</ul>
-<h1 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h1><h2 id="HTTP-协议缓存请求"><a href="#HTTP-协议缓存请求" class="headerlink" title="HTTP 协议缓存请求"></a>HTTP 协议缓存请求</h2><ul>
-<li><p>正确设置<code>expires</code>、<code>max-age</code>、<code>cache-control</code> 和其他 HTTP 缓存头:减少浏览器和服务器之间的往返次数。<a href="https://varvy.com/pagespeed/cache-control.html" target="_blank" rel="noopener">Cache-Control</a></p>
-<p><em>HTML 和 JS/CSS/image 资源都属于静态文件，HTTP 本身提供了缓存协议，浏览器实现了这些协议</em></p>
-<ol>
-<li>询问是否有更新：根据 If-Modified-Since / ETag 等协议向后端请求询问是否有更新，没有更新返回304，浏览器使用本地缓存。</li>
-<li>直接使用本地缓存：根据协议里的 Cache-Control / Expires 字段去确定多长时间内可以不去发请求询问更新，直接使用本地缓存。</li>
-</ol>
-<p><em>HTML 文件每次都向服务器询问是否有更新，JS/CSS/Image资源文件则不请求更新，直接使用本地缓存。那 JS/CSS 资源文件如何更新？常见做法是在在构建过程中给每个资源文件一个版本号或hash值，若资源文件有更新，版本号和 hash 值变化，这个资源请求的 URL 就变化了，同时对应的 HTML 页面更新，变成请求新的资源URL，资源也就更新了。</em></p>
-</li>
-<li><p>考虑使用使用专为指纹静态资源设计的 <code>Cache-control：immutable</code></p>
-</li>
-<li><p>不使用ETags</p>
-</li>
-</ul>
-<h2 id="离线数据缓存localStorage"><a href="#离线数据缓存localStorage" class="headerlink" title="离线数据缓存localStorage"></a>离线数据缓存localStorage</h2><p>json 数据的缓存可以用 localStorage 缓存请求下来的数据，可以在首次显示时先用本地数据，再请求更新，这都由前端 JS 控制。</p>
-<h2 id="离线缓存-manifest"><a href="#离线缓存-manifest" class="headerlink" title="离线缓存 manifest"></a>离线缓存 manifest</h2><p>移动端或Hybrid应用，可以设置离线文件或离线包机制让静态资源请求从本地读取，加快资源载入速度，并实现离线更新</p>
-<h1 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h1><ul>
-<li><p>HTML代码压缩，去除注释、空白符</p>
-</li>
-<li><p>注重标签的语义化，保持用最简洁的标签完成所需的功能</p>
-</li>
-<li><p>最小化iframes的数目 , iframe 内资源的下载进程会阻塞父页面静态资源的下载与 CSS 及 HTML DOM 的解析</p>
-</li>
-</ul>
-<h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><ul>
-<li>压缩CSS代码，排除重复的、未使用的CSS样式</li>
-<li><p>使用postCSS约束CSS代码</p>
-</li>
-<li><p>将CSS标签放在JavaScript标签之前</p>
-</li>
-<li><p>CSS文件需要是非阻塞的，以防止DOM占用加载时间。使用preload实际上可以在浏览器开始显示页面内容之前加载CSS文件。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"preload"</span> <span class="attr">href</span>=<span class="string">"global.min.css"</span> <span class="attr">as</span>=<span class="string">"style"</span> <span class="attr">onload</span>=<span class="string">"this.rel='stylesheet'"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">noscript</span>&gt;</span><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"global.min.css"</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li><p>根据组件打包CSS文件 按需加载，减少网络传输的文件大小</p>
-</li>
-<li><p>尽量少使用css通配符，特别是多层嵌套的末尾使用通配符</p>
-</li>
-<li><p>适当减少class长度、删除未使用的CSS选择器，避免在<body>中使用嵌入或内联CSS</body></p>
-</li>
-<li><p>简单动画尽量只使用transform、opacity、transition等属性完成，较复杂动画可以使用css帧动画</p>
-<p>js动画不要使用setTimeout、setInterval，setTimeout和setInterval在动画执行存在性能问题，且无法准确的控制帧数。</p>
-<p>使用requestAnimationFrame</p>
-<p>考虑对将要使用动画的部分，开启GPU硬件加速（注意不要滥用）</p>
-<p>考虑使用will-change属性（注意不要滥用）</p>
-</li>
-<li><p>给网络字体分组并异步加载，在 CSS 中利用 font-display 来加速首次渲染。</p>
-</li>
-</ul>
-<h1 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h1><ul>
-<li>JS代码压缩，js文件打包成一个文件，减小 JavaScript 包的大小，代码分模块加载</li>
-<li><p>使用ES Lint 进行代码检查</p>
-</li>
-<li><p>处理长列表或者大量DOM元素时，不要绑定太多的事件监听函数。节省内存和减少监听事件的注册</p>
-</li>
-<li><p>利用throttle和debounce函数去处理频发触发，但是不需要频发执行的函数，例如scroll,touchmove例如设置每隔16ms（60帧的帧间隔为16.7ms，因此可以合理地设置为16ms）才进行一次事件处理，避免频繁的事件调用导致移动端页面卡顿。</p>
-</li>
-<li><p>利用setTimeout代替setInterval</p>
-</li>
-<li><p>合理缓存DOM对象</p>
-</li>
-<li><p>避免使用eval、with，使用join代替连接符+，推荐使用ECMAScript 6的字符串模板</p>
-</li>
-<li><p>尽量使用ECMAScript 6+的特性来编程</p>
-</li>
-<li><p>考虑将高耗时的 JavaScript 放到 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">Web Worker</a> 或通过 Service Worker 来缓存字体，样式，JavaScript 和图片等资源文件。</p>
-</li>
-<li><p>考虑将 JavaScript 转换为 <a href="https://webassembly.org/" target="_blank" rel="noopener">WebAssembly</a>，这是一种二进制指令格式，可以使用 C/C++/Rust 等高级语言进行编译。</p>
-</li>
-<li><p>不使用document.write，避免在body中部嵌入多个JavaScript代码</p>
-</li>
-<li><p>检查JavaScript文件中的性能问题。</p>
-</li>
-</ul>
-<h1 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h1><ul>
-<li><p>使用工具压缩图片体积</p>
-</li>
-<li><p>使用较高压缩比格式的文件<a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/automating-image-optimization/?hl=zh-cn#what-is-webp" target="_blank" rel="noopener">webp</a>，由服务器依据图片请求头来进行判断是否支持webp，支持的话则自动返回webp格式图片  <a href="https://developers.google.cn/speed/webp/" target="_blank" rel="noopener">A new image format for the Web</a> <a href="https://zhitu.isux.us/index.php/preview/webp" target="_blank" rel="noopener">WebP使用方案</a> <a href="https://aotu.io/notes/2016/06/23/explore-something-of-webp/" target="_blank" rel="noopener">探究WebP一些事儿</a> <a href="https://www.jianshu.com/p/cb2bff169055" target="_blank" rel="noopener">为什么转换webp后体积变大了？</a></p>
-<ul>
-<li><p>通过Accept标头进行服务器端内容协商，web客户端发送一个“Accept”请求头，表明他们愿意接受哪些内容格式作为响应，如果浏览器预先表明它将“接受”图像/webp格式，web服务器就知道它可以安全地发送webp图像，从而大大简化了内容协商。</p>
-</li>
-<li><p>HTML5 <picture> 标签，它允许你以优先级顺序列出多个备选的图像目标，这样客户端就会请求它能够正确显示的第一个候选图像</picture></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//在本例中，当viewport大于960像素时，会加载图像960的图像。当viewport宽度大于768像素时，浏览器会加载768的。而当宽度小于768像素时，加载默认图像360。</span><br><span class="line">当浏览器不支持的时候就直接读取img标签</span><br><span class="line"><span class="tag">&lt;<span class="name">picture</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(min-width: 960px)"</span> <span class="attr">srcset</span>=<span class="string">960.jpg</span>"&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(min-width: 768px)"</span> <span class="attr">srcset</span>=<span class="string">"768.jpg"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"360.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>在你自己的JavaScript中尝试解码使用特定特征的非常小的WebP图像，并检查是否成功</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// check_webp_feature:</span></span><br><span class="line"><span class="comment">//   'feature' can be one of 'lossy', 'lossless', 'alpha' or 'animation'.</span></span><br><span class="line"><span class="comment">//   'callback(feature, result)' will be passed back the detection result (in an asynchronous way!)</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">check_webp_feature</span>(<span class="params">feature, callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> kTestImages = &#123;</span><br><span class="line">        lossy: <span class="string">"UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA"</span>,</span><br><span class="line">        lossless: <span class="string">"UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA=="</span>,</span><br><span class="line">        alpha: <span class="string">"UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA=="</span>,</span><br><span class="line">        animation: <span class="string">"UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> img = <span class="keyword">new</span> Image();</span><br><span class="line">    img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> result = (img.width &gt; <span class="number">0</span>) &amp;&amp; (img.height &gt; <span class="number">0</span>);</span><br><span class="line">        callback(feature, result);</span><br><span class="line">    &#125;;</span><br><span class="line">    img.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        callback(feature, <span class="literal">false</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    img.src = <span class="string">"data:image/webp;base64,"</span> + kTestImages[feature];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>请注意，映像加载是非阻塞和异步的。这意味着任何依赖于WebP支持的代码最好放在回调函数中</p>
-</li>
-</ul>
-<ul>
-<li><p>优先使用jpg格式、png8，而非png24。</p>
-</li>
-<li><p>合并小图，使用雪碧图</p>
-</li>
-<li><p>尽可能使用css3、svg、web fonts替代图片</p>
-</li>
-<li><p>小于2KB的图片可以尝试使用base64格式去替换，将图片转换成base64格式可以减少http请求数量，但是，不能对较大尺寸的图片使用base64格式，因为base64算法会提升三分之一的文件大小</p>
-</li>
-<li><p>针对网络情况请求不同画质的图片、针对设备像素比确定使用几倍图</p>
-</li>
-<li><p>空闲时间预加载图片</p>
-</li>
-<li><p>首屏强制锁屏loading、预加载所有资源</p>
-</li>
-<li><p>首屏加载完毕时预加载其他资源</p>
-</li>
-<li><p>如果最终呈现的图像大小已知，则在<img>上设置宽度和高度属性</p>
-</li>
-</ul>
-<h1 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h1><ul>
-<li><p>压缩字库大小，避免加载过多无用的资源，推荐工具字蛛</p>
-</li>
-<li><p>优化字体的展示策略，使用font-display属性可以避免在字体加载过程中，不显示文字的问题</p>
-</li>
-<li><p>Web字体格式：在web项目或应用程序中使用WOFF 2</p>
-</li>
-<li><p>当特殊文字量较少且内容固定时，可以尝试使用图片代替</p>
-</li>
-<li><p>使用预连接加载字体更快</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"preconnect"</span> <span class="attr">href</span>=<span class="string">"https://fonts.gstatic.com"</span> <span class="attr">crossorigin</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h1><p><a href="https://developers.google.com/web/fundamentals/performance/optimizing-javascript/tree-shaking/" target="_blank" rel="noopener">摇树（tree-shaking）</a>是一种在 <a href="http://www.2ality.com/2015/12/webpack-tree-shaking.html" target="_blank" rel="noopener">webpack</a> 中清理构建过程的方法，它仅将实际生产环境使用的代码打包，并排除没有使用的导入模块。使用 webpack 和 rollup，还可以使用<a href="https://medium.com/webpack/brief-introduction-to-scope-hoisting-in-webpack-8435084c171f" target="_blank" rel="noopener">作用域提升</a>（scope hoisting），作用域提升使得 webpack 和 rollup 可以检测 <code>import</code> 链可以展开的位置，并将其转换为一个内联函数，并且不会影响代码。使用 webpack，我们也可以使用 <a href="https://react-etc.net/entry/json-tree-shaking-lands-in-webpack-4-0" target="_blank" rel="noopener">JSON Tree Shaking</a>。</p>
-<p><a href="https://webpack.js.org/guides/code-splitting/" target="_blank" rel="noopener">代码拆分（code-splitting）</a>是另一个 webpack 功能，它将你的代码库拆分为按需加载的“块”。并非所有的 JavaScript 都必须立即下载、解析和编译。在代码中定义分割点后，webpack 可以处理依赖项和输出文件。它能够保持较小体积的初始下载，并在应用程序请求时按需请求代码。</p>
-<p>考虑使用 <a href="https://github.com/GoogleChromeLabs/preload-webpack-plugin" target="_blank" rel="noopener">preload-webpack-plugin</a>，它接受代码拆分的路由，然后提示浏览器使用 <code>&lt;link rel=&quot;preload&quot;&gt;</code> 或 <code>&lt;link rel=&quot;prefetch&quot;&gt;</code> 预加载它们。<a href="https://webpack.js.org/guides/code-splitting/#prefetching-preloading-modules" target="_blank" rel="noopener">Webpack 内联指令</a>还可以控制 <code>preload</code>/<code>prefetch</code>。</p>
-<p>考虑使用<a href="https://www.npmjs.com/package/npm-check" target="_blank" rel="noopener">npm-check</a> 更新包</p>
-<p>参考资料：<a href="https://developers.google.cn/web/fundamentals/performance/webpack/decrease-frontend-size?hl=zh-cn" target="_blank" rel="noopener">Decrease Front-end Size</a></p>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><ul>
-<li><p>首屏考虑css loading效果，防止白屏</p>
-</li>
-<li><p>对于整个页面资源需求量较大时，可以使用骨架屏。加载骨架屏占位，然后再去数据填充。如：vue-skeleton-webpack-plugin</p>
-</li>
-<li><p>通过Google Lighthouse 分析<a href="https://developers.google.cn/web/fundamentals/performance/speed-tools/?hl=zh-cn" target="_blank" rel="noopener">跑分工具</a>，可以较全面的了解网站的性能</p>
-</li>
-<li><p>通过Chrome的控制面板code coverage部分，找到未使用代码的比例</p>
-</li>
-<li><p>确定优先级：立即加载核心体验，然后加载增强体验，最后加载额外功能。</p>
-<p>定义基本核心体验（即完全可访问的核心内容）、增强体验（即更加丰富的完整体验）以及额外功能（可以延迟加载的非必需的资源：例如网页字体、不必要的样式、轮播脚本、视频播放器、社交媒体按钮和大图片）。</p>
-</li>
-<li><p>考虑使组件具有连接感知能力，可以将高 DPI 图像的请求重写为低 DPI 图像请求，删除 Web 字体、花哨的效果、预览缩略图和无限滚动、关闭视频、音频自动播放、减少显示项目的数量。</p>
-<p><a href="https://github.com/developers.google.com/web/update/2016/02/save-data" target="_blank" rel="noopener">Save-Data 客户端提示请求头</a>允许我们为受成本和性能限制的用户定制应用程序及其负载</p>
-<p><a href="https://github.com/googlechrome.gitrub.io/samples/network-Information/" target="_blank" rel="noopener">Network Information API</a> 根据网络类型提供<a href="https://justmarkup.com/log/2017/11/network-based-image-loading/" target="_blank" rel="noopener">高/低分辨率的图像</a> 和视频。</p>
-</li>
-<li><p>用户体验优化：关注异步处理，当异步未能及时返回时前端/UI应有相应处理，尽量保证用户无感知异步等待。<a href="https://developers.google.cn/web/fundamentals/instant-and-offline/offline-ux?hl=zh-cn" target="_blank" rel="noopener">Offline UX 注意事项</a></p>
-</li>
-</ul>
-<h1 id="针对年会游戏手机端页面的优化"><a href="#针对年会游戏手机端页面的优化" class="headerlink" title="针对年会游戏手机端页面的优化"></a>针对年会游戏手机端页面的优化</h1><p>以下是2019.2.13针对年会游戏手机端页面的优化工作：</p>
-<ul>
-<li><p>开启Gzip</p>
-</li>
-<li><p>login.html</p>
-<p>优化前：共20个请求、页面总大小341kb</p>
-<p>优化后：共12个请求、减少了8个请求数</p>
-<ul>
-<li>移除输入框中的三个图标，改为base64格式。节省了3个请求数</li>
-<li>移除layer.css 、layer.js 。节省了3个请求数</li>
-<li>移除zepto.js。节省了1个请求数</li>
-<li>移除common.js，将内容移至share.js中（share.js对common.js有依赖）。节省了1个请求数</li>
-<li>压缩页面为单行。节省了4.3KB体积</li>
-<li>压缩share.js。节省了3.3KB体积</li>
-<li>压缩config.js。节省166B</li>
-</ul>
-<p>【问题】：考虑移除config.js？移除则减少1个请求数但增加了接口地址维护成本，是否有更简单的办法？比如nginx代理？</p>
-<p>考虑移除flexible.js，移除则减少1个请求数但该页面布局整体需要重写</p>
-<p>考虑有损压缩图片，但未找到更好的无损压缩工具。</p>
-</li>
-</ul>
-<ul>
-<li><p>index.html</p>
-<p>优化前：共25个请求、页面总大小350kb</p>
-<p>优化后：共11个请求、节省了14个请求数</p>
-<ul>
-<li>注释弹幕霸屏无用的代码，节省了2个请求数</li>
-<li>移除layer.css、layer.js。节省了3个请求数</li>
-<li>移除jQueryRotate.js。节省了1个请求数</li>
-<li>移除jquery.form.js。节省了1个请求数</li>
-<li>移除zepto.js。节省了1个请求数</li>
-<li>移除fastclick.js。节省了1个请求数</li>
-<li>合并部分图片为雪碧图。节省了5个请求数</li>
-</ul>
-<p>【问题】：考虑移除config.js？移除则减少1个请求数但增加了接口地址维护成本，是否有更简单的办法？比如nginx代理？</p>
-</li>
-</ul>
-<ul>
-<li><p>shake.html</p>
-<p>优化前：共25个请求、页面总大小396kb</p>
-<p>优化后：共19个请求、节省了6个请求数</p>
-<ul>
-<li>去除小猪头gif图片。节省了1个请求数</li>
-<li>去除游戏开始前和进行时的音效。节省了2个请求数</li>
-<li>移除左上角的返回按钮图标，改为base64格式。节省了1个请求数</li>
-<li>移除关闭按钮，改为base64格式。节省了1个请求数</li>
-<li>压缩style.css</li>
-<li>移除layer.css、layer.js。节省了3个请求数</li>
-<li>压缩index.js</li>
-</ul>
-<p>【问题】：考虑移除config.js？移除则减少1个请求数但增加了接口地址维护成本，是否有更简单的办法？比如nginx代理？</p>
-</li>
-</ul>
-<p>参考：</p>
-<p><a href="https://github.com/thedaviddias/Front-End-Performance-Checklist" target="_blank" rel="noopener"><strong>Front-End-Performance-Checklist</strong></a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/navigation-and-resource-timing/?hl=zh-cn" target="_blank" rel="noopener">Assessing Loading Performance in Real Life with Navigation and Resource Timing</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/automating-image-optimization/?hl=zh-cn#what-is-webp" target="_blank" rel="noopener">优化图像</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/javascript-startup-optimization/?hl=zh-cn" target="_blank" rel="noopener">JavaScript 启动优化</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=zh-cn" target="_blank" rel="noopener">HTTP 缓存</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-javascript/tree-shaking/?hl=zh-cn" target="_blank" rel="noopener">Reduce JavaScript Payloads with Tree Shaking</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-javascript/code-splitting/?hl=zh-cn" target="_blank" rel="noopener">Reduce JavaScript Payloads with Code Splitting</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/critical-rendering-path/analyzing-crp?hl=zh-cn" target="_blank" rel="noopener">分析关键渲染路径性能</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/rendering/?hl=zh-cn" target="_blank" rel="noopener">渲染性能</a></p>
-<p><a href="https://www.checkbot.io/guide/speed/" target="_blank" rel="noopener">Web Speed Best Practices</a></p>
-<p><a href="https://mp.weixin.qq.com/s/i035lEHc2w2K-TBhbDtaLQ" target="_blank" rel="noopener">移动 H5 首屏秒开优化方案探讨</a></p>
-<p><a href="https://juejin.im/post/5b3c0d26e51d45191556b527?utm_source=gold_browser_extension#heading-1" target="_blank" rel="noopener">移动端网页性能优化自查表</a></p>
-<p><a href="https://juejin.im/post/5aaf9e5cf265da239c7b2b93" target="_blank" rel="noopener">移动spa商城优化记</a></p>
-<p><a href="https://mp.weixin.qq.com/s/JFjgRkub4K-QW6nEKQQXzQ" target="_blank" rel="noopener">手机活动页图片性能优化分享</a></p>
-<p><a href="https://github.com/xitu/gold-miner/blob/master/TODO1/front-end-performance-checklist-2019-pdf-pages-4.md" target="_blank" rel="noopener">2019 前端性能优化年度总结</a></p>
-<p><a href="https://juejin.im/post/5c46cbaee51d453f45612a2c#heading-16" target="_blank" rel="noopener">2019年前端性能优化清单</a></p>
-<p><a href="https://aotu.io/notes/2016/06/14/http2/" target="_blank" rel="noopener">HTTP/2</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">性能优化</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/23/web性能优化小结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-小程序开发小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/08/小程序开发小结/">小程序开发小结</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/08/小程序开发小结/" class="archive-article-date">
-  	<time datetime="2019-02-08T08:24:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">小程序</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/08/小程序开发小结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -811,19 +771,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Sass</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
+                <a href="javascript:void(0)" class="js-tag color5">Sass</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -832,6 +784,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -847,15 +807,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">react</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">《你不知道的JavaScript》</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">this</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -879,11 +839,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
               </li>
              
               <li class="article-tag-list-item">

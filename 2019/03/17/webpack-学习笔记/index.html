@@ -6,18 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 性能优化 | 我的地盘听我的</title>
+  <title>webpack 学习笔记 | 我的地盘听我的</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="这是萌新的博客,请多指教呢">
-<meta property="og:type" content="website">
-<meta property="og:title" content="我的地盘听我的">
-<meta property="og:url" content="http://yoursite.com/tags/性能优化/index.html">
+  <meta name="description" content="webpack学习笔记想想webpack是一个管道，有入口和出口。 核心理论Entry 入口未打包的目录，指定一个入口让webpack来操作它 123module.exports = &amp;#123;  entry: &apos;./path/to/my/entry/file.js&apos;&amp;#125;; Output：输出打包完成输出的目录，指定一个目录告诉webpack输出到哪儿，及命名规则 123456789c">
+<meta name="keywords" content="webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack 学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/03/17/webpack-学习笔记/index.html">
 <meta property="og:site_name" content="我的地盘听我的">
-<meta property="og:description" content="这是萌新的博客,请多指教呢">
+<meta property="og:description" content="webpack学习笔记想想webpack是一个管道，有入口和出口。 核心理论Entry 入口未打包的目录，指定一个入口让webpack来操作它 123module.exports = &amp;#123;  entry: &apos;./path/to/my/entry/file.js&apos;&amp;#125;; Output：输出打包完成输出的目录，指定一个目录告诉webpack输出到哪儿，及命名规则 123456789c">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://image-up-yun.test.upcdn.net/屏幕快照 2019-03-17 下午1.59.19.png">
+<meta property="og:updated_time" content="2019-03-17T06:21:17.453Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的地盘听我的">
-<meta name="twitter:description" content="这是萌新的博客,请多指教呢">
+<meta name="twitter:title" content="webpack 学习笔记">
+<meta name="twitter:description" content="webpack学习笔记想想webpack是一个管道，有入口和出口。 核心理论Entry 入口未打包的目录，指定一个入口让webpack来操作它 123module.exports = &amp;#123;  entry: &apos;./path/to/my/entry/file.js&apos;&amp;#125;; Output：输出打包完成输出的目录，指定一个目录告诉webpack输出到哪儿，及命名规则 123456789c">
+<meta name="twitter:image" content="http://image-up-yun.test.upcdn.net/屏幕快照 2019-03-17 下午1.59.19.png">
   
     <link rel="alternative" href="/atom.xml" title="我的地盘听我的" type="application/atom+xml">
   
@@ -139,60 +143,213 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-webpack-学习笔记" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/23/web性能优化小结/" class="archive-article-date">
-  	<time datetime="2019-02-23T08:26:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-23</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/23/web性能优化小结/">web性能优化小结</a>
+    <h1 class="article-title" itemprop="name">
+      webpack 学习笔记
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/03/17/webpack-学习笔记/" class="archive-article-date">
+  	<time datetime="2019-03-17T05:57:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://image-up-yun.test.upcdn.net/屏幕快照 2019-03-17 下午1.59.19.png" alt=""></p>
+<h1 id="webpack学习笔记"><a href="#webpack学习笔记" class="headerlink" title="webpack学习笔记"></a>webpack学习笔记</h1><p>想想webpack是一个管道，有入口和出口。</p>
+<h2 id="核心理论"><a href="#核心理论" class="headerlink" title="核心理论"></a>核心理论</h2><h3 id="Entry-入口"><a href="#Entry-入口" class="headerlink" title="Entry 入口"></a>Entry 入口</h3><p>未打包的目录，指定一个入口让webpack来操作它</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Output：输出"><a href="#Output：输出" class="headerlink" title="Output：输出"></a>Output：输出</h3><p>打包完成输出的目录，指定一个目录告诉webpack输出到哪儿，及命名规则</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),	<span class="comment">// 路径</span></span><br><span class="line">    filename: <span class="string">'my-first-webpack.bundle.js'</span>	<span class="comment">// 命名</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Loaders：loader"><a href="#Loaders：loader" class="headerlink" title="Loaders：loader"></a>Loaders：loader</h3><p>让webpack支持js和JSON以外的文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'my-first-webpack.bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123; <span class="attr">test</span>: <span class="regexp">/\.txt$/</span>, <span class="attr">use</span>: <span class="string">'raw-loader'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">上面的配置中定义了一个<span class="built_in">module</span>.rules属性，这个属性又有两个属性：test和use。这就好像告诉webpack编译器说：</span><br><span class="line"></span><br><span class="line">”Hi，webpack编译器，当你发现任何后缀为.txt的文件时，请使用raw-loader先转换一下，然后再把转换后的内容添加到打包文件中。“</span><br></pre></td></tr></table></figure>
+<h3 id="Plugins：插件"><a href="#Plugins：插件" class="headerlink" title="Plugins：插件"></a>Plugins：插件</h3><p>使用require引用插件，在plugins数组中添加插件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>); <span class="comment">//installed via npm</span></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>); <span class="comment">//to access built-in plugins</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123; <span class="attr">test</span>: <span class="regexp">/\.txt$/</span>, <span class="attr">use</span>: <span class="string">'raw-loader'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;<span class="attr">template</span>: <span class="string">'./src/index.html'</span>&#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">在上面的例子中，使用html-webpack-plugin生成一个HTML文件，这个文件就是你的应用程序。在其中已经自动引用好了打包的文件。</span><br></pre></td></tr></table></figure>
+<h3 id="Mode：模式"><a href="#Mode：模式" class="headerlink" title="Mode：模式"></a>Mode：模式</h3><p>通过设置<code>mode</code>属性，可以启动webpack内置的优化。</p>
+<h3 id="Browser-Compatibility：浏览器兼容"><a href="#Browser-Compatibility：浏览器兼容" class="headerlink" title="Browser Compatibility：浏览器兼容"></a>Browser Compatibility：浏览器兼容</h3><p>webpack 支持所有基于ES5的浏览器，但是IE8及以下是不支持的。因为webpack需要<code>import()</code>和<code>require()</code>。如果需要支持老版本浏览器，可以使用loader解决。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>创建一个目录并安装webpack及cli（并非全局安装）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir webpack-demo &amp;&amp; <span class="built_in">cd</span> webpack-demo</span><br><span class="line">npm init -y</span><br><span class="line">npm install webpack webpack-cli --save-dev</span><br></pre></td></tr></table></figure>
+<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p>传统web开发中，<script>标记之间存在隐式依赖关系。用这种方式管理JavaScript项目存在一些问题:</p>
+<ul>
+<li>脚本是否依赖于外部库并不明显。</li>
+<li>如果缺少依赖项，或者以错误的顺序包含依赖项，应用程序将无法正常运行。</li>
+<li>如果包含但没有使用依赖项，浏览器将被迫下载不必要的代码。</li>
+</ul>
+<p>让我们使用webpack来管理这些脚本，在webpack中，每个模块都会声明所引用的依赖，这样就避免了打包没有使用到的模块。另外通过配置，可以避免重复打包相同的引用，提高打包效率。通过loader，webpack可以引入任何其他的非JavaScript文件。例如，加载css、图片、字体、JSON、XML等。</p>
+<ul>
+<li>src 即 source ，是我们将要编写和编辑的代码</li>
+<li>dist 即 distribution ， 是我们构建过程中最小化和优化的输出，最终将加载到浏览器中</li>
+<li>在安装将被捆绑到<strong>生产</strong>包中的包时，应该使用npm install——save。</li>
+<li>如果安装<strong>用于开发目的</strong>的包(例如linter、测试库等)，那么应该使用npm install——save-dev</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npx webpack  或  npx webpack --config webpack.config.js</span><br><span class="line">将以脚本的src/index.js作为入口点，并生成dist/main.js作为输出</span><br></pre></td></tr></table></figure>
+<h5 id="webpack-仅支持-import-、export-、Module-API，如果要使用ES6-需要配合Babel这样的loader"><a href="#webpack-仅支持-import-、export-、Module-API，如果要使用ES6-需要配合Babel这样的loader" class="headerlink" title="webpack 仅支持 import 、export 、Module API，如果要使用ES6 需要配合Babel这样的loader"></a>webpack 仅支持 import 、export 、Module API，如果要使用ES6 需要配合Babel这样的loader</h5><p>通过在package.json中配置下列代码，可以使用 npm script来运行webpack 替代上面的npx命令</p>
+<p>使用 <strong>scripts</strong> 可以像引用npx一样通过名称引用本地安装的npm包 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">      "test": "echo \"Error: no test specified\" &amp;&amp; exit 1",</span><br><span class="line">      "build": "webpack"</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+<p>然后使用以下命令，也可以编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+<p>推荐 CSS loaders 有 postcss 、sass 、 less</p>
+<p>参考：</p>
+<p><a href="https://webpack.js.org/guides/getting-started/">webpack.js.org</a></p>
+<p><a href="https://juejin.im/post/5c11bf4ee51d45171643974c">webpack入门学习手记</a></p>
+</script></p>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wepay.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">性能优化</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">webpack</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/03/17/webpack-学习笔记/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/03/17/文件上传下载及读取等小结/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">文件上传下载及读取等小结</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -216,9 +373,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
@@ -290,19 +447,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Sass</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
+                <a href="javascript:void(0)" class="js-tag color5">Sass</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -311,6 +460,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -326,15 +483,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">react</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">《你不知道的JavaScript》</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">this</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -358,11 +515,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
               </li>
              
               <li class="article-tag-list-item">

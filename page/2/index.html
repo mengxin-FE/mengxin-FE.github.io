@@ -141,6 +141,376 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-web性能优化小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="影响因素"><a href="#影响因素" class="headerlink" title="影响因素"></a>影响因素</h1><p>影响页面加载慢的原因：</p>
+<ul>
+<li>CDN</li>
+<li>服务器带宽</li>
+<li>网络状况</li>
+<li>静态资源请求数量太多</li>
+<li>静态资源文件体积大</li>
+<li>浏览器对同一域名并发请求数限制</li>
+<li>数据库操作</li>
+</ul>
+<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p><strong>缩短请求响应时间、减少请求数、减少请求大小</strong>。</p>
+<ul>
+<li><p>域名收敛 </p>
+<p>网络情况差代表着，花销在域名解析上的时间会凸显，特别是当请求域名在没有被缓存的情况下（比如首次访问）</p>
+</li>
+<li><p>考虑使用SPDY协议、使用HTTPS、<a href="https://developers.google.cn/web/fundamentals/performance/http2/?hl=zh-cn" target="_blank" rel="noopener">HTTP2.0协议</a>  可以提升网络链路的复用性，提升资源加载效率， HTTP/2 可解决 HTTP/1.1 的许多固有性能问题，例如并发请求限制和缺乏标头压缩。</p>
+<p><em>在 HTTP/1 环境中，常见的做法是将样式和脚本捆绑成较大软件包。 这么做是因为大量请求会对性能带来不利影响。 使用 HTTP/2 后就不需要再这么做，因为同时发送多个请求的成本更低。 考虑使用 webpack 中的代码拆分来限制仅下载当前页面或视图需要的脚本数。 将您的 CSS 拆分为较小的模板或组件专用文件，且仅在可能使用的地方纳入这些资源。</em></p>
+</li>
+<li><p>避免混用http及https协议</p>
+</li>
+<li><p>预解析DNS，通过dns-prefetch属性可以让浏览器提前解析资源或接口对应的服务器IP地址，避免在请求中发起DNS解析请求，节省请求时间。</p>
+<!-- cdn域名预解析 -->
+<p><meta http-equiv="x-dns-prefetch-control" content="on"></p>
+<link rel="dns-prefetch" href="//cdn.domain.com">
+</li>
+<li><p>减少页面重定向，重定向用301而非304，不允许404、500；设置HSTS Header</p>
+</li>
+<li><p>尽可能减少TTFB——浏览器在接收数据之前等待的时间。<a href="https://scaleyourcode.com/blog/article/27" target="_blank" rel="noopener">What is Waiting (TTFB)</a>  <a href="https://varvy.com/pagespeed/ttfb.html" target="_blank" rel="noopener">Time to First Byte (TTFB)</a></p>
+</li>
+<li><p>减少cookie体积及数量</p>
+</li>
+<li><p>CDN分发资源、nginx部署</p>
+</li>
+<li><p>分域存放资源：由于浏览器同一域名并行下载数有限，利用多域名主机存放静态资源，增加并行下载数，缩短资源加载时间</p>
+</li>
+<li><p><a href="https://developers.google.cn/web/fundamentals/performance/resource-prioritization?hl=zh-cn" target="_blank" rel="noopener">资源预加载</a> : 利用preload，prefetch，preconnect属性我们可以在<code>&lt;head&gt;</code>内部声明式的书写资源获取请求，提前加载非首屏但又较重要的资源，避免在满足首屏优先加载的情况下，反而忽略了其他次重要资源的加载</p>
+<p><a href="https://github.com/GoogleChromeLabs/quicklink" target="_blank" rel="noopener">Google quicklink </a> 通过在空闲时间预取in-viewport链接，可以更快地加载后续页面 <a href="https://juejin.im/post/5c21f8435188256d12597789" target="_blank" rel="noopener">quicklink：实现原理</a></p>
+</li>
+<li><p>降低请求量：合并JS/CSS/图片资源，减少 HTTP 请求数，minify / 开启gzip 压缩，lazyLoad。</p>
+</li>
+</ul>
+<h1 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h1><h2 id="HTTP-协议缓存请求"><a href="#HTTP-协议缓存请求" class="headerlink" title="HTTP 协议缓存请求"></a>HTTP 协议缓存请求</h2><ul>
+<li><p>正确设置<code>expires</code>、<code>max-age</code>、<code>cache-control</code> 和其他 HTTP 缓存头:减少浏览器和服务器之间的往返次数。<a href="https://varvy.com/pagespeed/cache-control.html" target="_blank" rel="noopener">Cache-Control</a></p>
+<p><em>HTML 和 JS/CSS/image 资源都属于静态文件，HTTP 本身提供了缓存协议，浏览器实现了这些协议</em></p>
+<ol>
+<li>询问是否有更新：根据 If-Modified-Since / ETag 等协议向后端请求询问是否有更新，没有更新返回304，浏览器使用本地缓存。</li>
+<li>直接使用本地缓存：根据协议里的 Cache-Control / Expires 字段去确定多长时间内可以不去发请求询问更新，直接使用本地缓存。</li>
+</ol>
+<p><em>HTML 文件每次都向服务器询问是否有更新，JS/CSS/Image资源文件则不请求更新，直接使用本地缓存。那 JS/CSS 资源文件如何更新？常见做法是在在构建过程中给每个资源文件一个版本号或hash值，若资源文件有更新，版本号和 hash 值变化，这个资源请求的 URL 就变化了，同时对应的 HTML 页面更新，变成请求新的资源URL，资源也就更新了。</em></p>
+</li>
+<li><p>考虑使用使用专为指纹静态资源设计的 <code>Cache-control：immutable</code></p>
+</li>
+<li><p>不使用ETags</p>
+</li>
+</ul>
+<h2 id="离线数据缓存localStorage"><a href="#离线数据缓存localStorage" class="headerlink" title="离线数据缓存localStorage"></a>离线数据缓存localStorage</h2><p>json 数据的缓存可以用 localStorage 缓存请求下来的数据，可以在首次显示时先用本地数据，再请求更新，这都由前端 JS 控制。</p>
+<h2 id="离线缓存-manifest"><a href="#离线缓存-manifest" class="headerlink" title="离线缓存 manifest"></a>离线缓存 manifest</h2><p>移动端或Hybrid应用，可以设置离线文件或离线包机制让静态资源请求从本地读取，加快资源载入速度，并实现离线更新</p>
+<h1 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h1><ul>
+<li>HTML代码压缩，去除注释、空白符</li>
+<li>注重标签的语义化，保持用最简洁的标签完成所需的功能</li>
+<li>最小化iframes的数目 , iframe 内资源的下载进程会阻塞父页面静态资源的下载与 CSS 及 HTML DOM 的解析</li>
+</ul>
+<h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><ul>
+<li><p>压缩CSS代码，排除重复的、未使用的CSS样式</p>
+</li>
+<li><p>使用postCSS约束CSS代码</p>
+</li>
+<li><p>将CSS标签放在JavaScript标签之前</p>
+</li>
+<li><p>CSS文件需要是非阻塞的，以防止DOM占用加载时间。使用preload实际上可以在浏览器开始显示页面内容之前加载CSS文件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"preload"</span> <span class="attr">href</span>=<span class="string">"global.min.css"</span> <span class="attr">as</span>=<span class="string">"style"</span> <span class="attr">onload</span>=<span class="string">"this.rel='stylesheet'"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">noscript</span>&gt;</span><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"global.min.css"</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>根据组件打包CSS文件 按需加载，减少网络传输的文件大小</p>
+</li>
+<li><p>尽量少使用css通配符，特别是多层嵌套的末尾使用通配符</p>
+</li>
+<li><p>适当减少class长度、删除未使用的CSS选择器，避免在<body>中使用嵌入或内联CSS</body></p>
+</li>
+<li><p>简单动画尽量只使用transform、opacity、transition等属性完成，较复杂动画可以使用css帧动画</p>
+<p>js动画不要使用setTimeout、setInterval，setTimeout和setInterval在动画执行存在性能问题，且无法准确的控制帧数。</p>
+<p>使用requestAnimationFrame</p>
+<p>考虑对将要使用动画的部分，开启GPU硬件加速（注意不要滥用）</p>
+<p>考虑使用will-change属性（注意不要滥用）</p>
+</li>
+<li><p>给网络字体分组并异步加载，在 CSS 中利用 font-display 来加速首次渲染。</p>
+</li>
+</ul>
+<h1 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h1><ul>
+<li>JS代码压缩，js文件打包成一个文件，减小 JavaScript 包的大小，代码分模块加载</li>
+<li>使用ES Lint 进行代码检查</li>
+<li>处理长列表或者大量DOM元素时，不要绑定太多的事件监听函数。节省内存和减少监听事件的注册</li>
+<li>利用throttle和debounce函数去处理频发触发，但是不需要频发执行的函数，例如scroll,touchmove例如设置每隔16ms（60帧的帧间隔为16.7ms，因此可以合理地设置为16ms）才进行一次事件处理，避免频繁的事件调用导致移动端页面卡顿。</li>
+<li>利用setTimeout代替setInterval</li>
+<li>合理缓存DOM对象</li>
+<li>避免使用eval、with，使用join代替连接符+，推荐使用ECMAScript 6的字符串模板</li>
+<li>尽量使用ECMAScript 6+的特性来编程</li>
+<li>考虑将高耗时的 JavaScript 放到 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">Web Worker</a> 或通过 Service Worker 来缓存字体，样式，JavaScript 和图片等资源文件。</li>
+<li>考虑将 JavaScript 转换为 <a href="https://webassembly.org/" target="_blank" rel="noopener">WebAssembly</a>，这是一种二进制指令格式，可以使用 C/C++/Rust 等高级语言进行编译。</li>
+<li>不使用document.write，避免在body中部嵌入多个JavaScript代码</li>
+<li>检查JavaScript文件中的性能问题。</li>
+</ul>
+<h1 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h1><ul>
+<li><p>使用工具压缩图片体积</p>
+</li>
+<li><p>使用较高压缩比格式的文件<a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/automating-image-optimization/?hl=zh-cn#what-is-webp" target="_blank" rel="noopener">webp</a>，由服务器依据图片请求头来进行判断是否支持webp，支持的话则自动返回webp格式图片  <a href="https://developers.google.cn/speed/webp/" target="_blank" rel="noopener">A new image format for the Web</a> <a href="https://zhitu.isux.us/index.php/preview/webp" target="_blank" rel="noopener">WebP使用方案</a> <a href="https://aotu.io/notes/2016/06/23/explore-something-of-webp/" target="_blank" rel="noopener">探究WebP一些事儿</a> <a href="https://www.jianshu.com/p/cb2bff169055" target="_blank" rel="noopener">为什么转换webp后体积变大了？</a></p>
+<ul>
+<li><p>通过Accept标头进行服务器端内容协商，web客户端发送一个“Accept”请求头，表明他们愿意接受哪些内容格式作为响应，如果浏览器预先表明它将“接受”图像/webp格式，web服务器就知道它可以安全地发送webp图像，从而大大简化了内容协商。</p>
+</li>
+<li><p>HTML5 <picture> 标签，它允许你以优先级顺序列出多个备选的图像目标，这样客户端就会请求它能够正确显示的第一个候选图像</picture></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//在本例中，当viewport大于960像素时，会加载图像960的图像。当viewport宽度大于768像素时，浏览器会加载768的。而当宽度小于768像素时，加载默认图像360。</span><br><span class="line">当浏览器不支持的时候就直接读取img标签</span><br><span class="line"><span class="tag">&lt;<span class="name">picture</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(min-width: 960px)"</span> <span class="attr">srcset</span>=<span class="string">960.jpg</span>"&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(min-width: 768px)"</span> <span class="attr">srcset</span>=<span class="string">"768.jpg"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"360.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>在你自己的JavaScript中尝试解码使用特定特征的非常小的WebP图像，并检查是否成功</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// check_webp_feature:</span></span><br><span class="line"><span class="comment">//   'feature' can be one of 'lossy', 'lossless', 'alpha' or 'animation'.</span></span><br><span class="line"><span class="comment">//   'callback(feature, result)' will be passed back the detection result (in an asynchronous way!)</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">check_webp_feature</span>(<span class="params">feature, callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> kTestImages = &#123;</span><br><span class="line">        lossy: <span class="string">"UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA"</span>,</span><br><span class="line">        lossless: <span class="string">"UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA=="</span>,</span><br><span class="line">        alpha: <span class="string">"UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA=="</span>,</span><br><span class="line">        animation: <span class="string">"UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> img = <span class="keyword">new</span> Image();</span><br><span class="line">    img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> result = (img.width &gt; <span class="number">0</span>) &amp;&amp; (img.height &gt; <span class="number">0</span>);</span><br><span class="line">        callback(feature, result);</span><br><span class="line">    &#125;;</span><br><span class="line">    img.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        callback(feature, <span class="literal">false</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    img.src = <span class="string">"data:image/webp;base64,"</span> + kTestImages[feature];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>请注意，映像加载是非阻塞和异步的。这意味着任何依赖于WebP支持的代码最好放在回调函数中</p>
+</li>
+</ul>
+<ul>
+<li><p>优先使用jpg格式、png8，而非png24。</p>
+</li>
+<li><p>合并小图，使用雪碧图</p>
+</li>
+<li><p>尽可能使用css3、svg、web fonts替代图片</p>
+</li>
+<li><p>小于2KB的图片可以尝试使用base64格式去替换，将图片转换成base64格式可以减少http请求数量，但是，不能对较大尺寸的图片使用base64格式，因为base64算法会提升三分之一的文件大小</p>
+</li>
+<li><p>针对网络情况请求不同画质的图片、针对设备像素比确定使用几倍图</p>
+</li>
+<li><p>空闲时间预加载图片</p>
+</li>
+<li><p>首屏强制锁屏loading、预加载所有资源</p>
+</li>
+<li><p>首屏加载完毕时预加载其他资源</p>
+</li>
+<li><p>如果最终呈现的图像大小已知，则在<img>上设置宽度和高度属性</p>
+</li>
+</ul>
+<h1 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h1><ul>
+<li><p>压缩字库大小，避免加载过多无用的资源，推荐工具字蛛</p>
+</li>
+<li><p>优化字体的展示策略，使用font-display属性可以避免在字体加载过程中，不显示文字的问题</p>
+</li>
+<li><p>Web字体格式：在web项目或应用程序中使用WOFF 2</p>
+</li>
+<li><p>当特殊文字量较少且内容固定时，可以尝试使用图片代替</p>
+</li>
+<li><p>使用预连接加载字体更快</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"preconnect"</span> <span class="attr">href</span>=<span class="string">"https://fonts.gstatic.com"</span> <span class="attr">crossorigin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h1><p><a href="https://developers.google.com/web/fundamentals/performance/optimizing-javascript/tree-shaking/" target="_blank" rel="noopener">摇树（tree-shaking）</a>是一种在 <a href="http://www.2ality.com/2015/12/webpack-tree-shaking.html" target="_blank" rel="noopener">webpack</a> 中清理构建过程的方法，它仅将实际生产环境使用的代码打包，并排除没有使用的导入模块。使用 webpack 和 rollup，还可以使用<a href="https://medium.com/webpack/brief-introduction-to-scope-hoisting-in-webpack-8435084c171f" target="_blank" rel="noopener">作用域提升</a>（scope hoisting），作用域提升使得 webpack 和 rollup 可以检测 <code>import</code> 链可以展开的位置，并将其转换为一个内联函数，并且不会影响代码。使用 webpack，我们也可以使用 <a href="https://react-etc.net/entry/json-tree-shaking-lands-in-webpack-4-0" target="_blank" rel="noopener">JSON Tree Shaking</a>。</p>
+<p><a href="https://webpack.js.org/guides/code-splitting/" target="_blank" rel="noopener">代码拆分（code-splitting）</a>是另一个 webpack 功能，它将你的代码库拆分为按需加载的“块”。并非所有的 JavaScript 都必须立即下载、解析和编译。在代码中定义分割点后，webpack 可以处理依赖项和输出文件。它能够保持较小体积的初始下载，并在应用程序请求时按需请求代码。</p>
+<p>考虑使用 <a href="https://github.com/GoogleChromeLabs/preload-webpack-plugin" target="_blank" rel="noopener">preload-webpack-plugin</a>，它接受代码拆分的路由，然后提示浏览器使用 <code>&lt;link rel=&quot;preload&quot;&gt;</code> 或 <code>&lt;link rel=&quot;prefetch&quot;&gt;</code> 预加载它们。<a href="https://webpack.js.org/guides/code-splitting/#prefetching-preloading-modules" target="_blank" rel="noopener">Webpack 内联指令</a>还可以控制 <code>preload</code>/<code>prefetch</code>。</p>
+<p>考虑使用<a href="https://www.npmjs.com/package/npm-check" target="_blank" rel="noopener">npm-check</a> 更新包</p>
+<p>参考资料：<a href="https://developers.google.cn/web/fundamentals/performance/webpack/decrease-frontend-size?hl=zh-cn" target="_blank" rel="noopener">Decrease Front-end Size</a></p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><ul>
+<li><p>首屏考虑css loading效果，防止白屏</p>
+</li>
+<li><p>对于整个页面资源需求量较大时，可以使用骨架屏。加载骨架屏占位，然后再去数据填充。如：vue-skeleton-webpack-plugin</p>
+</li>
+<li><p>通过Google Lighthouse 分析<a href="https://developers.google.cn/web/fundamentals/performance/speed-tools/?hl=zh-cn" target="_blank" rel="noopener">跑分工具</a>，可以较全面的了解网站的性能</p>
+</li>
+<li><p>通过Chrome的控制面板code coverage部分，找到未使用代码的比例</p>
+</li>
+<li><p>确定优先级：立即加载核心体验，然后加载增强体验，最后加载额外功能。</p>
+<p>定义基本核心体验（即完全可访问的核心内容）、增强体验（即更加丰富的完整体验）以及额外功能（可以延迟加载的非必需的资源：例如网页字体、不必要的样式、轮播脚本、视频播放器、社交媒体按钮和大图片）。</p>
+</li>
+<li><p>考虑使组件具有连接感知能力，可以将高 DPI 图像的请求重写为低 DPI 图像请求，删除 Web 字体、花哨的效果、预览缩略图和无限滚动、关闭视频、音频自动播放、减少显示项目的数量。</p>
+<p><a href="https://github.com/developers.google.com/web/update/2016/02/save-data" target="_blank" rel="noopener">Save-Data 客户端提示请求头</a>允许我们为受成本和性能限制的用户定制应用程序及其负载</p>
+<p><a href="https://github.com/googlechrome.gitrub.io/samples/network-Information/" target="_blank" rel="noopener">Network Information API</a> 根据网络类型提供<a href="https://justmarkup.com/log/2017/11/network-based-image-loading/" target="_blank" rel="noopener">高/低分辨率的图像</a> 和视频。</p>
+</li>
+<li><p>用户体验优化：关注异步处理，当异步未能及时返回时前端/UI应有相应处理，尽量保证用户无感知异步等待。<a href="https://developers.google.cn/web/fundamentals/instant-and-offline/offline-ux?hl=zh-cn" target="_blank" rel="noopener">Offline UX 注意事项</a></p>
+</li>
+</ul>
+<h1 id="针对年会游戏手机端页面的优化"><a href="#针对年会游戏手机端页面的优化" class="headerlink" title="针对年会游戏手机端页面的优化"></a>针对年会游戏手机端页面的优化</h1><p>以下是2019.2.13针对年会游戏手机端页面的优化工作：</p>
+<ul>
+<li><p>开启Gzip</p>
+</li>
+<li><p>login.html</p>
+<p>优化前：共20个请求、页面总大小341kb</p>
+<p>优化后：共12个请求、减少了8个请求数</p>
+<ul>
+<li>移除输入框中的三个图标，改为base64格式。节省了3个请求数</li>
+<li>移除layer.css 、layer.js 。节省了3个请求数</li>
+<li>移除zepto.js。节省了1个请求数</li>
+<li>移除common.js，将内容移至share.js中（share.js对common.js有依赖）。节省了1个请求数</li>
+<li>压缩页面为单行。节省了4.3KB体积</li>
+<li>压缩share.js。节省了3.3KB体积</li>
+<li>压缩config.js。节省166B</li>
+</ul>
+<p>【问题】：考虑移除config.js？移除则减少1个请求数但增加了接口地址维护成本，是否有更简单的办法？比如nginx代理？</p>
+<p>考虑移除flexible.js，移除则减少1个请求数但该页面布局整体需要重写</p>
+<p>考虑有损压缩图片，但未找到更好的无损压缩工具。</p>
+</li>
+</ul>
+<ul>
+<li><p>index.html</p>
+<p>优化前：共25个请求、页面总大小350kb</p>
+<p>优化后：共11个请求、节省了14个请求数</p>
+<ul>
+<li>注释弹幕霸屏无用的代码，节省了2个请求数</li>
+<li>移除layer.css、layer.js。节省了3个请求数</li>
+<li>移除jQueryRotate.js。节省了1个请求数</li>
+<li>移除jquery.form.js。节省了1个请求数</li>
+<li>移除zepto.js。节省了1个请求数</li>
+<li>移除fastclick.js。节省了1个请求数</li>
+<li>合并部分图片为雪碧图。节省了5个请求数</li>
+</ul>
+<p>【问题】：考虑移除config.js？移除则减少1个请求数但增加了接口地址维护成本，是否有更简单的办法？比如nginx代理？</p>
+</li>
+</ul>
+<ul>
+<li><p>shake.html</p>
+<p>优化前：共25个请求、页面总大小396kb</p>
+<p>优化后：共19个请求、节省了6个请求数</p>
+<ul>
+<li>去除小猪头gif图片。节省了1个请求数</li>
+<li>去除游戏开始前和进行时的音效。节省了2个请求数</li>
+<li>移除左上角的返回按钮图标，改为base64格式。节省了1个请求数</li>
+<li>移除关闭按钮，改为base64格式。节省了1个请求数</li>
+<li>压缩style.css</li>
+<li>移除layer.css、layer.js。节省了3个请求数</li>
+<li>压缩index.js</li>
+</ul>
+<p>【问题】：考虑移除config.js？移除则减少1个请求数但增加了接口地址维护成本，是否有更简单的办法？比如nginx代理？</p>
+</li>
+</ul>
+<p>参考：</p>
+<p><a href="https://github.com/thedaviddias/Front-End-Performance-Checklist" target="_blank" rel="noopener"><strong>Front-End-Performance-Checklist</strong></a></p>
+<p><a href="https://developers.google.cn/web/fundamentals/performance/navigation-and-resource-timing/?hl=zh-cn" target="_blank" rel="noopener">Assessing Loading Performance in Real Life with Navigation and Resource Timing</a></p>
+<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/automating-image-optimization/?hl=zh-cn#what-is-webp" target="_blank" rel="noopener">优化图像</a></p>
+<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/javascript-startup-optimization/?hl=zh-cn" target="_blank" rel="noopener">JavaScript 启动优化</a></p>
+<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=zh-cn" target="_blank" rel="noopener">HTTP 缓存</a></p>
+<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-javascript/tree-shaking/?hl=zh-cn" target="_blank" rel="noopener">Reduce JavaScript Payloads with Tree Shaking</a></p>
+<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-javascript/code-splitting/?hl=zh-cn" target="_blank" rel="noopener">Reduce JavaScript Payloads with Code Splitting</a></p>
+<p><a href="https://developers.google.cn/web/fundamentals/performance/critical-rendering-path/analyzing-crp?hl=zh-cn" target="_blank" rel="noopener">分析关键渲染路径性能</a></p>
+<p><a href="https://developers.google.cn/web/fundamentals/performance/rendering/?hl=zh-cn" target="_blank" rel="noopener">渲染性能</a></p>
+<p><a href="https://www.checkbot.io/guide/speed/" target="_blank" rel="noopener">Web Speed Best Practices</a></p>
+<p><a href="https://mp.weixin.qq.com/s/i035lEHc2w2K-TBhbDtaLQ" target="_blank" rel="noopener">移动 H5 首屏秒开优化方案探讨</a></p>
+<p><a href="https://juejin.im/post/5b3c0d26e51d45191556b527?utm_source=gold_browser_extension#heading-1" target="_blank" rel="noopener">移动端网页性能优化自查表</a></p>
+<p><a href="https://juejin.im/post/5aaf9e5cf265da239c7b2b93" target="_blank" rel="noopener">移动spa商城优化记</a></p>
+<p><a href="https://mp.weixin.qq.com/s/JFjgRkub4K-QW6nEKQQXzQ" target="_blank" rel="noopener">手机活动页图片性能优化分享</a></p>
+<p><a href="https://github.com/xitu/gold-miner/blob/master/TODO1/front-end-performance-checklist-2019-pdf-pages-4.md" target="_blank" rel="noopener">2019 前端性能优化年度总结</a></p>
+<p><a href="https://juejin.im/post/5c46cbaee51d453f45612a2c#heading-16" target="_blank" rel="noopener">2019年前端性能优化清单</a></p>
+<p><a href="https://aotu.io/notes/2016/06/14/http2/" target="_blank" rel="noopener">HTTP/2</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/23/web性能优化小结/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-小程序开发小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/08/小程序开发小结/">小程序开发小结</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/08/小程序开发小结/" class="archive-article-date">
+  	<time datetime="2019-02-08T08:24:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">小程序</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/08/小程序开发小结/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-港岛漫步行记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -291,594 +661,9 @@
 
 
   
-    <article id="post-webAR探究" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/05/webAR探究/">webAR探究</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/05/webAR探究/" class="archive-article-date">
-  	<time datetime="2018-12-05T14:43:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="https://developer.apple.com/ios/images/arkit2-device-large_2x.png" width="100%"></p>
-<h1 id="webAR探究"><a href="#webAR探究" class="headerlink" title="webAR探究"></a>webAR探究</h1><h2 id="一、AR是什么"><a href="#一、AR是什么" class="headerlink" title="一、AR是什么"></a>一、AR是什么</h2><p>AR 可以简单的理解为一种实时将虚拟图像叠加在现实场景中的技术，且能交互，优势在于把目之所及的现实场景变成了背景，并将现实世界和数字世界无缝连接。</p>
-<p>AR 实现的方式和关键技术</p>
-<p>AR 的主要实现方式有 2 种：光学透视式 (Optical see-through) 和视频透视式 (Video see-through)</p>
-<ul>
-<li><p>光学透视式是将电脑生成的数字图像显示在眼前的一层半透明镜片上，这样就可以使现实场景和虚拟信息同时出现在视网膜上。</p>
-</li>
-<li><p>视频透视式技术是将现实场景首先通过相机录入电脑，经过和虚拟对象整合、压缩，再统一呈现在用户眼前。</p>
-</li>
-</ul>
-<p><u>目前（2018 年底） Web 前端要想实现 AR，都是靠的视频透视式技术。</u></p>
-<p><strong>计算机视觉技术在 AR 中起着至关重要的作用。因为<u>实现 AR 最核心的是识别与追踪</u>。首先，相机要先识别基准标志、关键点、光学图片等；然后再根据特征检测、边缘检测或其他图像处理方法来实时追踪；最后将虚拟图像叠加到真实场景中。</strong></p>
-<p>结合传感器来提供更多的交互或让 AR 渲染得更准确、通过网络连接云端来加速计算或交换更多数据等。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/flow-chart.png" alt=""></p>
-<h2 id="二、webAR"><a href="#二、webAR" class="headerlink" title="二、webAR"></a>二、webAR</h2><p><strong>由上得出结论：要实现 AR 需要<u>识别、追踪和渲染</u>三步。</strong></p>
-<h3 id="站在巨人的肩膀上"><a href="#站在巨人的肩膀上" class="headerlink" title="站在巨人的肩膀上"></a>站在巨人的肩膀上</h3><p>目前没有标准也没有成熟的库供使用，只有一些规范。</p>
-<ul>
-<li><p>WebARonARKit, WebARonARCore<br>ARKit 和 ARCore 分别是苹果和谷歌两大巨头出品的移动 AR SDK，提供的功能也类似：运动追踪、环境感知和光线感应但这两个都是移动 AR 的 SDK，于是谷歌的 AR 团队提供了 <a href="https://github.com/google-ar/WebARonARKit" target="_blank" rel="noopener">WebARonARKit</a> 和 <a href="https://github.com/google-ar/WebARonARCore" target="_blank" rel="noopener">WebARonARCore</a> 两个库，以便开发者<strong>能用 Web 技术来基于 ARKit 和 ARCore 开发，从而实现 WebAR</strong>。目前这两个库都还在试验阶段，想吃螃蟹的人赶紧去试试。其实现原理都是结合特定系统（iOS 和 Android）扩展了 WebVR API。Google AR 团队封装了一个 <a href="https://github.com/google-ar/three.ar.js" target="_blank" rel="noopener">three.ar.js</a> 的库，提供了一些实用的 AR API，包括 ARView, ARReticle, ARPerspectiveCamera, ARDebug 和 ARUtils 等。</p>
-</li>
-<li><p>AR.js</p>
-<p>AR.js 是 <a href="https://twitter.com/jerome_etienne" target="_blank" rel="noopener">Jerome Etienne</a> 开发的一款 Web AR 库，可以<a href="https://medium.com/arjs/augmented-reality-in-10-lines-of-html-4e193ea9fdbf" target="_blank" rel="noopener">用十行 HTML 就实现 AR</a>，并有 60 FPS 的帧率。它主要封装了以下几个库：</p>
-<ol>
-<li>WebRTC。获取视频流。</li>
-<li><a href="https://github.com/artoolkit/jsartoolkit5" target="_blank" rel="noopener">JSARToolKit</a>。主要提供了识别和追踪 marker 的功能</li>
-<li>Three.js, Babylon.js, A-Frame。这几个都是基于 WebGL 的渲染库，用于渲染要在 AR 环境中显示的东西</li>
-</ol>
-<p>由此观之，AR.js 像是一个把所有轮子都拼起来的瑞士军刀</p>
-</li>
-<li><p>React 360</p>
-</li>
-<li><p>EasyAR</p>
-</li>
-</ul>
-<h3 id="技术背景"><a href="#技术背景" class="headerlink" title="技术背景"></a>技术背景</h3><p><img src="http://image-up-yun.test.upcdn.net/1500621357361_6302_1500621357822.jpg" alt=""></p>
-<h4 id="WebRTC-获取视频流"><a href="#WebRTC-获取视频流" class="headerlink" title="WebRTC 获取视频流"></a>WebRTC 获取视频流</h4><ol>
-<li><p>AR 首先要识别，那就要用到 WebRTC 技术。</p>
-<p>WebRTC（Web 实时通信，Web Real-Time Communication），顾名思义是一个支持网页浏览器进行实时语音对话或视频对话的技术。通过WebRTC,可以通过网页呼起用户的摄像头，并且实时获取用户摄像头的图像数据的。</p>
-<p>它其中有个很重要的 API：getUserMedia() 可以实时获取摄像头的视频流，这是视频透视式的 AR 实现的前提（<strong>目前 iOS 11 刚刚支持这个 API，Android 是很早就能用</strong>）。</p>
-<p>getUserMedia 默认获取的是前置摄像头，如果想获取后置摄像头的视频流，需要用 navigator.mediaDevices.enumerateDevices() 将设备的音频、视频设备遍历得到</p>
-<p><strong>要用 https 打开网页才能访问摄像头。</strong></p>
-</li>
-<li><p>有了视频流我们就可以分析其中的特征点，运用计算机视觉的算法识别和追踪视频流中的事物。</p>
-</li>
-</ol>
-<h4 id="Tracking-js-JSFeat-ConvNetJS-deeplearn-js-keras-js-识别与追踪"><a href="#Tracking-js-JSFeat-ConvNetJS-deeplearn-js-keras-js-识别与追踪" class="headerlink" title="Tracking.js, JSFeat, ConvNetJS, deeplearn.js, keras.js 识别与追踪"></a>Tracking.js, JSFeat, ConvNetJS, deeplearn.js, keras.js 识别与追踪</h4><ol>
-<li><p>获取到视频流之后的工作就是识别和追踪了。</p>
-<p>视频流你可以看作是一帧一帧的图像，所以处理视频流的过程可以理解为图像处理的过程。但这里其实还涉及到一个如何传输视频流的问题，一般有两种方式：</p>
-<ul>
-<li><p>前端传输视频流给后端，后端处理完毕返回结果到前端</p>
-</li>
-<li><p>在前端直接处理视频流：</p>
-<p>在前端直接进行图像处理，可以用 <a href="https://trackingjs.com/" target="_blank" rel="noopener">Tracking.js</a> 和 <a href="https://inspirit.github.io/jsfeat/" target="_blank" rel="noopener">JSFeat</a>。这两个库类似，都是在前端做计算机视觉的，包括提取特征点、人脸识别等。把 WebRTC 拿到的视频流直接传给它们并调用 API 就能得到自己想要的效果。对于一些成熟的算法，如人脸识别，可以直接拿到识别结果，如果自己要识别的物体比较复杂你也可以自己进行特征点的计算，但这可能在前端会算力不足。</p>
-<p>提到计算机视觉，不得不提深度学习，毕竟现在很多图像处理算法被深度学习吊打。<a href="https://cs.stanford.edu/people/karpathy/convnetjs/" target="_blank" rel="noopener">ConvNetJS</a>，是斯坦福大学开源的一个前端深度学习框架，可以让你在前端完成深度神经网络的训练。<a href="https://deeplearnjs.org/" target="_blank" rel="noopener">deeplearn.js</a> 则是 Google Brain 团队搞的，功能和 ConvNetJS 类似。现在 ConvNetJS 好像不怎么维护了，deeplearn.js 还在频繁更新中，感兴趣的同学可以试用一下。另外一个紧锣密鼓开发的深度学习库 <a href="https://github.com/transcranial/keras-js" target="_blank" rel="noopener">keras.js</a>则是让你可以在浏览器中运行已经训练好的 Keras 模型（<a href="https://github.com/keras-team/keras" target="_blank" rel="noopener">Kears</a> 是著名的深度学习开发框架），并支持 WebGL 2。</p>
-</li>
-</ul>
-</li>
-<li><p>除了单纯的对图像、视频流处理，我们还能通过移动端设备的各种传感器数据获取到更多的距离、深度、光照等信息，从而使识别追踪更准确。</p>
-</li>
-</ol>
-<h4 id="A-Frame-Three-js-Babylon-js-Pixi-js-WebGL-渲染与交互"><a href="#A-Frame-Three-js-Babylon-js-Pixi-js-WebGL-渲染与交互" class="headerlink" title="A-Frame, Three.js, Babylon.js, Pixi.js, WebGL 渲染与交互"></a>A-Frame, Three.js, Babylon.js, Pixi.js, WebGL 渲染与交互</h4><ol>
-<li><p>识别和追踪之后，接下来是渲染。</p>
-<ul>
-<li><a href="https://aframe.io/" target="_blank" rel="noopener">A-Frame</a>     Mozilla 团队在 2015 年开源的一款做 WebVR 的框架</li>
-<li><a href="https://github.com/mozilla/aframe-xr" target="_blank" rel="noopener">aframe-xr</a>   A-Frame 团队发布的  其中包括了一些 Web AR 组件，用 A-Frame 的各种组件可以让你用很少的代码<a href="http://elevr.com/using-a-frame-for-webvr-and-ar/" target="_blank" rel="noopener">构建出 AR 所需要的 3D 立体世界</a>。</li>
-<li><a href="https://www.khronos.org/webgl/" target="_blank" rel="noopener">WebGL</a> OpenGL ES 在浏览器端的实现，用 WebGL 你可以操作前端的每一个像素点，能调用 GPU，虽然强大，但写起来异常复杂，学习成本也很高</li>
-<li><a href="https://threejs.org/" target="_blank" rel="noopener">Three.js</a>  将繁琐的 WebGL API 进行了封装和优化，让你可以用可读性更好的代码在前端书写 WebGL</li>
-<li><a href="https://www.babylonjs.com/" target="_blank" rel="noopener">Babylon.js</a>  和 Three.js 的关注点不一样，如果你对渲染的精细程度非常有要求，比如光线、阴影等，那么你可以考虑下</li>
-</ul>
-</li>
-<li><p>渲染出3D场景后，如何交互？</p>
-<p>这些基于 WebGL 的渲染方法，有一个共性的难题是如何交互，比如 hover, click 效果如何实现。这些实现起来要依赖于 <a href="https://en.wikipedia.org/wiki/Ray_casting" target="_blank" rel="noopener">光线投射算法 Ray casting</a> 方法。Three.js 直接提供了 <a href="https://threejs.org/docs/#api/core/Raycaster" target="_blank" rel="noopener">Raycaster</a> 类供实现 ray casting 算法。摄像头（这里的摄像头不是指手机的摄像头，而是你渲染时的 Camera，可以参考 Three.js 中的 <a href="https://threejs.org/docs/#api/cameras/Camera" target="_blank" rel="noopener">Camera</a>）视作视点，与你在屏幕上触碰的点坐标连城一条射线，看这条射线与你视图中哪些物体相交。</p>
-</li>
-</ol>
-<p><img src="http://image-up-yun.test.upcdn.net/ray-casting.jpg" alt=""></p>
-<p>   事实上在实现 AR 的时候，识别追踪和渲染交互是同时进行的，如何给用户更好、更流畅的体验是现在 Web AR 的又一大难题。</p>
-<h4 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h4><p>目前浏览器的算力确实还不足以与客户端去媲美，识别和追踪本质上是像素级的计算，对算力的要求都很高，因此 maker-based 的 AR 定位效率通常比 makerless 的要高很多。此外，计算机视觉算法的效率对性能影响也很大。</p>
-<h1 id="三、-demo实现"><a href="#三、-demo实现" class="headerlink" title="三、 demo实现"></a>三、 demo实现</h1><h2 id="1-终端适配性参考"><a href="#1-终端适配性参考" class="headerlink" title="1.终端适配性参考"></a>1.终端适配性参考</h2><p>目前，在web端，无论采用哪种实现手段，最主要是运行环境对webRTC、webGL 两个特性的支持程度。</p>
-<p>测试发现IOS 12以下不支持、IOS版微信QQ不支持、Safari支持；安卓支持良好。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/1.png" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/2.png" alt=""></p>
-<h2 id="2-技术方案"><a href="#2-技术方案" class="headerlink" title="2.技术方案"></a>2.技术方案</h2><p>采用： <a href="https://github.com/jeromeetienne/AR.js" target="_blank" rel="noopener">AR.js</a>                                 Efficient Augmented Reality for the Web </p>
-<p>​        <a href="https://aframe.io/" target="_blank" rel="noopener">AFrame.js</a>                         A web framework for building virtual reality experiences</p>
-<p>​            <a href="https://github.com/jeromeetienne/AR.js/tree/master/aframe" target="_blank" rel="noopener">AFrame-ar.js</a>                    Augmented reality for a-frame.</p>
-<p>​        <a href="https://github.com/donmccurdy/aframe-extras" target="_blank" rel="noopener">AFrame-extras.min.js</a>     Add-ons and helpers for A-Frame VR.</p>
-<p>注意：这种技术方案的特性是<strong>基于标记图Maker</strong>，也就是说需要一张<strong>特定的训练出的标记图</strong>才能渲染出AR效果，</p>
-<p>由于识别图需要训练，且有特定要求，所以识别图的外观和识别率有关系，识别率低则会导致模型抖动剧烈。</p>
-<h3 id="demo1：运行AR-js官网例子"><a href="#demo1：运行AR-js官网例子" class="headerlink" title="demo1：运行AR.js官网例子"></a>demo1：运行AR.js官网例子</h3><p>可以使用设备打开 <a href="https://jeromeetienne.github.io/AR.js/three.js/examples/mobile-performance.html" target="_blank" rel="noopener">官网demo</a> 然后对准 <a href="https://jeromeetienne.github.io/AR.js/data/images/HIRO.jpg" target="_blank" rel="noopener">识别图</a>即可体验，或本地运行项目来访问。</p>
-<ol>
-<li><p>下载项目 </p>
-   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装<a href="https://www.npmjs.com/package/http-server" target="_blank" rel="noopener">http-server服务</a>（需要nodejs）</p>
-   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g http-server</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用git bash 工具或其他（除Windows CMD）进入到需要预览的页面，生成SSL证书并通过HTTPS访问</p>
-<p>   首先进入项目</p>
-   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> AR.js</span><br></pre></td></tr></table></figure>
-<p>   生成SSL证书</p>
-   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem</span><br></pre></td></tr></table></figure>
-<p>   启动HTTPS服务，通过127.0.0.1 或IP访问</p>
-   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http-server -S -C cert.pem -o</span><br></pre></td></tr></table></figure>
-<p>   例如 <a href="https://192.168.3.52:8080/three.js/examples/dev.html" target="_blank" rel="noopener">https://192.168.3.52:8080/three.js/examples/dev.html</a>   可以看到这里打开了一个dev页面，PC端缺失摄像头而报错。如果你是微信打开，则报错webRTC不支持，可用Safari访问。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/3.png" alt=""></p>
-<p>   使用你的手机打开该页面，扫描特定的识别图，即可感受webAR的强大。这里也体现了该框架的特性：基于maker图片</p>
-<p>   <img src="https://jeromeetienne.github.io/AR.js/data/images/HIRO.jpg" alt="img"></p>
-</li>
-</ol>
-<p><img src="http://image-up-yun.test.upcdn.net/webar.png" alt=""></p>
-<pre><code>这里打开的是使用three.js写法的demo，渲染出了一个立方体并带有动效。
-
-
-
-**而在AR.js中分为两种写法：使用three.js结合一堆js库来实现、使用AFrame.js**
-
-在该项目中的example对比发现，使用 three.js 来构建3D场景后，还需要结合 artoolkit.js、threex.js等，&lt;u&gt;学习成本非常高。&lt;/u&gt;
-
-使用 AFrame.js 写法时，代码量减少很多，但也需要了解 AFrame.js 、AFrame-ar.js 、AFrame-extras.min.js
-</code></pre><h3 id="demo2：使用AFrame-js、AFrame-ar-js-、AFrame-extras-min-js"><a href="#demo2：使用AFrame-js、AFrame-ar-js-、AFrame-extras-min-js" class="headerlink" title="demo2：使用AFrame.js、AFrame-ar.js 、AFrame-extras.min.js"></a>demo2：使用AFrame.js、AFrame-ar.js 、AFrame-extras.min.js</h3><p>AFrame.js是火狐的项目，它包含了three.js</p>
-<p>AFrame-ar.js可以在web页面上渲染3d</p>
-<p>在参考AR.js官网给出的<a href="https://medium.com/arjs/augmented-reality-in-10-lines-of-html-4e193ea9fdbf" target="_blank" rel="noopener">“10行代码实现AR效果”</a>的例子时发现，该demo引用的aframe的版本较旧，而引用官网最新的版本时，所呈现的demo效果会有所不同。具体原因未知。</p>
-<p>以下demo与该例子所用的标签有些许不同，但也能实现demo，具体原由及细节需要研究 AFrame.js 。</p>
-<p>大致思路是：</p>
-<ul>
-<li><p>引用框架</p>
-</li>
-<li><p>在代码中使用框架的语法构建:</p>
-<ul>
-<li>3D场景、</li>
-<li>设置maker图、</li>
-<li>设置模型（案例使用的是<a href="https://cloud.tencent.com/developer/news/204942" target="_blank" rel="noopener">GITF2.0模型</a>，同事提供的是fbx模型则需要进行转换。<a href="https://modelconverter.com/convert.html" target="_blank" rel="noopener">在线转换工具</a> <a href="https://pissang.github.io/clay-viewer/editor/" target="_blank" rel="noopener">在线模型预览工具</a>）</li>
-<li>设置场景摄像机…..</li>
-</ul>
-</li>
-<li><p>使用<a href="https://jeromeetienne.github.io/AR.js/three.js/examples/marker-training/examples/generator.html" target="_blank" rel="noopener">maker generator</a> 训练出一个特定的maker，下载并在代码中指定该maker文件，maker文件与识别图相关联。</p>
-</li>
-<li><p>运行demo，使用设备的摄像头对准maker关联的图像，即可看到AR效果</p>
-</li>
-</ul>
-<ol>
-<li><p>像往常一样构建一个web页面，引入所需要的框架。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- include A-Frame obviously --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/aframe.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- include ar.js for A-Frame --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/aframe-ar.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- include A-Frame-Extras --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/static/js/aframe-extras.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用AFrame的标签，类似HTML的写法来实现AR效果</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">style</span>=<span class="string">'margin : 0px; overflow: hidden;'</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 构建一个3d场景 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a-scene</span> <span class="attr">embedded</span> <span class="attr">arjs</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">    <span class="comment">&lt;!-- 设置一个识别图，这个很重要，AR效果能不能显示出来全凭这张识别图是否被识别  --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a-marker</span> <span class="attr">preset</span>=<span class="string">'custom'</span> <span class="attr">type</span>=<span class="string">'pattern'</span> <span class="attr">url</span>=<span class="string">'/static/marker/test/20/pattern-marker(2).patt'</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">&lt;!-- load gltf model 加载一个GLTF格式的模型，该模型就是我们想渲染到屏幕上的效果--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a-entity</span> <span class="attr">gltf-model</span>=<span class="string">"/static/gltf/CNtower.glb"</span>  <span class="attr">scale</span>=<span class="string">'0.01 0.01 0.01'</span> <span class="attr">rotation</span>=<span class="string">"-90 0 0"</span>&gt;</span><span class="tag">&lt;/<span class="name">a-entity</span>&gt;</span>    </span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- a-entity标签也能渲染一个模型，animation-mixer属性还可也添加动效，理解具体细节需要参考AFrame.js文档 --&gt;</span>    </span><br><span class="line">        <span class="comment">&lt;!-- &lt;a-entity gltf-model="/static/gltf/scene.gltf" animation-mixer scale="1 1 1" rotation="-120 0 0" position="0 0.5 0"&gt;&lt;/a-entity&gt; --&gt;</span>    </span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 或者像这样 渲染一个立方体 --&gt;</span>    </span><br><span class="line">        <span class="comment">&lt;!-- &lt;a-box position='0 0.5 0' material='color: black;'&gt;&lt;/a-box&gt; --&gt;</span></span><br><span class="line">       </span><br><span class="line">    <span class="tag">&lt;/<span class="name">a-marker</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- add camera 添加一个摄像机，写法也不同，具体需要看文档--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;a-entity camera id="my"&gt;&lt;/a-entity&gt; --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a-camera</span> <span class="attr">ar-raycaster</span> <span class="attr">raycaster</span> <span class="attr">cursor</span>=<span class="string">"fuse:false"</span>&gt;</span><span class="tag">&lt;/<span class="name">a-camera</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">a-scene</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="四：总结"><a href="#四：总结" class="headerlink" title="四：总结"></a>四：总结</h1><p>1、由于项目运行在web中，因此web环境的兼容性很大程度取决于用户运行环境的浏览器内核。目前webAR所依赖的技术始终逃不了 webRTC 、webGL 、如果运行环境（浏览器）连这两个人特性都无法支持，则无法进行下一步。</p>
-<p>经测试IOS版本微信和QQ内置的浏览器均无法支持这两个特性，折中的办法是提示用户使用Safari进行体验。安卓端尚可。</p>
-<p>2、AR最核心的是识别与追踪，web领域的js版artoolkit不像Apple的ARCore 和Google的ARKit那样强大，而且业界还没形成一个成熟的解决方案，只有一些规范，草案等。</p>
-<p>基于maker识别图来进行识别和追踪是一个比较高效的做法，受限于识别算法和摄像机追踪的能力有限，所以上述demo对识别图有着非常高的要求，经过测试28张识别图，如果不按规则来设定识别图则会导致识别失败。设备摄像头需要离识别图非常近否则模型抖动会非常明显，严重影响体验。</p>
-<p>如果抛开依赖识别图这种方法，目前还没有解决方案。</p>
-<p><strong>所以从体验上看，目前最大的问题是识别图的识别率低且有特定要求，模型抖动剧烈影响体验，与模型交互困难。页面一直处于视频流状态会导致设备发热，耗电量大幅上升。</strong></p>
-<p>3、在3D场景渲染，模型渲染这一层面，首先需要对底层的webGL有一定熟悉程度，最重要的是three.js这个框架，或是经过封装的AFrame，它们用来构建3d场景和3d模型需要对这个框架有很深入的了解，如何与模型进行交互等等，这些将导致一些学习成本。</p>
-<p>经过测试，超过1MB的GITF2.0模型 使用AFrame加载不出，具体原因还需要进一步分析，</p>
-<p>4、国内外对webAR 的讨论和demo 案例目前都比较少，能够搜到的资料几乎都是英文版。成熟的产品更少，阴阳师的AR抽取SSR卡牌的也是基于maker图来实现，且抖动明显，追踪能力也比较差。王者荣耀刚刚更新在英雄界面能够显示AR效果目前也只在特定的OPPO联合开发机型中实现，况且这两款产品是更强大的APP端。</p>
-<p>参考： <a href="https://geekplux.com/2018/01/18/augmented-reality-development-tech-in-web-frontend.html" target="_blank" rel="noopener">Web 前端中的增强现实（AR）开发技术</a>  </p>
-<p>​        <a href="https://geekplux.com/2018/01/18/augmented-reality-development-tech-in-web-frontend.html" target="_blank" rel="noopener">webAR涉及的技术</a> </p>
-<p>​            <a href="https://blog.csdn.net/milli236/article/details/78671958" target="_blank" rel="noopener">JSARToolKit</a>    </p>
-<p>​            <a href="https://medium.com/@urish/web-powered-augmented-reality-a-hands-on-tutorial-9e6a882e323e" target="_blank" rel="noopener">Web-Powered Augmented Reality: a Hands-On Tutorial</a></p>
-<p>​            <a href="https://medium.com/arjs/augmented-reality-in-10-lines-of-html-4e193ea9fdbf" target="_blank" rel="noopener">Augmented Reality in 10 Lines of HTML - AR.js with a-frame magic</a></p>
-<p>​            <a href="https://mw18.mwconf.org/paper/the-portarble-museum-developing-augmented-reality-for-the-web-using-ar-js/" target="_blank" rel="noopener">Developing Augmented Reality For The Web Using AR.Js</a></p>
-<p>​        <a href="https://blog.theodo.fr/2018/09/build-first-ar-web-app-less-10mn/" target="_blank" rel="noopener">Build and access your first AR webapp in less than 10mn using ARjs</a></p>
-<p>​        <a href="https://medium.com/@akashkuttappa/using-3d-models-with-ar-js-and-a-frame-84d462efe498" target="_blank" rel="noopener">Using 3D models with AR.js and A-Frame</a></p>
-<p>​        <a href="http://dopro.io/web-ar.html" target="_blank" rel="noopener">web AR探索和总结</a></p>
-<p>​            <a href="http://dopro.io/web-3d-power.html" target="_blank" rel="noopener">Web 3D哪家强？</a></p>
-<p>​        <a href="https://tgideas.qq.com/gicp/news/475/6515247.html?from=list" target="_blank" rel="noopener">Web前端也能做的AR互动</a></p>
-<p>​            <a href="https://aotu.io/notes/2017/03/24/webar/" target="_blank" rel="noopener">实现一个简单但有趣的AR效果（Web）</a> </p>
-<p>​        <a href="https://mp.weixin.qq.com/s/l4JNfwhfdOIXkX9uBFIYFA" target="_blank" rel="noopener">前端WebAR实现简单版pokemon Go</a></p>
-<p>​        <a href="https://github.com/ns2250225/ns2250225.github.io" target="_blank" rel="noopener">黑暗大法师demo</a></p>
-<p>​            </p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">webAR</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/05/webAR探究/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-圳在回忆" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/18/圳在回忆/">圳在回忆</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/18/圳在回忆/" class="archive-article-date">
-  	<time datetime="2018-11-18T11:06:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://image-up-yun.test.upcdn.net/IMG_1101.jpg!thumb" alt=""></p>
-<h3 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h3><p>来深圳三年了，我和他一样，风华正茂，一起成长。</p>
-<p>漂过这么多城市，这是我呆得最久的一座城。</p>
-<p>换了屏幕色彩更好的电脑，尘封的作品终于浮现。记忆就像这张照片，熟悉而又模糊。回看照片，轮廓渐渐明朗，谨以此文，回忆自己在深圳的点点滴滴，细细品味这座城。</p>
-<h3 id="深圳很热情，像加州的阳光。"><a href="#深圳很热情，像加州的阳光。" class="headerlink" title="深圳很热情，像加州的阳光。"></a>深圳很热情，像加州的阳光。</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_1070.jpg!thumb" alt=""></p>
-<p>​只记得正式到访深圳是年初，刚下火车，迎面的热浪和湿润的空气令人稍有不适，我开始怀疑这是不是冬天。直到看见深南大道两旁繁盛的绿树，强壮的根蔓延开来，高大的棕榈树排成排……我真的来到了南方。</p>
-<p>原来深圳没有冬天，也不会下雪。</p>
-<p>身着大衣穿行在薄衬衫的人群中，地铁的语音播报居然有粤语！墙上写着“来了就是深圳人”，不愧是大城市啊。我学会了第一句广东话——”雷猴，深圳“</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0505.jpg!thumb" alt=""></p>
-<p>潮湿的空气让我养成早晚洗澡，勤用洗面奶的习惯～相比北方干燥灰霾，我觉得这里简直太宜居了。</p>
-<h3 id="相比夏天，更喜欢深圳的秋天"><a href="#相比夏天，更喜欢深圳的秋天" class="headerlink" title="相比夏天，更喜欢深圳的秋天"></a>相比夏天，更喜欢深圳的秋天</h3><p>因为珍贵，所以珍惜。呆久了会发现深圳的秋天不会超过两个月，不会冷也不会很晒，十分清爽。是非常适合出去“浪”的，所以周末我会出去逛逛，你会选择在家里泡一杯咖啡岁月静好，还是拿上相机出门呢？</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170706_000150.jpg!thumb" alt=""></p>
-<p>谢谢自己的努力，攒钱买了这台相机。人生终于拥有了属于自己的照相机，作为初学者，这部相机确实够用，它陪我看看这世界，虽然拿起来有点重。</p>
-<p>我仍然喜欢小时候玩的胶片相机，因为每次按下快门时，你无法预测拍到的样子，这种不确定会让你珍惜每一次拍照的moment，旅途归来最让人期待的就是等待照相馆冲洗照片。</p>
-<p>照片拿在手里的质感，是数码无法比拟的真实，和味道。</p>
-<p>打开地图会发现，深圳以福田为中轴线，像一只大鹏展开翅膀，东西绵延至海。可能是因为曾经有很多山，海，沙，田 …所以地名比较接地气吗？….百闻不如一见，背上行囊即刻出发。</p>
-<h3 id="山海城"><a href="#山海城" class="headerlink" title="山海城"></a>山海城</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_6375_1_PANO.jpg!thumb" alt=""></p>
-<p>站到山上，便能看到海，顺便看看这座城市。</p>
-<p>听起来就像自家后院一样，心情不好就冲上山去，看繁星点点，就这么简单，自在，洒脱，浪漫…..</p>
-<p>没想到可以站在山上看海，这与“脚踩沙滩看浪花”有着截然不同的体验。其实垦丁，圣托里尼也是类似的，高处看海浪一层接着一层会非常慢，很安静。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0818.jpg!thumb" alt=""></p>
-<p>记得第一次参加公司团建是爬南山，来自平原的我十多年来第一次爬山，我竟是最后一个到达山顶，于是决定每周来爬南山锻炼。再后来慢慢爬完了深圳所有的山…拍下了这些照片。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0831.jpg!thumb" alt=""></p>
-<p>采菊东篱下 悠然见南山。没错，每年重阳节时来这座山打卡的人非常多。这里靠近蛇口，平时很多外国人上山健身。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0825.jpg!thumb" alt=""></p>
-<p>看那片海，似乎很忙的样子。海上居然还有楼房？</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1744.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1901.jpg!thumb" alt=""></p>
-<h3 id="当你征服一座又一座山峰时，心开始野了。"><a href="#当你征服一座又一座山峰时，心开始野了。" class="headerlink" title="当你征服一座又一座山峰时，心开始野了。"></a>当你征服一座又一座山峰时，心开始野了。</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_5336_PANO.jpg!thumb" alt=""></p>
-<p>塘朗山，山不高，但山脉很长。从南山区西丽龙珠门上山，下山已是福田梅林。</p>
-<p>走完全程大概需要4小时，前半段为阶梯，后半段是铺装路。后半段的风景更好，给坚持到最后的你奖励。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_5315_PANO.jpg!thumb" alt=""></p>
-<p>梅林水库十分宁静，坐在坝上，脚踏着草坪，望着坝下的高尔夫球场，远处的高楼，晒着暖阳，不知不觉夕阳把影子拉长。伸个懒腰吧，爬山的疲劳感终于缓解。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_5344.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_5358.jpg!thumb" alt=""></p>
-<h3 id="又到凤凰花朵开放的时候"><a href="#又到凤凰花朵开放的时候" class="headerlink" title="又到凤凰花朵开放的时候"></a>又到凤凰花朵开放的时候</h3><p>路边火红的凤凰花开的时候，耳边总会想起林志炫的这首歌。约上三五好友，登上凤凰山，哼着这首歌。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_2193-Edit.jpg!thumb" alt=""></p>
-<p>每次说到凤凰山，就想起那次半路上下起大雨在树下躲雨的画面，狼狈不已。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG20151122144326.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG20151122142548.jpg!thumb" alt=""></p>
-<p>其实爬山的愉悦感是登上山顶歇口气的那一刻，居高临下，大汗淋漓的痛快。</p>
-<p>而了解一座城市，最简单的办法就是去高处。</p>
-<h3 id="莲花山-没有莲花"><a href="#莲花山-没有莲花" class="headerlink" title="莲花山 没有莲花"></a>莲花山 没有莲花</h3><p>但是有一片鲜红色的桃花林，相比老家的淡雅桃花显得充满浓烈诱惑。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0870.jpg!thumb" alt=""></p>
-<p>深圳是东门老区先发展起来的，在莲花山可以看见曾经的地标。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0874.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0897.jpg!thumb" alt=""></p>
-<p>有些建筑的风格在致敬香港，比如金中环就挺像的，有点意思。</p>
-<h3 id="梧桐山-没有梧桐"><a href="#梧桐山-没有梧桐" class="headerlink" title="梧桐山 没有梧桐"></a>梧桐山 没有梧桐</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_5749.jpg!thumb" alt=""></p>
-<p>早闻深圳最高的山就是此山，海拔近1000米。因为这山就在海边，所以是实打实的1000米高啊朋友们。记得第一次去挑战它的时候我只爬到小梧桐山顶就天色渐晚，打道回府，回到家后一整个星期都浑身酸痛，那酸爽…..</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_5853.jpg!thumb" alt=""></p>
-<p>有了第一次的经验，第二次起了个大早就上山了，阳光看起来不是很强烈，有些轻雾，顺利走完了全程，下山刚刚天黑。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_5753.jpg!thumb" alt=""></p>
-<p>然而我还是太年轻，低估了紫外线的能力，回到家才发现皮肤晒得发红，火辣辣的感觉。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_5757.jpg!thumb" alt=""></p>
-<p>EF-S18-135 这颗初级镜头这时候倒挺好用，一镜走天下哈哈，135mm长焦乘以佳能1.6倍转换系数等效得216mm焦段，不然想想背着大长焦镜头爬山其实挺累的，站在小梧桐山顶可以拍到几十公里外的罗湖区。</p>
-<h3 id="深圳湾-每个深圳人都会去的地方"><a href="#深圳湾-每个深圳人都会去的地方" class="headerlink" title="深圳湾 每个深圳人都会去的地方"></a>深圳湾 每个深圳人都会去的地方</h3><p>它是市中心地段的一条海岸线，虽然不像珠海情侣路那样有十里银滩，但这里有无敌海景骑行道，是非常棒的慢行步道。</p>
-<p>没有走过深圳湾全程不算来过深圳，快约上三五好友，即刻出发。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/20170805_120200.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0497_1_PANO.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0514_PANO.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0505.jpg!thumb" alt=""></p>
-<p>观桥公园可以看到全深圳CBD,完全不亚于维多利亚港。清新的海风吹呀吹，静待夕阳和云彩邂逅。你在桥上看风景，没准有个女孩子正在看你。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_6973.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0434.jpg!thumb" alt=""></p>
-<p>如果你想去香港，我更推荐你走这条路线，从深港大桥而过，可以在海上看到深圳的样子，看着渐行渐远的大陆，驶向海洋是一种微妙的感觉。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1052.jpg!thumb" alt=""></p>
-<p>没错就是这座桥了，它的对岸就是香港，就是这么近！</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1049.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1064.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1070.jpg!thumb" alt=""></p>
-<p>我真的很喜欢湾厦，因为这里的晚霞很美。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1066.jpg!thumb" alt=""></p>
-<p>南山后海CBD，曾经一段时间晚上常去那边玩到半夜～</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0449.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0451.jpg!thumb" alt=""></p>
-<p>人才公园，去过的都是人才。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0452.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0455_PANO.jpg!thumb" alt=""></p>
-<p>夕阳确实壮美，毕竟难能可贵，转瞬即逝。拍摄这种大场面的照片，需要超广角镜头。如果没有的话，拍摄多张然后合成全景也是不错的。</p>
-<h3 id="sea-world-海上世界"><a href="#sea-world-海上世界" class="headerlink" title="sea world 海上世界"></a>sea world 海上世界</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_0435.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0423.jpg!thumb" alt=""></p>
-<p>再一次叹服这滨海长廊的设计，时常能够亲近自然是我喜欢深圳的一个原因。</p>
-<p>心情不悦时，沿着海滨栈道走走，让自己和内心对话，远离城市的喧嚣和浮躁，闭上眼睛，且听风吟。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0422.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0443.jpg!thumb" alt=""></p>
-<p>也许是深圳最后的几条渔船，停在港湾，静待时间。看到这种画面，我会觉得很踏实。都说广东人勤劳务实，手里几栋房的阿伯照样出海打鱼开烧腊店。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG20150426163015.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/20170805_110530.jpg!thumb" alt=""></p>
-<h3 id="霓虹"><a href="#霓虹" class="headerlink" title="霓虹"></a>霓虹</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_1089.jpg!thumb" alt=""></p>
-<p>感谢爱迪生发明了电灯，世上竟有比天上的星星更闪耀的光。坐在南山顶上，亦或是深圳湾草坪，静待晚霞，望着城市的轮廓渐渐模糊，日落矣华灯初上，海风轻拂脸庞，你亦如画，一切的等待都是值得的。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1102.jpg!thumb" alt=""></p>
-<p>迷离的灯光 就像一个黑洞 有着无穷的魅力 吸引着你 </p>
-<p>霓虹灯，其实最早在香港非常流行，我觉得这是港味独特之一。</p>
-<p>霓虹灯一闪一闪，飘逸的楷书，行书，隶书，加上繁体字，一横一竖，一撇一捺都十分到位，严谨工整。</p>
-<p>看着满街都是这种风格，会有一种说不出来的微妙的感觉。毕竟是我们曾经使用过的字体，只是现在开始用宋体，简体，霓虹被LED替代，少了那份手工制作的厚重和仪式感。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0505_PANO.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0368_.jpg!thumb" alt=""></p>
-<p>深圳人才公园，可见深圳是多么求贤若渴，深爱人才，圳等你来。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1101.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_5162.jpg!thumb" alt=""></p>
-<p>摄影和画画一样，相机只是你手中的创作工具，画出怎样的画面最重要的还是镜头后面的那个头。不要因没有相机而气馁。好的作品能够感动人心，而无关画质。</p>
-<p>你能看出这些照片哪些是用iPhone拍摄的吗？</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1123.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/20170805_105913.jpg!thumb" alt=""></p>
-<p>走在木质的栈道上会有嗒嗒的声音，栏杆也是木质的，和自然的融合感愈加深刻。</p>
-<h3 id="人间烟火"><a href="#人间烟火" class="headerlink" title="人间烟火"></a>人间烟火</h3><p><img src="http://image-up-yun.test.upcdn.net/P60317-200055.jpg!thumb" alt=""></p>
-<p>长达10个月需要开冷气的夏季，终于让我摆脱了厚重的衣服，全身心都自在轻松了呢。这里气候确实很像加州，阳光很热情，不知不觉我晒成了咖喱色。</p>
-<p>“哪凉快哪呆着去”有时候是真的关心你。短T 沙滩裤 人字拖 成了深圳人的日常。渐渐的，白天我很少出去晃悠了，夜幕降临，深圳的一天才刚刚开始。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/LRM_EXPORT_20170827_225712.jpg!thumb" alt=""></p>
-<p>海岸城 最适合晚上来逛，美食，商场因有尽有。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/20170806_204722.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/20170806_211748.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1315.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1143.jpg!thumb" alt=""></p>
-<p>海上世界 华丽的喷泉表演 很值得一看。你没有看错，那确实是一艘游轮，明华轮 始于1962<br>想吃世界美食可以来这里逛逛，东南亚海鲜居多。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/20170806_224042.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/20170805_113159.jpg!thumb" alt=""></p>
-<p>海景豪宅下的渔港，这种鲜明对比，在香港也曾见过。</p>
-<h3 id="海上升明月"><a href="#海上升明月" class="headerlink" title="海上升明月"></a>海上升明月</h3><p>脑海里一直有个画面，就是希望能够爬到城市的后山上，坐下来欣赏车水马龙。终于实现了。搭配周杰伦的星晴这首歌，很安逸。</p>
-<p>不愧是国际都市，天空都被照亮了。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_6865.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_6869.jpg!thumb" alt=""></p>
-<p>月亮钻出云的时候，海面上也撒上了月光，亲眼见过才明白什么是月光。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_6874.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_20171004_184203.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_20171004_184715.jpg!thumb" alt=""></p>
-<p>夜晚的深圳湾，海面被灯光照亮。晚上有很多人在这里沿海跑步，真羡慕他们住在这附近。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_20171004_184831.jpg!thumb" alt=""></p>
-<h3 id="有一种日出叫-海上日出"><a href="#有一种日出叫-海上日出" class="headerlink" title="有一种日出叫 海上日出"></a>有一种日出叫 海上日出</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_0618.jpg!thumb" alt=""></p>
-<p>文艺青年说没看过日出，人生就不算完整。</p>
-<p>于是我决定疯一把，和同学约好，大半夜打车到深圳湾看日出。不负有心人，如愿看到了人生第一次海上日出，确实非常震撼，云彩像火一样燃烧。也是后来才知道，看日出，晚霞，火烧云，都是需要运气，真的是难忘的经历。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0622.jpg!thumb" alt=""></p>
-<p>天还未亮，城市的灯光仍未熄灭。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0636.jpg!thumb" alt=""></p>
-<p>慢慢的，天开始亮了起来。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0629.jpg!thumb" alt=""></p>
-<p>烈焰般的朝霞映衬下，这座城市还未完全苏醒，只见得一些轮廓，无与伦比。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0634.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0644.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0660.jpg!thumb" alt=""></p>
-<p>静静地望着，望着</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0686.jpg!thumb" alt=""></p>
-<p>太阳出来了</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0715.jpg!thumb" alt=""></p>
-<p>海面和天空披上了金色，还真是难以分辨出是日出还是日落呢。</p>
-<p>原来海上入日出是这样的。</p>
-<h3 id="一座城池"><a href="#一座城池" class="headerlink" title="一座城池"></a>一座城池</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_0679_PANO.jpg!thumb" alt=""></p>
-<p>有些时候，平平淡淡才是真。坐下来慢慢品味，这才是生活。</p>
-<p>自然风光拍得多了，没有更多的灵感，我会尝试拍一些其他的题材。小景，静物，人像这些需要把握细节的东西是我还没有尝试过的，我想女生可能更擅长把握这些，你需要和它产生对话和共鸣，注入情感和灵魂。</p>
-<p>很想去尝试，但是只停留在“想”。</p>
-<p>我想拍城市风光，想去爬楼，但是我没有时间，我的相机不够好，害怕被保安拦住……首先给自己设定了重重障碍的思路是不对的。成功的人找办法，失败的人找借口。我觉得道理差不多。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1798.jpg!thumb" alt=""></p>
-<p>一桥连深港，半岛城邦之下是渔船的港湾。不过现在的渔港已经开始拆除了，可能质朴的它不太适合这种奢华的黄金地段吧。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1891.jpg" alt=""></p>
-<p>万物生长，大厦屹立入云。其实仔细看上去，这里的环境和发展是和谐共处的，海湾 绿植都保护的得很好。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1467-2.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1468.jpg!thumb" alt=""></p>
-<p>看这些房子，像不像积木，想伸手把它们推倒。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1502.jpg!thumb" alt=""></p>
-<p>钢铁森林，其实也没有那么压抑了，我觉得比上海满是高架桥要好很多。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1716.jpg!thumb" alt=""></p>
-<p>像不像“小人国”～</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_6636.jpg!thumb" alt=""></p>
-<p>半山别墅，好羡慕这环境。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_6953.jpg!thumb" alt=""></p>
-<p>西部的海岸不是那么常见，宝安中心区就在这一块，天气好的时候据说能够看到广州小蛮腰…</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_20161113_162913_PANO.jpg!thumb" alt=""></p>
-<p>科技园，多少人的青春在这里奋斗，当然也包括我。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170820_185318.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/LRM_EXPORT_20170827_223319.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG20150412175940.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG20150412181333.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170820_180300_01.jpg!thumb" alt=""></p>
-<p>人生不就像这浪花吗。起起伏伏，慢慢习惯就好了</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170820_183939.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_1957.jpg!thumb" alt=""></p>
-<p>有人说深圳是文化沙漠，我是不认同的。虽然不像广州那般有百年文化底蕴，只是深圳是一座新城，一切都是崭新的。大大小小的图书馆，书店600多个，覆盖了所有街区。拿起一本书，在cafe坐一下午也是很多人的生活方式。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0942.jpg!thumb" alt=""></p>
-<h3 id="翻山越岭来看海"><a href="#翻山越岭来看海" class="headerlink" title="翻山越岭来看海"></a>翻山越岭来看海</h3><p>感谢你坚持读到这里，我们终于来到了深圳的最东部。</p>
-<p>来了滨海城市，最想看的肯定就是大海了。</p>
-<p>相信你和我一样，憧憬中的大海应该是像斯里兰卡，帕劳那样清澈见底的，蓝的深邃的…..脚踩银沙，捡贝壳 海星，海螺，捉招潮蟹，听听海螺里面的声音，躺在椰树之间的吊床上，悠闲地喝着椰汁…..</p>
-<p>带上装备，坐上旅游专线巴士，横穿整个深圳，经过一个多小时，终于来到了著名的大梅沙。看着满眼的人群～这落差 哈哈哈哈 犹如晴天霹雳的感觉</p>
-<p><img src="http://image-up-yun.test.upcdn.net/DSC02515.jpg!thumb" alt=""></p>
-<p>其实再往前走，有一条海滨栈道，一路的风景会更好。从高处看海滩的样子，看海浪缓缓铺上沙滩，就像微风拂过女孩的刘海。</p>
-<p>沿着步道往前走就是小梅沙，人群会少很多。到了这里，不如再往前。</p>
-<p>再坐一小时巴士就到了大鹏半岛，没错，这边是一个半岛，海滩数不胜数。每年我都会去这里春游。</p>
-<h4 id="西涌-xi-chong"><a href="#西涌-xi-chong" class="headerlink" title="西涌 xi chong"></a>西涌 xi chong</h4><p>相对于小梅沙，这里人烟稀少，尽情倾听大海的声音吧。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG20150501174404.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170729_151354.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0050.jpg!thumb" alt=""></p>
-<p>海上有一座小岛，叫情人岛～ 可以坐快艇过去，请务必穿拖鞋上岸啊，小石子很扎脚。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170729_170816.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170729_165954.jpg!thumb" alt=""></p>
-<p>金毛救生犬family 在那边呆了好多年，每次去都会碰到。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170729_174429.jpg!thumb" alt=""></p>
-<p>因为这里远离市区，餐厅很少，可以沙滩烧烤，我的经验是烤玉米最简单，手艺不好烤其他很容易糊喔。</p>
-<p>傍晚租帐篷露营，记得带防蚊喷雾。手机信号可能不太好，存几部电影吧。躺在防潮垫上，抬头看天空，是浩瀚无垠的星河，很久没有见过这样的满天星斗，请脑补星晴BGM，浪漫至极。</p>
-<p>第二天早早起来还可以欣赏日出，岂不美哉，不过我一次都没见过，每次都阴天，笑cry。</p>
-<h4 id="西涌还有一个玩法就是——穿越东西涌"><a href="#西涌还有一个玩法就是——穿越东西涌" class="headerlink" title="西涌还有一个玩法就是——穿越东西涌"></a>西涌还有一个玩法就是——穿越东西涌</h4><p>如果你和我一样，在沙滩上看海已经看腻了，可以试试从高处鸟瞰。<br>穿越东西涌就是一个选择。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_7616.jpg!thumb" alt=""></p>
-<p>先说明一下这个玩法需要三人以上同行，而且最好有一名有过户外相关经验，遇到恶劣天气或不熟悉路线稍微会有一些危险性。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_7620.jpg!thumb" alt=""></p>
-<p>没有比人更高的山</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_7646.jpg!thumb" alt=""></p>
-<p>面对自然的力量，一定要有敬畏之心。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_7637.jpg!thumb" alt=""></p>
-<p>穿越东西涌要穿长袖长裤运动鞋，头戴遮阳帽，可以防止皮肤被树枝划伤。全程基本上没有路，只是驴友们走得多了 便有了“路”。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_7638.jpg!thumb" alt=""></p>
-<p>一路上翻山越岭，基本是走在丛林中或悬崖边，中国南海尽收眼底，一眼看不到边界，只听得海浪深沉的咆哮声。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_7639.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_7704.jpg!thumb" alt=""></p>
-<p>那次去的时候顶着9级大风，烟波浩渺，非常凉爽。听闻香港麦理浩径也是这般，有机会也想去看看。</p>
-<h4 id="杨梅坑-amp-鹿咀山庄-amp-较场尾"><a href="#杨梅坑-amp-鹿咀山庄-amp-较场尾" class="headerlink" title="杨梅坑 &amp; 鹿咀山庄 &amp; 较场尾"></a>杨梅坑 &amp; 鹿咀山庄 &amp; 较场尾</h4><p>绕着半岛行驶半小时就到杨梅坑了，鹿嘴山庄就在杨梅坑的尽头。这边相对于西涌，开发得更完善一些。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_6282_全景图副本.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0163.jpg!thumb" alt=""></p>
-<p>清澈的海水 捧起来尝尝 真的是咸的 笑cay</p>
-<p>喜欢去杨梅坑环海骑单车，下水摸石头，去鹿咀山庄看万丈悬崖，什么海枯石烂 山盟海誓  应该就是如此吧，</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0137.jpg!thumb" alt=""></p>
-<p>小石头被海水打磨得圆圆的</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0164.jpg!thumb" alt=""></p>
-<p>路旁的芦苇草</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_6313-Pano.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_6530-Pano-2.jpg!thumb" alt=""></p>
-<p>拍摄这张照片 需要翻到悬崖下面，从船的高度对比来看，离下面的礁石其实还有几十米高呢，挺危险的。</p>
-<p>第一次见悬崖 真美</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_6556-Pano.jpg!thumb" alt=""></p>
-<p>等待客人的渔夫</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0555.jpg!thumb" alt=""></p>
-<p>较场尾则在杨梅坑所在的大鹏半岛的对面，那里有很多特色民宿和小吃店，酒吧电影院应有尽有。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0558.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0658.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0651.jpg!thumb" alt=""></p>
-<p>蛋挞甜点，水果芋圆，看起来好好吃啊！</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0649.jpg!thumb" alt=""></p>
-<p>其实都是假的！模型！哈哈哈哈 笑cry 把我都骗了！想吃就按模型来点就好啦</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0562.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0561.jpg!thumb" alt=""></p>
-<p>这些串串是真的，不要怀疑，大胆吃。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0560.jpg!thumb" alt=""></p>
-<p>木牌说出了多少人的心声</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0607.jpg!thumb" alt=""></p>
-<p>形单影只</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0619.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0628.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0635-2.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_6067.jpg!thumb" alt=""></p>
-<p>短暂的停留后，我找到了新的攀登目标</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_0810.jpg" alt=""></p>
-<h3 id="新生"><a href="#新生" class="headerlink" title="新生"></a>新生</h3><p><img src="http://image-up-yun.test.upcdn.net/IMG_20170423_145152.jpg!thumb" alt=""></p>
-<p>仅有的一些靠打渔为生的渔民也要离开这里了，这里即将诞生一个新的商区。有谁还记得曾经的深圳是一个小渔村呢？但我认为，合理开发 是值得的。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/UNADJUSTEDNONRAW_thumb_4c3.jpg!thumb" alt=""></p>
-<p>荒废的渔船，碎生蚝壳，记录了深圳速度。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_2912.jpg!thumb" alt=""></p>
-<p><img src="http://image-up-yun.test.upcdn.net/UNADJUSTEDNONRAW_thumb_4c6.jpg!thumb" alt=""></p>
-<p>期待全新的你</p>
-<p><img src="http://image-up-yun.test.upcdn.net/UNADJUSTEDNONRAW_thumb_4d2.jpg!thumb" alt=""></p>
-<p>大铲湾 </p>
-<p>刚搬到宝安区住的时候，找这个地方找了很久。终于不用再横穿整个深圳去看海了，挺欣喜的。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/UNADJUSTEDNONRAW_thumb_e3.jpg!thumb" alt=""></p>
-<p>没有沙滩的海，搭配杂乱的礁石，杂草。海上还有电线杆子～或许这就是原生态，说不出来的感觉。繁忙的飞机会从头顶掠过，周末出门散散步却是好去处。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_5550.jpg!thumb" alt=""></p>
-<p>载着全家希望的小船</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_5553.jpg!thumb" alt=""></p>
-<h3 id="城中村-看不到希望-寄托着无数希望"><a href="#城中村-看不到希望-寄托着无数希望" class="headerlink" title="城中村 看不到希望 寄托着无数希望"></a>城中村 看不到希望 寄托着无数希望</h3><p>在来深圳之前，只听说过“关内,关外”,不知道有什么区别。从未听过“城中村”,”握手楼“。</p>
-<p><img src="http://image-up-yun.test.upcdn.net/IMG_20170908_074421.jpg!thumb" alt=""></p>
-<p>指甲盖大小的土地上生长出2100栋自建楼，从空中看一定是像曼哈顿般密集的水泥森林。房子与房子之间触手可及，抬头只见得一线天这里像是一块“自留地”，和外界有非常大的区别…..</p>
-<p>其实应该感谢城中村，给了年轻人第一次落脚的地方。随着旧改，城中村也许会慢慢消失，但年轻人的梦想不会退却。</p>
-<p>未来，可期。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">疯言疯语</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/11/18/圳在回忆/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -978,19 +763,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Sass</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SQL</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">性能优化</a>
+                <a href="javascript:void(0)" class="js-tag color5">Sass</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -999,6 +776,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Vue.JS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1014,15 +799,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">react</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">《你不知道的JavaScript》</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">this</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1046,11 +831,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">深入理解ES6</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">工具</a>
+                <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
               </li>
              
               <li class="article-tag-list-item">
