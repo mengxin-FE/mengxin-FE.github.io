@@ -141,6 +141,204 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-React进阶之路" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/15/React进阶之路/">《React进阶之路》阅读笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2018/07/15/React进阶之路/" class="archive-article-date">
+  	<time datetime="2018-07-15T12:29:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/AvskgQFU55RO5jNMCxwaT5hQzOf6PIga9eq3iMTwPac!/b/dEYBAAAAAAAA&bo=OQxABuodTA8RWak!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<h1 id="React基础"><a href="#React基础" class="headerlink" title="React基础"></a>React基础</h1><h2 id="props和state"><a href="#props和state" class="headerlink" title="props和state"></a>props和state</h2><p>props是组件对外的接口，组件通过props接收外部传入的数据；<br><br>state是组件内部对内接口，组件内部状态的变化通过state来反应。<br><br>props是只读的，不能在组件内修改props；<br><br>state是可变的，组件的变化通过修改state来实现。</p>
+<p>在开发React应用时，要思考哪些组件应该设计成有状态组件，哪些组件应该设计成无状态组件。应该尽可能使用无状态组件，无状态组件不用关心状态的变化，只聚焦UI展示，所以更容易复用。</p>
+<p>通过定义少数的有状态组件管理整个应用的状态变化，并且将状态通过props传递给其余无状态组件，由无状态组件完成页面大部分UI渲染。</p>
+<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><p>只有类组件才具有生命周期方法，函数组件没有生命周期方法。</p>
+<ul>
+<li>挂载阶段：组件被创建，执行初始化，并被挂载到DOM中，完成组建的第一次渲染。</li>
+<li>更新阶段：组件被挂载到DOM后，组件的props或state可以引起组件更新。</li>
+<li>卸载阶段：组件从DOM中被卸载的过程</li>
+</ul>
+<h3 id="挂载阶段"><a href="#挂载阶段" class="headerlink" title="挂载阶段"></a>挂载阶段</h3><ol>
+<li>constructor：ES6构造方法，组件被创建时，首先调用此方法。该方法接收props参数，是从父组件中传入的属性对象。在这个方法中调用super(props)才能保证props被传入组件中。此方法通常用于初始化组件的state以及绑定事件。</li>
+<li>componentWillMount</li>
+<li>render：返回一个React元素而非组件的实际渲染工作，render是一个纯函数，不可在里面调用this.setState</li>
+<li>componentDidMount：组件被挂载到DOM后调用，通常用于向服务器请求数据。</li>
+</ol>
+<h3 id="更新阶段"><a href="#更新阶段" class="headerlink" title="更新阶段"></a>更新阶段</h3><ol>
+<li>componentWillReceiveProps：在props引起组件更新过程中调用。state引起更新不会触发该方法。</li>
+<li>shouldComponentUpdate：决定组件是否继续执行更新过程。</li>
+<li>componentWillUpadte：在组件render调用前执行</li>
+<li>componentDidUpdate：组件更新后被调用</li>
+</ol>
+<h3 id="卸载阶段"><a href="#卸载阶段" class="headerlink" title="卸载阶段"></a>卸载阶段</h3><ol>
+<li>componentWillUnmount：组件被卸载前调用</li>
+</ol>
+<h1 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h1><p>如果一个表单元素的值是由React来管理，它就是一个受控组件。非受控制组件指表单元素的状态依然由表单元素自己管理，而不是交给React组件管理，使用非受控组件使用属性ref来获取元素的值。<br><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"text"</span> ref=&#123; (input) =&gt; <span class="keyword">this</span>.input = input &#125; /&gt;</span><br></pre></td></tr></table></figure></p>
+<h1 id="高阶组件"><a href="#高阶组件" class="headerlink" title="高阶组件"></a>高阶组件</h1><p>HOC接收React组件作为参数，并且返回一个新的React组件。本质是一个函数，并不是组件。本质是装饰者设计模式。</p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
+<li>操作props：在被包装组件接收props前，高阶组件可以先拦截到props，对props操作后再传递给被包装组件。</li>
+<li>通过ref访问组件实例</li>
+<li>组件状态提升</li>
+<li>用其他元素包装组件</li>
+</ul>
+<p>高阶组件的实现方式：由高阶组件处理通用逻辑，然后将相关属性传递给被包装组件，这种实现方式为属性代理。还可以通过继承方式实现高阶组件：通过继承被包装组件实现逻辑的复用。继承方式实现的高阶组件常用于渲染劫持。例如当用户处于登录状态时，允许组件渲染， 否则渲染一个空组件。</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
+<li>为了区分高阶组件，应该把被包装组件的名称也包到高阶组件的名称中，如withPersistentData</li>
+<li>不要在组件的render方法中使用高阶组件，尽量不要在组件的其他生命周期方法中使用高阶组件。因为调用高阶组件每次返回一个新组件，于是每次render前一次高阶组件创建的组件都会被卸载，然后重新挂载本次创建的新组件，影响效率。</li>
+<li>如果需要使用被包装组件的静态方法，需要手动复制这些静态方法，因为高阶组件返回的新组件不包含被包装组件的静态方法。</li>
+</ol>
+<h1 id="React-Router"><a href="#React-Router" class="headerlink" title="React Router"></a>React Router</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-router-dom</span><br></pre></td></tr></table></figure>
+<p>React Router v4 每遵循React中一切皆组件的思想，每一个Route（路由）都是一个普通的React组件</p>
+<p>React Router 通过Router和Route两个组件完成路由功能。<br><br>一个应用只需要一个Router实例，所有的路由配置组件Route都定义为Router的子组件。</p>
+<h3 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h3><p>Route是React Router中用于配置路由信息的组件，每当有一个组件需要根据URL决定是否渲染时，需要创建一个Route</p>
+<ul>
+<li>path：用来描述这个Route匹配的URL的pathname，当URL匹配一个Route时，这个Route中定义的组件将会被渲染。</li>
+<li><p>match：当URL和Route匹配时，Route会创建一个match对象作为props中的一个属性传递给被渲染的组件。对象包含以下4个属性</p>
+<ul>
+<li>params：Route的path可以包含参数。例如<route path="/foo/:id">包含一个参数id，params从path解析到参数{id:1}</route></li>
+<li>isExact：布尔值。当URL完全匹配时值为true。path=’/foo’、URL=’<a href="http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。" target="_blank" rel="noopener">http://example.com/foo&#39;完全匹配；URL=&#39;http://example.com/foo/1&#39;部分匹配。</a></li>
+<li>path：Route的path属性。构建嵌套路由时会使用到</li>
+<li>url：URL的匹配部分</li>
+</ul>
+</li>
+<li><p>Route渲染组件的方式：Route提供3个属性用来定义待渲染的组件：</p>
+<ul>
+<li>component 当URL和Route匹配时，component属性定义的组件就会被渲染：</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Route path=<span class="string">'/foo'</span> component=&#123;Foo&#125;&gt;</span><br></pre></td></tr></table></figure>
+<p>当URL=’<a href="http://example.com/foo&#39;时，Foo组件会被渲染。" target="_blank" rel="noopener">http://example.com/foo&#39;时，Foo组件会被渲染。</a></p>
+</li>
+<li><p>render 该方式方便为待渲染组件传递额外的属性</p>
+</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">    &lt;Route path=<span class="string">'/foo'</span> render=&#123; (props) =&gt; (</span><br><span class="line">        &lt;Foo &#123;...props&#125; data=&#123;extraProps&#125; /&gt;</span><br><span class="line">    )&#125;&gt;</span><br><span class="line">    <span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">  - children  与上述不同，children返回的组件无论路由是否匹配都会被渲染，当匹配不成功时，match属性为null</span></span><br><span class="line"><span class="string">  - `</span><span class="string">``</span>js</span><br><span class="line">    &lt;Router path=<span class="string">'/foo'</span> children=&#123; (props) =&gt; (</span><br><span class="line">        &lt;div className=&#123;props.match ? <span class="string">'active'</span> : <span class="string">''</span>&#125;&gt;</span><br><span class="line">            &lt;Foo /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;&gt;</span></span><br><span class="line"><span class="regexp">    ```  </span></span><br><span class="line"><span class="regexp">    如果Route匹配当前URL，待渲染元素的根节点div的class将被设置为active</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">- Switch 和 exact。当URL和多个Route匹配时，这些Route都会执行渲染操作。如果只想当第一个匹配的Route渲染，可以把这些Route包裹到一个Switch组件中。如果想让URL和Route完全匹配时Route才渲染，可使用Route的exact属性。Switch和exact常联合使用应用于首页的导航。</span></span><br><span class="line"><span class="regexp">    ```js</span></span><br><span class="line"><span class="regexp">    &lt;Router&gt;</span></span><br><span class="line"><span class="regexp">        &lt;Switch&gt;</span></span><br><span class="line"><span class="regexp">            &lt;Route exact path='/</span><span class="string">' component=&#123;Home&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/posts<span class="string">' component=&#123;Posts&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;Route       path='</span>/:user<span class="string">' component=&#123;User&#125; /&gt;</span></span><br><span class="line"><span class="string">        &lt;/Switch&gt;</span></span><br><span class="line"><span class="string">    &lt;/Router&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果不使用Switch，当pathname为’posts’时，后面两个都会被匹配，但我们并不希望/:user被匹配。<br><br>如果不使用exact，’/‘,’/posts’…几乎所有URL都会被匹配到第一个Route,而又因为使用了Switch，后面的两个Route永远也不会被匹配。使用exact保证pathname只有完全匹配时，第一个Route才会被匹配。</p>
+</li>
+</ul>
+</li>
+<li><p>嵌套路由：是指在Route渲染的组件内部定义新的Route</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Posts = <span class="function">(<span class="params"> &#123; match&#125; </span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &#123;<span class="comment">/* 这里match.url 等于 /posts */</span>&#125;</span><br><span class="line">            &lt;Route path=&#123;<span class="string">`<span class="subst">$&#123;match.url&#125;</span>/:id`</span>&#125; component=&#123;PostDetail&#125; /&gt;</span><br><span class="line">            &lt;Route exact path=&#123;match.url&#125; component=&#123;PostList&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="链接-Link"><a href="#链接-Link" class="headerlink" title="链接 Link"></a>链接 Link</h3><p>Link是React Router提供的链接组件，一个Link组件定义了当点击该Link时，页面应该如何路由。</p>
+<p>Link使用to属性声明要导航到的URL地址。to可以是string或object类型，当to为object类型时，可以包含pathname、search、hash、state四个属性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> Navigation = <span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    &lt;header&gt;</span><br><span class="line">        &lt;nav&gt;</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/'&gt;Home&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">                &lt;li&gt;&lt;Link to='/posts'&gt;Posts&lt;/Link&gt;&lt;/li&gt;</span><br><span class="line">            &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>nav&gt;</span><br><span class="line">    &lt;<span class="regexp">/header&gt;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;link to &#123;</span></span><br><span class="line"><span class="regexp">    &#123;</span></span><br><span class="line"><span class="regexp">        pathname : '/</span>posts<span class="string">',</span></span><br><span class="line"><span class="string">        search : '</span>?sort=name<span class="string">',</span></span><br><span class="line">        hash : '#the-hash',</span><br><span class="line">        state : &#123; <span class="attr">fromHome</span> : <span class="literal">true</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="使用history对象手动实现导航"><a href="#使用history对象手动实现导航" class="headerlink" title="使用history对象手动实现导航"></a>使用history对象手动实现导航</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//push向浏览器历史记录新增一条</span></span><br><span class="line">history.push(path , [state])</span><br><span class="line"></span><br><span class="line"><span class="comment">//replace会用新记录替代当前记录</span></span><br><span class="line">history.replace(path , [state])</span><br></pre></td></tr></table></figure>
+<h1 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h1><p>Redux的主要思想即描述应用的状态，如何根据action进行更新。</p>
+<p><img src="http://m.qpic.cn/psb?/V10qN6b63M4WWC/*D.QOD9xmUP6nOTo6HZTeZy7iXJaSvMsW5dY9fC4Lp8!/b/dFYAAAAAAAAA&bo=gAZOA4AGTgMDKQw!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<h3 id="Redux三大原则"><a href="#Redux三大原则" class="headerlink" title="Redux三大原则"></a>Redux三大原则</h3><ul>
+<li>只维护一个全局状态state对象，储存在Redux的store中。</li>
+<li>保持应用状态只读。不可直接修改应用状态，需要修改时必须发送action，该action描述如何修改应用状态。</li>
+<li>应用状态的改变通过纯函数reducer完成。</li>
+</ul>
+<h2 id="react-redux"><a href="#react-redux" class="headerlink" title="react-redux"></a>react-redux</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install react-redux</span><br></pre></td></tr></table></figure>
+<p>根据组件意图不同，可以将组件划分为两类：展示组件、容器组件。<br></p>
+<ul>
+<li>展示组件–UI展示，不关心数据。</li>
+<li>容器组件–逻辑处理，如发送网络请求、处理返回数据、将处理过的数据通过props传递给展示组件。</li>
+</ul>
+<p>当展示组件的状态变更引起源数据变化时，展示组件通过调用容器组件提供的方法同步变化。<br><b>有/无 状态组件根据是否使用state来划分，展示组件和容器组件根据组件意图划分。</b></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">connect()   <span class="comment">// 用于把React组件和Redux的store连接起来，生成一个容器组件，负责数据管理和业务逻辑</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"><span class="keyword">import</span> TodoList <span class="keyword">from</span> <span class="string">'./TodoList'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(所需应用状态 , 展示组件的状态)(TodoList);</span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(mapStateToProps , mapDispatchToProps)(TodoList);</span><br><span class="line"></span><br><span class="line">connect的两个参数的类型都是函数，前者负责从全局应用状态state中取出所需数据，映射到展示组件的props。后者负责把action映射到展示组件的props上。</span><br><span class="line"></span><br><span class="line">mapStateToProps : 把state转换成props。state是Redux store中保存的应用状态，它作为参数传递给mapStateToProps。每当store中的state更新时，mapStateToProps会重新执行，重新计算传递给展示组件的props，从而触发组件的重新渲染。</span><br><span class="line"></span><br><span class="line">mapDispatchToProps : 容器组件可以发送action更新state。该函数接收store.dispatch方法作为参数，返回展示组件用来修改state的函数</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Provider    用于容器组件获取Redux的store。该组件需要接收store属性，然后把store属性保存到context</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>Plugin</th>
+<th>README</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dropbox</td>
+<td>[plugins/dropbox/README.md][PlDb]</td>
+</tr>
+<tr>
+<td>Github</td>
+<td>[plugins/github/README.md][PlGh]</td>
+</tr>
+<tr>
+<td>Google Drive</td>
+<td>[plugins/googledrive/README.md][PlGd]</td>
+</tr>
+<tr>
+<td>OneDrive</td>
+<td>[plugins/onedrive/README.md][PlOd]</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>[plugins/medium/README.md][PlMe]</td>
+</tr>
+<tr>
+<td>Google Analytics</td>
+<td>[plugins/googleanalytics/README.md][PlGa]</td>
+</tr>
+</tbody>
+</table>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">React.js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/07/15/React进阶之路/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-使用ant-design-Pro开发项目的小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -341,101 +539,6 @@
 
 
   
-    <article id="post-TGDC分享会摘录" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/03/TGDC分享会摘录/">《前端重构成长指南》TGDC分享会摘录</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/03/TGDC分享会摘录/" class="archive-article-date">
-  	<time datetime="2018-05-03T02:06:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="https://mp.weixin.qq.com/s?__biz=MjM5MjE1NDg2MQ==&amp;mid=2649948264&amp;idx=1&amp;sn=927954f9d9c20e7d51c5c4cefe4fb895&amp;scene=1&amp;srcid=0902fEYRNLDVhHuc8FilFjEO#rd" target="_blank" rel="noopener">文章来源</a></p>
-<p>职业成长，我觉得应该重点关注三个方向，<b>专业能力、通用能力和团队影响力。</b></p>
-<h2 id="一、专业能力"><a href="#一、专业能力" class="headerlink" title="一、专业能力"></a>一、专业能力</h2><p>其中专业能力方面我觉得可以分为职业技能和辅助技能两块。职业技能就是从事前端重构必须具备的功能，包括对工具、语言、知识的掌握。职业技能作为大家吃饭的本领需要达到怎样的标准才能算一个合格的前端重构？</p>
-<p>以熟悉来看，如果你能够快速完成一个移动页面的处理，做到不同浏览器和机型的兼容，实现页面的交互就达到熟悉的标准。要做到熟练应该具备独立完成一个产品双端官网的能力，在熟悉的基础上需要做好页面的性能优化和SEO。同时在工作中能够关注工作效率，然后在项目完成的时候能够做出一些必要的分析和总结。精通方面，不仅自己的能力要足够强，而且要能够带领团队完成大型社区平台的搭建能力。在刚才提到熟练的基础上拥有严谨的架构意识，能将代码进行模块化、系统化的处理，关注外部安全，大胆尝试技术上的创新。   </p>
-<p>怎么提升自己的职业技能？我在这边整理了大概三点，第一个是看，第二个是做，第三个是想。我觉得任何的技能学习，建议大家可以先通过看书系统的学习，由浅入深地了解一遍，在后续的过程中都是通过碎片的学习。系统地看书可以帮你建立一条完整的知识体系，让后面零散的知识在这个知识体系上，而不是永远的零散知识点。</p>
-<p><img src="http://mmbiz.qpic.cn/mmbiz_jpg/YOKljqwy3u67cibfsa9JzLX9mnN9qzUVibiaKrfW7V1EDv7M6LOBEE1drhfiaa2Trfrpmx9KLKLXMD7LoyTTPUsALg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1" width="100%"></p>
-<p>有了基础的理论之后，就可以尝试通过项目进行实践，在过程中要保持持续思考的状态，把职业技能充分地发挥出来，而不是仅仅完成需求。就像刚才这位同学提到的，大量的工作都是很简单的，我是不是完成需求就可以了？不是这样的，<b>应该把你学到的知识尽可能用到项目中，哪怕未来你不在这边做了，但是你的技能提升了，你就能找到更好的工作。</b></p>
-<p>我们还需要关注行业里面的优秀案例，开拓自己的思维，尝试把自己放到项目里面去想，自己做会怎么做，有没有更好的解决方案。</p>
-<p>我们可能需要<b>根据自身工作的实际情况针对性选择最为有用的辅助技能。</b>比如你是负责游戏人生这类社区平台的，掌握一些交互设计的能力可以让你进行网站架构的时候，页面逻辑更加清晰，操作体验更加顺畅。比如你是负责内部系统搭建的，掌握后台开发的技术，可以让你在联调的时候更加高效，甚至独立完成系统的搭建。如果你是负责项目成果分析的，可能要了解一些用研的方法和数据分析的方法，这样才能保证你分析的结果更加严谨准确，对于业务的指导性更强。</p>
-<p><img src="http://mmbiz.qpic.cn/mmbiz_jpg/YOKljqwy3u67cibfsa9JzLX9mnN9qzUVibBCbYTqK8j6kZicsL4J6dhHsnZIfiaankXAYLHq4MxLU1jhOnzfOmMxvw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1" width="100%"></p>
-<h2 id="二、通用能力"><a href="#二、通用能力" class="headerlink" title="二、通用能力"></a>二、通用能力</h2><p>如果说专业能力的强弱决定你能否完成一个需求，通用能力的高低就决定你能否把这个需求做得更好。</p>
-<h3 id="项目管理的能力"><a href="#项目管理的能力" class="headerlink" title="项目管理的能力"></a>项目管理的能力</h3><p>掌握一些基本的项目管理知识，通过流程规划、时间安排、资源整合、高质量地完成项目目标。</p>
-<p>因此在进行项目管理的时候我们第一步要做的是明确完成的工作内容到底有哪些，以我们这边经历的比较复杂的产品公测为例，我们需要把相关的工作按阶段罗列出来。比如前期可能需要参与到项目的讨论，包括需求的沟通会、工作量预估、页面逻辑讨论、功能点确认、上线时间确认以及上线渠道的确认。中期包括制定规范、执行页面的重构、页面的联调、页面测试以及上线发布。进入到后期主要是收尾工作，包括做一些数据分析、项目总结和方法论沉淀。</p>
-<p><img src="http://mmbiz.qpic.cn/mmbiz_jpg/YOKljqwy3u67cibfsa9JzLX9mnN9qzUVibnpQuibY5syk7VtvSECs4XnWW6TaBv7UN4YruR4Yz5pibddemxk16uYuw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1" width="100%"></p>
-<p>明确所有需要完成的工作之后，我们根据手上的资源以及各个项目的时间节点制定合理的项目排期，按照计划推进项目执行。此外在项目过程中有一个问题是需要重点关注的，就是突发情况。越复杂的项目发生突发情况的概率越高，当发生突发情况的时候可以先评估一下工作量、紧急度和重要性，然后判断现有资源是否可以处理，确保项目的整个进度不受影响。</p>
-<h3 id="解决问题的能力"><a href="#解决问题的能力" class="headerlink" title="解决问题的能力"></a>解决问题的能力</h3><p>每天会有大量的问题在我们的面前。因此我们需要通过逻辑思维借鉴相关经验，运用工具和方法准确有效地分析问题，然后制定出最佳的解决方案并予以执行。在解决问题之后做好效果的评估。在解决问题的过程中，我认为最重要的环节是分析问题的环节，因为只有找到问题的根源才能制定最有效的解决方案，做到事半功倍的效果。</p>
-<h3 id="主动沟通的能力"><a href="#主动沟通的能力" class="headerlink" title="主动沟通的能力"></a>主动沟通的能力</h3><p>沟通可以说是我们日常工作中最为平凡的一个行为，我们需要不时和上下游进行沟通来推进工作。我觉得主动沟通除了积极主动沟通之外，还要学会换位思考，充分了解对方心理的想法，然后用对方最为接受的方式表达出来。</p>
-<p><img src="http://mmbiz.qpic.cn/mmbiz_jpg/YOKljqwy3u67cibfsa9JzLX9mnN9qzUVibMx5wtyOooq7gEwsgsCPnLsy6uLENWXRuW1nTjSedXX1iaRticuH4WZ6g/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1" width="100%"></p>
-<h2 id="三、团队影响力"><a href="#三、团队影响力" class="headerlink" title="三、团队影响力"></a>三、团队影响力</h2><p>如果把团队看成一个整体，每个人能力的提升对于团队来说就是单项能力的提升，这必然会带动其他能力，其他人的增长，会起到相互促进的作用，从而帮助整个团队发展壮大。不少人觉得提升团队影响力是一件非常麻烦的事，其实并不困难。只要你能完成项目的同时注重文档的输出和知识的分享就是提升团队影响力，这个过程也会为整个团队带来积极的作用。</p>
-<p><b>文档输出方面，</b>将相应的工作方法总结成文档，在下次遇到同类问题的时候可以提升效率，并且可以给其他同事参考。对于团队来说，每个人输出的规范和方法论都是帮助团队完善文档平台的建设，改善团队的工作氛围。</p>
-<p><b>知识分享，</b>学习氛围的形成是一个相对比较漫长的过程，同时需要每个成员有乐于分享的过程。我们鼓励组员将工作成果阶段性总结，和团队进行分享，定期沉淀分享，不仅可以帮助我们对工作进行反思，找到提升改进的地方，同时可以让其他成员更好地了解自己，建立自身的专业形象。对于团队来说，每个人的优质分享都是帮助团队完善知识体系的搭建，加快所有成员的成长速度，提升团队的整体学习氛围。</p>
-<p> 此外团队影响力的提升也是个人和团队共同成长的过程，在团队发展的过程中通常会产生更多的机会，而只有那些注重团队影响力建设，为团队积极贡献的人才会成为这些资源的受益者。因此只有当你把团队成长和个人成长紧密联系起来的时候，你才能获得更快的成长。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">分享会</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/05/03/TGDC分享会摘录/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -554,19 +657,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">《JavaScript面向对象编程指南》</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -578,6 +681,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图解HTTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">this</a>
               </li>
              
@@ -586,19 +693,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">图解HTTP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -614,7 +717,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
+                <a href="javascript:void(0)" class="js-tag color5">疯言疯语</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -622,7 +725,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">疯言疯语</a>
+                <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
               </li>
              
               <li class="article-tag-list-item">

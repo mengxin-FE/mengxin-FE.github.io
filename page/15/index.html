@@ -141,6 +141,109 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-《JavaScript面向对象编程指南》阅读笔记-七" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/18/《JavaScript面向对象编程指南》阅读笔记-七/">《JavaScript面向对象编程指南》阅读笔记 七</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/18/《JavaScript面向对象编程指南》阅读笔记-七/" class="archive-article-date">
+  	<time datetime="2017-03-18T13:06:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://m.qpic.cn/psb?/V10qN6b63c9MK4/erHdLVUPUtgk2G4g4vl7jxrVMA7h*sPOqH5cicAafsU!/b/dGkBAAAAAAAA&bo=ewiAAucPsAQBOLI!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<h2 id="BOM和DOM"><a href="#BOM和DOM" class="headerlink" title="BOM和DOM"></a>BOM和DOM</h2><p>检查一个节点是否存在子节点，可以调用该节点的hasChildNodes()方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.documentElement.hasChildNodes()</span><br><span class="line"><span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>访问子元素： .childNodes()</p>
+<p>访问父元素： .parentNode()</p>
+<p>检测元素中是否存在属性： hasAttributes()</p>
+<p>获取元素的属性值： getAttribute</p>
+<p>访问标签中的内容： .textContent  低版本IE可用innerText  .nodeValue</p>
+<p>返回下一个同胞： .nextSibling</p>
+<p>返回前一个同胞： .previousSibling</p>
+<p>创建新节点： .createElement()  .createTextNode()</p>
+<p>插入新元素到末尾 .appendChild()</p>
+<p>在您指定的已有子节点之前插入新的子节点: .insertBefore()</p>
+<p>用新节点替换某个子节点: replaceChild()</p>
+<p>克隆现有节点： cloneNode()，该方法有一个布尔型参数(true = 深拷贝，包括所有子节点；false = 浅拷贝，只针对当前节点)</p>
+<p>移除节点： .removeChild()</p>
+<p>替换节点： .replaceChild()</p>
+<p>添加事件监听： .addEventListener()</p>
+<pre><code>item.addEventListener(&quot;click&quot; , 处理事件的函数 )
+</code></pre><p><code>IE9以前没有addEventListener()方法</code>，只可以用attachEvent()方法</p>
+<p>IE事件对象中，没有用于反映触发事件目标元素的target属性，但可以用它的等效属性srcElement。</p>
+<p>移除事件监听： .removeEventListener(“click” , 处理事件的函数 ) IE使用detachEvent()方法</p>
+<p>阻止事件冒泡： .stopPropagation() IE没有此方法，可以将cancelBubble设置为true</p>
+<p>阻止默认行为： .preventDefault() IE没有此方法，可以将returnValue设置为false</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">evt</span>)</span>&#123;</span><br><span class="line">   <span class="comment">//prep work</span></span><br><span class="line">   evt = evt || <span class="built_in">window</span>.event;</span><br><span class="line">   <span class="keyword">var</span> target =evt.target || evt.srcElement;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//actual callback work</span></span><br><span class="line">   <span class="built_in">console</span>.log(target.nodeName)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//start listening for click events</span></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">document</span>.addEventListener)&#123;</span><br><span class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">"click"</span>,callback,<span class="literal">false</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(docunment.attachEvent)&#123;<span class="comment">//old IE</span></span><br><span class="line">    <span class="built_in">document</span>.attachEvent(<span class="string">"onclick"</span>,callback);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">document</span>.onclick = callback;<span class="comment">//ancient</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="XMLHttpRequest对象"><a href="#XMLHttpRequest对象" class="headerlink" title="XMLHttpRequest对象"></a>XMLHttpRequest对象</h2><p>利用JavaScript将HTTP请求发送给服务端，然后根据服务器端的响应来局部更新页面。</p>
+<p>Ajax就是异步JavaScript，在发送HTTP请求后不需要停下来等待服务器响应，可以继续执行其他任务，待服务器处理完毕返回时再处理。</p>
+<p>XHR对象就是由JavaScript创建的。</p>
+<p>XHR对象用法步骤：<br>1.发送请求。在这步，需要对XHR对象的构建，并设置事件监听。<br>2.处理响应。在这步，事件监听器会在服务器的响应信息到达后处理相关代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//兼容IE低版本ActiveX对象</span></span><br><span class="line"><span class="keyword">var</span> ids = [<span class="string">"MSXML2.XMLHTTP.3.0"</span>,<span class="string">"MSXML2.XMLHTTP"</span>,<span class="string">"Microsoft.XMLHTTP"</span>];</span><br><span class="line"><span class="comment">//创建xhr对象</span></span><br><span class="line"><span class="keyword">var</span> xhr;</span><br><span class="line"><span class="keyword">if</span>(XMLHttpRequest)&#123;</span><br><span class="line">   	xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	IE:<span class="comment">//try to find an ActiveX object to use</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;ids.length;i++)&#123;</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			xhr = <span class="keyword">new</span> ActiveXObject(ids[<span class="number">1</span>]);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;<span class="keyword">catch</span>(e)&#123;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//为该对象设置触发readystatechange事件的监听器</span></span><br><span class="line">xhr.onreadystatechange = myCallback;</span><br><span class="line">xhr.open(<span class="string">"GET请求的类型"</span>,<span class="string">"somefile.txt请求的URL"</span>,<span class="literal">true</span>)</span><br><span class="line">xhr.send(<span class="string">"发送请求时可附带数据"</span>)</span><br><span class="line"><span class="comment">//请求被发送出去后，我们继续执行后续任务，直到服务器端响应后，会自动启动回调函数myCallback</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//每个XHR对象中有一个readyState属性。一旦改变了该属性的值，就会触发readystatechange事件，可能的值如下：</span></span><br><span class="line">&lt;li&gt;<span class="number">0</span>----为初始化状态&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">&lt;li&gt;1----载入请求状态&lt;/</span>li&gt;</span><br><span class="line">&lt;li&gt;<span class="number">2</span>----载入完成状态&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">&lt;li&gt;3----请求交互状态&lt;/</span>li&gt;</span><br><span class="line">&lt;li&gt;<span class="number">4</span>----请求完成状态&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function myCallback()&#123;</span></span><br><span class="line"><span class="regexp">   if(xhr.readyState &lt; 4)&#123;</span></span><br><span class="line"><span class="regexp">      return;/</span><span class="regexp">/not ready yet</span></span><br><span class="line"><span class="regexp">   &#125;</span></span><br><span class="line"><span class="regexp">   if(xhr.status !== 200)&#123;</span></span><br><span class="line"><span class="regexp">      alert("Error!");</span></span><br><span class="line"><span class="regexp">      retrun;</span></span><br><span class="line"><span class="regexp">   &#125;</span></span><br><span class="line"><span class="regexp">   /</span><span class="regexp">/all is fine, do the work</span></span><br><span class="line"><span class="regexp">   alert(xhr.responseText)</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/当readyState的值为4时，意味着服务器端的响应信息response已经返回，可以开始处理了。</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/在myCallback函数中，除了确定readyState的值是4之外，还必须检查HTTP请求的状态码，通过XHR对象的status属性获取，正常情况应该是200。</span></span><br><span class="line"><span class="regexp"></span></span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">《JavaScript面向对象编程指南》阅读笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/18/《JavaScript面向对象编程指南》阅读笔记-七/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-《JavaScript面向对象编程指南》阅读笔记-六" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -412,193 +515,6 @@ newtoy.constructor.prototype.rating;
 
 
   
-    <article id="post-《JavaScript面向对象编程指南》阅读笔记-四" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/05/《JavaScript面向对象编程指南》阅读笔记-四/">《JavaScript面向对象编程指南》阅读笔记 四</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/05/《JavaScript面向对象编程指南》阅读笔记-四/" class="archive-article-date">
-  	<time datetime="2017-03-05T03:38:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://b363.photo.store.qq.com/psb?/V10qN6b63c9MK4/RhGHAXaca9BdFwDzM9yQ2mbIqh.ASZ65BlsEaWWCAkM!/b/dGsBAAAAAAAA&bo=qwYABQASgA0RKSk!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><h4 id="instanceof-操作符"><a href="#instanceof-操作符" class="headerlink" title="instanceof 操作符"></a>instanceof 操作符</h4><p>通过instanceof操作符可以测试一个对象是不是由某个指定的构造器函数所创建的。</p>
-<pre><code>function Hero(){};
-var h = new Hero();
-var o = {};
-h instanceof Hero;
-//true
-h instanceof Object;
-//true
-o instanceof Object;
-//true
-</code></pre><h4 id="传递对象"><a href="#传递对象" class="headerlink" title="传递对象"></a>传递对象</h4><p>当拷贝某个对象或将它传递给某个对象时，传递的是该对象的引用。因此，在引用上所做的任何改动，都会影响它所引用的原对象。</p>
-<pre><code>var original = {howmany:1};
-var mycopy = original;
-mycopy.howmany;
-//1
-mycopy.howmany = 100;
-original.howmany;
-//100
-</code></pre><h4 id="比较对象"><a href="#比较对象" class="headerlink" title="比较对象"></a>比较对象</h4><p>当对对象进行比较操作时，当且仅当两个引用都指向同一个对象时，结果为ture。如果是不同的对象，即使它们有相同的属性和方法，比较操作也会返回false。</p>
-<pre><code>var fido = {breed : &quot;dog&quot;};
-var benji = {breed : &quot;dog&quot; };
-
-fido === benji
-//false
-</code></pre><p>但是，新建一个变量并被其中一个赋值，该变量就会指向同一个对象，操作符会返回ture。</p>
-<pre><code>var mydog = benjil
-mydog === benji;
-//ture
-</code></pre><h4 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h4><p>Object是JavaScript中所有对象的父级对象，</p>
-<pre><code>var o = {};
-o.toString();
-//&quot;[object Object]&quot;
-
-空对象包含一些继承自Object的属性和方法    
-·o.constructor : 返回构造器函数的引用
- .o.toString : 返回对象的描述字符串
- .o.valueOf() : 返回对象的单值描述信息。
-</code></pre><h3 id="call-与apply"><a href="#call-与apply" class="headerlink" title="call()与apply()"></a>call()与apply()</h3><p>让一个对象去“借用”另一个对象的方法并为自己所用。</p>
-<p>定义一个some_obj对象，该对象中有一个say()方法：</p>
-<pre><code>var some_obj = {
-  name : &quot;Bob&quot;,
-  say : function(who){
-     return &quot;Hi &quot; + who + &quot;, I am a &quot; + this.name;
-  }
-}
-</code></pre><p>调用say()方法，并在其中使用this.name来访问其name属性</p>
-<pre><code>some_obj.say(&quot;Alice&quot;)
-//&quot;Hi Alice, I am a Bob&quot;
-</code></pre><p>新建一个my_obj对象，他只有一个name属性：</p>
-<pre><code>var my_obj = {name : &quot;Tim&quot;}
-</code></pre><p>some_boj的say()方法也适用于my_obj，因此我们希望将该方法当作my_obj自身的方法来调用。<code>使用say()函数中的对象方法call():</code></p>
-<pre><code>some_obj.say.call(my_obj,&quot;Dude&quot;)
-//&quot;Hi Dude, I am a Tim&quot;
-</code></pre><p>在此处调用方法时传入了两个参数：对象my_obj和字符串”Dude”，实际上是通过call的首参数修改了对象函数的this值。</p>
-<p>apply()与call()基本相同，不同之处是参数不同。apply的参数是通过一个数组来传递。</p>
-<pre><code>some_obj.say.call(my_obj,&quot;Dude&quot;)
-some_obj.say.apply(my_obj,[&quot;Dude&quot;])
-</code></pre><h4 id="arguments对象"><a href="#arguments对象" class="headerlink" title="arguments对象"></a>arguments对象</h4><p>尽管arguments看上去像一个数组，但实际上是一个类似数组的对象。它和数组相似是因为其中包含索引元素和length属性。但它没有sort()、slice()这样的数组方法。</p>
-<p>可以将arguments转换成数组，这样就可以使用数组方法了。</p>
-<pre><code>function f(){
-   //新建一个空数组[]，使用slice方法。
-   var args = [].slice.call(arguments);
-   return args.reverse(); 
-}
-f(1,2,3,4)
-//[4, 3, 2, 1]
-</code></pre><p><code>如何区分数组和arguments对象？</code>，使用Object对象的toString()方法，该方法会返回所创建对象的内部类名。</p>
-<pre><code>Object.prototype.toString.call({})
-&quot;[object Object]&quot;
-
-Object.prototype.toString.call([])
-&quot;[object Array]&quot;
-</code></pre><h4 id="String对象的一些方法"><a href="#String对象的一些方法" class="headerlink" title="String对象的一些方法"></a>String对象的一些方法</h4><pre><code>var s = new String(&quot;Couch potato&quot;);
-s.toUpperCase()
-//&quot;COUCH POTATO&quot;
-s.toLowerCase()
-//&quot;couch potato&quot;
-s.charAt(0) 返回指定位置的字符
-//&quot;C&quot;
-s.charAt(100)若指定位置并不存在，返回一个空字符串
-//&quot;&quot;
-s.indexOf(&quot;u&quot;)匹配字符串的索引，返回其索引值
-//2
-s.indexOf(&quot;o&quot;,2)指定一个参数，找到字符串中“第2个o”的索引
-//7
-s.toLowerCase().indexOf(&quot;couch&quot;) 
-//0 注意返回的索引值是0，说明字符串的匹配部分是从0处开始的，这可能会给if语句的使用带来混淆。当我们像下面这样使用if语句，就会将索引值0隐式地转换为false。
-if(s.toLowerCase().indexOf(&quot;couch&quot;) ){......}
-
-正确的做法：使用if语句检测一个字符串中是否包含另一个字符串时，可以用数字-1来做indexOf()结果的比较
-if(s.indexOf(&quot;Couch&quot;) !== -1){.....}
-</code></pre><p><br></p>
-<pre><code>s.slice(1,5)
-//&quot;ouch&quot;
-s.substring(1,5)
-//&quot;ouch&quot;
-</code></pre><p>slice()和substring（）方法都用于返回目标字符串中指定的区间：但区别在于对负值参数的处理。</p>
-<p>substring()方法将负值视为0，而slice()方法则会将它与字符串的长度相加</p>
-<pre><code>s.slice(1,-1)  //== slice(1,s.length-1)
-//&quot;ouch potat&quot;  
-s.substring(1,-1) //==substring(1,0)
-//&quot;C&quot;
-</code></pre><p>split() 根据传递的分隔字符串，将目标分割成一个数组。</p>
-<pre><code>var s = new String(&quot;Couch potato&quot;);
-s.split(&quot; &quot;)
-//[&quot;Couch&quot;, &quot;potato&quot;]
-</code></pre><p>join()将数组合并成字符串</p>
-<pre><code>s.split(&quot; &quot;).join(&quot; &quot;);
-//&quot;Couch potato&quot;
-</code></pre><p>concat()用于合并字符串，和+操作符相似</p>
-<pre><code>s.concat(&quot;es&quot;)
-//&quot;Couch potatoes&quot;
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">《JavaScript面向对象编程指南》</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/05/《JavaScript面向对象编程指南》阅读笔记-四/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/14/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/16/">Next &raquo;</a>
@@ -717,19 +633,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">《JavaScript面向对象编程指南》</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -741,6 +657,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图解HTTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">this</a>
               </li>
              
@@ -749,19 +669,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">图解HTTP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -777,7 +693,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
+                <a href="javascript:void(0)" class="js-tag color5">疯言疯语</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -785,7 +701,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">疯言疯语</a>
+                <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
               </li>
              
               <li class="article-tag-list-item">

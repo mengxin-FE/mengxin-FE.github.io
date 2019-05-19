@@ -141,6 +141,193 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-《JavaScript面向对象编程指南》阅读笔记-四" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/05/《JavaScript面向对象编程指南》阅读笔记-四/">《JavaScript面向对象编程指南》阅读笔记 四</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/05/《JavaScript面向对象编程指南》阅读笔记-四/" class="archive-article-date">
+  	<time datetime="2017-03-05T03:38:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://b363.photo.store.qq.com/psb?/V10qN6b63c9MK4/RhGHAXaca9BdFwDzM9yQ2mbIqh.ASZ65BlsEaWWCAkM!/b/dGsBAAAAAAAA&bo=qwYABQASgA0RKSk!&rf=viewer_4&t=5" width="100%" height="100%" align="center"></p>
+<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><h4 id="instanceof-操作符"><a href="#instanceof-操作符" class="headerlink" title="instanceof 操作符"></a>instanceof 操作符</h4><p>通过instanceof操作符可以测试一个对象是不是由某个指定的构造器函数所创建的。</p>
+<pre><code>function Hero(){};
+var h = new Hero();
+var o = {};
+h instanceof Hero;
+//true
+h instanceof Object;
+//true
+o instanceof Object;
+//true
+</code></pre><h4 id="传递对象"><a href="#传递对象" class="headerlink" title="传递对象"></a>传递对象</h4><p>当拷贝某个对象或将它传递给某个对象时，传递的是该对象的引用。因此，在引用上所做的任何改动，都会影响它所引用的原对象。</p>
+<pre><code>var original = {howmany:1};
+var mycopy = original;
+mycopy.howmany;
+//1
+mycopy.howmany = 100;
+original.howmany;
+//100
+</code></pre><h4 id="比较对象"><a href="#比较对象" class="headerlink" title="比较对象"></a>比较对象</h4><p>当对对象进行比较操作时，当且仅当两个引用都指向同一个对象时，结果为ture。如果是不同的对象，即使它们有相同的属性和方法，比较操作也会返回false。</p>
+<pre><code>var fido = {breed : &quot;dog&quot;};
+var benji = {breed : &quot;dog&quot; };
+
+fido === benji
+//false
+</code></pre><p>但是，新建一个变量并被其中一个赋值，该变量就会指向同一个对象，操作符会返回ture。</p>
+<pre><code>var mydog = benjil
+mydog === benji;
+//ture
+</code></pre><h4 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h4><p>Object是JavaScript中所有对象的父级对象，</p>
+<pre><code>var o = {};
+o.toString();
+//&quot;[object Object]&quot;
+
+空对象包含一些继承自Object的属性和方法    
+·o.constructor : 返回构造器函数的引用
+ .o.toString : 返回对象的描述字符串
+ .o.valueOf() : 返回对象的单值描述信息。
+</code></pre><h3 id="call-与apply"><a href="#call-与apply" class="headerlink" title="call()与apply()"></a>call()与apply()</h3><p>让一个对象去“借用”另一个对象的方法并为自己所用。</p>
+<p>定义一个some_obj对象，该对象中有一个say()方法：</p>
+<pre><code>var some_obj = {
+  name : &quot;Bob&quot;,
+  say : function(who){
+     return &quot;Hi &quot; + who + &quot;, I am a &quot; + this.name;
+  }
+}
+</code></pre><p>调用say()方法，并在其中使用this.name来访问其name属性</p>
+<pre><code>some_obj.say(&quot;Alice&quot;)
+//&quot;Hi Alice, I am a Bob&quot;
+</code></pre><p>新建一个my_obj对象，他只有一个name属性：</p>
+<pre><code>var my_obj = {name : &quot;Tim&quot;}
+</code></pre><p>some_boj的say()方法也适用于my_obj，因此我们希望将该方法当作my_obj自身的方法来调用。<code>使用say()函数中的对象方法call():</code></p>
+<pre><code>some_obj.say.call(my_obj,&quot;Dude&quot;)
+//&quot;Hi Dude, I am a Tim&quot;
+</code></pre><p>在此处调用方法时传入了两个参数：对象my_obj和字符串”Dude”，实际上是通过call的首参数修改了对象函数的this值。</p>
+<p>apply()与call()基本相同，不同之处是参数不同。apply的参数是通过一个数组来传递。</p>
+<pre><code>some_obj.say.call(my_obj,&quot;Dude&quot;)
+some_obj.say.apply(my_obj,[&quot;Dude&quot;])
+</code></pre><h4 id="arguments对象"><a href="#arguments对象" class="headerlink" title="arguments对象"></a>arguments对象</h4><p>尽管arguments看上去像一个数组，但实际上是一个类似数组的对象。它和数组相似是因为其中包含索引元素和length属性。但它没有sort()、slice()这样的数组方法。</p>
+<p>可以将arguments转换成数组，这样就可以使用数组方法了。</p>
+<pre><code>function f(){
+   //新建一个空数组[]，使用slice方法。
+   var args = [].slice.call(arguments);
+   return args.reverse(); 
+}
+f(1,2,3,4)
+//[4, 3, 2, 1]
+</code></pre><p><code>如何区分数组和arguments对象？</code>，使用Object对象的toString()方法，该方法会返回所创建对象的内部类名。</p>
+<pre><code>Object.prototype.toString.call({})
+&quot;[object Object]&quot;
+
+Object.prototype.toString.call([])
+&quot;[object Array]&quot;
+</code></pre><h4 id="String对象的一些方法"><a href="#String对象的一些方法" class="headerlink" title="String对象的一些方法"></a>String对象的一些方法</h4><pre><code>var s = new String(&quot;Couch potato&quot;);
+s.toUpperCase()
+//&quot;COUCH POTATO&quot;
+s.toLowerCase()
+//&quot;couch potato&quot;
+s.charAt(0) 返回指定位置的字符
+//&quot;C&quot;
+s.charAt(100)若指定位置并不存在，返回一个空字符串
+//&quot;&quot;
+s.indexOf(&quot;u&quot;)匹配字符串的索引，返回其索引值
+//2
+s.indexOf(&quot;o&quot;,2)指定一个参数，找到字符串中“第2个o”的索引
+//7
+s.toLowerCase().indexOf(&quot;couch&quot;) 
+//0 注意返回的索引值是0，说明字符串的匹配部分是从0处开始的，这可能会给if语句的使用带来混淆。当我们像下面这样使用if语句，就会将索引值0隐式地转换为false。
+if(s.toLowerCase().indexOf(&quot;couch&quot;) ){......}
+
+正确的做法：使用if语句检测一个字符串中是否包含另一个字符串时，可以用数字-1来做indexOf()结果的比较
+if(s.indexOf(&quot;Couch&quot;) !== -1){.....}
+</code></pre><p><br></p>
+<pre><code>s.slice(1,5)
+//&quot;ouch&quot;
+s.substring(1,5)
+//&quot;ouch&quot;
+</code></pre><p>slice()和substring（）方法都用于返回目标字符串中指定的区间：但区别在于对负值参数的处理。</p>
+<p>substring()方法将负值视为0，而slice()方法则会将它与字符串的长度相加</p>
+<pre><code>s.slice(1,-1)  //== slice(1,s.length-1)
+//&quot;ouch potat&quot;  
+s.substring(1,-1) //==substring(1,0)
+//&quot;C&quot;
+</code></pre><p>split() 根据传递的分隔字符串，将目标分割成一个数组。</p>
+<pre><code>var s = new String(&quot;Couch potato&quot;);
+s.split(&quot; &quot;)
+//[&quot;Couch&quot;, &quot;potato&quot;]
+</code></pre><p>join()将数组合并成字符串</p>
+<pre><code>s.split(&quot; &quot;).join(&quot; &quot;);
+//&quot;Couch potato&quot;
+</code></pre><p>concat()用于合并字符串，和+操作符相似</p>
+<pre><code>s.concat(&quot;es&quot;)
+//&quot;Couch potatoes&quot;
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">《JavaScript面向对象编程指南》</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/03/05/《JavaScript面向对象编程指南》阅读笔记-四/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-《JavaScript面向对象编程指南》阅读笔记-三" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -911,281 +1098,6 @@ aside[role=&quot;complementary&quot;] {
 
 
   
-    <article id="post-《JavaScript面向对象编程指南》阅读笔记-二" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/18/《JavaScript面向对象编程指南》阅读笔记-二/">《JavaScript面向对象编程指南》阅读笔记-二</a>
-    </h1>
-  
-
-        
-        <a href="/2017/02/18/《JavaScript面向对象编程指南》阅读笔记-二/" class="archive-article-date">
-  	<time datetime="2017-02-18T11:47:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://a2.qpic.cn/psb?/V10qN6b63c9MK4/Guh7q37W1B8jvkNIAw12upUHC4DYebyBhQCK0VGaR1s!/b/dAoAAAAAAAAA&bo=VQOAAkAGsAQFAAU!&rf=viewer_4&t=5" width="100%" height="100%" alt="图片名称" align="center"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<h2 id="基本数据类型、数组、循环及条件表达式"><a href="#基本数据类型、数组、循环及条件表达式" class="headerlink" title="基本数据类型、数组、循环及条件表达式"></a>基本数据类型、数组、循环及条件表达式</h2><h4 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h4><ul>
-<li>Number 数字</li>
-<li>Boolean 布尔值 包括turn和false</li>
-<li>String 字符串</li>
-<li>Null 只包含一个值null，null通常是指没有值或空值，不代表任何东西。null与underfined最大的区别在于:被赋为null的变量通常是被认为已经定义了的。</li>
-<li>Underfined 当访问不存在的变量时会返回这个值，此外，已声明却未赋值的变量也会如此。</li>
-</ul>
-<h4 id="查看类型操作符-typeof"><a href="#查看类型操作符-typeof" class="headerlink" title="查看类型操作符 typeof"></a>查看类型操作符 typeof</h4><p>typeof可以查看变量或值的类型，该操作符会返回代表数据类型的字符串，结果有：number、boolean、string、undefined、object、function</p>
-<pre><code>var n =1;
-typeof n;
-//&quot;number&quot;
-</code></pre><h3 id="Infinity"><a href="#Infinity" class="headerlink" title="Infinity"></a>Infinity</h3><p>在javascript中这是一个特殊值，代表超出javascript处理范围的数值。它仍是一个数字。</p>
-<pre><code>typeof Infinity;
-//&quot;number&quot;
-</code></pre><p>任何数除以0也等于Infinity</p>
-<pre><code>var a = 6 / 0;
-a;
-//Infinity
-
-Infinity -  Infinity
-//NaN
-</code></pre><p>Infinity与其他操作数执行算术运算的结果都是Infinity</p>
-<pre><code>Infinity - 20;
-//Infinity
-</code></pre><h3 id="NaN-仍是数字类型"><a href="#NaN-仍是数字类型" class="headerlink" title="NaN 仍是数字类型"></a>NaN 仍是数字类型</h3><pre><code>typeof NaN
-//&quot;number&quot;
-</code></pre><p>在算术运算中使用不恰当的操作数导致运算失败，就会返回NaN</p>
-<pre><code>var a = 10 * f;
-a
-//NaN
-</code></pre><h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>一对双引号或单引号之间的任何值都会视为字符串</p>
-<pre><code>var s = &quot;1&quot;;
-typeof s;
-//&quot;string&quot;
-</code></pre><p>字符串+拼接</p>
-<pre><code>var s1 =&quot;web&quot;;
-var s2 =&quot;site&quot;;
-var s3= s1+s2;
-s3;
-//website
-typeof s3
-//&quot;string&quot;
-</code></pre><h5 id="将一个数字字符串用于算术运算中，该字符串会在运算中被当做数字类型"><a href="#将一个数字字符串用于算术运算中，该字符串会在运算中被当做数字类型" class="headerlink" title="将一个数字字符串用于算术运算中，该字符串会在运算中被当做数字类型"></a>将一个数字字符串用于算术运算中，该字符串会在运算中被当做数字类型</h5><pre><code>var s = &quot;1&quot;;
-var s = 3 * s;
-s
-//3
-typeof s;
-//&quot;number&quot;
-
-var a = &quot;1&quot;;
-a++;
-a
-//2
-typeof a
-//&quot;number&quot;
-</code></pre><h5 id="数字字符串转换为数字的偷懒办法，将它乘以1。（最好的办法是调用parseInt-函数）"><a href="#数字字符串转换为数字的偷懒办法，将它乘以1。（最好的办法是调用parseInt-函数）" class="headerlink" title="数字字符串转换为数字的偷懒办法，将它乘以1。（最好的办法是调用parseInt()函数）"></a>数字字符串转换为数字的偷懒办法，将它乘以1。（最好的办法是调用parseInt()函数）</h5><pre><code>var s =&quot;100&quot;;
-typeof s;
-//&quot;string&quot;
-s = s * 1;
-//100
-typeof s;
-//&quot;number&quot;
-</code></pre><p>转换失败，会得到NaN。上述提过，运算失败会返回Nan</p>
-<pre><code>var moive = &quot;101 delmatians&quot;;
-move * 1;
-NaN
-</code></pre><h5 id="其他类型转换为字符串的偷懒办法，与空字符串相加"><a href="#其他类型转换为字符串的偷懒办法，与空字符串相加" class="headerlink" title="其他类型转换为字符串的偷懒办法，与空字符串相加"></a>其他类型转换为字符串的偷懒办法，与空字符串相加</h5><pre><code>var n =1;
-typeof n;
-//&quot;number&quot;
-n = n + &quot;&quot;;
-//&quot;1&quot;
-typeof n
-//&quot;string&quot;
-</code></pre><h3 id="布尔值-ture和false"><a href="#布尔值-ture和false" class="headerlink" title="布尔值 ture和false"></a>布尔值 ture和false</h3><p>三种逻辑运算符，都属于布尔运算。  &amp;&amp; || ！</p>
-<p>理解各种类型的值转换为相应布尔值的规则非常重要。除了下面特定的值（将转换为false）,其他的大部分值在转换为布尔值时都为ture</p>
-<ul>
-<li>空字符串””</li>
-<li>null</li>
-<li>underfined</li>
-<li>数字0</li>
-<li>数字NaN</li>
-<li>布尔值false</li>
-</ul>
-<p>这6个值有时称为falsy值，而其他值称为truthy值（包括字符串”0”，”false”）</p>
-<pre><code>ture &amp;&amp; ture &amp;&amp; false &amp;&amp; false;
-//false
-
-false || ture || false;
-//ture
-
-false &amp;&amp; false || ture &amp;&amp; ture;
-//ture
-</code></pre><p>逻辑运算，！的优先级最高，其次是&amp;&amp;，最后是||</p>
-<pre><code>flase &amp;&amp; false || ture &amp;&amp; ture;
-//ture
-
-与下面等效:
-(false &amp;&amp; false) || (ture &amp;&amp; ture);
-</code></pre><h5 id="惰性求值-在一个连续的逻辑操作中，操作结果在最后一个操作完成之前就已经明确了的话，那么该操往往就不必再继续执行了"><a href="#惰性求值-在一个连续的逻辑操作中，操作结果在最后一个操作完成之前就已经明确了的话，那么该操往往就不必再继续执行了" class="headerlink" title="惰性求值 在一个连续的逻辑操作中，操作结果在最后一个操作完成之前就已经明确了的话，那么该操往往就不必再继续执行了"></a>惰性求值 在一个连续的逻辑操作中，操作结果在最后一个操作完成之前就已经明确了的话，那么该操往往就不必再继续执行了</h5><pre><code>ture || false || ture || false || ture;
-//ture
-</code></pre><h5 id="JavaScript引擎在一个逻辑表达式遇到一个非布尔类型的操作数，那么该操作数的值就会成为该表达式所返回的结果。通常这种情况应该尽量避免，它会降低代码可读性。"><a href="#JavaScript引擎在一个逻辑表达式遇到一个非布尔类型的操作数，那么该操作数的值就会成为该表达式所返回的结果。通常这种情况应该尽量避免，它会降低代码可读性。" class="headerlink" title="JavaScript引擎在一个逻辑表达式遇到一个非布尔类型的操作数，那么该操作数的值就会成为该表达式所返回的结果。通常这种情况应该尽量避免，它会降低代码可读性。"></a>JavaScript引擎在一个逻辑表达式遇到一个非布尔类型的操作数，那么该操作数的值就会成为该表达式所返回的结果。通常这种情况应该尽量避免，它会降低代码可读性。</h5><pre><code>ture || &quot;something&quot;
-//ture
-true &amp;&amp; &quot;something&quot;
-//something
-true &amp;&amp; something &amp;&amp; true
-//true
-</code></pre><h3 id="undefined-与null"><a href="#undefined-与null" class="headerlink" title="undefined 与null"></a>undefined 与null</h3><pre><code>var i = 1 + undefined;
-i;
-//NaN
-
-var i = 1 + null;
-i;
-//1
-</code></pre><p>null和undefined在被转换为其他基本类型时，方法存在一定的区别。</p>
-<ul>
-<li><p>转换成数字：</p>
-<pre><code>1 * undefined；
-//NaN
-
-1 * null；
-//0
-</code></pre></li>
-<li><p>转换成布尔值</p>
-<pre><code>!!undefined
-//false
-
-!!null;
-//false
-</code></pre></li>
-<li><p>转换成字符串</p>
-<pre><code>&quot;value:&quot; + null;
-//&quot;value:null&quot;
-
-&quot;value:&quot; + undefined;
-//&quot;value:undefined&quot;
-</code></pre></li>
-</ul>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><pre><code>声明数组
-var a = [];
-var a = [1,2,3]
-a[0];
-//1
-
-修改数组
-a[2] = &quot;three&quot;;
-//[0,1,&quot;three&quot;]
-a[3] = &quot;four&quot;
-//[0,1,&quot;three&quot;,&quot;four&quot;]
-
-如果新元素被添加的位置与原数组末端之间存在一定间隔，那么之间的元素将会设置为undefined值
-var a = [1,2,3];
-a[5] = &quot;new&quot;;
-[1,2,3,undefined,undefined,&quot;new&quot;]
-
-删除元素，使用delete操作符，但仅仅是元素被删除的位置留空，数组长度不变。
-var a = [1,2,3];
-delete a[0];
-ture;
-a
-//[undefined × 1, 2, 3]
-
-var a = [[1,2,3],[4,5,6]];
-a;
-//[Array[3], Array[3]]
-a[0]
-//[1,2,3]
-访问内层数组的元素
-a[0][0];
-//1
-</code></pre><p>注意：可以通过数组这种访问方式来获取字符串中特定位置上的字符</p>
-<pre><code>var a = &quot;one&quot;;
-a[0];
-//o
-a[1];
-//n    
-a[2]
-//e
-</code></pre><h5 id="检查变量是否存在-使用typeof"><a href="#检查变量是否存在-使用typeof" class="headerlink" title="检查变量是否存在  使用typeof"></a>检查变量是否存在  使用typeof</h5><pre><code>var result =&quot;&quot;;
-if (somevar){
-    result = &quot;yes&quot;;
-}
-result
-//&quot;&quot;
-就算if(somevar)返回的是false，也并不意味着somevar就未定义，它也可以是一种被初始化为falsy值(如false或0)
-因此在检查变量是否存在时应使用typeof
-var result =&quot;&quot;;
-if(typeof somevar !== &quot;undefined&quot;){
-    result = &quot;yes&quot;;
-}
-result
-//&quot;&quot;
-</code></pre><p>三元操作符</p>
-<pre><code>var a = 1;
-var result = &quot;&quot;;
-if(a === 1){
-    result = &quot;a is one&quot;;
-}else{
-    result = &quot;a is not one&quot;;
-}
-</code></pre><p>简化为：<br>    var a = 1;<br>    var result = (a === 1) ? “a is one” : “a is not one”;</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">《JavaScript面向对象编程指南》</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/02/18/《JavaScript面向对象编程指南》阅读笔记-二/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/15/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/17/">Next &raquo;</a>
@@ -1304,19 +1216,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">《JavaScript面向对象编程指南》</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1328,6 +1240,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图解HTTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">this</a>
               </li>
              
@@ -1336,19 +1252,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">图解HTTP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1364,7 +1276,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
+                <a href="javascript:void(0)" class="js-tag color5">疯言疯语</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1372,7 +1284,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">疯言疯语</a>
+                <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
               </li>
              
               <li class="article-tag-list-item">

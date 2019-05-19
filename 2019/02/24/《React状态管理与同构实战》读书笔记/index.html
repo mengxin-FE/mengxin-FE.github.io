@@ -17,7 +17,7 @@
 <meta property="og:description" content="著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。 传统模式下的多个页面被抽象成一个个视图，原来的页面跳转由js负责切换视图，原来向后端请求整个页面，现在变成向后端请求数据接口。 但这种方式的问题在于如何到达其他页面？为了实现传统URL的特点，需要在前端模拟一套路由，有了路由即可通过URL直接进入某个视图。——React Router 我们可以将界">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551612229017&di=6acbb56e00836975626351208aee5780&imgtype=0&src=http%3A%2F%2Fpic1.zhimg.com%2Fv2-46509713ee9311cbdc9276253faf9e6a_1200x500.jpg">
-<meta property="og:updated_time" content="2019-03-12T14:59:53.059Z">
+<meta property="og:updated_time" content="2019-03-23T09:52:24.579Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《React状态管理与同构实战》读书笔记">
 <meta name="twitter:description" content="著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。 传统模式下的多个页面被抽象成一个个视图，原来的页面跳转由js负责切换视图，原来向后端请求整个页面，现在变成向后端请求数据接口。 但这种方式的问题在于如何到达其他页面？为了实现传统URL的特点，需要在前端模拟一套路由，有了路由即可通过URL直接进入某个视图。——React Router 我们可以将界">
@@ -268,7 +268,16 @@
 <p>在Redux应用中，需要创建一个store，用来存放应用中必要的state。store有getState，dispatch，subscribe，replaceReducer等几个方法。</p>
 <p>getState用来返回应用当前的页面数据状态，dispatch用来派发action，这是引起页面数据状态更新的唯一途径，它引发reducer函数，根据action处理当前的状态。dispatch的返回值为相关action，而action是描述应用变化的js对象，必须含有有效的type属性。</p>
 <h5 id="react-redux-库"><a href="#react-redux-库" class="headerlink" title="react-redux 库"></a>react-redux 库</h5><p>它避免了在代码中直接使用store.subscribe ，store.getState，对这些方法进行了封装和增强，对React 和 Redux进行了连接。</p>
-
+<h3 id="工程"><a href="#工程" class="headerlink" title="工程"></a>工程</h3><p>一个良好，清晰的项目目录至关重要。在主目录下，./public 文件夹用于存放HTML页面， ./node_modules 是所有依赖包的目录，而所有react 和 Redux业务相关内容存放在 ./src 文件夹中。</p>
+<p>按照Redux的功能区块进行划分，src目录中还可以分为 </p>
+<ul>
+<li>./actions : 维护应用中所有action</li>
+<li>./components : 维护应用中的展示组件</li>
+<li>./containers : 维护应用中的容器组件</li>
+<li>./reducers : 定义reducer函数</li>
+<li>Index.js 入口文件</li>
+</ul>
+<h3 id="对页面进行组件划分（展示组件和容器组件），"><a href="#对页面进行组件划分（展示组件和容器组件），" class="headerlink" title="对页面进行组件划分（展示组件和容器组件），"></a>对页面进行组件划分（展示组件和容器组件），</h3><h3 id="确定组件的数据来源（props-和-state），"><a href="#确定组件的数据来源（props-和-state），" class="headerlink" title="确定组件的数据来源（props 和 state），"></a>确定组件的数据来源（props 和 state），</h3><h3 id="确定应用数据状态（默认数状态，正在请求数据，更新作废数据，数据格式，更新时机）。"><a href="#确定应用数据状态（默认数状态，正在请求数据，更新作废数据，数据格式，更新时机）。" class="headerlink" title="确定应用数据状态（默认数状态，正在请求数据，更新作废数据，数据格式，更新时机）。"></a>确定应用数据状态（默认数状态，正在请求数据，更新作废数据，数据格式，更新时机）。</h3><h3 id="确定数据如何在组件之间流转-——组件之间的数据依赖关系"><a href="#确定数据如何在组件之间流转-——组件之间的数据依赖关系" class="headerlink" title="确定数据如何在组件之间流转 ——组件之间的数据依赖关系"></a>确定数据如何在组件之间流转 ——组件之间的数据依赖关系</h3><h3 id="确定业务中需要的action及对应的reducer，reducer根据action值改变数据状态，组件获得新的props数据后利用该数据进行相应渲染更新。"><a href="#确定业务中需要的action及对应的reducer，reducer根据action值改变数据状态，组件获得新的props数据后利用该数据进行相应渲染更新。" class="headerlink" title="确定业务中需要的action及对应的reducer，reducer根据action值改变数据状态，组件获得新的props数据后利用该数据进行相应渲染更新。"></a>确定业务中需要的action及对应的reducer，reducer根据action值改变数据状态，组件获得新的props数据后利用该数据进行相应渲染更新。</h3>
       
 
       
@@ -540,19 +549,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">《JavaScript面向对象编程指南》</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">《JavaScript设计模式与开发实践》</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -564,6 +573,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图解HTTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">this</a>
               </li>
              
@@ -572,19 +585,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">图解HTTP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -600,7 +609,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
+                <a href="javascript:void(0)" class="js-tag color5">疯言疯语</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -608,7 +617,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">疯言疯语</a>
+                <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
               </li>
              
               <li class="article-tag-list-item">
