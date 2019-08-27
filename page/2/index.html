@@ -141,448 +141,178 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-《React状态管理与同构实战》读书笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-Promise-与-Async" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/24/《React状态管理与同构实战》读书笔记/">《React状态管理与同构实战》读书笔记</a>
+      <a class="article-title" href="/2019/08/27/Promise-与-Async/">Promise 与 Async</a>
     </h1>
   
 
         
-        <a href="/2019/02/24/《React状态管理与同构实战》读书笔记/" class="archive-article-date">
-  	<time datetime="2019-02-24T08:47:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-24</time>
+        <a href="/2019/08/27/Promise-与-Async/" class="archive-article-date">
+  	<time datetime="2019-08-27T14:33:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551612229017&di=6acbb56e00836975626351208aee5780&imgtype=0&src=http%3A%2F%2Fpic1.zhimg.com%2Fv2-46509713ee9311cbdc9276253faf9e6a_1200x500.jpg" width="100%"></p>
-<p>著作权归该书作者所有。本读书笔记仅供个人记录学习使用，如若侵权，请通知到我，我将立即删除全部内容。</p>
-<p>传统模式下的多个页面被抽象成一个个视图，原来的页面跳转由js负责切换视图，原来向后端请求整个页面，现在变成向后端请求数据接口。</p>
-<p>但这种方式的问题在于如何到达其他页面？为了实现传统URL的特点，需要在前端模拟一套路由，有了路由即可通过URL直接进入某个视图。——React Router</p>
-<p>我们可以将界面和数据与对数据操作进行分离，即Redux。</p>
-<p>组件是React的核心，组件有输入，自己的状态，输出。</p>
+        <p>JavaScript 异步方式共有有下面六种。</p>
 <ul>
-<li>输入即props</li>
-<li>状态即state</li>
-<li>输出即render函数的返回值。</li>
+<li>事件监听</li>
+<li>回调函数</li>
+<li>发布/订阅</li>
+<li>Promise</li>
+<li>generator 生成器</li>
+<li>async/await</li>
 </ul>
-<h4 id="创建组建的几种方式和区别"><a href="#创建组建的几种方式和区别" class="headerlink" title="创建组建的几种方式和区别"></a>创建组建的几种方式和区别</h4><p>有些组件有自身状态；有些则没有，被称为无状态组件，也可以写成functional component 函数式组件，函数式组件就是一个普通函数，其参数是一个对象，在被调用时就是传入的props，推荐配合函数参数解构使用。</p>
-<p>如果组件是纯组件，应该使用purecomponent。</p>
-<p>传统web架构中无法直接引用HTML，而React能够很轻松的开发组件，在开发时将页面划分为若干个组件逐个开发，每个组件包含逻辑和样式。</p>
-<h4 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h4><ul>
-<li>挂载</li>
-<li>更新</li>
-<li>卸载</li>
-</ul>
-<h4 id="组件的属性和状态"><a href="#组件的属性和状态" class="headerlink" title="组件的属性和状态"></a>组件的属性和状态</h4><p>组件根据不同的输入会有不同的输出。</p>
-<h5 id="属性-props"><a href="#属性-props" class="headerlink" title="属性 props"></a>属性 props</h5><ul>
-<li>组件的输入被抽象为属性，使用组件时可以传入一些属性。属性只可读不能修改</li>
-<li>组件的属性应该有默认值</li>
-<li>组件的属性值应该校验</li>
-</ul>
-<h5 id="状态-state"><a href="#状态-state" class="headerlink" title="状态 state"></a>状态 state</h5><ul>
-<li><p>组件需要记录自身的变化，被抽象为状态。例如下拉菜单是否展开就是自身的状态。</p>
-</li>
-<li><p>存储在state中，通过this.state读取</p>
-</li>
-<li><p>组件在初始化时可以赋予默认值</p>
-</li>
-<li><p>更新state使用setState，它是异步的，当setState执行完成时会自动更新界面</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用setState实现每秒自增的时钟</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Clock</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    state = &#123;</span><br><span class="line">        time : <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    componentDidMount () &#123;</span><br><span class="line">        <span class="keyword">this</span>.id = setInterval( <span class="function"><span class="params">()</span> =&gt;</span></span><br><span class="line">        	 <span class="keyword">this</span>.setState( &#123; <span class="attr">time</span>:<span class="keyword">this</span>.state0 + <span class="number">1</span> &#125; ) </span><br><span class="line">        , <span class="number">1000</span> );</span><br><span class="line">    &#125;</span><br><span class="line">    componentWillMount () &#123;</span><br><span class="line">		clearInterval( <span class="keyword">this</span>.id )</span><br><span class="line">    &#125;</span><br><span class="line">    render () &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;this.state.time&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><p>三种状态：</p>
 <ul>
-<li><p>setState第二个参数是函数，该函数会在state更新后被调用</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Clock</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    state : &#123; <span class="attr">time</span> : <span class="number">1</span> &#125;</span><br><span class="line">    componentDidMount () &#123;</span><br><span class="line">        <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">            time : <span class="keyword">this</span>.state.time + <span class="number">1</span> </span><br><span class="line">        &#125;,</span><br><span class="line">        () =&gt; &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.time)</span><br><span class="line">        &#125;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>不要在render中使用setState，因为setState会触发render，导致死循环。</p>
-</li>
-<li>不影响UI变化的数据不需要放到state</li>
+<li>pending 进行中</li>
+<li>fulfilled   成功</li>
+<li>rejected  失败</li>
 </ul>
-<h4 id="组件与事件"><a href="#组件与事件" class="headerlink" title="组件与事件"></a>组件与事件</h4><ul>
-<li>react中的事件名称是驼峰式，如 onclick </li>
-<li>事件处理器是函数</li>
-</ul>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    onClick ()&#123;</span><br><span class="line">        <span class="built_in">console</span>.log( <span class="string">'我被点击了 '</span> )</span><br><span class="line">    &#125;</span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span> = <span class="string">&#123;</span> <span class="attr">this.onClick.bind</span>(<span class="attr">this</span>) &gt;</span>点击<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h4><h5 id="父子组件"><a href="#父子组件" class="headerlink" title="父子组件"></a>父子组件</h5><ul>
-<li>父组件向子组件传递消息：初始化时传递参数或实例化时调用方法</li>
-<li>子组件向父组件传递消息：通过回调函数或为子组件部署消息接口。部署消息接口需要一个可以发布和订阅消息的基类，子组件继承消息基类就有了发布消息的能力，然后父组件订阅子组件的消息，即可实现子组件向父组件传递消息的功能。</li>
-</ul>
-<h5 id="状态管理工具"><a href="#状态管理工具" class="headerlink" title="状态管理工具"></a>状态管理工具</h5><p>通过它把组件之间的关系和关系的处理逻辑从组件中抽象出来，并集中化到统一的地方离开处理——Redux</p>
-<h4 id="组件的抽象与复用"><a href="#组件的抽象与复用" class="headerlink" title="组件的抽象与复用"></a>组件的抽象与复用</h4><ul>
-<li>组件应该值通过属性输入，避免使用context，避免读取全局变量，I/O</li>
-<li>组件的属性应该有默认值，应该使用简单值便于维护</li>
-<li>组件考虑边界异常情况，做好属性的类型验证</li>
-<li>组件应该通用，不限制使用环境</li>
-<li>组件有一部分功能是一样的，可以抽象为一个父类，然后继承。</li>
-<li>组合组件 mixin</li>
-<li>高阶组件，接收组件并返回新组件。实现方法为调用传入的组件或继承传入的组件。一般只在传入组件的外围进行一些操作时使用调用；如果向在传入组件的内部进行一些操作则使用继承法。</li>
-</ul>
-<h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h4><p>传统web开发是基于命令式和DOM编程，而React把UI抽象为组件和状态，大部分情况都不需要命令式和DOM，但偶尔需要也提供了操作原生DOM的方法。</p>
+<p>特点：</p>
 <ul>
-<li>ref</li>
-<li>findDOMNode</li>
-<li>dangerouslySetInnerHTML</li>
+<li><p>一旦新建它就会立即执行，无法中途取消。</p>
+</li>
+<li><p>如果不设置回调函数，<code>Promise</code>内部抛出的错误，不会反应到外部。</p>
+</li>
 </ul>
-<h3 id="Redux应用架构"><a href="#Redux应用架构" class="headerlink" title="Redux应用架构"></a>Redux应用架构</h3><p>Redux是一个可预测的状态的容器，只关注全局状态的管理，为实现对数据状态的管理封装提供了不同的方法，并规定了进行管理的模式，使得数据状态变得可预测，可追溯。</p>
-<p>Redux追求单一数据源，所有的状态数据都存储在store中，状态数据时只读的，当页面需要作出改变时，这个改变由action描述，并被开发者dispatch派发，然后该action被相应的reducer作为参数获取，并根据现有的页面状态数据树产生一颗新的树。当页面中各个组件根据新树抽取出自己需要的状态进行更新，并触发重新渲染，就得到我们预期的页面。</p>
-<p>页面数据状态树被存储为一个js对象，这棵页面状态数据树会随着用户的操作或异步数据到达而发生变化。这样的设计理念让我们的关注点变得简单直接。因为页面的展现内容依赖各个组件的状态数据，而状态数据存储在一个js对象中，因此我们只需要关注该对象，</p>
-<p>页面状态数据树是只读的，当页面需要新的数据状态时再生成一颗全新的状态数据树。</p>
-<p>当页面需要展现新的数据状态时，需要dispatch（派发）一个action（动作）即可，action也是js对象，包含了该动作变化的所有信息，使用reducer函数来接收action（reducer接收当前页面数据状态prevState 和 被派发的action）返回一个新的js对象，并执行页面状态数据树的变更。</p>
-<p>即：( previousState , action  ) =&gt; newState</p>
-<p>reducer必须是纯函数，纯函数的返回值只依赖其参数，不存在副作用（调用I/O，发送网络请求，在函数体内修改外部变量的值，调用存在副作用的函数等）reducer接收当前页面状态数据树和action，在不改变当前页面的状态数据树的原则下，返回一颗全新的页面状态数据树，并且这颗新的树完全可以通过旧的推测得到。这样的设计理念使得维护变得更轻松，出现任何问题一定是组件接收了不正确的state，而该state的产生出自reducer，首先确定reducer接收到的action是否正确…….这就是可预测性，可追溯性的体现。</p>
-<h5 id="store"><a href="#store" class="headerlink" title="store"></a>store</h5><p>Redux之本，可预测状态的容器，保存着整个页面状态数据树。其实是js对象，包含了若干方法。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">store = &#123;</span><br><span class="line">    dispatch,	<span class="comment">// 派发action</span></span><br><span class="line">    getState,	<span class="comment">// 获取当前页面数据状态树，即store中的state</span></span><br><span class="line">    subscribe,	<span class="comment">// 订阅页面数据状态，即store中的state的变化</span></span><br><span class="line">    replaceReducer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="action"><a href="#action" class="headerlink" title="action"></a>action</h5><p>描述状态变更的信息，由store.dispatch派发。其实也是js对象，Redux规定action对象拥有一个type属性作为描述该action的名称。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> action1 = &#123;</span><br><span class="line">    type = <span class="string">'read_books'</span> , </span><br><span class="line">    data : &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="dispatch"><a href="#dispatch" class="headerlink" title="dispatch"></a>dispatch</h5><p>store.dispatch方法负责派发action，这个action作为dispatch方法的参数。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">store.dispatch(action1)</span><br></pre></td></tr></table></figure>
-<h5 id="reducer"><a href="#reducer" class="headerlink" title="reducer"></a>reducer</h5><p>action只是描述变化，并携带这种变化的数据，真正执行变化并产生数据状态的时候reducer方法。必须是纯函数。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> updateStateTree = <span class="function"><span class="keyword">function</span> (<span class="params"> previousState = &#123;&#125; , action </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> ( action.type )&#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'action1'</span>:</span><br><span class="line">        	<span class="keyword">return</span> newState1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当无法匹配action时，默认返回原previousState参数，previousState设置了默认值代表初始状态。</p>
-<p>当通过Redux的createStore方法创建了store实例后，使用store.dispatch派发一个描述变化的action（该action需要开发者根据业务编写），reducer函数执行处理变化和更新数据（reducer也需要开发者编写）当页面数据状态得以更新时，store.subscribe( callbackFunction ) 方法订阅数据的更新，并由callbackFunction完成UI更新。</p>
-<h5 id="redux是独立的，可以和其他框架一起使用"><a href="#redux是独立的，可以和其他框架一起使用" class="headerlink" title="redux是独立的，可以和其他框架一起使用"></a>redux是独立的，可以和其他框架一起使用</h5><p>当创建一个store时，需要编写reducer函数来进行页面数据状态的变更，reducer负责根据相应的action 和 previousState 推算出最新的状态数据，且reducer必须保持纯函数特性。</p>
-<h5 id="Redux有点像发布订阅系统，但并不完全是。"><a href="#Redux有点像发布订阅系统，但并不完全是。" class="headerlink" title="Redux有点像发布订阅系统，但并不完全是。"></a>Redux有点像发布订阅系统，但并不完全是。</h5><p>为了自动触发页面更新，需要使用store.subscribe方法注册每一次数据更新后的回调逻辑，这种回调逻辑一般是对页面的渲染，也就是react需要衔接的部分。该方法接收一个响应函数作为参数，该函数会在每次派发action并更新完状态后调用，使用store.getState()获取最新数据，完成正确的页面响应。</p>
-<p>正是因为有了store.subscribe ，store数据更新后可以直接触发相关组件重新渲染。</p>
-<h5 id="函数式编程之不可变性和共享"><a href="#函数式编程之不可变性和共享" class="headerlink" title="函数式编程之不可变性和共享"></a>函数式编程之不可变性和共享</h5><p>保证数据的不可变性好处在于可回溯，副作用少。而js的引用类型即共享内存空间，我们需要注意它们的作用域。</p>
-<p>在Redux中保持不可变性——reducer在更新过程中，不直接更改原有对象，而是创建一个新的对象用来承载新的数据。亦可使用immutable.js 不可变的数据操作类库。</p>
-<h3 id="Redux-中间件和异步"><a href="#Redux-中间件和异步" class="headerlink" title="Redux 中间件和异步"></a>Redux 中间件和异步</h3><p>使得可以在派发action和执行reducer这两步<strong>之间</strong>进行更多的操作，例如日志记录，调用异步接口等。</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个应用了中间件的store</span></span><br><span class="line"><span class="keyword">const</span> store = createStore( reducer , preloadedState , applyMiddleware(middleware) );</span><br><span class="line"><span class="comment">// applyMiddleware(middleware)即接入中间件</span></span><br></pre></td></tr></table></figure>
-<p>Redux-logger</p>
-<p>Redux-thunk 解决异步场景，使得dispatch可以接收一个函数作为参数，在函数体内进行异步操作，并在异步完成后再派发action。</p>
-<h5 id="Redux架构回顾"><a href="#Redux架构回顾" class="headerlink" title="Redux架构回顾"></a>Redux架构回顾</h5><ul>
-<li>确定所需的状态数据</li>
-<li>根据交互和业务需求，分析确定action</li>
-<li>根据不同的action，完成reducer函数的编写</li>
-<li>根据reducer等创建store</li>
-<li>订阅数据更新，完成视图渲染</li>
-</ul>
-<p>在Redux应用中，需要创建一个store，用来存放应用中必要的state。store有getState，dispatch，subscribe，replaceReducer等几个方法。</p>
-<p>getState用来返回应用当前的页面数据状态，dispatch用来派发action，这是引起页面数据状态更新的唯一途径，它引发reducer函数，根据action处理当前的状态。dispatch的返回值为相关action，而action是描述应用变化的js对象，必须含有有效的type属性。</p>
-<h5 id="react-redux-库"><a href="#react-redux-库" class="headerlink" title="react-redux 库"></a>react-redux 库</h5><p>它避免了在代码中直接使用store.subscribe ，store.getState，对这些方法进行了封装和增强，对React 和 Redux进行了连接。</p>
-<h3 id="工程"><a href="#工程" class="headerlink" title="工程"></a>工程</h3><p>一个良好，清晰的项目目录至关重要。在主目录下，./public 文件夹用于存放HTML页面， ./node_modules 是所有依赖包的目录，而所有react 和 Redux业务相关内容存放在 ./src 文件夹中。</p>
-<p>按照Redux的功能区块进行划分，src目录中还可以分为 </p>
+<p>先new生成</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Promise'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="comment">/* 异步操作成功 */</span>)&#123;</span><br><span class="line">    resolve(value);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    reject(error);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Promise构造函数接收函数参数。函数的两个入参分别是<code>resolve</code>和<code>reject</code>。它们是两个函数，由 JavaScript 引擎提供，不用自己部署。</p>
+<p><code>resolve</code>函数的作用是，将<code>Promise</code>对象的状态从“未完成”变为“成功”（即从 pending 变为 resolved），在异步操作成功时调用，并将异步操作的结果，作为参数传递出去；<code>reject</code>函数的作用是，将<code>Promise</code>对象的状态从“未完成”变为“失败”（即从 pending 变为 rejected），在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去。</p>
+<p><code>Promise</code>实例生成以后，可以用<code>then</code>方法分别指定<code>resolved</code>状态和<code>rejected</code>状态的回调函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">promise.then(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// success</span></span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// failure</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>then</code>方法接受两个回调函数作为参数。第一个回调函数是<code>Promise</code>对象的状态变为<code>resolved</code>时调用，第二个回调函数是<code>Promise</code>对象的状态变为<code>rejected</code>时调用。</p>
 <ul>
-<li>./actions : 维护应用中所有action</li>
-<li>./components : 维护应用中的展示组件</li>
-<li>./containers : 维护应用中的容器组件</li>
-<li>./reducers : 定义reducer函数</li>
-<li>Index.js 入口文件</li>
+<li><p>Promise 新建后立即执行，</p>
+</li>
+<li><p><code>then</code>方法指定的回调函数将在当前脚本所有同步任务执行完才会执行。</p>
+</li>
 </ul>
-<h3 id="对页面进行组件划分（展示组件和容器组件），"><a href="#对页面进行组件划分（展示组件和容器组件），" class="headerlink" title="对页面进行组件划分（展示组件和容器组件），"></a>对页面进行组件划分（展示组件和容器组件），</h3><h3 id="确定组件的数据来源（props-和-state），"><a href="#确定组件的数据来源（props-和-state），" class="headerlink" title="确定组件的数据来源（props 和 state），"></a>确定组件的数据来源（props 和 state），</h3><h3 id="确定应用数据状态（默认数状态，正在请求数据，更新作废数据，数据格式，更新时机）。"><a href="#确定应用数据状态（默认数状态，正在请求数据，更新作废数据，数据格式，更新时机）。" class="headerlink" title="确定应用数据状态（默认数状态，正在请求数据，更新作废数据，数据格式，更新时机）。"></a>确定应用数据状态（默认数状态，正在请求数据，更新作废数据，数据格式，更新时机）。</h3><h3 id="确定数据如何在组件之间流转-——组件之间的数据依赖关系"><a href="#确定数据如何在组件之间流转-——组件之间的数据依赖关系" class="headerlink" title="确定数据如何在组件之间流转 ——组件之间的数据依赖关系"></a>确定数据如何在组件之间流转 ——组件之间的数据依赖关系</h3><h3 id="确定业务中需要的action及对应的reducer，reducer根据action值改变数据状态，组件获得新的props数据后利用该数据进行相应渲染更新。"><a href="#确定业务中需要的action及对应的reducer，reducer根据action值改变数据状态，组件获得新的props数据后利用该数据进行相应渲染更新。" class="headerlink" title="确定业务中需要的action及对应的reducer，reducer根据action值改变数据状态，组件获得新的props数据后利用该数据进行相应渲染更新。"></a>确定业务中需要的action及对应的reducer，reducer根据action值改变数据状态，组件获得新的props数据后利用该数据进行相应渲染更新。</h3>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">react</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/24/《React状态管理与同构实战》读书笔记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-web性能优化小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="影响因素"><a href="#影响因素" class="headerlink" title="影响因素"></a>影响因素</h1><p>影响页面加载慢的原因：</p>
+<h2 id="then方法"><a href="#then方法" class="headerlink" title="then方法"></a>then方法</h2><p>Promise实例具有then方法。它的作用是为 Promise 实例添加状态改变时的回调函数。</p>
+<p><code>then</code>方法的第一个参数是<code>resolved</code>状态的回调函数，第二个参数（可选）是<code>rejected</code>状态的回调函数。</p>
+<p><code>then</code>方法返回的是一个新的<code>Promise</code>实例（注意，不是原来那个<code>Promise</code>实例）。因此可以采用链式写法，即<code>then</code>方法后面再调用另一个<code>then</code>方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">getJSON(<span class="string">"/posts.json"</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">json</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> json.post;</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">post</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上面的代码使用<code>then</code>方法，依次指定了两个回调函数。第一个回调函数完成以后，会将返回结果作为参数，传入第二个回调函数。</p>
+<p>采用链式的<code>then</code>，可以指定一组按照次序调用的回调函数。这时，前一个回调函数，有可能返回的还是一个<code>Promise</code>对象（即有异步操作），这时后一个回调函数，就会等待该<code>Promise</code>对象的状态发生变化，才会被调用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">getJSON(<span class="string">"/post/1.json"</span>)</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span>(<span class="params">post</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> getJSON(post.commentURL);</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span> <span class="title">funcA</span>(<span class="params">comments</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"resolved: "</span>, comments);</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> <span class="title">funcB</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"rejected: "</span>, err);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上面代码中，第一个<code>then</code>方法指定的回调函数，返回的是另一个<code>Promise</code>对象。这时，第二个<code>then</code>方法指定的回调函数，就会等待这个新的<code>Promise</code>对象状态发生变化。如果变为<code>resolved</code>，就调用<code>funcA</code>，如果状态变为<code>rejected</code>，就调用<code>funcB</code>。</p>
+<p>如果采用箭头函数，上面的代码可以写得更简洁。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">getJSON(<span class="string">"/post/1.json"</span>).then(</span><br><span class="line">  post =&gt; getJSON(post.commentURL)</span><br><span class="line">).then(</span><br><span class="line">  comments =&gt; <span class="built_in">console</span>.log(<span class="string">"resolved: "</span>, comments),</span><br><span class="line">  err =&gt; <span class="built_in">console</span>.log(<span class="string">"rejected: "</span>, err)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>如果后续任务是异步任务的话，必须return 一个 新的 promise 对象。<br>如果后续任务是同步任务，只需 return 一个结果即可。</p>
+<h2 id="catch方法"><a href="#catch方法" class="headerlink" title="catch方法"></a>catch方法</h2><p>用于指定发生错误时的回调函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">getJSON(<span class="string">'/posts.json'</span>)</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span>(<span class="params">posts</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;)</span><br><span class="line">.catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 处理 getJSON 和 前一个回调函数运行时发生的错误</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'发生错误！'</span>, error);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上面代码中，<code>getJSON</code>方法返回一个 Promise 对象，如果该对象状态变为<code>resolved</code>，则会调用<code>then</code>方法指定的回调函数；如果异步操作抛出错误，状态就会变为<code>rejected</code>，就会调用<code>catch</code>方法指定的回调函数，处理这个错误。另外，<code>then</code>方法指定的回调函数，如果运行中抛出错误，也会被<code>catch</code>方法捕获。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'test'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">promise.catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(error);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// Error: test</span></span><br></pre></td></tr></table></figure>
+<p>上面代码中，<code>promise</code>抛出一个错误，就被<code>catch</code>方法指定的回调函数捕获。注意，上面的写法与下面两种写法是等价的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写法一</span></span><br><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'test'</span>);</span><br><span class="line">  &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">    reject(e);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">promise.catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(error);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法二</span></span><br><span class="line"><span class="keyword">const</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'test'</span>));</span><br><span class="line">&#125;);</span><br><span class="line">promise.catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(error);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>一般来说，不要在<code>then</code>方法里面定义 Reject 状态的回调函数（即<code>then</code>的第二个参数），总是使用<code>catch</code>方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// good</span></span><br><span class="line">promise</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123; <span class="comment">//cb</span></span><br><span class="line">    <span class="comment">// success</span></span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// error</span></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p><code>catch</code>方法返回的还是一个 Promise 对象，因此后面还可以接着调用<code>then</code>方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> someAsyncThing = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 下面一行会报错，因为x没有声明</span></span><br><span class="line">    resolve(x + <span class="number">2</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">someAsyncThing()</span><br><span class="line">.catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'oh no'</span>, error);</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'carry on'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// oh no [ReferenceError: x is not defined]</span></span><br><span class="line"><span class="comment">// carry on</span></span><br></pre></td></tr></table></figure>
+<h2 id="finally方法"><a href="#finally方法" class="headerlink" title="finally方法"></a>finally方法</h2><p><code>finally</code>方法用于指定不管 Promise 对象最后状态如何，都会执行的操作。该方法是 ES2018 引入标准的。</p>
+<p><code>finally</code>方法的回调函数不接受任何参数，这意味着没有办法知道，前面的 Promise 状态到底是<code>fulfilled</code>还是<code>rejected</code>。这表明，<code>finally</code>方法里面的操作，应该是与状态无关的，不依赖于 Promise 的执行结果。</p>
+<h2 id="all方法"><a href="#all方法" class="headerlink" title="all方法"></a>all方法</h2><p>用于将多个 Promise 实例，包装成一个新的 Promise 实例。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="built_in">Promise</span>.all([p1, p2, p3]);</span><br></pre></td></tr></table></figure>
+<p><code>Promise.all</code>方法接受一个数组作为参数，<code>p1</code>、<code>p2</code>、<code>p3</code>都是 Promise 实例</p>
+<p><code>p</code>的状态由<code>p1</code>、<code>p2</code>、<code>p3</code>决定，分成两种情况。</p>
+<p>（1）只有<code>p1</code>、<code>p2</code>、<code>p3</code>的状态都变成<code>fulfilled</code>，<code>p</code>的状态才会变成<code>fulfilled</code>，此时<code>p1</code>、<code>p2</code>、<code>p3</code>的返回值组成一个数组，传递给<code>p</code>的回调函数。</p>
+<p>（2）只要<code>p1</code>、<code>p2</code>、<code>p3</code>之中有一个被<code>rejected</code>，<code>p</code>的状态就变成<code>rejected</code>，此时第一个被<code>reject</code>的实例的返回值，会传递给<code>p</code>的回调函数。</p>
+<h2 id="race方法"><a href="#race方法" class="headerlink" title="race方法"></a>race方法</h2><p>同样是将多个 Promise 实例，包装成一个新的 Promise 实例。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="built_in">Promise</span>.race([p1, p2, p3]);</span><br></pre></td></tr></table></figure>
+<p>上面代码中，只要<code>p1</code>、<code>p2</code>、<code>p3</code>之中有一个实例率先改变状态，<code>p</code>的状态就跟着改变。那个率先改变的 Promise 实例的返回值，就传递给<code>p</code>的回调函数。</p>
+<h2 id="resolve方法"><a href="#resolve方法" class="headerlink" title="resolve方法"></a>resolve方法</h2><p>将现有对象转为 Promise 对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> jsPromise = <span class="built_in">Promise</span>.resolve($.ajax(<span class="string">'/whatever.json'</span>));</span><br></pre></td></tr></table></figure>
+<p>上面代码将 jQuery 生成的<code>deferred</code>对象，转为一个新的 Promise 对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve(<span class="string">'foo'</span>)</span><br><span class="line"><span class="comment">// 等价于</span></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> resolve(<span class="string">'foo'</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="reject方法"><a href="#reject方法" class="headerlink" title="reject方法"></a>reject方法</h2><p>返回一个新的 Promise 实例，该实例的状态为<code>rejected</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="built_in">Promise</span>.reject(<span class="string">'出错了'</span>);</span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> reject(<span class="string">'出错了'</span>))</span><br><span class="line"></span><br><span class="line">p.then(<span class="literal">null</span>, <span class="function"><span class="keyword">function</span> (<span class="params">s</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(s)</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 出错了</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p>首先初始化一个 Promise 对象，可以通过两种方式创建， 这两种方式都会返回一个 Promise 对象。</p>
 <ul>
-<li>CDN</li>
-<li>服务器带宽</li>
-<li>网络状况</li>
-<li>静态资源请求数量太多</li>
-<li>静态资源文件体积大</li>
-<li>浏览器对同一域名并发请求数限制</li>
-<li>数据库操作</li>
+<li>1、new Promise(fn)</li>
+<li>2、Promise.resolve(fn)</li>
 </ul>
-<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p><strong>缩短请求响应时间、减少请求数、减少请求大小</strong>。</p>
+</li>
+<li><p>然后调用上一步返回的 promise 对象的 then 方法，注册回调函数。</p>
 <ul>
-<li><p>域名收敛 </p>
-<p>网络情况差代表着，花销在域名解析上的时间会凸显，特别是当请求域名在没有被缓存的情况下（比如首次访问）</p>
-</li>
-<li><p>考虑使用SPDY协议、使用HTTPS、<a href="https://developers.google.cn/web/fundamentals/performance/http2/?hl=zh-cn" target="_blank" rel="noopener">HTTP2.0协议</a>  可以提升网络链路的复用性，提升资源加载效率， HTTP/2 可解决 HTTP/1.1 的许多固有性能问题，例如并发请求限制和缺乏标头压缩。</p>
-<p><em>在 HTTP/1 环境中，常见的做法是将样式和脚本捆绑成较大软件包。 这么做是因为大量请求会对性能带来不利影响。 使用 HTTP/2 后就不需要再这么做，因为同时发送多个请求的成本更低。 考虑使用 webpack 中的代码拆分来限制仅下载当前页面或视图需要的脚本数。 将您的 CSS 拆分为较小的模板或组件专用文件，且仅在可能使用的地方纳入这些资源。</em></p>
-</li>
-<li><p>避免混用http及https协议</p>
-</li>
-<li><p>预解析DNS，通过dns-prefetch属性可以让浏览器提前解析资源或接口对应的服务器IP地址，避免在请求中发起DNS解析请求，节省请求时间。</p>
-<!-- cdn域名预解析 -->
-<p><meta http-equiv="x-dns-prefetch-control" content="on"></p>
-<link rel="dns-prefetch" href="//cdn.domain.com">
-</li>
-<li><p>减少页面重定向，重定向用301而非304，不允许404、500；设置HSTS Header</p>
-</li>
-<li><p>尽可能减少TTFB——浏览器在接收数据之前等待的时间。<a href="https://scaleyourcode.com/blog/article/27" target="_blank" rel="noopener">What is Waiting (TTFB)</a>  <a href="https://varvy.com/pagespeed/ttfb.html" target="_blank" rel="noopener">Time to First Byte (TTFB)</a></p>
-</li>
-<li><p>减少cookie体积及数量</p>
-</li>
-<li><p>CDN分发资源、nginx部署</p>
-</li>
-<li><p>分域存放资源：由于浏览器同一域名并行下载数有限，利用多域名主机存放静态资源，增加并行下载数，缩短资源加载时间</p>
-</li>
-<li><p><a href="https://developers.google.cn/web/fundamentals/performance/resource-prioritization?hl=zh-cn" target="_blank" rel="noopener">资源预加载</a> : 利用preload，prefetch，preconnect属性我们可以在<code>&lt;head&gt;</code>内部声明式的书写资源获取请求，提前加载非首屏但又较重要的资源，避免在满足首屏优先加载的情况下，反而忽略了其他次重要资源的加载</p>
-<p><a href="https://github.com/GoogleChromeLabs/quicklink" target="_blank" rel="noopener">Google quicklink </a> 通过在空闲时间预取in-viewport链接，可以更快地加载后续页面 <a href="https://juejin.im/post/5c21f8435188256d12597789" target="_blank" rel="noopener">quicklink：实现原理</a></p>
-</li>
-<li><p>降低请求量：合并JS/CSS/图片资源，减少 HTTP 请求数，minify / 开启gzip 压缩，lazyLoad。</p>
+<li><p>then 中的回调函数可以有一个参数，也可以不带参数。如果 then 中的回调函数依赖上一步的返回结果，那么要带上参数。比如</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(fn)</span><br><span class="line">.then(fn1(value）&#123;</span><br><span class="line">    <span class="comment">//处理value</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h1><h2 id="HTTP-协议缓存请求"><a href="#HTTP-协议缓存请求" class="headerlink" title="HTTP 协议缓存请求"></a>HTTP 协议缓存请求</h2><ul>
-<li><p>正确设置<code>expires</code>、<code>max-age</code>、<code>cache-control</code> 和其他 HTTP 缓存头:减少浏览器和服务器之间的往返次数。<a href="https://varvy.com/pagespeed/cache-control.html" target="_blank" rel="noopener">Cache-Control</a></p>
-<p><em>HTML 和 JS/CSS/image 资源都属于静态文件，HTTP 本身提供了缓存协议，浏览器实现了这些协议</em></p>
+</li>
+<li><p>最后注册 catch 异常处理函数，处理前面回调中可能抛出的异常。</p>
+</li>
+</ul>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p><a href="https://mp.weixin.qq.com/s?__biz=MzA5NzkwNDk3MQ==&amp;mid=2650587545&amp;idx=1&amp;sn=e72731ececaafa917a4330949d3b4c2b&amp;chksm=8891d1bdbfe658ab82f9c7d440c869314f32979f8d3d81d28a474a6fe9693059ad8de3548f69&amp;mpshare=1&amp;scene=24&amp;srcid=0705sLdZwKJEQ5kOFIyOfApH#rd" target="_blank" rel="noopener">用 Promise 讲一个悲伤的故事给你听</a></p>
+<p>一个提交表单的页面，里面有姓名、地址等巴拉巴拉的信息，其中有一项是手机验证码，我们不得不等待手机验证码接口通过，才能发出后续的请求操作，这时候接口之间就存在了彼此依赖的关系，Async跟Await就有了用武之地，让异步请求之间可以按顺序执行。用.then()的方式，在第一个请求验证码的接口有返回值之后，才能执行后续的的Promise，并且还需要一个then输出结果，如下图：</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/T81bAV0NNN9kQLf1UpQndLlGXpmGGic2nLH4yhOC4A5C1DnmdfJQgxsoDaZ8eH3icHrbAfR4rGAMgv7hBRJqrdUA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<h1 id="Async"><a href="#Async" class="headerlink" title="Async"></a>Async</h1><h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>Async—声明一个异步函数(async function someName(){…})</p>
+<ul>
+<li>自动将常规函数转换成Promise，返回值也是一个Promise对象</li>
+<li>只有async函数内部的异步操作执行完，才会执行then方法指定的回调函数</li>
+<li>异步函数内部可以使用await</li>
+</ul>
+<p>Await—暂停异步的功能执行(var result = await someAsyncCall();)</p>
+<ul>
+<li>放置在Promise调用之前，await强制其他代码等待，直到Promise完成并返回结果</li>
+<li>只能与Promise一起使用，不适用与回调</li>
+<li>只能在async函数内部使用</li>
+</ul>
+<p>async函数完全可以看作多个异步操作，包装成的一个 Promise 对象，而await命令就是内部then命令的语法糖。</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/T81bAV0NNN9kQLf1UpQndLlGXpmGGic2niaeY93ribK6Lw7HjTcrF3OM6XHft1gFNiaI9Pxr8bUbJetrFa0SicN7Ieg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<p>await后面需要是一个Promise对象，如果不是则会被转成Promise对象。只要其中一个如果Promise对象变为reject状态，那么整个async函数都会中断操作。如果状态是resolve，那么他的返回值则会变成then里面的参数，如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// async/await</span></span><br><span class="line"><span class="keyword">async</span> getBooksByAuthorWithAwait(authorId) &#123;</span><br><span class="line">    <span class="keyword">const</span> books = <span class="keyword">await</span> bookModel.fetchAll();  </span><br><span class="line">    <span class="keyword">return</span> books.filter(<span class="function"><span class="params">b</span> =&gt;</span> b.authorId === authorId);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// promise</span></span><br><span class="line">getBooksByAuthorWithPromise(authorId) &#123; </span><br><span class="line">    <span class="keyword">return</span> bookModel.fetchAll()</span><br><span class="line">        .then(<span class="function"><span class="params">books</span> =&gt;</span> books.filter(<span class="function"><span class="params">b</span> =&gt;</span> b.authorId === authorId));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>很明显，<code>async/await</code> 的版本比 promise 的版本更加的易于理解。如果你忽略 <code>await</code> 关键字，这段代码看起来就像任何其他的同步式语言（比如说 Python）。</p>
+<p>调试 async 函数。调试器会在 await 这一行等待执行完成然后才会移动到下一行。</p>
+<h2 id="不要过于线性化"><a href="#不要过于线性化" class="headerlink" title="不要过于线性化"></a>不要过于线性化</h2><p>虽然 <code>await</code> 能够使你的代码看起来像同步代码一样，但是一定要记住这些代码仍然是以异步的方式执行的，注意不要使代码过于线性化。</p>
+<p>场景一，我们同时发出三个不互相依赖的请求，如果用Async/Await就显得不明智了</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/T81bAV0NNN9kQLf1UpQndLlGXpmGGic2nK0eKKib3TSpJc3qSeK5S09Ljqed3B2eYkFScsCXCkN7chaUyOCA57AQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<p>如上图所示，上面我们A需要2s，B需要4s，C需要3s，我们如上图所示发请求，就存在彼此依赖的关系，c等b执行完，b等a执行完，从开始到结束需要（2+3+4）9s。</p>
+<p>此时我们需要用Promise.all()将异步调用并行执行，而不是一个接一个执行，如下所示：</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/T81bAV0NNN9kQLf1UpQndLlGXpmGGic2nJukskAgfQcKc64B3FwvuZnZJhRrCOqOxXVzMS1Eq7D3jicwIKAjicSgA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="img"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> getBooksAndAuthor(authorId) &#123;  </span><br><span class="line">    <span class="keyword">const</span> books = <span class="keyword">await</span> bookModel.fetchAll();  </span><br><span class="line">    <span class="keyword">const</span> author = <span class="keyword">await</span> authorModel.fetch(authorId);  </span><br><span class="line">    <span class="keyword">return</span> &#123;    </span><br><span class="line">        author,    </span><br><span class="line">        books: books.filter(<span class="function"><span class="params">book</span> =&gt;</span> book.authorId === authorId),  </span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ol>
-<li>询问是否有更新：根据 If-Modified-Since / ETag 等协议向后端请求询问是否有更新，没有更新返回304，浏览器使用本地缓存。</li>
-<li>直接使用本地缓存：根据协议里的 Cache-Control / Expires 字段去确定多长时间内可以不去发请求询问更新，直接使用本地缓存。</li>
+<li><code>await bookModel.fetchAll()</code> 将会等待 <code>fetchAll()</code> 执行完。</li>
+<li>然后 <code>await authorModel.fetch(authorId)</code> 才会被执行</li>
 </ol>
-<p><em>HTML 文件每次都向服务器询问是否有更新，JS/CSS/Image资源文件则不请求更新，直接使用本地缓存。那 JS/CSS 资源文件如何更新？常见做法是在在构建过程中给每个资源文件一个版本号或hash值，若资源文件有更新，版本号和 hash 值变化，这个资源请求的 URL 就变化了，同时对应的 HTML 页面更新，变成请求新的资源URL，资源也就更新了。</em></p>
-</li>
-<li><p>考虑使用使用专为指纹静态资源设计的 <code>Cache-control：immutable</code></p>
-</li>
-<li><p>不使用ETags</p>
-</li>
-</ul>
-<h2 id="离线数据缓存localStorage"><a href="#离线数据缓存localStorage" class="headerlink" title="离线数据缓存localStorage"></a>离线数据缓存localStorage</h2><p>json 数据的缓存可以用 localStorage 缓存请求下来的数据，可以在首次显示时先用本地数据，再请求更新，这都由前端 JS 控制。</p>
-<h2 id="离线缓存-manifest"><a href="#离线缓存-manifest" class="headerlink" title="离线缓存 manifest"></a>离线缓存 manifest</h2><p>移动端或Hybrid应用，可以设置离线文件或离线包机制让静态资源请求从本地读取，加快资源载入速度，并实现离线更新</p>
-<h1 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h1><ul>
-<li>HTML代码压缩，去除注释、空白符</li>
-<li>注重标签的语义化，保持用最简洁的标签完成所需的功能</li>
-<li>最小化iframes的数目 , iframe 内资源的下载进程会阻塞父页面静态资源的下载与 CSS 及 HTML DOM 的解析</li>
-</ul>
-<h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><ul>
-<li><p>压缩CSS代码，排除重复的、未使用的CSS样式</p>
-</li>
-<li><p>使用postCSS约束CSS代码</p>
-</li>
-<li><p>将CSS标签放在JavaScript标签之前</p>
-</li>
-<li><p>CSS文件需要是非阻塞的，以防止DOM占用加载时间。使用preload实际上可以在浏览器开始显示页面内容之前加载CSS文件。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"preload"</span> <span class="attr">href</span>=<span class="string">"global.min.css"</span> <span class="attr">as</span>=<span class="string">"style"</span> <span class="attr">onload</span>=<span class="string">"this.rel='stylesheet'"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">noscript</span>&gt;</span><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"global.min.css"</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+<p>注意， <code>authorModel.fetch(authorId)</code> 并不依赖 <code>bookModel.fetchAll()</code> 的结果，实际上他们可以并行执行。然而，由于使用了 <code>await</code> 这两次调用就变成了串行的了，花费的总时间将会远超并行的方式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">a(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  b();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">c(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  d();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果写成下面的方式，虽然一定能保证功能一致，但变成了最低效的执行方式：</span></span><br><span class="line"><span class="keyword">await</span> a();</span><br><span class="line"><span class="keyword">await</span> b();</span><br><span class="line"><span class="keyword">await</span> c();</span><br><span class="line"><span class="keyword">await</span> d();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 因为翻译成回调，就变成了：</span></span><br><span class="line">a(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  b(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    c(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      d();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 然而我们发现，原始代码中，函数 c 可以与 a 同时执行，但 async/await 语法会让我们倾向于在 b 执行完后，再执行 c。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 当我们意识到这一点，可以优化一下性能：</span></span><br><span class="line">(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> a();</span><br><span class="line">  b();</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line">(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> c();</span><br><span class="line">  d();</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者利用 Promise.all:</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">ab</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">await</span> a();</span><br><span class="line">  b();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">cd</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">await</span> c();</span><br><span class="line">  d();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.all([ab(), cd()]);</span><br></pre></td></tr></table></figure>
+<h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><h3 id="try…catch"><a href="#try…catch" class="headerlink" title="try…catch"></a>try…catch</h3><p>当 <code>await</code> 一个函数调用的时候，任何 rejected 的值都会以异常的形式抛出来。这里有个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookModel</span> </span>&#123;  </span><br><span class="line">    fetchAll() &#123;    </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;      </span><br><span class="line">            <span class="built_in">window</span>.setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123; </span><br><span class="line">                reject(&#123;<span class="string">'error'</span>: <span class="number">400</span>&#125;) </span><br><span class="line">            &#125;, <span class="number">1000</span>);    </span><br><span class="line">        &#125;);  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// async/await</span></span><br><span class="line"><span class="keyword">async</span> getBooksByAuthorWithAwait(authorId) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;  </span><br><span class="line">        <span class="keyword">const</span> books = <span class="keyword">await</span> bookModel.fetchAll();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;  </span><br><span class="line">        <span class="built_in">console</span>.log(error);    <span class="comment">// &#123; "error": 400 &#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>被捕获的错误就是 rejected 的值。在我们捕获这个异常之后，我们有很多方式来处理它：</p>
 <ul>
-<li><p>根据组件打包CSS文件 按需加载，减少网络传输的文件大小</p>
-</li>
-<li><p>尽量少使用css通配符，特别是多层嵌套的末尾使用通配符</p>
-</li>
-<li><p>适当减少class长度、删除未使用的CSS选择器，避免在<body>中使用嵌入或内联CSS</body></p>
-</li>
-<li><p>简单动画尽量只使用transform、opacity、transition等属性完成，较复杂动画可以使用css帧动画</p>
-<p>js动画不要使用setTimeout、setInterval，setTimeout和setInterval在动画执行存在性能问题，且无法准确的控制帧数。</p>
-<p>使用requestAnimationFrame</p>
-<p>考虑对将要使用动画的部分，开启GPU硬件加速（注意不要滥用）</p>
-<p>考虑使用will-change属性（注意不要滥用）</p>
-</li>
-<li><p>给网络字体分组并异步加载，在 CSS 中利用 font-display 来加速首次渲染。</p>
-</li>
+<li>处理掉这个异常，然后返回一个正常的值。（没有在 <code>catch</code> 块中使用任何 <code>return</code> 表达式等价于使用 <code>return undefined</code> ；同时，返回的仍是一个 resolved 的值。）</li>
+<li>抛出这个异常，如果你希望调用者去处理它。你可以直接抛出原始的错误对象，例如 <code>throw error;</code> ，这种方式允许你以 promise 链式的方式使用  <code>async getBooksByAuthorWithAwait()</code> 方法（列如，你仍然可以像 <code>getBooksByAuthorWithAwait().then(...).catch(error =&gt; ...)</code> 这样调用它）；或者，你可以使用 <code>Error</code> 对象包装错误对象，例如， <code>throw new Error(error)</code> ，使用这种方式可以在控制台中展示所有的调用栈记录。</li>
+<li>使用 Reject，例如， <code>return Promise.reject(error)</code> ，这个方式等价于 <code>throw error</code> ，因此不推荐使用这种方式。</li>
 </ul>
-<h1 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h1><ul>
-<li>JS代码压缩，js文件打包成一个文件，减小 JavaScript 包的大小，代码分模块加载</li>
-<li>使用ES Lint 进行代码检查</li>
-<li>处理长列表或者大量DOM元素时，不要绑定太多的事件监听函数。节省内存和减少监听事件的注册</li>
-<li>利用throttle和debounce函数去处理频发触发，但是不需要频发执行的函数，例如scroll,touchmove例如设置每隔16ms（60帧的帧间隔为16.7ms，因此可以合理地设置为16ms）才进行一次事件处理，避免频繁的事件调用导致移动端页面卡顿。</li>
-<li>利用setTimeout代替setInterval</li>
-<li>合理缓存DOM对象</li>
-<li>避免使用eval、with，使用join代替连接符+，推荐使用ECMAScript 6的字符串模板</li>
-<li>尽量使用ECMAScript 6+的特性来编程</li>
-<li>考虑将高耗时的 JavaScript 放到 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">Web Worker</a> 或通过 Service Worker 来缓存字体，样式，JavaScript 和图片等资源文件。</li>
-<li>考虑将 JavaScript 转换为 <a href="https://webassembly.org/" target="_blank" rel="noopener">WebAssembly</a>，这是一种二进制指令格式，可以使用 C/C++/Rust 等高级语言进行编译。</li>
-<li>不使用document.write，避免在body中部嵌入多个JavaScript代码</li>
-<li>检查JavaScript文件中的性能问题。</li>
-</ul>
-<h1 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h1><ul>
-<li><p>使用工具压缩图片体积</p>
-</li>
-<li><p>使用较高压缩比格式的文件<a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/automating-image-optimization/?hl=zh-cn#what-is-webp" target="_blank" rel="noopener">webp</a>，由服务器依据图片请求头来进行判断是否支持webp，支持的话则自动返回webp格式图片  <a href="https://developers.google.cn/speed/webp/" target="_blank" rel="noopener">A new image format for the Web</a> <a href="https://zhitu.isux.us/index.php/preview/webp" target="_blank" rel="noopener">WebP使用方案</a> <a href="https://aotu.io/notes/2016/06/23/explore-something-of-webp/" target="_blank" rel="noopener">探究WebP一些事儿</a> <a href="https://www.jianshu.com/p/cb2bff169055" target="_blank" rel="noopener">为什么转换webp后体积变大了？</a></p>
+<h3 id="使用-catch"><a href="#使用-catch" class="headerlink" title="使用 .catch"></a>使用 .catch</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// books === undefined if error happens,</span></span><br><span class="line"><span class="comment">// since nothing returned in the catch statement</span></span><br><span class="line"><span class="keyword">let</span> books = <span class="keyword">await</span> bookModel.fetchAll()  </span><br><span class="line">	.catch(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123; </span><br><span class="line">        <span class="built_in">console</span>.log(error); </span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给定一个 URL 数组，如何实现接口的继发和并发？</p>
 <ul>
-<li><p>通过Accept标头进行服务器端内容协商，web客户端发送一个“Accept”请求头，表明他们愿意接受哪些内容格式作为响应，如果浏览器预先表明它将“接受”图像/webp格式，web服务器就知道它可以安全地发送webp图像，从而大大简化了内容协商。</p>
+<li><p>async 继发实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 继发一</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">loadData</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> res1 = <span class="keyword">await</span> fetch(url1);</span><br><span class="line">  <span class="keyword">var</span> res2 = <span class="keyword">await</span> fetch(url2);</span><br><span class="line">  <span class="keyword">var</span> res3 = <span class="keyword">await</span> fetch(url3);</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"whew all done"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 继发二</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">loadData</span>(<span class="params">urls</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> url <span class="keyword">of</span> urls) &#123;</span><br><span class="line">    <span class="keyword">const</span> response = <span class="keyword">await</span> fetch(url);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">await</span> response.text());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>HTML5 <picture> 标签，它允许你以优先级顺序列出多个备选的图像目标，这样客户端就会请求它能够正确显示的第一个候选图像</picture></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//在本例中，当viewport大于960像素时，会加载图像960的图像。当viewport宽度大于768像素时，浏览器会加载768的。而当宽度小于768像素时，加载默认图像360。</span><br><span class="line">当浏览器不支持的时候就直接读取img标签</span><br><span class="line"><span class="tag">&lt;<span class="name">picture</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(min-width: 960px)"</span> <span class="attr">srcset</span>=<span class="string">960.jpg</span>"&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(min-width: 768px)"</span> <span class="attr">srcset</span>=<span class="string">"768.jpg"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"360.jpg"</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>在你自己的JavaScript中尝试解码使用特定特征的非常小的WebP图像，并检查是否成功</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// check_webp_feature:</span></span><br><span class="line"><span class="comment">//   'feature' can be one of 'lossy', 'lossless', 'alpha' or 'animation'.</span></span><br><span class="line"><span class="comment">//   'callback(feature, result)' will be passed back the detection result (in an asynchronous way!)</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">check_webp_feature</span>(<span class="params">feature, callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> kTestImages = &#123;</span><br><span class="line">        lossy: <span class="string">"UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA"</span>,</span><br><span class="line">        lossless: <span class="string">"UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA=="</span>,</span><br><span class="line">        alpha: <span class="string">"UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA=="</span>,</span><br><span class="line">        animation: <span class="string">"UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">var</span> img = <span class="keyword">new</span> Image();</span><br><span class="line">    img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> result = (img.width &gt; <span class="number">0</span>) &amp;&amp; (img.height &gt; <span class="number">0</span>);</span><br><span class="line">        callback(feature, result);</span><br><span class="line">    &#125;;</span><br><span class="line">    img.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        callback(feature, <span class="literal">false</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    img.src = <span class="string">"data:image/webp;base64,"</span> + kTestImages[feature];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>请注意，映像加载是非阻塞和异步的。这意味着任何依赖于WebP支持的代码最好放在回调函数中</p>
-</li>
-</ul>
-<ul>
-<li><p>优先使用jpg格式、png8，而非png24。</p>
-</li>
-<li><p>合并小图，使用雪碧图</p>
-</li>
-<li><p>尽可能使用css3、svg、web fonts替代图片</p>
-</li>
-<li><p>小于2KB的图片可以尝试使用base64格式去替换，将图片转换成base64格式可以减少http请求数量，但是，不能对较大尺寸的图片使用base64格式，因为base64算法会提升三分之一的文件大小</p>
-</li>
-<li><p>针对网络情况请求不同画质的图片、针对设备像素比确定使用几倍图</p>
-</li>
-<li><p>空闲时间预加载图片</p>
-</li>
-<li><p>首屏强制锁屏loading、预加载所有资源</p>
-</li>
-<li><p>首屏加载完毕时预加载其他资源</p>
-</li>
-<li><p>如果最终呈现的图像大小已知，则在<img>上设置宽度和高度属性</p>
-</li>
-</ul>
-<h1 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h1><ul>
-<li><p>压缩字库大小，避免加载过多无用的资源，推荐工具字蛛</p>
-</li>
-<li><p>优化字体的展示策略，使用font-display属性可以避免在字体加载过程中，不显示文字的问题</p>
-</li>
-<li><p>Web字体格式：在web项目或应用程序中使用WOFF 2</p>
-</li>
-<li><p>当特殊文字量较少且内容固定时，可以尝试使用图片代替</p>
-</li>
-<li><p>使用预连接加载字体更快</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"preconnect"</span> <span class="attr">href</span>=<span class="string">"https://fonts.gstatic.com"</span> <span class="attr">crossorigin</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h1><p><a href="https://developers.google.com/web/fundamentals/performance/optimizing-javascript/tree-shaking/" target="_blank" rel="noopener">摇树（tree-shaking）</a>是一种在 <a href="http://www.2ality.com/2015/12/webpack-tree-shaking.html" target="_blank" rel="noopener">webpack</a> 中清理构建过程的方法，它仅将实际生产环境使用的代码打包，并排除没有使用的导入模块。使用 webpack 和 rollup，还可以使用<a href="https://medium.com/webpack/brief-introduction-to-scope-hoisting-in-webpack-8435084c171f" target="_blank" rel="noopener">作用域提升</a>（scope hoisting），作用域提升使得 webpack 和 rollup 可以检测 <code>import</code> 链可以展开的位置，并将其转换为一个内联函数，并且不会影响代码。使用 webpack，我们也可以使用 <a href="https://react-etc.net/entry/json-tree-shaking-lands-in-webpack-4-0" target="_blank" rel="noopener">JSON Tree Shaking</a>。</p>
-<p><a href="https://webpack.js.org/guides/code-splitting/" target="_blank" rel="noopener">代码拆分（code-splitting）</a>是另一个 webpack 功能，它将你的代码库拆分为按需加载的“块”。并非所有的 JavaScript 都必须立即下载、解析和编译。在代码中定义分割点后，webpack 可以处理依赖项和输出文件。它能够保持较小体积的初始下载，并在应用程序请求时按需请求代码。</p>
-<p>考虑使用 <a href="https://github.com/GoogleChromeLabs/preload-webpack-plugin" target="_blank" rel="noopener">preload-webpack-plugin</a>，它接受代码拆分的路由，然后提示浏览器使用 <code>&lt;link rel=&quot;preload&quot;&gt;</code> 或 <code>&lt;link rel=&quot;prefetch&quot;&gt;</code> 预加载它们。<a href="https://webpack.js.org/guides/code-splitting/#prefetching-preloading-modules" target="_blank" rel="noopener">Webpack 内联指令</a>还可以控制 <code>preload</code>/<code>prefetch</code>。</p>
-<p>考虑使用<a href="https://www.npmjs.com/package/npm-check" target="_blank" rel="noopener">npm-check</a> 更新包</p>
-<p>参考资料：<a href="https://developers.google.cn/web/fundamentals/performance/webpack/decrease-frontend-size?hl=zh-cn" target="_blank" rel="noopener">Decrease Front-end Size</a></p>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><ul>
-<li><p>首屏考虑css loading效果，防止白屏</p>
-</li>
-<li><p>对于整个页面资源需求量较大时，可以使用骨架屏。加载骨架屏占位，然后再去数据填充。如：vue-skeleton-webpack-plugin</p>
-</li>
-<li><p>通过Google Lighthouse 分析<a href="https://developers.google.cn/web/fundamentals/performance/speed-tools/?hl=zh-cn" target="_blank" rel="noopener">跑分工具</a>，可以较全面的了解网站的性能</p>
-</li>
-<li><p>通过Chrome的控制面板code coverage部分，找到未使用代码的比例</p>
-</li>
-<li><p>确定优先级：立即加载核心体验，然后加载增强体验，最后加载额外功能。</p>
-<p>定义基本核心体验（即完全可访问的核心内容）、增强体验（即更加丰富的完整体验）以及额外功能（可以延迟加载的非必需的资源：例如网页字体、不必要的样式、轮播脚本、视频播放器、社交媒体按钮和大图片）。</p>
-</li>
-<li><p>考虑使组件具有连接感知能力，可以将高 DPI 图像的请求重写为低 DPI 图像请求，删除 Web 字体、花哨的效果、预览缩略图和无限滚动、关闭视频、音频自动播放、减少显示项目的数量。</p>
-<p><a href="https://github.com/developers.google.com/web/update/2016/02/save-data" target="_blank" rel="noopener">Save-Data 客户端提示请求头</a>允许我们为受成本和性能限制的用户定制应用程序及其负载</p>
-<p><a href="https://github.com/googlechrome.gitrub.io/samples/network-Information/" target="_blank" rel="noopener">Network Information API</a> 根据网络类型提供<a href="https://justmarkup.com/log/2017/11/network-based-image-loading/" target="_blank" rel="noopener">高/低分辨率的图像</a> 和视频。</p>
-</li>
-<li><p>用户体验优化：关注异步处理，当异步未能及时返回时前端/UI应有相应处理，尽量保证用户无感知异步等待。<a href="https://developers.google.cn/web/fundamentals/instant-and-offline/offline-ux?hl=zh-cn" target="_blank" rel="noopener">Offline UX 注意事项</a></p>
-</li>
-</ul>
-<h1 id="针对年会游戏手机端页面的优化"><a href="#针对年会游戏手机端页面的优化" class="headerlink" title="针对年会游戏手机端页面的优化"></a>针对年会游戏手机端页面的优化</h1><p>以下是2019.2.13针对年会游戏手机端页面的优化工作：</p>
-<ul>
-<li><p>开启Gzip</p>
-</li>
-<li><p>login.html</p>
-<p>优化前：共20个请求、页面总大小341kb</p>
-<p>优化后：共12个请求、减少了8个请求数</p>
-<ul>
-<li>移除输入框中的三个图标，改为base64格式。节省了3个请求数</li>
-<li>移除layer.css 、layer.js 。节省了3个请求数</li>
-<li>移除zepto.js。节省了1个请求数</li>
-<li>移除common.js，将内容移至share.js中（share.js对common.js有依赖）。节省了1个请求数</li>
-<li>压缩页面为单行。节省了4.3KB体积</li>
-<li>压缩share.js。节省了3.3KB体积</li>
-<li>压缩config.js。节省166B</li>
-</ul>
-<p>【问题】：考虑移除config.js？移除则减少1个请求数但增加了接口地址维护成本，是否有更简单的办法？比如nginx代理？</p>
-<p>考虑移除flexible.js，移除则减少1个请求数但该页面布局整体需要重写</p>
-<p>考虑有损压缩图片，但未找到更好的无损压缩工具。</p>
-</li>
-</ul>
-<ul>
-<li><p>index.html</p>
-<p>优化前：共25个请求、页面总大小350kb</p>
-<p>优化后：共11个请求、节省了14个请求数</p>
-<ul>
-<li>注释弹幕霸屏无用的代码，节省了2个请求数</li>
-<li>移除layer.css、layer.js。节省了3个请求数</li>
-<li>移除jQueryRotate.js。节省了1个请求数</li>
-<li>移除jquery.form.js。节省了1个请求数</li>
-<li>移除zepto.js。节省了1个请求数</li>
-<li>移除fastclick.js。节省了1个请求数</li>
-<li>合并部分图片为雪碧图。节省了5个请求数</li>
-</ul>
-<p>【问题】：考虑移除config.js？移除则减少1个请求数但增加了接口地址维护成本，是否有更简单的办法？比如nginx代理？</p>
-</li>
-</ul>
-<ul>
-<li><p>shake.html</p>
-<p>优化前：共25个请求、页面总大小396kb</p>
-<p>优化后：共19个请求、节省了6个请求数</p>
-<ul>
-<li>去除小猪头gif图片。节省了1个请求数</li>
-<li>去除游戏开始前和进行时的音效。节省了2个请求数</li>
-<li>移除左上角的返回按钮图标，改为base64格式。节省了1个请求数</li>
-<li>移除关闭按钮，改为base64格式。节省了1个请求数</li>
-<li>压缩style.css</li>
-<li>移除layer.css、layer.js。节省了3个请求数</li>
-<li>压缩index.js</li>
-</ul>
-<p>【问题】：考虑移除config.js？移除则减少1个请求数但增加了接口地址维护成本，是否有更简单的办法？比如nginx代理？</p>
+<li><p>async 并发实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 并发一</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">loadData</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> res = <span class="keyword">await</span> <span class="built_in">Promise</span>.all([fetch(url1), fetch(url2), fetch(url3)]);</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"whew all done"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 并发二</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">loadData</span>(<span class="params">urls</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 并发读取 url</span></span><br><span class="line">  <span class="keyword">const</span> textPromises = urls.map(<span class="keyword">async</span> url =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> response = <span class="keyword">await</span> fetch(url);</span><br><span class="line">    <span class="keyword">return</span> response.text();</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 按次序输出</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> textPromise <span class="keyword">of</span> textPromises) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">await</span> textPromise);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>参考：</p>
-<p><a href="https://github.com/thedaviddias/Front-End-Performance-Checklist" target="_blank" rel="noopener"><strong>Front-End-Performance-Checklist</strong></a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/navigation-and-resource-timing/?hl=zh-cn" target="_blank" rel="noopener">Assessing Loading Performance in Real Life with Navigation and Resource Timing</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/automating-image-optimization/?hl=zh-cn#what-is-webp" target="_blank" rel="noopener">优化图像</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/javascript-startup-optimization/?hl=zh-cn" target="_blank" rel="noopener">JavaScript 启动优化</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=zh-cn" target="_blank" rel="noopener">HTTP 缓存</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-javascript/tree-shaking/?hl=zh-cn" target="_blank" rel="noopener">Reduce JavaScript Payloads with Tree Shaking</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/optimizing-javascript/code-splitting/?hl=zh-cn" target="_blank" rel="noopener">Reduce JavaScript Payloads with Code Splitting</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/critical-rendering-path/analyzing-crp?hl=zh-cn" target="_blank" rel="noopener">分析关键渲染路径性能</a></p>
-<p><a href="https://developers.google.cn/web/fundamentals/performance/rendering/?hl=zh-cn" target="_blank" rel="noopener">渲染性能</a></p>
-<p><a href="https://www.checkbot.io/guide/speed/" target="_blank" rel="noopener">Web Speed Best Practices</a></p>
-<p><a href="https://mp.weixin.qq.com/s/i035lEHc2w2K-TBhbDtaLQ" target="_blank" rel="noopener">移动 H5 首屏秒开优化方案探讨</a></p>
-<p><a href="https://juejin.im/post/5b3c0d26e51d45191556b527?utm_source=gold_browser_extension#heading-1" target="_blank" rel="noopener">移动端网页性能优化自查表</a></p>
-<p><a href="https://juejin.im/post/5aaf9e5cf265da239c7b2b93" target="_blank" rel="noopener">移动spa商城优化记</a></p>
-<p><a href="https://mp.weixin.qq.com/s/JFjgRkub4K-QW6nEKQQXzQ" target="_blank" rel="noopener">手机活动页图片性能优化分享</a></p>
-<p><a href="https://github.com/xitu/gold-miner/blob/master/TODO1/front-end-performance-checklist-2019-pdf-pages-4.md" target="_blank" rel="noopener">2019 前端性能优化年度总结</a></p>
-<p><a href="https://juejin.im/post/5c46cbaee51d453f45612a2c#heading-16" target="_blank" rel="noopener">2019年前端性能优化清单</a></p>
-<p><a href="https://aotu.io/notes/2016/06/14/http2/" target="_blank" rel="noopener">HTTP/2</a></p>
+<p><a href="https://juejin.im/post/5cb8271151882532826e7af9" target="_blank" rel="noopener">手撕遵循 Promise/A+ 规范的 Promise</a></p>
+<p><a href="https://mp.weixin.qq.com/s/tCO6QXK0Nqa59MwUu6pRyQ" target="_blank" rel="noopener">面试题</a></p>
+<p><a href="https://juejin.im/post/5d116ae5518825328779c9d5" target="_blank" rel="noopener">async/await 应知应会</a></p>
+<p><a href="https://mp.weixin.qq.com/s/5ir6N17XHPRtQ_kQm8ZV0A" target="_blank" rel="noopener">浅谈Async/Await</a></p>
+<p><a href="https://juejin.im/post/5cf7042df265da1ba647d9d1" target="_blank" rel="noopener">如何在 JS 循环中正确使用 async 与 await</a></p>
+<p><a href="https://juejin.im/post/5c30375851882525ec200027" target="_blank" rel="noopener">JS 异步编程六种方案</a></p>
+<p><a href="https://juejin.im/post/5bcf3e3f6fb9a05cd53b3e3d?utm_source=gold_browser_extension#heading-5" target="_blank" rel="noopener">ES6 系列之我们来聊聊 Async</a></p>
 
       
 
@@ -591,11 +321,22 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">es6</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/23/web性能优化小结/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/08/27/Promise-与-Async/">展开全文 >></a>
         </p>
       
 
@@ -625,27 +366,132 @@
 
 
   
-    <article id="post-小程序开发小结" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-港岛漫步行记(二)" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/08/小程序开发小结/">小程序开发小结</a>
+      <a class="article-title" href="/2019/05/19/港岛漫步行记(二)/">港岛漫步行记(二)</a>
     </h1>
   
 
         
-        <a href="/2019/02/08/小程序开发小结/" class="archive-article-date">
-  	<time datetime="2019-02-08T08:24:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-08</time>
+        <a href="/2019/05/19/港岛漫步行记(二)/" class="archive-article-date">
+  	<time datetime="2019-05-19T03:58:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><img src="http://image-up-yun.test.upcdn.net/IMG_4089-Pano.jpg" alt=""></p>
+<p>瞄了眼日历，这集更新距离上期已过去半年之久，这段时间去过几次香港，想酝酿更有深度的内容呈现给大家，让大家久等了。</p>
+<p>天气越来越热，值得欣慰的是空气好转起来，乘缆车上太平山顶，望着湛蓝色天空浮起白白的云朵，全港尽在眼前，云淡风轻原来是这种感觉。如果你和我一样爱好摄影，我推荐你即刻出发，夏日的香港空气通透度最高。我却更喜欢秋冬季的香港，虽然笼罩了一层薄雾，但干燥凉爽，非常适合慢游，让我们开始慢游全世界～</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4807_PANO.jpg" alt=""></p>
+<p>从福田口岸出境坐东铁线到红磡或尖东站，即可到达维多利亚港。清晨，从尖东沿着维港步行，清新的海风拂面，脚踏星光大道，看到这些明星手印和雕像，海面上船来船往，对岸长满的摩天楼…这是一个有故事的地方。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20161001_093859_HDR.jpg" alt=""></p>
+<p>这次印象特别深，在去维港的路上时下起了小雨，等我们抵达时雨后初晴！空气通透地没有一丝尘埃，自从那次之后再也没有见过如此景致。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20161001_094929_HDR.jpg" alt=""></p>
+<p> 相比中银大厦外表朴实的建行，像这种内地企业在香港的有不少，楼顶全是大大的logo，不过中银，IFC这种却没有，也许是太知名了。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20160430_122321_HDR.jpg" alt=""></p>
+<p>星光大道那时候还在维修，为了一睹李小龙只能移步星光花园。现在全新的星光大道又重新开放了。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20160430_122423_HDR.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20160430_122538_HDR副本.jpg" alt=""></p>
+<p>正是因为他们，成就了香港电影。喜欢香港电影的你应该迫不及待想来打卡吧。我发现来参观最多的外国友人是韩国妹纸，想必他们的影响力早已是世界级。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4101.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4100.jpg" alt=""></p>
+<p>山下仅有的些许土地种满了房子，土地资源真的很紧张。不到万不得已时不会侵占绿地资源，也不能够肆无忌惮地填海造地。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4008.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4007.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1414_.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4077.jpg" alt=""></p>
+<p>随处可见的救生圈，保障工作做得真好。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4112.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4108.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1414.jpg" alt=""></p>
+<p>看各种各样的船来来往往。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4201.jpg" alt=""></p>
+<p>真羡慕啊，有了船就可以出海遨游。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4119.jpg" alt=""></p>
+<p>虽然我买不起船，但是【天星小轮】还是坐得起。它已经有一百多年历史了，往返中环上环和尖沙咀，票价只要两三块港币呢。天星小轮被评为全球一百个必去景点之一。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1427.jpg" alt=""></p>
+<p>如果你想去更远的离岛，去中环码头坐轮渡就好啦。有固定的班次，具体时间表要查询 First Ferry APP 和 <a href="http://www.hkkf.com.hk/index.php?op=show&amp;page=home&amp;style=sc" target="_blank" rel="noopener">港九小轮官网</a> </p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4177.jpg" alt=""></p>
+<p>最新地标——IFC 国际金融中心。一期和二期长得挺像。在深圳也见过这样的楼，应该是模仿的它们，取名金中环。</p>
+<p>彩色的天星小轮后面就是中环码头，从中环码头出来上天桥就直达IFC购物中心，我觉得应该是全亚洲最厉害的商场了。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7474.jpg" alt=""></p>
+<p>让我们继续往前移步，这里是尖沙咀汽车总站，在这里坐车可以去很多地方。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7492.jpg" alt=""></p>
+<p>网上打卡很多的雪糕车～几块钱一个，奶油味很足。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20160430_110936_HDR.jpg" alt=""></p>
+<p>广九铁路的钟楼。以前广州到九龙的铁路终点就在此，现在只剩一个钟楼遗迹。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4073.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4070.jpg" alt=""></p>
+<p>画面突然来到了冬天～ 全港笼罩了一层薄纱。我喜欢在这里的大家樂吃brunch</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5369.jpg" alt=""></p>
+<p>这里经常有鸽子出没，不过建议离它们远点，谨防禽流感。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_14142.jpg" alt=""></p>
+<p>香港最冷的时候，穿一件薄外套足矣。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5368.jpg" alt=""></p>
+<p>静静地看着夕阳，大家都在等着晚上的烟花盛宴。每年国庆和元旦跨年的时候都会有，记得早早来占位置哦。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5467.jpg" alt=""></p>
+<p>尖沙咀码头就在钟楼的右边，体验天星小轮就在此处登船。可以去湾仔，中环。</p>
+<p>在右手边有一家香港旅游发展局的店面，如果你有想要了解香港的问题可以进去咨询，他们会非常细心耐心地给你讲解，也会有一些纸质手册赠予。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7504.jpg" alt=""></p>
+<p>在对的地方 向对的观众 说对的讯息</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4143.jpg" alt=""></p>
+<p>平日成人2块7港币，周末3块2，这价格相当良心了。值得注意的是：长者免费。我觉得这个”长者”的称谓比大陆所谓的”老人”更好听。香港社会对于老人和小孩的照顾有体现在方方面面。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1422.jpg" alt=""></p>
+<p>你应该注意到了，售票机是不支持支付宝或者微信支付的。没错，香港绝大多数地方是不支持网络支付的，他们主要的支付方式还是现金和刷卡，不过随着支付宝和微信支付开始铺天盖地做活动之后，这种情况会慢慢改善。另外八达通是一个比较通用的储值卡，可以坐车，坐船，买景点门票，超市便利店购物等。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1419.jpg" alt=""></p>
+<p>一边通往湾仔，一边通往中环，可别走错了喔。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1416-2.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4145.jpg" alt=""></p>
+<p>船还没来，看看窗外的风景也不错</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1420.jpg" alt=""></p>
+<p>这是我第一次看见邮轮，地球上最大的交通工具，真的好大呀。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4144.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5372.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4146.jpg" alt=""></p>
+<p>再对比下我们的船～</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5379.jpg" alt=""></p>
+<p>PS：有内鬼，终止交易。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7510.jpg" alt=""></p>
+<p>船来接我们啦，比较幸运是彩色款呢</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7522.jpg" alt=""></p>
+<p>船来时栅栏就会打开，走进充满年代感的通道</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7516.jpg" alt=""></p>
+<p>磨砂的地面，空气中带有浓浓的柴油味～是我对天星码头的记忆</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1421.jpg" alt=""></p>
+<p>准备登船了</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4151.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1424.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7505.jpg" alt=""></p>
+<p>船舱内长这样，有很多救生衣和救生圈。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1439.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7531.jpg" alt=""></p>
+<p>船有两层，一层可容纳299人。这种字体真好看。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1438.jpg" alt=""></p>
+<p>坐到最里面，晒晒太阳，看看风景，跟着船一起慢摇，惬意的很。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4157.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_4158.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1425.jpg" alt=""></p>
+<p>船很快就驶向对岸，仅需3分钟就可抵达对岸。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_5425.jpg" alt=""></p>
+<p>你站在桥上看风景，看风景人在楼上看你。明月装饰了你的窗子，你装饰了别人的梦。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1426.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_20171024_112944.jpg" alt=""></p>
+<p>终于到港了，船务员会用一根杆子将粗壮的绳子套在码头墩子上，然后放下甲板，这才放行。这块甲板看起来很有质感。</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_7533.jpg" alt=""></p>
+<p>华灯初上 看着对岸 有时候会觉得莫名的渺小</p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_16112.jpg" alt=""></p>
+<p><img src="http://image-up-yun.test.upcdn.net/IMG_1631.jpg" alt=""></p>
+<p>人生就好像一艘小船，出发，到港，循环往复；</p>
+<p>虽然岁月会留下痕迹，虽然经常会遇到起起伏伏的波浪，但我们终将劈波斩浪继续前行。</p>
+<p>感谢阅读。</p>
+
       
 
       
@@ -658,7 +504,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">小程序</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">疯言疯语</a>
         		</li>
       		
 		</ul>
@@ -668,7 +514,117 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/08/小程序开发小结/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/19/港岛漫步行记(二)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-webpack-学习笔记" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/17/webpack-学习笔记/">webpack 学习笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/17/webpack-学习笔记/" class="archive-article-date">
+  	<time datetime="2019-03-17T05:57:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://image-up-yun.test.upcdn.net/屏幕快照 2019-03-17 下午1.59.19.png" alt=""></p>
+<h1 id="webpack学习笔记"><a href="#webpack学习笔记" class="headerlink" title="webpack学习笔记"></a>webpack学习笔记</h1><p>想想webpack是一个管道，有入口和出口。</p>
+<h2 id="核心理论"><a href="#核心理论" class="headerlink" title="核心理论"></a>核心理论</h2><h3 id="Entry-入口"><a href="#Entry-入口" class="headerlink" title="Entry 入口"></a>Entry 入口</h3><p>未打包的目录，指定一个入口让webpack来操作它</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Output：输出"><a href="#Output：输出" class="headerlink" title="Output：输出"></a>Output：输出</h3><p>打包完成输出的目录，指定一个目录告诉webpack输出到哪儿，及命名规则</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>),	<span class="comment">// 路径</span></span><br><span class="line">    filename: <span class="string">'my-first-webpack.bundle.js'</span>	<span class="comment">// 命名</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Loaders：loader"><a href="#Loaders：loader" class="headerlink" title="Loaders：loader"></a>Loaders：loader</h3><p>让webpack支持js和JSON以外的文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'my-first-webpack.bundle.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123; <span class="attr">test</span>: <span class="regexp">/\.txt$/</span>, <span class="attr">use</span>: <span class="string">'raw-loader'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">上面的配置中定义了一个<span class="built_in">module</span>.rules属性，这个属性又有两个属性：test和use。这就好像告诉webpack编译器说：</span><br><span class="line"></span><br><span class="line">”Hi，webpack编译器，当你发现任何后缀为.txt的文件时，请使用raw-loader先转换一下，然后再把转换后的内容添加到打包文件中。“</span><br></pre></td></tr></table></figure>
+<h3 id="Plugins：插件"><a href="#Plugins：插件" class="headerlink" title="Plugins：插件"></a>Plugins：插件</h3><p>使用require引用插件，在plugins数组中添加插件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>); <span class="comment">//installed via npm</span></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>); <span class="comment">//to access built-in plugins</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123; <span class="attr">test</span>: <span class="regexp">/\.txt$/</span>, <span class="attr">use</span>: <span class="string">'raw-loader'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(&#123;<span class="attr">template</span>: <span class="string">'./src/index.html'</span>&#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">在上面的例子中，使用html-webpack-plugin生成一个HTML文件，这个文件就是你的应用程序。在其中已经自动引用好了打包的文件。</span><br></pre></td></tr></table></figure>
+<h3 id="Mode：模式"><a href="#Mode：模式" class="headerlink" title="Mode：模式"></a>Mode：模式</h3><p>通过设置<code>mode</code>属性，可以启动webpack内置的优化。</p>
+<h3 id="Browser-Compatibility：浏览器兼容"><a href="#Browser-Compatibility：浏览器兼容" class="headerlink" title="Browser Compatibility：浏览器兼容"></a>Browser Compatibility：浏览器兼容</h3><p>webpack 支持所有基于ES5的浏览器，但是IE8及以下是不支持的。因为webpack需要<code>import()</code>和<code>require()</code>。如果需要支持老版本浏览器，可以使用loader解决。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>创建一个目录并安装webpack及cli（并非全局安装）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir webpack-demo &amp;&amp; <span class="built_in">cd</span> webpack-demo</span><br><span class="line">npm init -y</span><br><span class="line">npm install webpack webpack-cli --save-dev</span><br></pre></td></tr></table></figure>
+<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p>传统web开发中，<script>标记之间存在隐式依赖关系。用这种方式管理JavaScript项目存在一些问题:</p>
+<ul>
+<li>脚本是否依赖于外部库并不明显。</li>
+<li>如果缺少依赖项，或者以错误的顺序包含依赖项，应用程序将无法正常运行。</li>
+<li>如果包含但没有使用依赖项，浏览器将被迫下载不必要的代码。</li>
+</ul>
+<p>让我们使用webpack来管理这些脚本，在webpack中，每个模块都会声明所引用的依赖，这样就避免了打包没有使用到的模块。另外通过配置，可以避免重复打包相同的引用，提高打包效率。通过loader，webpack可以引入任何其他的非JavaScript文件。例如，加载css、图片、字体、JSON、XML等。</p>
+<ul>
+<li>src 即 source ，是我们将要编写和编辑的代码</li>
+<li>dist 即 distribution ， 是我们构建过程中最小化和优化的输出，最终将加载到浏览器中</li>
+<li>在安装将被捆绑到<strong>生产</strong>包中的包时，应该使用npm install——save。</li>
+<li>如果安装<strong>用于开发目的</strong>的包(例如linter、测试库等)，那么应该使用npm install——save-dev</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npx webpack  或  npx webpack --config webpack.config.js</span><br><span class="line">将以脚本的src/index.js作为入口点，并生成dist/main.js作为输出</span><br></pre></td></tr></table></figure>
+<h5 id="webpack-仅支持-import-、export-、Module-API，如果要使用ES6-需要配合Babel这样的loader"><a href="#webpack-仅支持-import-、export-、Module-API，如果要使用ES6-需要配合Babel这样的loader" class="headerlink" title="webpack 仅支持 import 、export 、Module API，如果要使用ES6 需要配合Babel这样的loader"></a>webpack 仅支持 import 、export 、Module API，如果要使用ES6 需要配合Babel这样的loader</h5><p>通过在package.json中配置下列代码，可以使用 npm script来运行webpack 替代上面的npx命令</p>
+<p>使用 <strong>scripts</strong> 可以像引用npx一样通过名称引用本地安装的npm包 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">      "test": "echo \"Error: no test specified\" &amp;&amp; exit 1",</span><br><span class="line">      "build": "webpack"</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+<p>然后使用以下命令，也可以编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+<p>推荐 CSS loaders 有 postcss 、sass 、 less</p>
+<p>参考：</p>
+<p><a href="https://webpack.js.org/guides/getting-started/">webpack.js.org</a></p>
+<p><a href="https://juejin.im/post/5c11bf4ee51d45171643974c">webpack入门学习手记</a></p>
+</script></p>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">webpack</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/17/webpack-学习笔记/">展开全文 >></a>
         </p>
       
 
@@ -700,7 +656,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -788,7 +744,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">webgl three.js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Js基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">webgl canvas 游戏 引擎</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -816,11 +784,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
+                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
+                <a href="javascript:void(0)" class="js-tag color1">webAR</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -844,19 +812,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">react</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">图解HTTP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
+                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">《实战ES2015》</a>
+                <a href="javascript:void(0)" class="js-tag color3">读书是一场修行</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -868,6 +832,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">工具</a>
               </li>
              
@@ -876,15 +844,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">疯言疯语</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">小程序</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">疯言疯语</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">HTML5</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">微信小游戏</a>
               </li>
              
               <li class="article-tag-list-item">
